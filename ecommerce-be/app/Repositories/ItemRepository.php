@@ -19,8 +19,6 @@ class ItemRepository extends BaseRepository
         $this->model = $this->model->where('category_id', $value);
     }
 
-   
-
     public function itemUpdateWithImage(int $id, array $params){
 
         /**get fillable should be before accessing the model */

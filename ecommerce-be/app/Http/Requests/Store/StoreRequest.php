@@ -34,7 +34,8 @@ class StoreRequest extends BaseRequest
             'refbrgy_id'        => 'sometimes',
             'user_id'           => 'sometimes',
             'latitude'          => 'sometimes',
-            'longitude'          => 'sometimes'
+            'longitude'          => 'sometimes',
+            'show_mobile'        => 'sometimes',
 
         ];
     }

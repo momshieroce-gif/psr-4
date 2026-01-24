@@ -82,7 +82,7 @@ Route::post('send-email-invitation', [UserController::class, 'inviteByEmail']);
   Route::get('google-api-text-search', [GoogleApiController::class, 'textSearch']);
   Route::get('google-api-nearby-search', [GoogleApiController::class, 'nearBySearch']);
   Route::resource('receive_methods', ReceiveMethodController::class)->only(['index']);
-  Route::resource('stores', StoreController::class);
+  Route::resource('all_stores', StoreController::class);
   Route::resource('delivery_charges', DeliveryChargeController::class)->only(['index']);
   Route::post('create-new-activation-code', [MobileActivationCodeController::class, 'createNewActivationcode']);
   Route::get('use-old-activation-code', [MobileActivationCodeController::class, 'useOldActivationcode']);

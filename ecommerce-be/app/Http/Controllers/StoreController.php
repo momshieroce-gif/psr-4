@@ -18,8 +18,5 @@ class StoreController extends ApiController
         $this->updateRequest = StoreRequest::class;
     }
 
-    protected function getResource() : BaseResource {
-        return new BaseResource( $this->result );
-    }
 
 }

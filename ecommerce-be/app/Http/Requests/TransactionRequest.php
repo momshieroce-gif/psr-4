@@ -22,6 +22,7 @@ class TransactionRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'store_id'                  => 'required',
             'items'                     => 'required',
             'deliveryCharge'            => 'required',
             'selectedReceiveMethod'     => 'required',

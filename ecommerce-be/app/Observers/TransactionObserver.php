@@ -6,8 +6,10 @@ use App\Http\Requests\TransactionRequest;
 use App\Models\Order;
 use App\Models\Item;
 use App\Models\ItemPrice;
+use App\Traits\Obfuscate\OptimusRequiredToModel;
 
 class TransactionObserver {
+    use OptimusRequiredToModel;
     public function created( Transaction $transaction ): void {
 
         $request = app( TransactionRequest::class );
@@ -22,7 +24,7 @@ class TransactionObserver {
 
                         Order::create( [
                             'transaction_id'    => $transaction->id,
-                            'store_id'          => $requestItem[ 'store_id' ],
+                            'store_id'          => $this->optimus()->decode($requestItem[ 'store_id' ]),
                             'item_id'           => $item[ 'item_id' ],
                             'item_name'         => $modelItem->name,
                             'item_description'  => $modelItem->description,

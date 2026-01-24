@@ -17,6 +17,7 @@ class TransactionRepository extends BaseRepository implements BaseInterface
     }
 
     public function createTransaction(
+        int $storeId,
         Array $items,
         float $deliveryCharge,
         int $selectedReceiveMethod,
@@ -28,6 +29,7 @@ class TransactionRepository extends BaseRepository implements BaseInterface
 
         $user = Auth::user();
         return $this->model->create( [
+            'store_id'              => $storeId,
             'user_id'               => $user->id,
             'payment_method_id'     => $selectedPaymenthMethod,
             'receive_method_id'     => $selectedPaymenthMethod,
