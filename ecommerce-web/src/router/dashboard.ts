@@ -40,10 +40,10 @@ export default [
           ]
         },
         {
-          path: 'all-transactions',
+          path: 'my-transactions',
           children: [
-            { path: '', component: () => import('src/pages/dashboard/all-transactions/IndexPage.vue') },
-            { path: ':id', component: () => import('src/pages/dashboard/all-transactions/ShowPage.vue') },
+            { path: '', component: () => import('src/pages/dashboard/my-transactions/IndexPage.vue') },
+            { path: ':id', component: () => import('src/pages/dashboard/my-transactions/ShowPage.vue') },
           ]
         },
         {
@@ -51,6 +51,7 @@ export default [
           children: [
             { path: '', component: () => import('src/pages/dashboard/all-stores/IndexPage.vue') },
             { path: ':id', component: () => import('src/pages/dashboard/all-stores/EditPage.vue') },
+            { path: ':id/items', component: () => import('src/pages/dashboard/all-stores/items/IndexPage.vue') },
           ]
         }
       ]

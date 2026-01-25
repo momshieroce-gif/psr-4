@@ -4,14 +4,29 @@
     <q-card flat bordered class="page-header-card q-mb-lg">
       <q-card-section class="header-section">
         <div class="header-content">
-          <div class="header-icon-wrapper">
-            <q-icon name="store" size="40px" color="primary" />
+          <div class="header-left">
+            <div class="header-icon-wrapper">
+              <q-icon name="store" size="40px" color="primary" />
+            </div>
+            <div class="header-text">
+              <h1 class="page-title">Edit Store</h1>
+              <p class="page-subtitle">Update store information and location</p>
+            </div>
           </div>
-          <div class="header-text">
-            <h1 class="page-title">Edit Store</h1>
-            <p class="page-subtitle">Update store information and location</p>
+          <div class="header-actions">
+            <q-btn 
+              unelevated
+              color="primary"
+              label="View Items"
+              icon="inventory_2"
+              :to="`${$route.path}/items`"
+              class="view-items-btn"
+            >
+              <q-tooltip>View store items</q-tooltip>
+            </q-btn>
           </div>
         </div>
+        
       </q-card-section>
     </q-card>
 

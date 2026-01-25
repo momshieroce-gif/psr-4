@@ -1,99 +1,270 @@
 <template>
-  <div class="transactions-container">
+  <div class="stores-page-container">
     <!-- Header Section -->
-    <div class="transactions-header q-mb-lg">
-      <div class="row items-center q-mb-md">
-        <div class="col">
-          <div class="text-h4 text-weight-bold">
-            <q-icon name="receipt_long" class="q-mr-sm" />
-            My Transactions
+    <div class="page-header q-mb-md">
+      <div class="header-content">
+        <div class="header-title-section">
+          <q-icon name="receipt_long" size="32px" color="primary" class="q-mr-sm" />
+          <h2 class="page-title">My Transactions</h2>
+        </div>
+        <div class="header-actions">
+          <q-input
+            v-model="search"
+            placeholder="Search transactions..."
+            outlined
+            dense
+            clearable
+            debounce="300"
+            class="search-input"
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Grid View -->
+    <div class="desktop-only">
+      <div v-if="typedResult.length === 0" class="empty-state-desktop">
+        <q-icon name="receipt_long" size="80px" color="grey-4" />
+        <div class="text-h5 q-mt-md text-grey-6">No transactions found</div>
+        <div class="text-body2 text-grey-5 q-mt-sm">Your transaction history will appear here</div>
+      </div>
+      <div v-else>
+        <!-- Grid Header -->
+        <div class="grid-header transactions-grid-header">
+          <div class="grid-header-cell header-name">
+            <q-icon name="tag" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Reference</span>
           </div>
-          <div class="text-body2 text-grey-7 q-mt-xs">
-            View and manage your order history
+          <div class="grid-header-cell header-mobile">
+            <q-icon name="payments" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Summary</span>
+          </div>
+          <div class="grid-header-cell header-actions">
+            <q-icon name="settings" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Actions</span>
+          </div>
+        </div>
+
+        <!-- Grid Rows -->
+        <div class="stores-grid">
+          <q-card
+            v-for="transaction in typedResult"
+            :key="transaction.optimus_id"
+            flat
+            bordered
+            class="store-grid-item"
+          >
+            <div class="grid-row transaction-grid-row">
+              <div class="grid-cell cell-name">
+                <router-link
+                  :to="`${$route.path}/${transaction.optimus_id}`"
+                  class="transaction-reference"
+                >
+                  <q-icon name="receipt_long" color="primary" />
+                  <div class="transaction-reference-text">
+                    <div class="transaction-reference-id">#{{ transaction.reference_id }}</div>
+                    <div class="transaction-date">
+                      <q-icon name="calendar_today" size="xs" class="q-mr-xs" />
+                      {{ formatDate(transaction.created_at) }}
+                    </div>
+                  </div>
+                </router-link>
+              </div>
+              <div class="grid-cell cell-mobile">
+                <div class="transaction-summary">
+                  <q-badge
+                    :color="getStatusColor(transaction.status?.label)"
+                    :label="transaction.status?.label || 'Pending'"
+                    class="status-badge"
+                  />
+                  <div class="transaction-total">
+                    Grand Total:
+                    <span>{{ transaction.grand_total }}</span>
+                  </div>
+                  <div class="transaction-meta">
+                    <div class="transaction-meta-item">
+                      <q-icon name="payment" size="xs" class="q-mr-xs" />
+                      {{ transaction.payment_method?.name || 'N/A' }}
+                    </div>
+                    <div class="transaction-meta-item">
+                      <q-icon name="local_shipping" size="xs" class="q-mr-xs" />
+                      {{ transaction.receive_method?.name || 'N/A' }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid-cell cell-actions">
+                <div class="action-buttons">
+                  <q-btn
+                    unelevated
+                    round
+                    dense
+                    color="negative"
+                    icon="check_circle"
+                    :to="`${$route.path}/${transaction.optimus_id}`"
+                    class="action-btn-grid action-btn-delete"
+                  >
+                    <q-tooltip>Mark as received</q-tooltip>
+                  </q-btn>
+                  <q-btn
+                    unelevated
+                    round
+                    dense
+                    color="primary"
+                    icon="visibility"
+                    :to="`${$route.path}/${transaction.optimus_id}`"
+                    class="action-btn-grid action-btn-edit"
+                  >
+                    <q-tooltip>View details</q-tooltip>
+                  </q-btn>
+                </div>
+              </div>
+            </div>
+          </q-card>
+        </div>
+
+        <!-- Pagination -->
+        <div class="grid-pagination">
+          <div class="pagination-info">
+            Showing {{ pagination.from }} - {{ pagination.to }} of {{ pagination.rowsNumber }} transactions
+          </div>
+          <div class="pagination-controls">
+            <q-btn
+              v-if="pagination.lastPage > 2"
+              flat
+              round
+              dense
+              icon="first_page"
+              color="grey-8"
+              :disable="pagination.page === 1"
+              @click="goToFirstPage"
+            />
+            <q-btn
+              flat
+              round
+              dense
+              icon="chevron_left"
+              color="grey-8"
+              :disable="pagination.page === 1"
+              @click="goToPreviousPage"
+            />
+            <span class="page-number">{{ pagination.page }} / {{ pagination.lastPage }}</span>
+            <q-btn
+              flat
+              round
+              dense
+              icon="chevron_right"
+              color="grey-8"
+              :disable="pagination.page === pagination.lastPage"
+              @click="goToNextPage"
+            />
+            <q-btn
+              v-if="pagination.lastPage > 2"
+              flat
+              round
+              dense
+              icon="last_page"
+              color="grey-8"
+              :disable="pagination.page === pagination.lastPage"
+              @click="goToLastPage"
+            />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Transactions Grid -->
-    <q-table grid :rows="result" :columns="customerTransactionsColumns as any" row-key="optimus_id" hide-header
-      :visible-columns="[]" class="transactions-table" hide-bottom :loading="false" :rows-per-page-options="[0]">
-      <template v-slot:item="props">
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 q-pa-sm">
-          <q-card flat bordered class="transaction-card" :class="{ 'transaction-card-selected': props.selected }">
-            <!-- Status Badge -->
-            <q-card-section class="transaction-header q-pb-sm">
-              <div class="flex justify-between items-center">
-                <q-badge :color="getStatusColor(props.row.status?.label)" :label="props.row.status?.label"
-                  class="status-badge" />
-                <div class="text-caption text-grey-6">
-                  <q-icon name="calendar_today" size="xs" class="q-mr-xs" />
-                  {{ formatDate(props.row.created_at) }}
-                </div>
+    <!-- Mobile Card View -->
+    <div class="mobile-only">
+      <div v-if="typedResult.length === 0" class="empty-state">
+        <q-icon name="receipt_long" size="64px" color="grey-4" />
+        <div class="text-h6 q-mt-md text-grey-6">No transactions found</div>
+        <div class="text-body2 text-grey-5 q-mt-sm">Your transaction history will appear here</div>
+      </div>
+      <div v-else class="stores-cards">
+        <q-card
+          v-for="transaction in typedResult"
+          :key="transaction.optimus_id"
+          flat
+          bordered
+          class="store-card q-mb-md"
+        >
+          <q-card-section>
+            <div class="store-card-header">
+              <div class="store-card-title">
+                <q-icon name="receipt_long" color="primary" size="24px" class="q-mr-sm" />
+                <div class="transaction-reference-id">#{{ transaction.reference_id }}</div>
               </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <!-- Transaction Details -->
-            <q-card-section class="transaction-details">
-              <q-list dense class="transaction-list">
-                <q-item v-for="(col, k) in props.cols" :key="k" class="transaction-item">
-                  <q-item-section>
-                    <q-item-label class="transaction-label">
-                      <q-icon :name="getColumnIcon(col.label)" size="xs" class="q-mr-xs" />
-                      {{ col.label }}
-                    </q-item-label>
-                  </q-item-section>
-                  <q-item-section side>
-                    <q-item-label class="transaction-value">
-                      {{ col.value }}
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-card-section>
-
-            <q-separator />
-
-            <!-- Action Buttons -->
-            <q-card-section class="transaction-actions q-pt-md">
-              <div class="row q-gutter-sm">
-                <q-btn :to="`${$route.path}/${props.row.optimus_id}`" outline color="negative" icon="check_circle"
-                  label="Received" class="col" size="sm" />
-                <q-btn :to="`${$route.path}/${props.row.optimus_id}`" color="primary" icon="visibility" label="View"
-                  class="col" size="sm" unelevated />
+              <q-badge
+                :color="getStatusColor(transaction.status?.label)"
+                :label="transaction.status?.label || 'Pending'"
+                class="status-badge"
+              />
+            </div>
+            <div class="store-card-info">
+              <q-icon name="calendar_today" size="16px" color="grey-6" class="q-mr-xs" />
+              <span class="text-body2 text-grey-7">{{ formatDate(transaction.created_at) }}</span>
+            </div>
+            <div class="transaction-mobile-details">
+              <div class="transaction-detail-row">
+                <span class="transaction-detail-label">Grand Total</span>
+                <span class="transaction-detail-value">{{ transaction.grand_total }}</span>
               </div>
-            </q-card-section>
-          </q-card>
-        </div>
-      </template>
-
-      <!-- Empty State -->
-      <template v-slot:no-data>
-        <div class="empty-state">
-          <q-icon name="receipt_long" size="64px" color="grey-4" />
-          <div class="text-h6 text-grey-6 q-mt-md">No transactions found</div>
-          <div class="text-body2 text-grey-5 q-mt-sm">
-            Your transaction history will appear here
-          </div>
-        </div>
-      </template>
-    </q-table>
-
-    <!-- Pagination -->
-    <div class="pagination-container q-mt-lg">
-      <q-pagination v-model="pagination.page" color="primary" :max="pagination.lastPage" boundary-links direction-links
-        :max-pages="7" class="transactions-pagination" />
+              <div class="transaction-detail-row">
+                <span class="transaction-detail-label">Payment</span>
+                <span class="transaction-detail-value">{{ transaction.payment_method?.name || 'N/A' }}</span>
+              </div>
+              <div class="transaction-detail-row">
+                <span class="transaction-detail-label">Receiving</span>
+                <span class="transaction-detail-value">{{ transaction.receive_method?.name || 'N/A' }}</span>
+              </div>
+            </div>
+            <div class="store-card-actions q-mt-md">
+              <q-btn
+                unelevated
+                dense
+                color="negative"
+                icon="check_circle"
+                label="Received"
+                :to="`${$route.path}/${transaction.optimus_id}`"
+                class="action-btn-mobile action-btn-delete-mobile"
+              />
+              <q-btn
+                unelevated
+                dense
+                color="primary"
+                icon="visibility"
+                label="View"
+                :to="`${$route.path}/${transaction.optimus_id}`"
+                class="action-btn-mobile action-btn-edit-mobile"
+              />
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+      <div v-if="typedResult.length > 0" class="mobile-pagination q-mt-md">
+        <q-pagination
+          v-model="pagination.page"
+          :max="pagination.lastPage"
+          :max-pages="5"
+          direction-links
+          boundary-links
+          color="primary"
+          @update:model-value="handlePageChange"
+        />
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onRequest } from 'boot/axios-call';
+import { onRequest, firstPage, previousPage, nextPage, lastPage } from 'boot/axios-call';
 import { useCommonStore } from 'src/stores/common';
 import { onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
-import { customerTransactionsColumns } from 'boot/columns';
+import { CustomerTransactionRow } from 'src/boot/interfaces';
 
 const search = ref('');
 const useCommon = useCommonStore();
@@ -110,18 +281,25 @@ entityQuery.value = {
   },
 };
 
+const typedResult = result as unknown as CustomerTransactionRow[];
+
+const handlePageChange = (page: number) => {
+  entityQuery.value.query.page = page;
+  onRequest(entityQuery.value);
+};
+
 onMounted(() => {
   entityQuery.value.query.page = 1;
   onRequest(entityQuery.value, true);
 });
 
 watch(search, (newValue) => {
-  if (!newValue) {
+  if (newValue) {
+    entityQuery.value.query.filters = 'reference_id:' + search.value;
+  } else {
     delete entityQuery.value.query.filters;
-    onRequest(entityQuery.value);
-    return;
   }
-  entityQuery.value.query.filters = 'name:' + search.value;
+  entityQuery.value.query.page = 1;
   onRequest(entityQuery.value);
 });
 
@@ -129,6 +307,22 @@ watch(() => pagination.value.page, (newPage) => {
   entityQuery.value.query.page = newPage;
   onRequest(entityQuery.value);
 });
+
+const goToFirstPage = () => {
+  firstPage(entityQuery.value);
+};
+
+const goToPreviousPage = () => {
+  previousPage(entityQuery.value);
+};
+
+const goToNextPage = () => {
+  nextPage(entityQuery.value);
+};
+
+const goToLastPage = () => {
+  lastPage(entityQuery.value, pagination.value);
+};
 
 // Helper functions for UI
 const getStatusColor = (status: string | undefined): string => {
@@ -138,16 +332,6 @@ const getStatusColor = (status: string | undefined): string => {
   if (statusLower.includes('preparing') || statusLower.includes('processing')) return 'warning';
   if (statusLower.includes('cancelled') || statusLower.includes('rejected')) return 'negative';
   return 'primary';
-};
-
-const getColumnIcon = (label: string): string => {
-  const labelLower = label.toLowerCase();
-  if (labelLower.includes('reference') || labelLower.includes('id')) return 'tag';
-  if (labelLower.includes('total') || labelLower.includes('amount') || labelLower.includes('price')) return 'attach_money';
-  if (labelLower.includes('payment')) return 'payment';
-  if (labelLower.includes('delivery') || labelLower.includes('receive')) return 'local_shipping';
-  if (labelLower.includes('date') || labelLower.includes('time')) return 'schedule';
-  return 'info';
 };
 
 const formatDate = (dateString: string | undefined): string => {
@@ -162,42 +346,14 @@ const formatDate = (dateString: string | undefined): string => {
 </script>
 
 <style scoped lang="scss">
-.transactions-container {
-  padding: 16px;
-  max-width: 1400px;
-  margin: 0 auto;
+@import 'src/css/dashboard/all-stores/index.scss';
+
+.transactions-grid-header {
+  grid-template-columns: 2fr 2fr 1fr;
 }
 
-.transactions-header {
-  padding: 16px 0;
-}
-
-.transactions-table {
-  margin: 0;
-}
-
-.transaction-card {
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  }
-}
-
-.transaction-card-selected {
-  background-color: #f5f5f5;
-  border: 2px solid var(--q-primary);
-}
-
-.transaction-header {
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border-radius: 12px 12px 0 0;
+.transaction-grid-row {
+  grid-template-columns: 2fr 2fr 1fr;
 }
 
 .status-badge {
@@ -207,78 +363,99 @@ const formatDate = (dateString: string | undefined): string => {
   border-radius: 16px;
 }
 
-.transaction-details {
-  flex: 1;
-  padding: 16px;
+.transaction-reference {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #1a1a1a;
 }
 
-.transaction-list {
-  .transaction-item {
-    padding: 8px 0;
-    min-height: auto;
-  }
+.transaction-reference-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.transaction-label {
+.transaction-reference-id {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.transaction-date {
   font-size: 12px;
   color: #666;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
 }
 
-.transaction-value {
+.transaction-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.transaction-total {
   font-size: 14px;
   color: #1a1a1a;
   font-weight: 600;
+
+  span {
+    font-weight: 700;
+  }
 }
 
-.transaction-actions {
-  padding: 16px;
-  background: #fafafa;
-  border-radius: 0 0 12px 12px;
-}
-
-.empty-state {
+.transaction-meta {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 64px 16px;
-  text-align: center;
+  gap: 6px;
+  color: #666;
+  font-size: 13px;
 }
 
-.pagination-container {
+.transaction-meta-item {
   display: flex;
-  justify-content: center;
-  padding: 24px 0;
+  align-items: center;
 }
 
-.transactions-pagination {
-  :deep(.q-btn) {
-    border-radius: 8px;
-    margin: 0 2px;
-  }
+.transaction-mobile-details {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-@media (max-width: 600px) {
-  .transactions-container {
-    padding: 8px;
+.transaction-detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.transaction-detail-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.transaction-detail-value {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .transactions-grid-header {
+    display: none;
   }
 
-  .transaction-card {
-    margin-bottom: 16px;
+  .transaction-grid-row {
+    grid-template-columns: 1fr;
   }
 
-  .transaction-actions {
-    .row {
-      flex-direction: column;
-    }
+  .transaction-reference {
+    gap: 10px;
+  }
 
-    .q-btn {
-      width: 100%;
-      margin-bottom: 8px;
-    }
+  .transaction-reference-id {
+    font-size: 18px;
   }
 }
 </style>

@@ -14,7 +14,7 @@
           <div class="hero-actions">
             <q-btn to="/find-store" color="primary" size="lg" unelevated class="hero-btn" icon="explore"
               label="Find Stores Near Me" />
-            <q-btn to="/cart" color="secondary" size="lg" outline class="hero-btn" icon="shopping_cart"
+            <q-btn to="/cart" color="secondary" size="lg" outline class="hero-btn hero-btn--outline" icon="shopping_cart"
               label="View Cart" />
           </div>
         </div>
@@ -168,6 +168,11 @@ import ZetenpoLogo from 'src/components/ZetenpoLogo.vue';
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
+}
+
+.hero-btn--outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.85);
 }
 
 .hero-image {
