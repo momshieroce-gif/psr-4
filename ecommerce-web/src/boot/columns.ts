@@ -5,7 +5,7 @@ export const storeColumns = [
     name: 'name',
     required: true,
     label: 'Name',
-    align: 'left',
+    align: 'left' as const,
     field: (row: StoreRow) => row.name
   },
   
@@ -13,13 +13,13 @@ export const storeColumns = [
     name: 'mobile',
     required: true,
     label: 'Mobile',
-    align: 'left',
+    align: 'left' as const,
     field: (row: StoreRow) => row.mobile
   },
   {
     name: 'Actions',
     label: 'Actions',
-    align: 'center',
+    align: 'center' as const,
     field: (row: StoreRow) => row.id
   },
 ]

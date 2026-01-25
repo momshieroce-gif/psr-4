@@ -37,6 +37,7 @@ class StoreIndexRequest extends BaseRequest
             'radius'             => 'sometimes',
             'orderBy'            => 'sometimes',
             'columns'            => 'sometimes',
+            'filters'            => 'sometimes',
 
         ];
     }

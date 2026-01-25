@@ -17,7 +17,7 @@
         <q-space />
 
         <!-- User Info -->
-        <div class="user-info-section">
+        <q-btn flat dense no-caps class="user-info-section" padding="8px 12px">
           <q-avatar size="36px" class="user-avatar">
             <q-icon name="account_circle" size="36px" color="primary" />
           </q-avatar>
@@ -25,7 +25,17 @@
             <div class="text-body2 text-grey-8 text-weight-medium">{{ profile.name || 'User' }}</div>
             <div class="text-caption text-grey-6">{{ profile.mobile || '' }}</div>
           </div>
-        </div>
+          <q-menu anchor="bottom right" self="top right">
+            <q-list style="min-width: 160px">
+              <q-item clickable v-close-popup @click="logoutNow">
+                <q-item-section avatar>
+                  <q-icon name="logout" />
+                </q-item-section>
+                <q-item-section>Logout</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -132,8 +142,31 @@ const handleLogout = () => {
 };
 
 const confirmLogout = async () => {
+  if (!showLogoutDialog.value) {
+    showLogoutDialog.value = true;
+    return;
+  }
+
   try {
     showLogoutDialog.value = false;
+    await logout();
+    $q.notify({
+      message: 'You have been logged out successfully.',
+      type: 'positive',
+      position: 'top',
+    });
+    router.push('/');
+  } catch (error) {
+    $q.notify({
+      message: 'An error occurred during logout.',
+      type: 'negative',
+      position: 'top',
+    });
+  }
+};
+
+const logoutNow = async () => {
+  try {
     await logout();
     $q.notify({
       message: 'You have been logged out successfully.',
@@ -222,6 +255,7 @@ const confirmLogout = async () => {
   border-radius: 24px;
   background: #f5f5f5;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     background: #eeeeee;

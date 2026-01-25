@@ -9,7 +9,10 @@
           </div>
           <div class="map-header-text">
             <div class="map-header-title-wrapper">
-              <h1 class="map-header-title">Find Nearby Stores</h1>
+              <div class="map-header-title-with-icon">
+                <q-icon name="explore" size="md" color="primary" class="map-header-inline-icon" />
+                <h1 class="map-header-title">Find Nearby Stores</h1>
+              </div>
               <q-chip color="primary" text-color="white" size="sm" class="map-header-badge">
                 <q-icon name="store" size="xs" class="q-mr-xs" />
                 {{ nearestStores.length }} {{ nearestStores.length === 1 ? 'store' : 'stores' }} found
@@ -24,8 +27,21 @@
         <div class="map-header-actions">
           <q-btn color="primary" icon="my_location" label="Refresh Location" unelevated @click="localGetLocation"
             class="refresh-location-btn" size="md" />
-          <q-btn color="secondary" icon="search" label="Find Stores" outline @click="getNearestStore"
+          <q-btn color="secondary" icon="search" label="Find Nearest Stores" outline @click="getNearestStore"
             class="find-stores-btn" size="md" :loading="false" />
+          <q-input 
+            v-model="searchString" 
+            placeholder="Search stores..." 
+            outlined 
+            dense 
+            debounce="300"
+            class="search-input"
+            clearable
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
         </div>
       </q-card-section>
     </q-card>
@@ -166,7 +182,7 @@ const directions = ref<google.maps.DirectionsResult | null>(null)
 const directionsRenderer = ref<google.maps.DirectionsRenderer | null>(null)
 const currentZoom = ref(15)
 const showStoreList = ref(true)
-
+const searchString = ref('')
 const origin = ref({ lat: lat.value, lng: lng.value })
 const destination = ref({ lat: 14.609, lng: 120.994 })
 
@@ -514,6 +530,31 @@ const requestDirections = () => {
   }
 }
 
+watch(searchString, async () => {
+  if (searchString.value) {
+    const result = await get(
+      {
+        message: 'Searching nearest store',
+        entity: 'public_stores',
+        query: {
+          filters: 'name:' + searchString.value,
+          orderBy: 'name:asc',
+        },
+      },
+      true
+    );
+
+    if (result && typeof result === 'object' && 'data' in result) {
+      nearestStores.value = (result as any).data.data;
+      showStoreList.value = true;
+    }
+  }
+
+  if (!searchString.value) {
+    nearestStores.value = [];
+  }
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -576,6 +617,16 @@ const requestDirections = () => {
   margin-bottom: 12px;
 }
 
+.map-header-title-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.map-header-inline-icon {
+  display: none;
+}
+
 .map-header-title {
   font-size: 28px;
   font-weight: 700;
@@ -599,14 +650,14 @@ const requestDirections = () => {
 }
 
 .map-header-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
   gap: 12px;
-  flex-wrap: wrap;
+  align-items: center;
 }
 
 .refresh-location-btn,
 .find-stores-btn {
-  min-width: 160px;
   height: 44px;
   font-weight: 600;
   border-radius: 10px;
@@ -616,6 +667,47 @@ const requestDirections = () => {
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.search-input {
+  height: 44px;
+
+  :deep(.q-field__control) {
+    height: 44px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  :deep(.q-field__native) {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 12px;
+  }
+
+  :deep(.q-field__prepend) {
+    padding-left: 12px;
+    color: #666;
+  }
+
+  :deep(.q-field--outlined .q-field__control) {
+    border: 2px solid #e0e0e0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  :deep(.q-field--outlined:hover .q-field__control) {
+    border-color: #667eea;
+    box-shadow: 0 2px 12px rgba(102, 126, 234, 0.15);
+  }
+
+  :deep(.q-field--focused .q-field__control) {
+    border-color: #667eea;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+  }
+
+  :deep(.q-field__clearable) {
+    padding-right: 8px;
   }
 }
 
@@ -982,6 +1074,31 @@ const requestDirections = () => {
   background: white;
 }
 
+@media (max-width: 774px) {
+  .map-header-icon-wrapper {
+    display: none;
+  }
+
+  .map-header-inline-icon {
+    display: block !important;
+    font-size: 24px !important;
+  }
+
+  .map-header-title {
+    font-size: 20px;
+  }
+
+  .map-header-title-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .map-header-title-with-icon {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .map-page-container {
     padding: 16px;
@@ -997,33 +1114,22 @@ const requestDirections = () => {
     margin-bottom: 20px;
   }
 
-  .map-header-icon-wrapper {
-    width: 56px;
-    height: 56px;
-
-    .q-icon {
-      font-size: 32px !important;
-    }
-  }
-
   .map-header-title {
-    font-size: 24px;
-  }
-
-  .map-header-title-wrapper {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    font-size: 18px;
   }
 
   .map-header-actions {
-    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
   }
 
   .refresh-location-btn,
   .find-stores-btn {
-    flex: 1;
-    min-width: 0;
+    grid-column: span 1;
+  }
+
+  .search-input {
+    grid-column: 1 / -1;
   }
 
   .map-wrapper {
@@ -1058,12 +1164,14 @@ const requestDirections = () => {
   }
 
   .map-header-actions {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
   }
 
   .refresh-location-btn,
-  .find-stores-btn {
-    width: 100%;
+  .find-stores-btn,
+  .search-input {
+    grid-column: 1;
   }
 
   .map-wrapper {

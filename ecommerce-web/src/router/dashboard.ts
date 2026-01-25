@@ -38,6 +38,21 @@ export default [
             { path: ':id', component: () => import('src/pages/dashboard/store-menu-access/ShowPage.vue') }, 
             { path: ':storeId/create/:userId', component: () => import('src/pages/dashboard/store-menu-access/CreatePage.vue') }
           ]
+        },
+        {
+          path: 'my-transactions',
+          children: [
+            { path: '', component: () => import('src/pages/dashboard/my-transactions/IndexPage.vue') },
+            { path: ':id', component: () => import('src/pages/dashboard/my-transactions/ShowPage.vue') },
+          ]
+        },
+        {
+          path: 'all-stores',
+          children: [
+            { path: '', component: () => import('src/pages/dashboard/all-stores/IndexPage.vue') },
+            { path: ':id', component: () => import('src/pages/dashboard/all-stores/EditPage.vue') },
+            { path: ':id/items', component: () => import('src/pages/dashboard/all-stores/items/IndexPage.vue') },
+          ]
         }
       ]
     }

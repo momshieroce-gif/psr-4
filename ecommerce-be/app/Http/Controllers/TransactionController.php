@@ -28,6 +28,7 @@ class TransactionController extends ApiController {
         $request = app($this->storeRequest);
         $this->result = $this->repository
             ->createTransaction( 
+                $request->store_id,
                 $request->items, 
                 $request->deliveryCharge, 
                 $request->selectedReceiveMethod, $request->selectedPaymenthMethod, 

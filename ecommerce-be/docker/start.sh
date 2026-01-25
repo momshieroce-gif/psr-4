@@ -1,31 +1,32 @@
 #!/bin/bash
+set -e
 
-# Start PHP-FPM in the background
+echo "Starting PHP-FPM..."
+# Start PHP-FPM in daemon mode
 php-fpm -D
 
-#composer install
-composer install
+# Wait for PHP-FPM to start
+sleep 3
 
-# Wait for database to be ready
-echo "Waiting for database connection..."
-until php artisan tinker --execute="DB::connection()->getPdo();" 2>/dev/null; do
-  echo "Database is unavailable - sleeping"
-  sleep 2
-done
-echo "Database is ready!"
+# Verify PHP-FPM is running
+if ! pgrep -x php-fpm > /dev/null; then
+    echo "ERROR: PHP-FPM failed to start"
+    php-fpm --test
+    exit 1
+fi
 
-composer dump-autoload
+echo "PHP-FPM is running (PID: $(pgrep php-fpm))"
 
-# artisan migrate
-php artisan migrate
+# Check if PHP-FPM is listening
+if command -v ss > /dev/null; then
+    ss -tuln | grep 9000 || echo "WARNING: Port 9000 check with ss"
+elif command -v netstat > /dev/null; then
+    netstat -tuln | grep 9000 || echo "WARNING: Port 9000 check with netstat"
+fi
 
-php artisan db:seed
+echo "Starting Nginx..."
+# Test Nginx configuration
+nginx -t
 
-# Start queue worker in the background
-php artisan queue:work --sleep=3 --tries=3 --max-time=3600 &
-
-# Start scheduler in the background
-php artisan schedule:work &
-
-# Wait for all background processes
-wait
+# Start Nginx in foreground
+exec nginx -g "daemon off;"

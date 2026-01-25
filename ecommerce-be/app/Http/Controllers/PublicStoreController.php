@@ -22,7 +22,7 @@ class PublicStoreController extends ApiController
     public function index(): BaseResource
     {
         $this->params = app($this->indexRequest)->all();
-        $this->result = $this->repository->setParameters($this->params)->getWithinKm();
+        $this->result = $this->repository->setParameters($this->params)->applyFilters();
         return $this->getResource();
     }
 

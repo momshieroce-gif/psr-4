@@ -18,7 +18,8 @@ export interface GetQuery {
   storeIds?: Array<number>
   limit?: number
   whereHas?: string
-  listingApi?: string
+  listingApi?: string,
+  show_mobile?: number
 }
 export interface GetParams {
   message?: string
@@ -213,6 +214,7 @@ export interface CustomerTransactionRow {
   delivery_charge: string
   optimus_id: number,
   created_at: string
+  status?: { label: string; name: string }
 }
 
 export interface StoreRow {

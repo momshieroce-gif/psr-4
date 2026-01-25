@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\Obfuscate\OptimusRequiredToModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Requests\BaseIndexRequest;;
-use Illuminate\Support\Arr;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Transaction extends Model implements Auditable
@@ -19,9 +17,12 @@ class Transaction extends Model implements Auditable
 
     protected $table = 'transactions';
     protected $fillable = [
+        'store_id',
         'user_id',
         'payment_method_id',
         'receive_method_id',
+        'lat',
+        'lng',
         'delivery_charge',
         'contact_number',
         'reference_id',

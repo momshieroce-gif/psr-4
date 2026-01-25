@@ -3,14 +3,14 @@
     <div class="row q-gutter-md q-mb-md">
       <div class="col-12">
         <BreadCrumbsWrapper :bread-crumbs="[
-            {
-              name: 'Cart',
-              path: '/cart',
-            },
-            {
-              name: 'Checkout',
-              path: '',
-            },
+          {
+            name: 'Cart',
+            path: '/cart',
+          },
+          {
+            name: 'Checkout',
+            path: '',
+          },
         ]" />
       </div>
     </div>
@@ -36,11 +36,11 @@
                   <q-icon name="local_shipping" color="primary" size="sm" class="q-mr-xs" />
                   <span class="text-weight-bold">Delivery Location</span>
                 </div>
-                <div class="info-window-body">
+                <!-- <div class="info-window-body">
                   <p class="text-caption text-grey-7 q-ma-none">
                     Drag the marker to set your delivery location
                   </p>
-                </div>
+                </div> -->
               </div>
             </InfoWindow>
           </AdvancedMarker>
@@ -50,7 +50,7 @@
         <div class="text-caption text-grey-7">
           <q-icon name="info" size="xs" class="q-mr-xs" />
           Drag the marker to set your delivery location
-      </div>
+        </div>
       </q-card-section>
     </q-card>
 
@@ -61,13 +61,13 @@
           <div class="text-h6 text-weight-bold q-mb-md">
             <q-icon name="phone_android" class="q-mr-sm" />
             Verify Your Mobile Number
-    </div>
-        <q-form @submit="getVerificationCode" ref="myForm">
+          </div>
+          <q-form @submit="getVerificationCode" ref="myForm">
             <q-input v-model="mobile" class="full-width q-mb-md" outlined label="Enter mobile number"
               placeholder="9XX XXX XXXX" :rules="[
-              async (val) =>
-                isValidMobileNumber(val) ||
-                'Please enter a valid mobile number.',
+                async (val) =>
+                  isValidMobileNumber(val) ||
+                  'Please enter a valid mobile number.',
               ]" hide-bottom-space prefix="+63">
               <template v-slot:prepend>
                 <q-icon name="phone" />
@@ -75,7 +75,7 @@
             </q-input>
             <q-btn class="full-width" color="primary" unelevated size="lg" icon="verified_user"
               label="Get Verification Code" type="submit" />
-        </q-form>
+          </q-form>
         </q-card-section>
       </q-card>
     </div>
@@ -113,7 +113,7 @@
               <q-btn flat label="Cancel" color="grey-7" v-close-popup class="col" />
               <q-btn label="Verify & Complete Order" color="primary" unelevated class="col" icon="check_circle"
                 type="submit" />
-          </div>
+            </div>
           </q-form>
         </q-card-section>
       </q-card>
@@ -425,32 +425,34 @@ const verifyPassCode = async () => {
 
 const passCode = ref('');
 
+const storeId = ref(0);
 const processCustomerOrder = async () => {
   let customerOrders: CustomerOrder[] = [];
   Object.entries(groupByStore.value as unknown as Record<string, GroupStoreItemInterface[]>).forEach(
-  ([key, items]) => {
-    const itemOrders: ItemOrder[] = items.map(
-      (item: GroupStoreItemInterface) => {
-        return {
-          item_id: item.id,
-          variations: item.variations,
-          qty: item.count,
-          unit_id: item.unit_id
-        };
-      }
-    );
-
-    customerOrders.push({
-      store_id: key,
-      items: itemOrders,
-    });
-  }
-);
+    ([key, items]) => {
+      const itemOrders: ItemOrder[] = items.map(
+        (item: GroupStoreItemInterface) => {
+          return {
+            item_id: item.id,
+            variations: item.variations,
+            qty: item.count,
+            unit_id: item.unit_id
+          };
+        }
+      );
+      storeId.value = Number(key);
+      customerOrders.push({
+        store_id: key,
+        items: itemOrders,
+      });
+    }
+  );
 
   const result = await create(
     {
       entity: 'transactions',
       data: {
+        store_id: storeId.value,
         total: total.value,
         items: customerOrders,
         deliveryCharge: deliveryCharge.value,

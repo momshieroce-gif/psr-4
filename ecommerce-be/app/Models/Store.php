@@ -22,10 +22,6 @@ class Store extends Model implements Auditable
        'name', 'mobile', 'desc', 'is_active', 'user_id', 'latitude', 'longitude'
     ];
 
-    protected $hidden = [
-        'mobile',
-    ];
-
     protected $appends = ['slug_name', 'optimus_id', 'logo',  'value', 'label', 'distance'];
 
     public function getLabelAttribute(){

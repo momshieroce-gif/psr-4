@@ -152,6 +152,78 @@
         </div>
       </q-card-section>
     </q-card>
+
+    <!-- Orders Section -->
+    <q-card flat bordered class="orders-card q-mt-lg" v-if="localResult.orders && localResult.orders.length > 0">
+      <q-card-section class="orders-header">
+        <div class="text-h5 text-weight-bold">
+          <q-icon name="shopping_bag" color="primary" class="q-mr-sm" />
+          Order Items ({{ localResult.orders.length }})
+        </div>
+        <div class="text-body2 text-grey-7 q-mt-xs">
+          Items included in this transaction
+        </div>
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-section class="orders-content">
+        <div class="orders-list">
+          <div v-for="(order, index) in localResult.orders" :key="order.id || index" class="order-item">
+            <div class="order-item-header">
+              <div class="order-item-number">
+                <q-icon name="inventory_2" color="primary" size="sm" class="q-mr-xs" />
+                <span class="text-weight-bold">Item {{ index + 1 }}</span>
+              </div>
+              <q-chip v-if="order.store" color="primary" text-color="white" size="sm" outline>
+                <q-icon name="store" size="xs" class="q-mr-xs" />
+                {{ order.store.name }}
+              </q-chip>
+            </div>
+
+            <div class="order-item-body">
+              <div class="order-item-info">
+                <div class="order-item-name">
+                  <q-icon name="label" color="grey-6" size="sm" class="q-mr-xs" />
+                  <span class="text-weight-medium">{{ order.item_name }}</span>
+                </div>
+                <div class="order-item-description" v-if="order.item_description">
+                  <p class="text-body2 text-grey-7 q-mt-xs q-mb-none">
+                    {{ order.item_description }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="order-item-details">
+                <div class="order-detail-row">
+                  <span class="order-detail-label">
+                    <q-icon name="shopping_cart" size="xs" class="q-mr-xs" />
+                    Quantity:
+                  </span>
+                  <span class="order-detail-value text-weight-medium">{{ order.qty }}</span>
+                </div>
+                <div class="order-detail-row">
+                  <span class="order-detail-label">
+                    <q-icon name="attach_money" size="xs" class="q-mr-xs" />
+                    Unit Price:
+                  </span>
+                  <span class="order-detail-value">₱{{ formatCurrency(order.online_price) }}</span>
+                </div>
+                <div class="order-detail-row order-subtotal">
+                  <span class="order-detail-label text-weight-bold">
+                    <q-icon name="receipt" size="xs" class="q-mr-xs" />
+                    Subtotal:
+                  </span>
+                  <span class="order-detail-value text-weight-bold text-primary">
+                    ₱{{ formatCurrency(order.subtotal) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -159,6 +231,28 @@
 import { show } from 'src/boot/axios-call';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+
+interface OrderItem {
+  id: number;
+  transaction_id: number;
+  store_id: number;
+  item_id: number;
+  item_name: string;
+  item_description?: string;
+  unit_id: number;
+  base_price: number;
+  store_price: number;
+  online_price: number;
+  qty: number;
+  subtotal: number;
+  format_subtotal?: string;
+  format_price?: string;
+  store?: {
+    id: number;
+    name: string;
+    optimus_id: number;
+  };
+}
 
 interface TransactionDetail {
   id: number;
@@ -177,6 +271,7 @@ interface TransactionDetail {
   payment_method?: { name: string };
   receive_method?: { name: string };
   status?: { label: string; name: string };
+  orders?: OrderItem[];
 }
 
 const route = useRoute();
@@ -194,7 +289,8 @@ const localResult = ref<TransactionDetail>({
   delivery_charge: '0.00',
   total: 0,
   grand_total: 0,
-  created_at: ''
+  created_at: '',
+  orders: []
 });
 
 onMounted(async () => {
@@ -203,7 +299,7 @@ onMounted(async () => {
     entity: 'customer-transactions',
     optimus_id: Number(route.params.id),
     query: {
-      with: 'paymentMethod,receiveMethod,status',
+      with: 'paymentMethod,receiveMethod,status,orders.store',
     },
   });
   if (result) {
@@ -321,6 +417,154 @@ const formatCurrency = (amount: number | string): string => {
   .info-group {
     padding: 16px;
     margin-bottom: 16px;
+  }
+}
+
+.orders-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.orders-header {
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+  padding: 24px;
+}
+
+.orders-content {
+  padding: 24px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+}
+
+.order-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.order-item-number {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.order-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-item-info {
+  flex: 1;
+}
+
+.order-item-name {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.order-item-description {
+  padding-left: 24px;
+}
+
+.order-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.order-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.order-detail-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.order-detail-value {
+  font-size: 15px;
+  color: #1a1a1a;
+}
+
+.order-subtotal {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 2px solid rgba(25, 118, 210, 0.2);
+  background: rgba(25, 118, 210, 0.05);
+  border-radius: 6px;
+  padding: 12px 16px;
+
+  .order-detail-label,
+  .order-detail-value {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .orders-header {
+    padding: 16px;
+  }
+
+  .orders-content {
+    padding: 16px;
+  }
+
+  .order-item {
+    padding: 16px;
+  }
+
+  .order-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .order-item-body {
+    gap: 12px;
+  }
+
+  .order-item-details {
+    padding: 12px;
   }
 }
 </style>

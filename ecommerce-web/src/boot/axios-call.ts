@@ -303,7 +303,7 @@ export async function show<T>(params: ShowInterface, hasLoader = false): Promise
     });
   }
   return axios
-    .get(`/${params.entity}/${params.optimus_id}?${queryString(params.query)}`)
+    .get(`/${params.entity}/${params.optimus_id}?${queryString(params.query as object)}`)
     .then((response) => {
       Loading.hide();
       return response.data.data;
