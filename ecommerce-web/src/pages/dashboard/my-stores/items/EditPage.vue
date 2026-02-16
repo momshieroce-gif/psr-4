@@ -118,11 +118,10 @@
 </template>
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue';
-import { show, update, get, saveEntityWithImages } from 'src/boot/axios-call';
-import { getFileFromUrl, urltoFile, ensureFileExtension } from 'boot/common';
+import { show, get, saveEntityWithImages } from 'src/boot/axios-call';
+import { getFileFromUrl } from 'boot/common';
 import { useRoute, useRouter } from 'vue-router';
 import type { QForm } from 'quasar';
-import { ItemInterface } from 'boot/interfaces';
 
 const route = useRoute();
 const router = useRouter();
@@ -132,7 +131,7 @@ const onReset = () => {
   myForm.value?.resetValidation();
 };
 
-const item = ref<ItemInterface>({
+const item = ref<any>({
   name: '',
   description: '',
   images: [],
@@ -156,10 +155,10 @@ const getItem = async () => {
   });
 };
 
-const categories = ref([]);
+const categories = ref<any[]>([]);
 
 const listingApi = async () => {
-  const result = await get(
+  const result: any = await get(
     {
       entity: 'listing_api',
       query: {
@@ -171,9 +170,9 @@ const listingApi = async () => {
   categories.value = result.data.data.categories;
 };
 
-const selectedFiles = ref([]);
+const selectedFiles = ref<any[]>([]);
 const primaryImageName = ref('');
-const addImage = (files) => {
+const addImage = (files: readonly any[]) => {
   for (var i = 0; i <= files.length; i++) {
     if (files[i] != undefined) {
       selectedFiles.value.push(files[i]);
@@ -185,22 +184,23 @@ const addImage = (files) => {
   }
 };
 
-const deletedFiles = ref([]);
-const removeImage = (file: Array<{ id: number; name: string }>) => {
+const deletedFiles = ref<number[]>([]);
+const removeImage = (files: readonly any[]) => {
+  const file = files[0];
   let newFiles = selectedFiles.value.filter(function (v: { name: string }) {
     if (v !== undefined) {
-      return v.name !== file[0].name;
+      return v.name !== file?.name;
     }
   });
   selectedFiles.value = newFiles;
-  if (file[0].id) {
-    deletedFiles.value.push(file[0].id);
+  if (file?.id) {
+    deletedFiles.value.push(file.id);
   }
 };
 
-const uploader = ref('uploader');
+const uploader = ref<any>(null);
 const loadItemImage = () => {
-  item.value.images?.forEach(async (file) => {
+  item.value.images?.forEach(async (file: any) => {
     let fileFromUrl = await getFileFromUrl(file.path_url, file.name);
     if (file.is_primary == 1) {
       primaryImageName.value = file.name;
@@ -212,12 +212,12 @@ const loadItemImage = () => {
       id: file.id,
     });
 
-    uploader.value.addFiles([fileFromUrl]);
+    uploader.value?.addFiles([fileFromUrl]);
   });
 };
 
 const onSubmit = async () => {
-  myForm.value?.validate().then(async (success: any) => {
+  myForm.value?.validate().then(async (success: boolean) => {
     if (success) {
       const fd = new FormData();
 
@@ -229,14 +229,18 @@ const onSubmit = async () => {
       }
 
       for (const deletedFile of deletedFiles.value) {
-        fd.append('deletedFiles[]', deletedFile);
+        fd.append('deletedFiles[]', String(deletedFile));
       }
 
       fd.append('primaryImageName', primaryImageName.value);
-      fd.append('description', item.value.description);
-      fd.append('name', item.value.name);
-      fd.append('store_id', route.params.id);
-      fd.append('category_id', item.value.category?.id);
+      fd.append('description', item.value.description || '');
+      fd.append('name', item.value.name || '');
+      fd.append('store_id', String(route.params.id || ''));
+
+      const categoryId = item.value.category?.id;
+      if (categoryId) {
+        fd.append('category_id', String(categoryId));
+      }
 
       saveEntityWithImages({
         store_id: Number(route.params.id),
@@ -248,6 +252,4 @@ const onSubmit = async () => {
   });
 };
 
-const filterFn = () => {
-};
 </script>

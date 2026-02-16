@@ -23,12 +23,50 @@
           <q-carousel-slide :name="index" class="column no-wrap flex-center" v-for="(image, index) in item.images"
             :key="image.id">
               <div class="q-pa-md text-center full-width full-height flex flex-center">
-                <img :src="image.path_url" class="product-image" :alt="item.name" />
+                <img
+                  :src="image.path_url"
+                  class="product-image"
+                  :alt="item.name"
+                  @click="openZoomModal(image.path_url)"
+                />
             </div>
           </q-carousel-slide>
         </q-carousel>
         </q-card>
       </div>
+      <q-dialog v-model="isZoomModalOpen" maximized>
+        <q-card class="zoom-modal-card">
+          <q-card-section class="zoom-modal-header">
+            <q-space />
+            <q-btn icon="close" flat round dense @click="closeZoomModal" />
+          </q-card-section>
+          <q-separator />
+          <q-card-section class="zoom-modal-content">
+            <div
+              class="zoom-modal-container"
+              :class="{ 'is-zoomed': isZoomed, 'is-dragging': isDragging }"
+              @click="toggleZoom"
+              @mousedown.prevent="onDragStart"
+              @mousemove.prevent="onDragMove"
+              @mouseup="onDragEnd"
+              @mouseleave="onDragEnd"
+              @touchstart.passive="onTouchStart"
+              @touchmove.passive="onTouchMove"
+              @touchend="onDragEnd"
+            >
+              <img
+                v-if="zoomImageUrl"
+                :src="zoomImageUrl"
+                class="zoom-modal-image"
+                :class="{ 'is-zoomed': isZoomed }"
+                :style="zoomStyle"
+                :alt="item.name"
+                draggable="false"
+              />
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
 
       <div class="col-lg-7 col-md-7 col-xs-12">
         <q-card class="product-info-card q-mt-sm" flat bordered>
@@ -90,7 +128,7 @@
 </template>
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { onMounted, ref, watch, type Ref } from 'vue';
+import { onMounted, ref, watch, computed, type Ref } from 'vue';
 import { show } from 'src/boot/axios-call';
 import { getPriceRange } from 'src/boot/utilities';
 import { useUserCartStore } from 'src/stores/userCart';
@@ -128,6 +166,15 @@ const filteredItemPrice: Ref<Array<{ unit_id: number; price: number }>> = ref(
 const slide = ref(0);
 const selectedUnit = ref<number | null>(null);
 const qty = ref(1);
+const isZoomModalOpen = ref(false);
+const zoomImageUrl = ref('');
+const isZoomed = ref(false);
+const isDragging = ref(false);
+const dragMoved = ref(false);
+const zoomScale = ref(2);
+const pan = ref({ x: 0, y: 0 });
+const dragStart = ref({ x: 0, y: 0 });
+const panStart = ref({ x: 0, y: 0 });
 const store = ref({
   name: '',
   logo: { path_url: '' },
@@ -196,6 +243,10 @@ watch(selectedUnit, (newValue) => {
   }
 });
 
+watch(slide, () => {
+  resetZoom();
+});
+
 watch(qty, (newValue) => {
   if (newValue < 1) {
     qty.value = 1;
@@ -248,6 +299,150 @@ const userAddCart = () => {
   });
 };
 
+const resetZoom = () => {
+  isZoomed.value = false;
+  isDragging.value = false;
+  dragMoved.value = false;
+  pan.value = { x: 0, y: 0 };
+};
+
+const openZoomModal = (url: string) => {
+  zoomImageUrl.value = url;
+  isZoomModalOpen.value = true;
+  isZoomed.value = true;
+  pan.value = { x: 0, y: 0 };
+};
+
+const closeZoomModal = () => {
+  isZoomModalOpen.value = false;
+  zoomImageUrl.value = '';
+  resetZoom();
+};
+
+const toggleZoom = () => {
+  if (isDragging.value || dragMoved.value) {
+    return;
+  }
+  if (isZoomed.value) {
+    resetZoom();
+  } else {
+    isZoomed.value = true;
+    pan.value = { x: 0, y: 0 };
+  }
+};
+
+const getPointer = (event: MouseEvent | TouchEvent) => {
+  if ('touches' in event && event.touches.length > 0) {
+    return { x: event.touches[0].clientX, y: event.touches[0].clientY };
+  }
+  const mouseEvent = event as MouseEvent;
+  return { x: mouseEvent.clientX, y: mouseEvent.clientY };
+};
+
+const clampPan = (container: HTMLElement, image: HTMLImageElement, nextX: number, nextY: number) => {
+  const containerWidth = container.clientWidth;
+  const containerHeight = container.clientHeight;
+  const naturalWidth = image.naturalWidth || image.clientWidth;
+  const naturalHeight = image.naturalHeight || image.clientHeight;
+  const imageRatio = naturalWidth / naturalHeight;
+  const containerRatio = containerWidth / containerHeight;
+  let baseWidth = containerWidth;
+  let baseHeight = containerHeight;
+
+  if (imageRatio > containerRatio) {
+    baseHeight = containerWidth / imageRatio;
+  } else {
+    baseWidth = containerHeight * imageRatio;
+  }
+
+  const scaledWidth = baseWidth * zoomScale.value;
+  const scaledHeight = baseHeight * zoomScale.value;
+  const maxX = Math.max(0, (scaledWidth - containerWidth) / 2);
+  const maxY = Math.max(0, (scaledHeight - containerHeight) / 2);
+
+  return {
+    x: Math.min(maxX, Math.max(-maxX, nextX)),
+    y: Math.min(maxY, Math.max(-maxY, nextY)),
+  };
+};
+
+const onDragStart = (event: MouseEvent) => {
+  if (!isZoomed.value) {
+    return;
+  }
+  const pointer = getPointer(event);
+  isDragging.value = true;
+  dragMoved.value = false;
+  dragStart.value = { x: pointer.x, y: pointer.y };
+  panStart.value = { x: pan.value.x, y: pan.value.y };
+};
+
+const onDragMove = (event: MouseEvent) => {
+  if (!isZoomed.value || !isDragging.value) {
+    return;
+  }
+  const container = event.currentTarget as HTMLElement;
+  const image = container.querySelector('img');
+  if (!image) {
+    return;
+  }
+  const pointer = getPointer(event);
+  const nextX = panStart.value.x + (pointer.x - dragStart.value.x);
+  const nextY = panStart.value.y + (pointer.y - dragStart.value.y);
+  if (Math.abs(pointer.x - dragStart.value.x) > 4 || Math.abs(pointer.y - dragStart.value.y) > 4) {
+    dragMoved.value = true;
+  }
+  pan.value = clampPan(container, image, nextX, nextY);
+};
+
+const onTouchStart = (event: TouchEvent) => {
+  if (!isZoomed.value) {
+    return;
+  }
+  const pointer = getPointer(event);
+  isDragging.value = true;
+  dragMoved.value = false;
+  dragStart.value = { x: pointer.x, y: pointer.y };
+  panStart.value = { x: pan.value.x, y: pan.value.y };
+};
+
+const onTouchMove = (event: TouchEvent) => {
+  if (!isZoomed.value || !isDragging.value) {
+    return;
+  }
+  const container = event.currentTarget as HTMLElement;
+  const image = container.querySelector('img');
+  if (!image) {
+    return;
+  }
+  const pointer = getPointer(event);
+  const nextX = panStart.value.x + (pointer.x - dragStart.value.x);
+  const nextY = panStart.value.y + (pointer.y - dragStart.value.y);
+  if (Math.abs(pointer.x - dragStart.value.x) > 4 || Math.abs(pointer.y - dragStart.value.y) > 4) {
+    dragMoved.value = true;
+  }
+  pan.value = clampPan(container, image, nextX, nextY);
+};
+
+const onDragEnd = () => {
+  isDragging.value = false;
+  if (dragMoved.value) {
+    setTimeout(() => {
+      dragMoved.value = false;
+    }, 0);
+  }
+};
+
+const zoomStyle = computed(() => {
+  if (!isZoomed.value) {
+    return {};
+  }
+  return {
+    transform: `translate(${pan.value.x}px, ${pan.value.y}px) scale(${zoomScale.value})`,
+    transformOrigin: 'center center',
+  };
+});
+
 </script>
 
 <style scoped lang="scss">
@@ -278,6 +473,55 @@ const userAddCart = () => {
   max-height: 380px;
   object-fit: contain;
   border-radius: 8px;
+  cursor: zoom-in;
+}
+
+.zoom-modal-card {
+  height: 100%;
+  border-radius: 0;
+}
+
+.zoom-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 16px;
+}
+
+.zoom-modal-content {
+  height: calc(100% - 56px);
+  padding: 0;
+}
+
+.zoom-modal-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: zoom-in;
+  user-select: none;
+  background: #000;
+}
+
+.zoom-modal-container.is-zoomed {
+  cursor: grab;
+}
+
+.zoom-modal-container.is-dragging {
+  cursor: grabbing;
+}
+
+.zoom-modal-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.zoom-modal-image.is-zoomed {
+  transition: none;
 }
 
 .product-info-card {

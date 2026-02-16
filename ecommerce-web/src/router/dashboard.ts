@@ -52,6 +52,8 @@ export default [
             { path: '', component: () => import('src/pages/dashboard/all-stores/IndexPage.vue') },
             { path: ':id', component: () => import('src/pages/dashboard/all-stores/EditPage.vue') },
             { path: ':id/items', component: () => import('src/pages/dashboard/all-stores/items/IndexPage.vue') },
+            { path: ':id/items/:itemId', component: () => import('src/pages/dashboard/all-stores/items/EditPage.vue') },
+            { path: ':id/items/:itemId/item-prices', component: () => import('src/pages/dashboard/all-stores/items/PricePage.vue') },
           ]
         }
       ]

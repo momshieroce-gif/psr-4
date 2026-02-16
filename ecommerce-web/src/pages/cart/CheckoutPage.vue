@@ -495,16 +495,16 @@ const processCustomerOrder = async () => {
 // Custom animated marker styles
 :deep(.custom-marker) {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   animation: markerBounce 2s infinite;
 }
 
 :deep(.marker-icon) {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -514,8 +514,8 @@ const processCustomerOrder = async () => {
   transition: transform 0.3s ease;
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 12px;
+    height: 12px;
   }
 }
 
@@ -529,8 +529,8 @@ const processCustomerOrder = async () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   z-index: 1;
   animation: markerPulse 2s ease-out infinite;

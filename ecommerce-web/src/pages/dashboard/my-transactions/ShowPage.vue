@@ -12,7 +12,7 @@
             View complete transaction information
           </div>
         </div>
-        <q-btn to="/dashboard/customer-transactions" outline color="primary" icon="arrow_back" label="Back" />
+        <q-btn outline color="primary" icon="arrow_back" label="Back" @click="$router.back()" />
       </div>
     </div>
 
