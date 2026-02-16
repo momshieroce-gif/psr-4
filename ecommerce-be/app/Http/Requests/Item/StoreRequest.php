@@ -20,7 +20,7 @@ class StoreRequest extends BaseRequest
         return [
             'name'          => 'required', 
             'description'   => 'required',  
-            'unit_id'       => 'required',
+            'unit_id'       => 'sometimes',
             'store_id'      => 'required',
             'category_id'   => 'required',
             'files'         => 'sometimes'

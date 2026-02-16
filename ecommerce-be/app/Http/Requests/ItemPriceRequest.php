@@ -22,6 +22,8 @@ class ItemPriceRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'item_id'       => 'required|integer',
+            'item_prices'   => 'required|array',
         ];
     }
 }

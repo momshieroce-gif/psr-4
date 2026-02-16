@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ItemResource;
+use App\Http\Resources\BaseResource;
 use App\Repositories\ItemRepository;
 use App\Http\Requests\Item\StoreRequest;
 use App\Http\Requests\BaseIndexRequest;
@@ -19,7 +19,7 @@ class ItemController extends ApiController
         $this->updateRequest = Request::class;
     }
 
-    protected function itemUpdate(int $id) : ItemResource {
+    protected function itemUpdate(int $id) : BaseResource {
         $params = app( $this->storeRequest )->all();
         $this->result = $this->repository->itemUpdateWithImage( $id, $params );
         return $this->getResource();

@@ -52,9 +52,7 @@ Route::group( [ 'middleware' => 'auth:api' ], function () {
     id}
     ', [ProfileController::class, 'update']);
     Route::post('logout', [RegisterController::class, 'logout']);
-    Route::post('item-update/ {
-        id}
-        ', [ItemController::class, 'itemUpdate'])->middleware('itemMiddleware');
+    Route::post('item-update/{id}', [ItemController::class, 'itemUpdate'])->middleware('itemMiddleware');
     Route::resource('items', ItemController::class)->middleware('itemMiddleware');
     Route::resource('item-prices', ItemPriceController::class);
     Route::resource('store-menu-access', StoreMenuAccessController::class);
