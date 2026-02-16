@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Jan 04, 2026 at 01:32 AM
--- Server version: 9.4.0
+-- Generation Time: Feb 16, 2026 at 10:33 PM
+-- Server version: 9.6.0
 -- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -346,7 +346,29 @@ INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `
 (190, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 57, '[]', '{\"transaction_id\":77,\"store_id\":\"1609067713\",\"item_id\":858,\"item_name\":\"Dolore consectetur illo consequatur.\",\"item_description\":\"Dolorem voluptatum totam veniam et qui et dolorem mollitia ut nihil est quibusdam quae blanditiis nulla molestiae.\",\"unit_id\":18,\"base_price\":81.9,\"store_price\":90.09,\"online_price\":99.1,\"qty\":1,\"id\":57}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', NULL, '2026-01-04 09:19:33', '2026-01-04 09:19:33'),
 (191, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 78, '[]', '{\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":33,\"contact_number\":\"9270079301\",\"reference_id\":\"6959c2e76f59c\",\"total\":77.44,\"grand_total\":110.44,\"status_id\":1,\"id\":78}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36', NULL, '2026-01-04 09:31:19', '2026-01-04 09:31:19');
 INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `auditable_id`, `old_values`, `new_values`, `url`, `ip_address`, `user_agent`, `tags`, `created_at`, `updated_at`) VALUES
-(192, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 58, '[]', '{\"transaction_id\":78,\"store_id\":\"458047115\",\"item_id\":754,\"item_name\":\"Facere dolorum qui odio quibusdam.\",\"item_description\":\"Temporibus sint quaerat sunt sit est consequatur iure ullam magni cum quia.\",\"unit_id\":13,\"base_price\":64,\"store_price\":70.4,\"online_price\":77.44,\"qty\":1,\"id\":58}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36', NULL, '2026-01-04 09:31:19', '2026-01-04 09:31:19');
+(192, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 58, '[]', '{\"transaction_id\":78,\"store_id\":\"458047115\",\"item_id\":754,\"item_name\":\"Facere dolorum qui odio quibusdam.\",\"item_description\":\"Temporibus sint quaerat sunt sit est consequatur iure ullam magni cum quia.\",\"unit_id\":13,\"base_price\":64,\"store_price\":70.4,\"online_price\":77.44,\"qty\":1,\"id\":58}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36', NULL, '2026-01-04 09:31:19', '2026-01-04 09:31:19'),
+(193, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 79, '[]', '{\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":7,\"contact_number\":\"9270079301\",\"reference_id\":\"6959eaa84f3c1\",\"total\":103.46,\"grand_total\":110.46,\"status_id\":1,\"id\":79}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', NULL, '2026-01-04 12:20:56', '2026-01-04 12:20:56'),
+(194, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 59, '[]', '{\"transaction_id\":79,\"store_id\":\"2033899500\",\"item_id\":949,\"item_name\":\"Enim dolores nulla id illum earum et vitae.\",\"item_description\":\"Molestias eum repellendus cupiditate natus debitis esse hic maiores.\",\"unit_id\":19,\"base_price\":85.5,\"store_price\":94.05,\"online_price\":103.46,\"qty\":1,\"id\":59}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', NULL, '2026-01-04 12:20:56', '2026-01-04 12:20:56'),
+(195, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 80, '[]', '{\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":7,\"contact_number\":\"9270079301\",\"reference_id\":\"6959ed8777d60\",\"total\":78.41,\"grand_total\":85.41,\"status_id\":1,\"id\":80}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', NULL, '2026-01-04 12:33:11', '2026-01-04 12:33:11'),
+(196, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 60, '[]', '{\"transaction_id\":80,\"store_id\":2,\"item_id\":982,\"item_name\":\"Dignissimos omnis exercitationem sed sunt eligendi eos quia quia.\",\"item_description\":\"Odit suscipit aut numquam omnis culpa quia eos.\",\"unit_id\":10,\"base_price\":64.8,\"store_price\":71.28,\"online_price\":78.41,\"qty\":1,\"id\":60}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', NULL, '2026-01-04 12:33:11', '2026-01-04 12:33:11'),
+(197, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 81, '[]', '{\"store_id\":2033899500,\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":7,\"contact_number\":\"9270079301\",\"reference_id\":\"6973fdebadaf6\",\"lat\":\"10.361551653152\",\"lng\":\"123.98292150159\",\"total\":46.46,\"grand_total\":53.46,\"status_id\":1,\"id\":81}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 07:02:03', '2026-01-24 07:02:03'),
+(198, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 61, '[]', '{\"transaction_id\":81,\"store_id\":2,\"item_id\":742,\"item_name\":\"Officiis ipsa quia magnam quaerat.\",\"item_description\":\"Et nostrum natus et quidem dolorum eum tenetur eius nihil delectus.\",\"unit_id\":12,\"base_price\":19.2,\"store_price\":21.12,\"online_price\":23.23,\"qty\":2,\"id\":61}', 'http://127.0.0.1:8080/api/transactions', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 07:02:03', '2026-01-24 07:02:03'),
+(199, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"name\":\"Molestias id delectus harum.\",\"mobile\":\"98995816937\",\"latitude\":10.3513178692,\"longitude\":123.97168502346}', '{\"name\":\"A earum.\",\"mobile\":\"92332\",\"latitude\":14.5995,\"longitude\":120.9842}', 'http://127.0.0.1:8080/api/all_stores/495513597', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', NULL, '2026-01-24 08:39:36', '2026-01-24 08:39:36'),
+(200, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"mobile\":\"92332\"}', '{\"mobile\":\"asdfsaf\"}', 'http://127.0.0.1:8080/api/all_stores/458047115', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 08:40:55', '2026-01-24 08:40:55'),
+(201, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"mobile\":\"asdfsaf\"}', '{\"mobile\":\"09101\"}', 'http://127.0.0.1:8080/api/all_stores/458047115', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 08:42:30', '2026-01-24 08:42:30'),
+(202, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"name\":\"A earum.\"}', '{\"name\":\"A earum.ggg\"}', 'http://127.0.0.1:8080/api/all_stores/458047115', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 08:50:05', '2026-01-24 08:50:05'),
+(203, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"mobile\":\"09101\"}', '{\"mobile\":\"999\"}', 'http://127.0.0.1:8080/api/all_stores/458047115', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 08:51:15', '2026-01-24 08:51:15'),
+(204, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"mobile\":\"999\"}', '{\"mobile\":\"asdf\"}', 'http://127.0.0.1:8080/api/all_stores/458047115', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 08:51:59', '2026-01-24 08:51:59'),
+(205, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"name\":\"A earum.ggg\",\"mobile\":\"asdf\"}', '{\"name\":\"A earum.\",\"mobile\":\"9172292694700\"}', 'http://127.0.0.1:8080/api/all_stores/495513597', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 08:53:33', '2026-01-24 08:53:33'),
+(206, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"mobile\":\"9172292694700\"}', '{\"mobile\":\"9172292694711\"}', 'http://127.0.0.1:8080/api/all_stores/458047115', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 08:54:02', '2026-01-24 08:54:02'),
+(207, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Store', 1, '{\"mobile\":\"9172292694711\"}', '{\"mobile\":\"9172292694712\"}', 'http://127.0.0.1:8080/api/all_stores/458047115', '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-01-24 08:54:15', '2026-01-24 08:54:15'),
+(208, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 82, '[]', '{\"store_id\":2033899500,\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":13,\"contact_number\":\"9270079301\",\"reference_id\":\"6987f0928bed7\",\"lat\":\"10.361838904298\",\"lng\":\"123.98722652952\",\"total\":103.46,\"grand_total\":116.46,\"status_id\":1,\"id\":82}', 'http://127.0.0.1:8080/api/transactions', '192.168.65.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-02-08 10:10:26', '2026-02-08 10:10:26'),
+(209, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 62, '[]', '{\"transaction_id\":82,\"store_id\":2,\"item_id\":949,\"item_name\":\"Enim dolores nulla id illum earum et vitae.\",\"item_description\":\"Molestias eum repellendus cupiditate natus debitis esse hic maiores.\",\"unit_id\":19,\"base_price\":85.5,\"store_price\":94.05,\"online_price\":103.46,\"qty\":1,\"id\":62}', 'http://127.0.0.1:8080/api/transactions', '192.168.65.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Mobile Safari/537.36', NULL, '2026-02-08 10:10:26', '2026-02-08 10:10:26'),
+(210, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 83, '[]', '{\"store_id\":2033899500,\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":13,\"contact_number\":\"9270079301\",\"reference_id\":\"6987f17a2d1fc\",\"lat\":\"10.361838904298\",\"lng\":\"123.98722652952\",\"total\":31.46,\"grand_total\":44.46,\"status_id\":1,\"id\":83}', 'http://127.0.0.1:8080/api/transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', NULL, '2026-02-08 10:14:18', '2026-02-08 10:14:18'),
+(211, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 63, '[]', '{\"transaction_id\":83,\"store_id\":2,\"item_id\":943,\"item_name\":\"Consequatur assumenda et rem et eos.\",\"item_description\":\"Ut accusantium dolore aperiam tempora hic architecto rerum rerum voluptatem non consequatur ipsa nam.\",\"unit_id\":16,\"base_price\":26,\"store_price\":28.6,\"online_price\":31.46,\"qty\":1,\"id\":63}', 'http://127.0.0.1:8080/api/transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', NULL, '2026-02-08 10:14:18', '2026-02-08 10:14:18'),
+(212, 'App\\Models\\User', 28, 'updated', 'App\\Models\\Item', 952, '{\"name\":\"Qui nam aliquid dolor et voluptatum velit.\",\"description\":\"Veritatis reiciendis et esse distinctio cumque qui assumenda perferendis qui voluptatem sed qui.\",\"category_id\":1}', '{\"name\":\"Qui nam aliquid dolor et voluptatum velit.www\",\"description\":\"Veritatis reiciendis et esse distinctio cumque qui assumenda perferendis qui voluptatem sed qui.www\",\"category_id\":\"3\"}', 'http://127.0.0.1:8080/api/item-update/2109870990?filters=store_id%3A458047115', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', NULL, '2026-02-08 12:01:36', '2026-02-08 12:01:36'),
+(213, 'App\\Models\\User', 28, 'deleted', 'App\\Models\\Item', 754, '{\"id\":754,\"name\":\"Facere dolorum qui odio quibusdam.\",\"description\":\"Temporibus sint quaerat sunt sit est consequatur iure ullam magni cum quia.\",\"category_id\":11,\"store_id\":1}', '[]', 'http://127.0.0.1:8080/api/items/619699388', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', NULL, '2026-02-17 06:04:10', '2026-02-17 06:04:10'),
+(214, 'App\\Models\\User', 28, 'deleted', 'App\\Models\\ItemPrice', 952, '{\"id\":952,\"item_id\":952,\"unit_id\":15,\"color_id\":0,\"size_id\":0,\"qty\":0,\"delivery_charge_id\":1,\"original_price\":\"74.40\",\"selling_price\":\"81.84\",\"online_price\":\"90.02\"}', '[]', 'http://127.0.0.1:8080/api/item-prices', '192.168.65.1', 'PostmanRuntime/7.51.0', NULL, '2026-02-17 06:31:19', '2026-02-17 06:31:19');
 
 -- --------------------------------------------------------
 
@@ -3168,7 +3190,7 @@ INSERT INTO `images` (`id`, `thumbnail`, `path`, `imageable_id`, `imageable_type
 (950, 'images/uploads/32.jpg', 'images/uploads/32.jpg', 949, 'App\\Models\\Item', 1, 'Expedita aut sed.', NULL, 'logo', '2024-08-09 21:41:56', '2024-08-09 21:41:56'),
 (951, 'images/uploads/11.jpg', 'images/uploads/11.jpg', 950, 'App\\Models\\Item', 1, 'Quam doloremque.', NULL, 'logo', '2024-08-09 21:41:56', '2024-08-09 21:41:56'),
 (952, 'images/uploads/7.jpg', 'images/uploads/7.jpg', 951, 'App\\Models\\Item', 1, 'In qui tenetur.', NULL, 'logo', '2024-08-09 21:41:57', '2024-08-09 21:41:57'),
-(953, 'images/uploads/11.jpg', 'images/uploads/11.jpg', 952, 'App\\Models\\Item', 1, 'Accusamus similique.', NULL, 'logo', '2024-08-09 21:41:57', '2024-08-09 21:41:57'),
+(953, 'images/uploads/11.jpg', 'images/uploads/11.jpg', 952, 'App\\Models\\Item', 0, 'Accusamus similique.', NULL, 'logo', '2024-08-09 21:41:57', '2026-02-12 09:57:03'),
 (954, 'images/uploads/20.jpg', 'images/uploads/20.jpg', 953, 'App\\Models\\Item', 1, 'Odit voluptatum.', NULL, 'logo', '2024-08-09 21:41:57', '2024-08-09 21:41:57'),
 (955, 'images/uploads/30.jpg', 'images/uploads/30.jpg', 954, 'App\\Models\\Item', 1, 'Autem non.', NULL, 'logo', '2024-08-09 21:41:57', '2024-08-09 21:41:57'),
 (956, 'images/uploads/6.jpg', 'images/uploads/6.jpg', 955, 'App\\Models\\Item', 1, 'Voluptatem quod.', NULL, 'logo', '2024-08-09 21:41:57', '2024-08-09 21:41:57'),
@@ -3198,7 +3220,7 @@ INSERT INTO `images` (`id`, `thumbnail`, `path`, `imageable_id`, `imageable_type
 (980, 'images/uploads/31.jpg', 'images/uploads/31.jpg', 979, 'App\\Models\\Item', 1, 'Veritatis vel aut.', NULL, 'logo', '2024-08-09 21:41:58', '2024-08-09 21:41:58'),
 (981, 'images/uploads/1.jpg', 'images/uploads/1.jpg', 980, 'App\\Models\\Item', 1, 'Molestiae doloribus tempora.', NULL, 'logo', '2024-08-09 21:41:58', '2024-08-09 21:41:58'),
 (982, 'images/uploads/4.jpg', 'images/uploads/4.jpg', 981, 'App\\Models\\Item', 1, 'Ea provident eligendi.', NULL, 'logo', '2024-08-09 21:41:58', '2024-08-09 21:41:58'),
-(983, 'images/uploads/8.jpg', 'images/uploads/8.jpg', 982, 'App\\Models\\Item', 1, 'Consequatur delectus ut.', NULL, 'logo', '2024-08-09 21:41:58', '2024-08-09 21:41:58'),
+(983, 'images/uploads/8.jpg', 'images/uploads/8.jpg', 982, 'App\\Models\\Item', 0, 'Consequatur delectus ut.', NULL, 'logo', '2024-08-09 21:41:58', '2026-02-08 13:28:34'),
 (984, 'images/uploads/25.jpg', 'images/uploads/25.jpg', 983, 'App\\Models\\Item', 1, 'Tenetur ab culpa.', NULL, 'logo', '2024-08-09 21:41:58', '2024-08-09 21:41:58'),
 (985, 'images/uploads/30.jpg', 'images/uploads/30.jpg', 984, 'App\\Models\\Item', 1, 'Perferendis facere.', NULL, 'logo', '2024-08-09 21:41:58', '2024-08-09 21:41:58'),
 (986, 'images/uploads/35.jpg', 'images/uploads/35.jpg', 985, 'App\\Models\\Item', 1, 'Voluptas quis ut.', NULL, 'logo', '2024-08-09 21:41:59', '2024-08-09 21:41:59'),
@@ -3269,7 +3291,11 @@ INSERT INTO `images` (`id`, `thumbnail`, `path`, `imageable_id`, `imageable_type
 (1051, 'images/uploads/logo7.jpg', 'images/uploads/logo7.jpg', 49, 'App\\Models\\Store', 1, 'Cum repudiandae illum.', NULL, 'logo', '2024-08-09 21:42:02', '2024-08-09 21:42:02'),
 (1052, 'images/uploads/logo17.jpg', 'images/uploads/logo17.jpg', 50, 'App\\Models\\Store', 1, 'Aliquid tempora doloremque.', NULL, 'logo', '2024-08-09 21:42:02', '2024-08-09 21:42:02'),
 (1092, 'images/uploads/1734999473-116353377242112_n.jpg', 'images/uploads/1734999473-116353377242112_n.jpg', 717, 'App\\Models\\Item', 0, '116353377242112_n.jpg', 136116, NULL, '2024-12-24 08:17:53', '2024-12-24 08:19:18'),
-(1093, 'images/uploads/1734999558-049206836_n.jpg', 'images/uploads/1734999558-049206836_n.jpg', 717, 'App\\Models\\Item', 0, '049206836_n.jpg', 282873, NULL, '2024-12-24 08:19:18', '2024-12-24 08:19:18');
+(1093, 'images/uploads/1734999558-049206836_n.jpg', 'images/uploads/1734999558-049206836_n.jpg', 717, 'App\\Models\\Item', 0, '049206836_n.jpg', 282873, NULL, '2024-12-24 08:19:18', '2024-12-24 08:19:18'),
+(1097, 'images/uploads/1770526719-121.png', 'images/uploads/1770526719-121.png', 982, 'App\\Models\\Item', 0, '121.png', 224232, NULL, '2026-02-08 12:58:39', '2026-02-08 13:28:34'),
+(1098, 'images/uploads/1770527774-1.png', 'images/uploads/1770527774-1.png', 982, 'App\\Models\\Item', 1, '1.png', 497671, NULL, '2026-02-08 13:16:14', '2026-02-08 13:28:34'),
+(1099, 'images/uploads/1770528573-1.png', 'images/uploads/1770528573-1.png', 952, 'App\\Models\\Item', 0, '1.png', 497671, NULL, '2026-02-08 13:29:33', '2026-02-12 09:57:03'),
+(1100, 'images/uploads/1770861423-111.jpeg', 'images/uploads/1770861423-111.jpeg', 952, 'App\\Models\\Item', 1, '111.jpeg', 164612, NULL, '2026-02-12 09:57:03', '2026-02-12 09:57:03');
 
 -- --------------------------------------------------------
 
@@ -4112,7 +4138,7 @@ INSERT INTO `items` (`id`, `name`, `description`, `category_id`, `store_id`, `cr
 (751, 'Vel consequatur quisquam magni facere.', 'Inventore saepe sapiente dolorum sit laborum nam deleniti adipisci a aut atque.', 24, 27, '2024-08-09 21:39:45', '2024-08-09 21:39:45', NULL),
 (752, 'Eum ipsam accusantium ipsum ullam non dolores.', 'Provident qui quia voluptatum vitae dolore voluptatem reiciendis consequuntur est aut eos reiciendis velit.', 2, 25, '2024-08-09 21:39:45', '2024-08-09 21:39:45', NULL),
 (753, 'Et quidem voluptatibus rem qui et.', 'Ipsa repellat rerum qui modi velit quos neque quod et quo est harum qui perferendis eius saepe.', 6, 17, '2024-08-09 21:39:45', '2024-08-09 21:39:45', NULL),
-(754, 'Facere dolorum qui odio quibusdam.', 'Temporibus sint quaerat sunt sit est consequatur iure ullam magni cum quia.', 11, 1, '2024-08-09 21:39:45', '2024-08-09 21:39:45', NULL),
+(754, 'Facere dolorum qui odio quibusdam.', 'Temporibus sint quaerat sunt sit est consequatur iure ullam magni cum quia.', 11, 1, '2024-08-09 21:39:45', '2026-02-17 06:04:10', '2026-02-17 06:04:10'),
 (755, 'Sed totam ut velit totam nobis rerum.', 'Accusantium voluptas deserunt repudiandae quis pariatur nulla rem qui provident vel doloribus.', 12, 27, '2024-08-09 21:39:45', '2024-08-09 21:39:45', NULL),
 (756, 'Consequatur atque amet eos doloribus aliquam beatae.', 'Vel ipsa rerum quaerat ipsa et quod sint.', 3, 42, '2024-08-09 21:39:45', '2024-08-09 21:39:45', NULL),
 (757, 'Praesentium nesciunt expedita et maiores sit iusto fugiat facilis.', 'Consequatur vel vel veniam eum a eius a quam inventore.', 11, 22, '2024-08-09 21:39:45', '2024-08-09 21:39:45', NULL),
@@ -4310,7 +4336,7 @@ INSERT INTO `items` (`id`, `name`, `description`, `category_id`, `store_id`, `cr
 (949, 'Enim dolores nulla id illum earum et vitae.', 'Molestias eum repellendus cupiditate natus debitis esse hic maiores.', 22, 2, '2024-08-09 21:39:56', '2024-08-09 21:39:56', NULL),
 (950, 'Non distinctio odio et blanditiis et magni rerum.', 'Quibusdam nobis et vitae et at veniam occaecati est provident.', 16, 24, '2024-08-09 21:39:56', '2024-08-09 21:39:56', NULL),
 (951, 'Deleniti et sit voluptas corrupti itaque.', 'Commodi cum est ut ea modi blanditiis harum.', 7, 4, '2024-08-09 21:39:56', '2024-08-09 21:39:56', NULL),
-(952, 'Qui nam aliquid dolor et voluptatum velit.', 'Veritatis reiciendis et esse distinctio cumque qui assumenda perferendis qui voluptatem sed qui.', 1, 1, '2024-08-09 21:39:57', '2024-08-09 21:39:57', NULL),
+(952, 'Qui nam aliquid dolor et voluptatum velit.www', 'Veritatis reiciendis et esse distinctio cumque qui assumenda perferendis qui voluptatem sed qui.www', 3, 1, '2024-08-09 21:39:57', '2026-02-08 12:01:36', NULL),
 (953, 'Repellat omnis dolor saepe est a.', 'Enim itaque velit eum sed qui suscipit voluptas odit dolorum fuga fugit.', 23, 33, '2024-08-09 21:39:57', '2024-08-09 21:39:57', NULL),
 (954, 'Qui dignissimos autem tenetur totam.', 'Voluptatem occaecati exercitationem dolor cumque impedit sit quidem maxime nihil enim qui distinctio vitae et explicabo.', 19, 8, '2024-08-09 21:39:57', '2024-08-09 21:39:57', NULL),
 (955, 'Fugit et explicabo et labore recusandae.', 'Dolor libero in repudiandae eveniet maxime rem tenetur cupiditate illum rem ut natus voluptatibus.', 17, 44, '2024-08-09 21:39:57', '2024-08-09 21:39:57', NULL),
@@ -4372,7 +4398,7 @@ CREATE TABLE `item_prices` (
   `item_id` int DEFAULT NULL,
   `unit_id` int DEFAULT NULL,
   `color_id` int DEFAULT NULL,
-  `size_id` int NOT NULL,
+  `size_id` int DEFAULT NULL,
   `qty` int NOT NULL,
   `delivery_charge_id` int DEFAULT '1',
   `original_price` decimal(8,2) NOT NULL,
@@ -5337,7 +5363,6 @@ INSERT INTO `item_prices` (`id`, `item_id`, `unit_id`, `color_id`, `size_id`, `q
 (949, 949, 19, 0, 0, 0, 1, 85.50, 94.05, 103.46, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
 (950, 950, 9, 0, 0, 0, 1, 44.60, 49.06, 53.97, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
 (951, 951, 12, 0, 0, 0, 1, 43.00, 47.30, 52.03, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(952, 952, 15, 0, 0, 0, 1, 74.40, 81.84, 90.02, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
 (953, 953, 20, 0, 0, 0, 1, 18.70, 20.57, 22.63, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
 (954, 954, 8, 0, 0, 0, 1, 80.30, 88.33, 97.16, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
 (955, 955, 11, 0, 0, 0, 1, 36.70, 40.37, 44.41, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
@@ -5415,21 +5440,20 @@ CREATE TABLE `menus` (
 INSERT INTO `menus` (`id`, `parent_id`, `icon`, `name`, `path`, `is_visible`, `created_at`, `updated_at`) VALUES
 (1, 0, 'fas fa-home', 'Home', '/', 1, '2024-08-09 21:38:50', '2024-08-09 21:38:50'),
 (2, 0, 'fas fa-user-alt', 'Profile', '/dashboard/profile', 1, '2024-08-09 21:38:50', '2024-08-09 21:38:50'),
-(3, 0, 'fas fa-list-ul', 'Transactions', '/dashboard/customer-transactions', 1, '2024-08-09 21:38:50', '2024-08-09 21:38:50'),
+(3, 0, 'fas fa-list-ul', 'My transactions', '/dashboard/my-transactions', 1, '2024-08-09 21:38:50', '2024-08-09 21:38:50'),
 (4, 0, 'fas fa-users-cog', 'Admin Roles', '/dashboard/roles', 1, '2024-08-09 21:38:50', '2024-08-09 21:38:50'),
-(5, 0, 'fa-solid fa-store', 'Stores', '/dashboard/my-stores', 1, '2024-08-09 21:38:50', '2024-08-09 21:38:50'),
-(6, 0, 'fa-solid fa-mobile-screen', 'Roles', '/dashboard/store-roles', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
+(5, 0, 'fa-solid fa-store', 'My Stores', '/dashboard/my-stores', 1, '2024-08-09 21:38:50', '2024-08-09 21:38:50'),
+(6, 0, 'fa-solid fa-mobile-screen', 'Store Roles', '/dashboard/store-roles', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
 (7, 0, 'fa-solid fa-mobile-screen', 'Shared Stores', '/dashboard/shared-stores', 0, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
 (8, 0, '', 'Invoices', '/dashboard/invoices', 0, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
 (9, 0, '', 'Menus', '/dashboard/menus', 0, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
 (10, 0, '', 'Items', '/dashboard/items', 0, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
-(11, 0, 'fa-solid fa-store', 'Stores', '/dashboard/stores', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
-(12, 0, 'fa-solid fa-truck', 'Deliveries', '/dashboard/deliveries', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
-(13, 0, 'fas fa-list-ul', 'Transactions', '/dashboard/transactions', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
-(14, 0, 'far fa-address-card', 'Store Access', '/dashboard/store-menu-access', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
-(15, 0, 'far fa-address-card', 'My Franchisee', '/dashboard/franchisees', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
-(16, 0, 'fas fa-list-ul', 'All Transactions', '/dashboard/all-transactions', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
-(17, 0, 'fa-solid fa-store', 'All Stores', '/dashboard/all-stores', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51');
+(11, 0, 'fa-solid fa-truck', 'Deliveries', '/dashboard/deliveries', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
+(12, 0, 'fas fa-list-ul', 'Transactions', '/dashboard/transactions', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
+(13, 0, 'far fa-address-card', 'Store Access', '/dashboard/store-menu-access', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
+(14, 0, 'far fa-address-card', 'My Franchisee', '/dashboard/franchisees', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
+(15, 0, 'fas fa-list-ul', 'All Transactions', '/dashboard/all-transactions', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51'),
+(16, 0, 'fa-solid fa-store', 'All Stores', '/dashboard/all-stores', 1, '2024-08-09 21:38:51', '2024-08-09 21:38:51');
 
 -- --------------------------------------------------------
 
@@ -5456,7 +5480,8 @@ INSERT INTO `menu_role` (`id`, `menu_id`, `role_id`, `created_at`, `updated_at`)
 (19, 4, 4, '2024-01-04 06:52:45', '2024-01-04 06:52:45'),
 (20, 5, 4, '2024-07-07 08:59:53', '2024-07-07 08:59:53'),
 (22, 16, 4, '2024-01-04 06:52:45', '2024-01-04 06:52:45'),
-(23, 17, 4, '2024-11-29 08:19:37', '2024-11-29 08:19:37');
+(23, 17, 4, '2024-11-29 08:19:37', '2024-11-29 08:19:37'),
+(24, 15, 4, '2026-01-25 06:19:12', '2026-01-25 06:19:12');
 
 -- --------------------------------------------------------
 
@@ -5709,92 +5734,97 @@ CREATE TABLE `oauth_access_tokens` (
 --
 
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
-('064543e9b97e5964342ec60cd109b680c8e493313b72479a5dfde9ac8de8cefc10bb787403a525a2', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:38:14', '2026-01-03 10:26:22', '2027-01-02 11:38:14'),
-('07ec07e758ebc73940fcc5543e19facdad296fc4cbc77ec4532a3a68070ba29cd8526977b9593665', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:17:16', '2026-01-03 10:26:22', '2027-01-03 08:17:16'),
+('064543e9b97e5964342ec60cd109b680c8e493313b72479a5dfde9ac8de8cefc10bb787403a525a2', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:38:14', '2026-02-08 12:52:40', '2027-01-02 11:38:14'),
+('07ec07e758ebc73940fcc5543e19facdad296fc4cbc77ec4532a3a68070ba29cd8526977b9593665', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:17:16', '2026-02-08 12:52:40', '2027-01-03 08:17:16'),
 ('08dc80a72f980b7aa94a6629c938f24ed87c4a55c7052220e1c356758225bddea3655536500131d7', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:16:30', '2024-12-27 10:11:23', '2025-12-27 08:16:30'),
 ('0d693be89a6b2905b345816f76c70e9b78e9382c454cbd2d6ce744b3c79b1874b209670642bac991', 27, 1, 'MyApp', '[]', 1, '2026-01-04 08:40:43', '2026-01-04 08:42:12', '2027-01-04 08:40:43'),
-('0e0d0624fdf40436f9480d1e9c973385284470c45f035e7570adfbaf07979930282bb9b5bb0b9a08', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:33', '2026-01-03 10:26:22', '2027-01-02 11:58:33'),
-('0e5985ed6f4cffc9a12a22d0c913acdaf057de42a721d7f89aedb45410904dafa135d54f796486e2', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:31:59', '2026-01-03 10:26:22', '2027-01-02 11:31:59'),
+('0e0d0624fdf40436f9480d1e9c973385284470c45f035e7570adfbaf07979930282bb9b5bb0b9a08', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:33', '2026-02-08 12:52:40', '2027-01-02 11:58:33'),
+('0e5985ed6f4cffc9a12a22d0c913acdaf057de42a721d7f89aedb45410904dafa135d54f796486e2', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:31:59', '2026-02-08 12:52:40', '2027-01-02 11:31:59'),
 ('0e7cd543282dd95ef73fadb14e5b0bfc3844bd2cd80e2765237b1a0ff9c672667cbbc9972b18de06', 26, 1, 'MyApp', '[]', 1, '2024-11-17 06:37:17', '2024-12-27 10:11:23', '2025-11-17 06:37:17'),
 ('10081106e46a3e24711516b8e3257c4ad8a40a275929044cb8c622df6281936c14499166b8ecac70', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:16:41', '2026-01-04 08:42:12', '2025-11-09 08:16:41'),
 ('1008f4f07521284c7e17043b317c08584f8492d3a451df44b855f4180099d1bf7fadebf6ac782b4f', 26, 1, 'MyApp', '[]', 1, '2024-11-16 08:08:58', '2024-12-27 10:11:23', '2025-11-16 08:08:58'),
 ('11644d96ae94fe55f91b298c8b79345de122fa67f8904eaaaf1d3166e53035fea3069ffee68b811f', 24, 1, 'MyApp', '[]', 1, '2024-10-16 06:25:13', '2024-10-21 06:08:02', '2025-10-16 06:25:13'),
 ('17f6ba3a4db5eb71a2c0257747fedcd094fea2b8cb94a87596f17ffec21684e273de0390cd878c97', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:18:20', '2026-01-04 08:42:12', '2025-11-09 08:18:20'),
-('19408563346c578755fc17f6a3bd10cd904e9787ae639ec295caeabeefd7c52a2c17d587e7699f9f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:58', '2026-01-03 10:26:22', '2027-01-03 08:37:58'),
+('19408563346c578755fc17f6a3bd10cd904e9787ae639ec295caeabeefd7c52a2c17d587e7699f9f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:58', '2026-02-08 12:52:40', '2027-01-03 08:37:58'),
 ('1a3a4751731ebcee7c11a05c042503ddd378d7ae80af0a4b7001ee5c7cbd660bcb4325f37182c5b8', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:59', '2026-01-04 08:42:12', '2025-11-09 07:54:59'),
 ('1e2e92e2a63fbca9ea8cf6c19705c690600c2262210134cb5b3ada0cc4f525785b76d4452016456f', 27, 1, 'MyApp', '[]', 1, '2026-01-03 07:57:47', '2026-01-04 08:42:12', '2027-01-03 07:57:47'),
-('1e72e53414e234bea7f57cdcf0ce3c0a18d701ded130b22ba16f818712302339addc8205f894e446', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:16', '2026-01-03 10:26:22', '2027-01-03 08:36:16'),
+('1e72e53414e234bea7f57cdcf0ce3c0a18d701ded130b22ba16f818712302339addc8205f894e446', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:16', '2026-02-08 12:52:40', '2027-01-03 08:36:16'),
 ('2420749a34d4c84867c148d03337f2e4b9c0d2dc09e282194447377882ad89784c95bf6bed9b4e60', 26, 1, 'MyApp', '[]', 1, '2024-12-23 10:07:37', '2024-12-27 10:11:23', '2025-12-23 10:07:37'),
-('2708725498c3009a7a45798057934682bd1d979a2d2702a171a38fde7c6468bfd3d1363f943220c2', 28, 1, 'MyApp', '[]', 0, '2026-01-04 09:31:19', '2026-01-04 09:31:19', '2027-01-04 09:31:19'),
-('2777c2d347f1258b7b88239a96959f406c266bbc7233877f63134e59b74d1ba8ab31096c1d1de39f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:40', '2026-01-03 10:26:22', '2027-01-03 08:33:40'),
-('27fd36eec2a3e6ce014e2c4a403e8e38c21a5702138c0bb15aa662ca8e3eaaca3d29d1a7f8b18fcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:15', '2026-01-03 10:26:22', '2027-01-03 08:37:15'),
-('2daac5065de5b214e513ebb8a649c6583ee70afd11a17b6aa2812e7cb6835e031ca2603123b538ae', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:41:40', '2026-01-03 10:26:22', '2027-01-02 11:41:40'),
+('2708725498c3009a7a45798057934682bd1d979a2d2702a171a38fde7c6468bfd3d1363f943220c2', 28, 1, 'MyApp', '[]', 1, '2026-01-04 09:31:19', '2026-02-08 12:52:40', '2027-01-04 09:31:19'),
+('2777c2d347f1258b7b88239a96959f406c266bbc7233877f63134e59b74d1ba8ab31096c1d1de39f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:40', '2026-02-08 12:52:40', '2027-01-03 08:33:40'),
+('27fd36eec2a3e6ce014e2c4a403e8e38c21a5702138c0bb15aa662ca8e3eaaca3d29d1a7f8b18fcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:15', '2026-02-08 12:52:40', '2027-01-03 08:37:15'),
+('2daac5065de5b214e513ebb8a649c6583ee70afd11a17b6aa2812e7cb6835e031ca2603123b538ae', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:41:40', '2026-02-08 12:52:40', '2027-01-02 11:41:40'),
 ('2de729b26beb70a47c598ab2681c580419752643a29106de0934144368ba89b4d3516dd2f28b784b', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:15:00', '2026-01-04 08:42:12', '2025-11-09 08:15:00'),
 ('2f15e591fbb22e4a1171b78e4fa276c4b1e9f9494e4eaf96e7d4cadbe370f539456bd56b80900bac', 22, 1, 'MyApp', '[]', 1, '2024-11-02 15:04:39', '2024-11-02 15:51:39', '2025-11-02 15:04:39'),
+('33e1c28de0b645acd67f8d83e4750b620ab77c07eadc3adc831f7d8fd2cd5d03ed7d58cf1ab42fe7', 28, 1, 'MyApp', '[]', 1, '2026-02-08 12:51:18', '2026-02-08 12:52:40', '2027-02-08 12:51:18'),
 ('398b15860b85a0801b87e6a5551b799b7e457c18e01c699f9bf84cb9429ac1f516a0d8053a58399c', 26, 1, 'MyApp', '[]', 1, '2024-12-01 08:38:50', '2024-12-27 10:11:23', '2025-12-01 08:38:50'),
 ('3cc4ef471b4e5d6a059a4f673d6374b160c4434f96606c63ea2a151b998fefb8494c8f985950a065', 25, 1, 'MyApp', '[]', 0, '2024-10-16 05:29:51', '2024-10-16 05:29:51', '2025-10-16 05:29:51'),
-('40eb2ef42e85b84edec253014fdbf99cad9600a3be992fd4d6825f62eacf75219a556e3b0120df96', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:25:24', '2026-01-03 10:26:22', '2027-01-03 08:25:24'),
+('40eb2ef42e85b84edec253014fdbf99cad9600a3be992fd4d6825f62eacf75219a556e3b0120df96', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:25:24', '2026-02-08 12:52:40', '2027-01-03 08:25:24'),
 ('419f506a30f79d338ffa4bc08352cf642a44e6936606b333864ed38a790dea1629b73f3d8e83476d', 26, 1, 'MyApp', '[]', 0, '2024-12-27 10:11:51', '2024-12-27 10:11:51', '2025-12-27 10:11:51'),
 ('42fe3fe21ebb6a28499a8450bbd3057246572d10b62637a798c49a118e4f0fbf3cfcffafb29b8d8d', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:16:45', '2024-12-27 10:11:23', '2025-12-27 08:16:45'),
-('453c9f023ddd895c7a25a77adaf763ae83aa3815acfa4277638091daa181a8605d1e0337b946725b', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:44', '2026-01-03 10:26:22', '2027-01-03 08:38:44'),
-('477457618e9077e84d40507e09633a51087a7fd5703525c511df1cecc2c810587c03d64bfe4e9dcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:36', '2026-01-03 10:26:22', '2027-01-03 08:37:36'),
-('48111d11a7cc0752747e8d9d006314e1693e10e8a32bb85b4079e2a7f1453823344171c83500bf2a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 07:59:20', '2026-01-03 10:26:22', '2027-01-03 07:59:20'),
-('4b8f9121c9f01408ba8ecfac65d5d25dddce344323a4aaf94b1a4204281897fca1875f1540f1aeda', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:47', '2026-01-03 10:26:22', '2027-01-03 08:36:47'),
-('4bd2007d7151a9acc2df965ffb4504830e086469d5499dfe57162097dcb5108498141464949bfc23', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:24:45', '2026-01-03 10:26:22', '2027-01-03 08:24:45'),
+('453c9f023ddd895c7a25a77adaf763ae83aa3815acfa4277638091daa181a8605d1e0337b946725b', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:44', '2026-02-08 12:52:40', '2027-01-03 08:38:44'),
+('477457618e9077e84d40507e09633a51087a7fd5703525c511df1cecc2c810587c03d64bfe4e9dcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:36', '2026-02-08 12:52:40', '2027-01-03 08:37:36'),
+('48111d11a7cc0752747e8d9d006314e1693e10e8a32bb85b4079e2a7f1453823344171c83500bf2a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 07:59:20', '2026-02-08 12:52:40', '2027-01-03 07:59:20'),
+('4b8f9121c9f01408ba8ecfac65d5d25dddce344323a4aaf94b1a4204281897fca1875f1540f1aeda', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:47', '2026-02-08 12:52:40', '2027-01-03 08:36:47'),
+('4bd2007d7151a9acc2df965ffb4504830e086469d5499dfe57162097dcb5108498141464949bfc23', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:24:45', '2026-02-08 12:52:40', '2027-01-03 08:24:45'),
 ('4d16abaa62e5c0374b208e34f2af8c256847f67d17c52ab45dcc950062863ee1b293dc960106c607', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:17:05', '2026-01-04 08:42:12', '2025-11-09 08:17:05'),
 ('4fc2287824c1d4a7728b195ebf5656df58d454de4e07ec433e4d147fd61d6a045164c5f5b49240bd', 26, 1, 'MyApp', '[]', 1, '2024-12-15 04:32:50', '2024-12-27 10:11:23', '2025-12-15 04:32:50'),
-('5183829e514f2d8284f732b07718957b511eaa7f2e7e5de8c89415def592ab07094a67b2210b034f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:31:23', '2026-01-03 10:26:22', '2027-01-03 08:31:23'),
+('5183829e514f2d8284f732b07718957b511eaa7f2e7e5de8c89415def592ab07094a67b2210b034f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:31:23', '2026-02-08 12:52:40', '2027-01-03 08:31:23'),
 ('52b301d2025ceebe4a01eaaa670ac95a64e36b0213d7112a3e8cf9e01218544015a071e37b392052', 26, 1, 'MyApp', '[]', 1, '2024-10-21 06:09:56', '2024-12-27 10:11:23', '2025-10-21 06:09:56'),
-('5672843e461bc5548ae8ea92a7d6c6f5ba2d4fe0c47a2982d491e0e38f130db0c61c6e6616d34986', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:42', '2026-01-03 10:26:22', '2027-01-03 08:35:42'),
+('5672843e461bc5548ae8ea92a7d6c6f5ba2d4fe0c47a2982d491e0e38f130db0c61c6e6616d34986', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:42', '2026-02-08 12:52:40', '2027-01-03 08:35:42'),
 ('576037debeaa758bf8e9ef1517c0930a3f6f106325a08ce0cc1527482711f9b13609bcf40809ad1d', 24, 1, 'MyApp', '[]', 1, '2024-10-13 06:55:13', '2024-10-21 06:08:02', '2025-10-13 06:55:13'),
 ('5970843354c52a61ae896de5c41eddca3e67a638c6ba8c497d36c19bcd40928062779f579c2852aa', 24, 1, 'MyApp', '[]', 1, '2024-10-13 06:53:32', '2024-10-21 06:08:02', '2025-10-13 06:53:32'),
 ('605ef3ff38b8242189f6d816836a1e3202c67c4746179abf9be69f09c66d5aee30684ad8d7bd1cde', 24, 1, 'MyApp', '[]', 1, '2024-10-18 08:29:46', '2024-10-21 06:08:02', '2025-10-18 08:29:46'),
 ('64cbf37f173e7c108ebf3bcc5f4370bf635f2e9df257dcc1f0e45658351362900fbb6d89382bc887', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:17:32', '2026-01-04 08:42:12', '2025-11-09 08:17:32'),
-('66bd63aeff4fb3aa9d8bb60d797a161a7b6ff03e6489ff7684a56053e371c4c7832a70adbf746c22', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:32:44', '2026-01-03 10:26:22', '2027-01-03 08:32:44'),
+('66bd63aeff4fb3aa9d8bb60d797a161a7b6ff03e6489ff7684a56053e371c4c7832a70adbf746c22', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:32:44', '2026-02-08 12:52:40', '2027-01-03 08:32:44'),
 ('6793101e4b8b6e8f33c4b771cda4aad7e07c71b61c352a10349e2c2cbf1ec32b0d8ae5077e83d8a7', 27, 1, 'MyApp', '[]', 1, '2024-11-09 11:21:24', '2026-01-04 08:42:12', '2025-11-09 11:21:24'),
-('7023f2f68cf10bc00a024dc5640f5ef3385a2733670375ea9391fe86604ec55b3ad5cee2794686b6', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:00', '2026-01-03 10:26:22', '2027-01-03 08:35:00'),
+('684a6010dc575ab96498e9a394982fb859504f37701a408909c1370c414740d8047241e31efae806', 28, 1, 'MyApp', '[]', 1, '2026-01-24 09:09:25', '2026-02-08 12:52:40', '2027-01-24 09:09:25'),
+('7023f2f68cf10bc00a024dc5640f5ef3385a2733670375ea9391fe86604ec55b3ad5cee2794686b6', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:00', '2026-02-08 12:52:40', '2027-01-03 08:35:00'),
 ('73aacc0261a61a6a27ddfde32dcbcdde4a9c048f498cbee041694fc3bbdc7081b3eb621edee883ef', 27, 1, 'MyApp', '[]', 1, '2024-11-10 10:40:01', '2026-01-04 08:42:12', '2025-11-10 10:40:01'),
-('749d5d4eb2362cc13610d62559cc6b467e6ba56baafcf4030393f111b6a03035508022c64eb50ff5', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:41:58', '2026-01-03 10:26:22', '2027-01-03 08:41:58'),
-('78bd59f1ae72d32b2af501a9ec5f3942577ade545c19b467a48cb21fdfbc60b794db6adc26e111a7', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:42:20', '2026-01-03 10:26:22', '2027-01-02 11:42:20'),
-('7a002c114e833ca9c273e429f45245986b83e0c250d73ae147cd2cd8125c7d177227639c3c4b264e', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:39:10', '2026-01-03 10:26:22', '2027-01-02 11:39:10'),
+('749d5d4eb2362cc13610d62559cc6b467e6ba56baafcf4030393f111b6a03035508022c64eb50ff5', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:41:58', '2026-02-08 12:52:40', '2027-01-03 08:41:58'),
+('78bd59f1ae72d32b2af501a9ec5f3942577ade545c19b467a48cb21fdfbc60b794db6adc26e111a7', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:42:20', '2026-02-08 12:52:40', '2027-01-02 11:42:20'),
+('7a002c114e833ca9c273e429f45245986b83e0c250d73ae147cd2cd8125c7d177227639c3c4b264e', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:39:10', '2026-02-08 12:52:40', '2027-01-02 11:39:10'),
+('7ebb4b3cb84dc2dfef16ae8827f80ff2624dc53ec377800dde918b97e49f2fd7c3b7cd7037f98efe', 28, 1, 'MyApp', '[]', 1, '2026-01-25 06:55:24', '2026-02-08 12:52:40', '2027-01-25 06:55:24'),
 ('81e70348462760e1b9578f69d864fbd332eb4e759a7cb3238df15a68dd483d5175b28945022de803', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:52:17', '2026-01-04 08:42:12', '2025-11-09 07:52:17'),
-('84c69f640fcf9d0f7ed2a11ca4b195b7a1962198d88ba456eeb3bc5ca81c3c3cccf9ee2fb9af4196', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:04:28', '2026-01-03 10:26:22', '2027-01-02 12:04:28'),
+('84c69f640fcf9d0f7ed2a11ca4b195b7a1962198d88ba456eeb3bc5ca81c3c3cccf9ee2fb9af4196', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:04:28', '2026-02-08 12:52:40', '2027-01-02 12:04:28'),
+('84cd113fe921f3aae3e14ac2c82107f1cacec2ee280a2c31003eb5583e65a895dde8f1087e9f0e6d', 28, 1, 'MyApp', '[]', 1, '2026-01-25 06:16:09', '2026-02-08 12:52:40', '2027-01-25 06:16:09'),
 ('87a65251d2b06656d51e9f25012ba6319ae46657b11565d577c7f45ba8e650dae6c10b3909edb529', 23, 1, 'MyApp', '[]', 0, '2024-10-13 06:35:15', '2024-10-13 06:35:15', '2025-10-13 06:35:15'),
 ('87aec5d048f4293a100c83deb3eadffe694bdecd6b5882427083d513f41ebc776eed7c329bcb7493', 27, 1, 'MyApp', '[]', 1, '2025-12-30 08:59:27', '2026-01-04 08:42:12', '2026-12-30 08:59:27'),
-('897c3ec58b37b29092e35226f8af0b2a6864d76f23203e5fdf45a273c043de1184b06fb7782c6e98', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:53', '2026-01-03 10:26:22', '2027-01-02 11:58:53'),
-('8d59609d992514fe04c01b6b4773a4ce2afc3e8d47c3fbe1fb0dcccc30b458e27ef7b68851e5f3d5', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:59:34', '2026-01-03 10:26:22', '2027-01-02 11:59:34'),
+('897c3ec58b37b29092e35226f8af0b2a6864d76f23203e5fdf45a273c043de1184b06fb7782c6e98', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:53', '2026-02-08 12:52:40', '2027-01-02 11:58:53'),
+('8d59609d992514fe04c01b6b4773a4ce2afc3e8d47c3fbe1fb0dcccc30b458e27ef7b68851e5f3d5', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:59:34', '2026-02-08 12:52:40', '2027-01-02 11:59:34'),
 ('8d7169ffafe380572c9ddb7d7482c778532da60b661eebdfde65feb0f97e790008e32a27f06deede', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:07', '2026-01-04 08:42:12', '2025-11-09 07:54:07'),
 ('912ec3193a684f170e4ff796e19c0e79733c00654012dfcc7b51a91b751d2f4e131a0648076b760d', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:18:47', '2024-12-27 10:11:23', '2025-12-27 08:18:47'),
 ('99d91f4820b2024068933cdd2eacf4bb0d85c33f8e3794eaeb5a738dbd938964494bc23944f0a487', 26, 1, 'MyApp', '[]', 1, '2024-11-16 09:15:00', '2024-12-27 10:11:23', '2025-11-16 09:15:00'),
 ('9d647f9e304ecfacdb3f362a72d0153227d21678c1090533e2914b95e62af6d723fde7edd73edad9', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:16:04', '2026-01-04 08:42:12', '2025-11-09 08:16:04'),
-('a97b52dc4a10e69cb06656590132c2298ec6e9bc92fbf6b570f61beb1f261ed70b3dace4657fe974', 28, 1, 'MyApp', '[]', 0, '2026-01-04 08:51:00', '2026-01-04 08:51:00', '2027-01-04 08:51:00'),
-('addc34f84de345442322abef9d9cd3c32e819cad317f3d6074e2f7e6cbde6128e37495e1bf6057bd', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:21', '2026-01-03 10:26:22', '2027-01-02 11:58:21'),
-('aed22c26f0486598455ff065d8a36bec12b259cdeb8fb9d32aa7867d10e4c72d7ab2fda1772af056', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:27:57', '2026-01-03 10:26:22', '2027-01-03 08:27:57'),
-('b21b0ac9396ab2d58b490f33c941c4f528aad6b405a5fa4d3884498c61b084060ff56d8c6d53bddf', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:26:33', '2026-01-03 10:26:22', '2027-01-03 08:26:33'),
+('a97b52dc4a10e69cb06656590132c2298ec6e9bc92fbf6b570f61beb1f261ed70b3dace4657fe974', 28, 1, 'MyApp', '[]', 1, '2026-01-04 08:51:00', '2026-02-08 12:52:40', '2027-01-04 08:51:00'),
+('addc34f84de345442322abef9d9cd3c32e819cad317f3d6074e2f7e6cbde6128e37495e1bf6057bd', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:21', '2026-02-08 12:52:40', '2027-01-02 11:58:21'),
+('aed22c26f0486598455ff065d8a36bec12b259cdeb8fb9d32aa7867d10e4c72d7ab2fda1772af056', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:27:57', '2026-02-08 12:52:40', '2027-01-03 08:27:57'),
+('b21b0ac9396ab2d58b490f33c941c4f528aad6b405a5fa4d3884498c61b084060ff56d8c6d53bddf', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:26:33', '2026-02-08 12:52:40', '2027-01-03 08:26:33'),
 ('b3bf45a510ca423059a9380bcbf8f6f5f5f8b213ef81a8b0a3fbaa25bb75de64077a37317226e04d', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:27', '2026-01-04 08:42:12', '2025-11-09 07:54:27'),
-('bc6a6484dbfe15bbc1f481d67569a6f7e47eb76b4cf6921356a2a1dcad7c7055655ad74d1d044f4d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:59', '2026-01-03 10:26:22', '2027-01-03 08:33:59'),
+('bc6a6484dbfe15bbc1f481d67569a6f7e47eb76b4cf6921356a2a1dcad7c7055655ad74d1d044f4d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:59', '2026-02-08 12:52:40', '2027-01-03 08:33:59'),
 ('c0c0e24c4820c844e7b4f1de956cef510ee47d87eae6dad0493a72399a07a965baa87bbd5e1cb425', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:04', '2026-01-04 08:42:12', '2025-11-09 08:13:04'),
-('c26c68807dc164fab874c409ae970b584fd04d5b75d5091cc6cc8973f362e6e4eb7d1a30456d13e8', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:40:30', '2026-01-03 10:26:22', '2027-01-03 08:40:30'),
-('cc824b2942c2d638645cad7db5058f85b5a9b3f0ddeffbd258fc3a5da9ea1c062ca97298c5b0f0cd', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:49', '2026-01-03 10:26:22', '2027-01-03 08:38:49'),
-('d09877fdb46309a39f069609830a3f33768d31d03083533e57e94fa25f5f0b025d7cff8a1d92a825', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:09', '2026-01-03 10:26:22', '2027-01-03 08:39:09'),
-('d0c5eb51c198db805992c3ccf98c5c875ec2e387bf41eaf1fc77b6b257fa448176c7f5004086c62d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:42:26', '2026-01-03 10:26:22', '2027-01-03 08:42:26'),
-('d490d081096e9519aeb3affb0ca3b4d71be71e5d51baee7d370b8658719ba9f13c5558b29064bd54', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:00:02', '2026-01-03 10:26:22', '2027-01-02 12:00:02'),
+('c26c68807dc164fab874c409ae970b584fd04d5b75d5091cc6cc8973f362e6e4eb7d1a30456d13e8', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:40:30', '2026-02-08 12:52:40', '2027-01-03 08:40:30'),
+('cc824b2942c2d638645cad7db5058f85b5a9b3f0ddeffbd258fc3a5da9ea1c062ca97298c5b0f0cd', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:49', '2026-02-08 12:52:40', '2027-01-03 08:38:49'),
+('d09877fdb46309a39f069609830a3f33768d31d03083533e57e94fa25f5f0b025d7cff8a1d92a825', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:09', '2026-02-08 12:52:40', '2027-01-03 08:39:09'),
+('d0c5eb51c198db805992c3ccf98c5c875ec2e387bf41eaf1fc77b6b257fa448176c7f5004086c62d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:42:26', '2026-02-08 12:52:40', '2027-01-03 08:42:26'),
+('d490d081096e9519aeb3affb0ca3b4d71be71e5d51baee7d370b8658719ba9f13c5558b29064bd54', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:00:02', '2026-02-08 12:52:40', '2027-01-02 12:00:02'),
 ('d5a8de12179a27b1c6f243e8722ed183346bfe1883b67d7c097bb3b5b35d0c1f1b628e407f6a3b19', 27, 1, 'MyApp', '[]', 1, '2024-10-21 06:17:34', '2026-01-04 08:42:12', '2025-10-21 06:17:34'),
-('d76fd93f9b7d4fefc43026291e6808a52f9cf41b7611ecb16da2c48beabacfd8c49a9454a596927f', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:55:10', '2026-01-03 10:26:22', '2027-01-02 11:55:10'),
+('d76fd93f9b7d4fefc43026291e6808a52f9cf41b7611ecb16da2c48beabacfd8c49a9454a596927f', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:55:10', '2026-02-08 12:52:40', '2027-01-02 11:55:10'),
 ('da38243a2ba02f7ce04eb156390e5fb30006882963b304e4a1944018e779d6ee4b53ec80d7274a8e', 11, 1, 'MyApp', '[]', 1, '2024-11-02 15:55:07', '2024-11-09 07:43:32', '2025-11-02 15:55:07'),
 ('dc6bb1b59adc2b1ad274d5c2fa984e907fe0a63794cf1b509bd883fa188d71484bd112a47a5f8190', 26, 1, 'MyApp', '[]', 1, '2024-12-15 04:26:18', '2024-12-27 10:11:23', '2025-12-15 04:26:18'),
 ('de4cd7e43e450b1bb006da6ec6c23a4b1eabe4a8166dd9e93e265fed503b0c189662b7a5d8e06135', 26, 1, 'MyApp', '[]', 1, '2024-11-17 06:36:24', '2024-12-27 10:11:23', '2025-11-17 06:36:24'),
 ('df1ea0409e7d47b74718a5c00bcd56fd53ed0f8c88e8f9ff177ff985ef8735ff1089f87f1debb62c', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:16', '2026-01-04 08:42:12', '2025-11-09 08:13:16'),
 ('e0d551a2f15ea926573450cae08fe95e067ee7e95503c6dfe9a56c82b007ef1d39607516b369c41f', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:48', '2026-01-04 08:42:12', '2025-11-09 08:13:48'),
-('e21c3d7cacc635201db49dda1b04d0c767d914c3e886deb9363549f734f09f656b352fd91ecd0ca0', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:46', '2026-01-03 10:26:22', '2027-01-02 11:57:46'),
+('e21c3d7cacc635201db49dda1b04d0c767d914c3e886deb9363549f734f09f656b352fd91ecd0ca0', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:46', '2026-02-08 12:52:40', '2027-01-02 11:57:46'),
+('e2ec1ffb912c238cc7ce6402aa433ffe1fbf48f7cf222334b05c0d2bbe3dfd4f10e61ba1bd69521d', 28, 1, 'MyApp', '[]', 0, '2026-02-08 12:54:44', '2026-02-08 12:54:44', '2027-02-08 12:54:44'),
 ('e3efa5ca063a378328d97d6a8c066a276ac364a07ee83f7a6da16d23cff8318eff5e7fb1ab9a00e4', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:53:53', '2026-01-04 08:42:12', '2025-11-09 07:53:53'),
 ('e46ca33a86935399ad01c1841d319735ea9b534ac64e9009abb5628e3ec9953f8d141d1de8ead1fc', 26, 1, 'MyApp', '[]', 1, '2024-11-17 06:34:53', '2024-12-27 10:11:23', '2025-11-17 06:34:53'),
 ('e8db9e20cfab7066f2823e652cb10d479f4776992fb280a12e293390c1f8e738eeb26ced6ab149bd', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:26:30', '2024-12-27 10:11:23', '2025-12-27 08:26:30'),
-('ecbfa6e7b5f286f1093e53aaedee67128016561acd3da905ef2800be59d3f87f4fbc0f60d1bf1d1b', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:27', '2026-01-03 10:26:22', '2027-01-02 11:57:27'),
+('ecbfa6e7b5f286f1093e53aaedee67128016561acd3da905ef2800be59d3f87f4fbc0f60d1bf1d1b', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:27', '2026-02-08 12:52:40', '2027-01-02 11:57:27'),
 ('f18b5bd2970d7b955bf155f478024cfa31f4b82b89a918578c4be91eac53422adc2c27a266183ef8', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:36:32', '2026-01-04 08:42:12', '2025-11-09 08:36:32'),
 ('f63948153056dd1d61e77f9afc83f0928c461868e03b4cb8106a6c6219f07fe9c16fc0ebe0845743', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:15:22', '2026-01-04 08:42:12', '2025-11-09 08:15:22'),
 ('fa797315f4466873c5caea339a427415a6936d9e519005e284f078a314c7f06a36fc2570293c69fe', 27, 1, 'MyApp', '[]', 1, '2024-11-10 11:21:40', '2026-01-04 08:42:12', '2025-11-10 11:21:40'),
-('fc550ab7753a23dc9e748bc0581fbc8aeab3b4908a61152036764e261b2f94be408d0169c0368c8a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:40', '2026-01-03 10:26:22', '2027-01-03 08:39:40');
+('fc550ab7753a23dc9e748bc0581fbc8aeab3b4908a61152036764e261b2f94be408d0169c0368c8a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:40', '2026-02-08 12:52:40', '2027-01-03 08:39:40');
 
 -- --------------------------------------------------------
 
@@ -5955,20 +5985,10 @@ INSERT INTO `orders` (`id`, `transaction_id`, `store_id`, `item_id`, `item_name`
 (42, 59, 4, 133, 'Aspernatur eaque sit dolore nisi aut deserunt voluptate.', 'Officia dolor facilis sequi minima dolorum cumque laudantium officia veniam dignissimos harum quis sed.', 14, 50.10, 55.11, 60.62, 1, NULL, '2024-11-09 08:36:36', '2024-11-09 08:36:36'),
 (43, 60, 7, 27, 'Sed est ratione repudiandae nihil doloremque atque sunt.', 'Dolorem minus mollitia inventore velit dolores aspernatur nobis aliquid nihil nihil.', 1, 77.60, 85.36, 93.90, 1, NULL, '2024-11-09 11:21:27', '2024-11-09 11:21:27'),
 (44, 61, 6, 23, 'Saepe velit sit consectetur maxime deserunt.', 'Corrupti quos aut iste quod a autem amet sed laborum.', 5, 50.20, 55.22, 60.74, 1, NULL, '2024-11-10 11:22:08', '2024-11-10 11:22:08'),
-(45, 66, 1037370658, 133, 'Aspernatur eaque sit dolore nisi aut deserunt voluptate.', 'Officia dolor facilis sequi minima dolorum cumque laudantium officia veniam dignissimos harum quis sed.', 14, 50.10, 55.11, 60.62, 1, NULL, '2026-01-01 12:02:02', '2026-01-01 12:02:02'),
-(46, 67, 1037370658, 133, 'Aspernatur eaque sit dolore nisi aut deserunt voluptate.', 'Officia dolor facilis sequi minima dolorum cumque laudantium officia veniam dignissimos harum quis sed.', 14, 50.10, 55.11, 60.62, 1, NULL, '2026-01-01 12:02:09', '2026-01-01 12:02:09'),
-(47, 68, 2033899500, 879, 'Qui vero nesciunt impedit molestiae voluptas numquam.', 'Esse aperiam eveniet sit labore rerum molestias molestias eum est et quis aspernatur ipsam at sunt asperiores.', 2, 96.80, 106.48, 117.13, 1, NULL, '2026-01-01 16:10:02', '2026-01-01 16:10:02'),
-(48, 69, 2033899500, 943, 'Consequatur assumenda et rem et eos.', 'Ut accusantium dolore aperiam tempora hic architecto rerum rerum voluptatem non consequatur ipsa nam.', 16, 26.00, 28.60, 31.46, 2, NULL, '2026-01-02 14:23:01', '2026-01-02 14:23:01'),
-(49, 70, 2033899500, 949, 'Enim dolores nulla id illum earum et vitae.', 'Molestias eum repellendus cupiditate natus debitis esse hic maiores.', 19, 85.50, 94.05, 103.46, 2, NULL, '2026-01-02 14:25:13', '2026-01-02 14:25:13'),
-(50, 70, 2033899500, 801, 'Itaque neque eligendi ratione doloribus.', 'Aut asperiores eos sunt vitae ut ad fuga aspernatur.', 7, 81.10, 89.21, 98.13, 1, NULL, '2026-01-02 14:25:13', '2026-01-02 14:25:13'),
-(51, 71, 2033899500, 943, 'Consequatur assumenda et rem et eos.', 'Ut accusantium dolore aperiam tempora hic architecto rerum rerum voluptatem non consequatur ipsa nam.', 16, 26.00, 28.60, 31.46, 1, NULL, '2026-01-03 07:57:47', '2026-01-03 07:57:47'),
-(52, 72, 1037370658, 852, 'Non ipsam est consequatur animi non atque.', 'Voluptas ducimus hic pariatur corporis nobis quia non repellendus nihil recusandae repellendus qui aut harum.', 11, 12.90, 14.19, 15.61, 1, NULL, '2026-01-03 10:23:14', '2026-01-03 10:23:14'),
-(53, 73, 2033899500, 949, 'Enim dolores nulla id illum earum et vitae.', 'Molestias eum repellendus cupiditate natus debitis esse hic maiores.', 19, 85.50, 94.05, 103.46, 2, NULL, '2026-01-03 10:26:11', '2026-01-03 10:26:11'),
-(54, 74, 458047115, 754, 'Facere dolorum qui odio quibusdam.', 'Temporibus sint quaerat sunt sit est consequatur iure ullam magni cum quia.', 13, 64.00, 70.40, 77.44, 1, NULL, '2026-01-04 08:40:43', '2026-01-04 08:40:43'),
-(55, 75, 327342599, 957, 'Accusantium dolor explicabo et nulla ab sed.', 'Perspiciatis vero magnam quia quo sit at unde odit quia rerum magnam ad qui inventore.', 17, 26.70, 29.37, 32.31, 1, NULL, '2026-01-04 08:51:00', '2026-01-04 08:51:00'),
-(56, 76, 2033899500, 943, 'Consequatur assumenda et rem et eos.', 'Ut accusantium dolore aperiam tempora hic architecto rerum rerum voluptatem non consequatur ipsa nam.', 16, 26.00, 28.60, 31.46, 1, NULL, '2026-01-04 09:13:15', '2026-01-04 09:13:15'),
-(57, 77, 1609067713, 858, 'Dolore consectetur illo consequatur.', 'Dolorem voluptatum totam veniam et qui et dolorem mollitia ut nihil est quibusdam quae blanditiis nulla molestiae.', 18, 81.90, 90.09, 99.10, 1, NULL, '2026-01-04 09:19:33', '2026-01-04 09:19:33'),
-(58, 78, 458047115, 754, 'Facere dolorum qui odio quibusdam.', 'Temporibus sint quaerat sunt sit est consequatur iure ullam magni cum quia.', 13, 64.00, 70.40, 77.44, 1, NULL, '2026-01-04 09:31:19', '2026-01-04 09:31:19');
+(60, 80, 2, 982, 'Dignissimos omnis exercitationem sed sunt eligendi eos quia quia.', 'Odit suscipit aut numquam omnis culpa quia eos.', 10, 64.80, 71.28, 78.41, 1, NULL, '2026-01-04 12:33:11', '2026-01-04 12:33:11'),
+(61, 81, 2, 742, 'Officiis ipsa quia magnam quaerat.', 'Et nostrum natus et quidem dolorum eum tenetur eius nihil delectus.', 12, 19.20, 21.12, 23.23, 2, NULL, '2026-01-24 07:02:03', '2026-01-24 07:02:03'),
+(62, 82, 2, 949, 'Enim dolores nulla id illum earum et vitae.', 'Molestias eum repellendus cupiditate natus debitis esse hic maiores.', 19, 85.50, 94.05, 103.46, 1, NULL, '2026-02-08 10:10:26', '2026-02-08 10:10:26'),
+(63, 83, 2, 943, 'Consequatur assumenda et rem et eos.', 'Ut accusantium dolore aperiam tempora hic architecto rerum rerum voluptatem non consequatur ipsa nam.', 16, 26.00, 28.60, 31.46, 1, NULL, '2026-02-08 10:14:18', '2026-02-08 10:14:18');
 
 -- --------------------------------------------------------
 
@@ -8024,7 +8044,7 @@ INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`)
 (18, 26, 3, '2024-10-21 06:09:26', '2024-10-21 06:09:26'),
 (19, 27, 7, '2024-10-21 06:12:32', '2024-10-21 06:12:32'),
 (20, 11, 1, '2026-01-02 11:25:40', '2026-01-02 11:25:40'),
-(21, 28, 4, NULL, NULL);
+(21, 28, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -8344,7 +8364,7 @@ CREATE TABLE `stores` (
 --
 
 INSERT INTO `stores` (`id`, `name`, `mobile`, `desc`, `latitude`, `longitude`, `is_active`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Molestias id delectus harum.', '98995816937', 'Ex voluptas maiores e', 10.3513178692, 123.97168502346, NULL, 26, NULL, '2024-08-09 21:38:54', '2024-12-15 04:35:04'),
+(1, 'A earum.', '9172292694712', 'Ex voluptas maiores e', 14.5995, 120.9842, NULL, 26, NULL, '2024-08-09 21:38:54', '2026-01-24 08:54:15'),
 (2, 'Cum magni cum.', '98236395160', 'Ratione dignissimos qui sint non ut rerum vel enim itaque quidem qui corrupti nihil rerum necessitatibus dolores maxime doloribus dolores quidem alias soluta reiciendis quasi alias.', 10.358196258544922, 123.98220825195312, NULL, 11, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
 (3, 'Adipisci eius blanditiis.', '95390877743', 'Omnis quidem aut ipsam delectus assumenda laudantium et officiis est voluptatem impedit ipsa ab aliquam repellendus quasi cupiditate eos ut libero ea voluptas.', 10.351566314697266, 123.97174072265625, NULL, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
 (4, 'Eveniet exercitationem necessitatibus dolorem.', '92057078643', 'Voluptatem quia possimus vel sit non impedit dolorem eum officia rerum minima quos sed culpa dolorum voluptatem sit sunt et aspernatur nesciunt qui ipsa laborum.', 10.331385612487793, 123.93457794189453, NULL, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
@@ -8503,6 +8523,7 @@ CREATE TABLE `store_ratings` (
 
 CREATE TABLE `transactions` (
   `id` bigint UNSIGNED NOT NULL,
+  `store_id` bigint NOT NULL,
   `user_id` bigint NOT NULL,
   `reference_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status_id` bigint NOT NULL,
@@ -8523,85 +8544,10 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `user_id`, `reference_id`, `status_id`, `payment_method_id`, `receive_method_id`, `lat`, `lng`, `contact_number`, `delivery_charge`, `total`, `grand_total`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 24, '6713288b02cca', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 11:33:31', '2024-10-19 11:33:31'),
-(2, 24, '6713289fe9e8b', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 11:33:51', '2024-10-19 11:33:51'),
-(3, 24, '67133ee822e4c', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:08:56', '2024-10-19 13:08:56'),
-(4, 24, '67133f5a594a3', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:10:50', '2024-10-19 13:10:50'),
-(5, 24, '67133f8052b52', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:11:28', '2024-10-19 13:11:28'),
-(6, 24, '67133fda55b8e', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:12:58', '2024-10-19 13:12:58'),
-(7, 24, '67133fec760fc', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:13:16', '2024-10-19 13:13:16'),
-(8, 24, '67133ffa94199', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:13:30', '2024-10-19 13:13:30'),
-(9, 24, '6713400e5ab7e', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:13:50', '2024-10-19 13:13:50'),
-(10, 24, '67134022b1a2d', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:14:10', '2024-10-19 13:14:10'),
-(11, 24, '6713405eab672', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:15:10', '2024-10-19 13:15:10'),
-(12, 24, '6713406cad689', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:15:24', '2024-10-19 13:15:24'),
-(13, 24, '671340885c3e7', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:15:52', '2024-10-19 13:15:52'),
-(14, 24, '671340b75ca2a', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:16:39', '2024-10-19 13:16:39'),
-(15, 24, '671340c4343ed', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:16:52', '2024-10-19 13:16:52'),
-(16, 24, '671340d22bd05', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:17:06', '2024-10-19 13:17:06'),
-(17, 24, '671340ef4782f', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:17:35', '2024-10-19 13:17:35'),
-(18, 24, '671340f629c1e', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:17:42', '2024-10-19 13:17:42'),
-(19, 24, '67134117dcbc0', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-19 13:18:15', '2024-10-19 13:18:15'),
-(20, 24, '67142491ca345', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:28:49', '2024-10-20 05:28:49'),
-(21, 24, '671425b7df47d', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:33:43', '2024-10-20 05:33:43'),
-(22, 24, '671425e05bd89', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:34:24', '2024-10-20 05:34:24'),
-(23, 24, '6714262fc1fe1', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:35:43', '2024-10-20 05:35:43'),
-(24, 24, '6714264682c4b', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:36:06', '2024-10-20 05:36:06'),
-(25, 24, '67142662c455e', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:36:34', '2024-10-20 05:36:34'),
-(26, 24, '671426f4cf8f9', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:39:00', '2024-10-20 05:39:00'),
-(27, 24, '6714271eccd65', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:39:42', '2024-10-20 05:39:42'),
-(28, 24, '671427a6caffd', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:41:58', '2024-10-20 05:41:58'),
-(29, 24, '671427b80bbc7', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:42:16', '2024-10-20 05:42:16'),
-(30, 24, '671427eb8619e', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:43:07', '2024-10-20 05:43:07'),
-(31, 24, '67142830b10ae', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:44:16', '2024-10-20 05:44:16'),
-(32, 24, '6714283dc65e7', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:44:29', '2024-10-20 05:44:29'),
-(33, 24, '671428558d799', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:44:53', '2024-10-20 05:44:53'),
-(34, 24, '6714286b5b893', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:45:15', '2024-10-20 05:45:15'),
-(35, 24, '67142879a53f5', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:45:29', '2024-10-20 05:45:29'),
-(36, 24, '671428b1c58b1', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:46:25', '2024-10-20 05:46:25'),
-(37, 24, '671428baabc35', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:46:34', '2024-10-20 05:46:34'),
-(38, 24, '671428efa5ddb', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:47:27', '2024-10-20 05:47:27'),
-(39, 24, '671429020729c', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:47:46', '2024-10-20 05:47:46'),
-(40, 24, '67142bd492858', 1, 1, 1, NULL, NULL, '09123456789', 37.00, 0.00, 0.00, NULL, '2024-10-20 05:59:48', '2024-10-20 05:59:48'),
-(41, 24, '67142c6b40746', 1, 1, 1, NULL, NULL, '09123456789', 27.00, 0.00, 0.00, NULL, '2024-10-20 06:02:19', '2024-10-20 06:02:19'),
-(42, 24, '67142da7cf287', 1, 1, 1, NULL, NULL, '09123456789', 19.00, 0.00, 0.00, NULL, '2024-10-20 06:07:35', '2024-10-20 06:07:35'),
-(43, 24, '67142e4562279', 1, 1, 1, NULL, NULL, '09123456789', 19.00, 0.00, 0.00, NULL, '2024-10-20 06:10:13', '2024-10-20 06:10:13'),
-(44, 24, '67142f4420353', 1, 1, 1, NULL, NULL, '09123456789', 19.00, 0.00, 0.00, NULL, '2024-10-20 06:14:28', '2024-10-20 06:14:28'),
-(45, 24, '67143004c1cac', 1, 1, 1, NULL, NULL, '09123456789', 19.00, 0.00, 0.00, NULL, '2024-10-20 06:17:40', '2024-10-20 06:17:40'),
-(46, 24, '67144a9fedd55', 1, 1, 1, NULL, NULL, '09123456789', 19.00, 0.00, 0.00, NULL, '2024-10-20 08:11:11', '2024-10-20 08:11:11'),
-(47, 26, '67157fb6ecd9d', 1, 1, 1, NULL, NULL, '09270079123', 19.00, 0.00, 0.00, NULL, '2024-10-21 06:09:58', '2024-10-21 06:09:58'),
-(48, 27, '67158181131aa', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 0.00, 0.00, '2024-10-27 17:53:52', '2024-10-21 06:17:37', '2024-10-27 17:53:52'),
-(49, 27, '671c1ef9a8d98', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 0.00, 0.00, NULL, '2024-10-26 06:43:05', '2024-10-26 06:43:05'),
-(50, 27, '671d941f66003', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 0.00, 0.00, NULL, '2024-10-27 09:15:11', '2024-10-27 09:15:11'),
-(51, 27, '671d999849e33', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 60.74, 0.00, NULL, '2024-10-27 09:38:32', '2024-10-27 09:38:32'),
-(52, 27, '671d9bbdaa48c', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 60.74, 79.74, NULL, '2024-10-27 09:47:41', '2024-10-27 09:47:41'),
-(53, 27, '671e0e23663e2', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 16.21, 35.21, NULL, '2024-10-27 17:55:47', '2024-10-27 17:55:47'),
-(54, 27, '671e0e924bbcf', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 16.21, 35.21, NULL, '2024-10-27 17:57:38', '2024-10-27 17:57:38'),
-(55, 27, '6724931f03975', 1, 1, 1, NULL, NULL, '09270079301', 37.00, 121.36, 158.36, NULL, '2024-11-01 16:36:47', '2024-11-01 16:36:47'),
-(56, 22, '6725cf0a73694', 1, 1, 1, NULL, NULL, '09289828272', 19.00, 17.91, 36.91, NULL, '2024-11-02 15:04:42', '2024-11-02 15:04:42'),
-(57, 11, '6725dae09283d', 1, 1, 1, NULL, NULL, '09993088141', 115.00, 325.37, 440.37, NULL, '2024-11-02 15:55:12', '2024-11-02 15:55:12'),
-(58, 27, '672ea4347a491', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 78.65, 97.65, NULL, '2024-11-09 07:52:20', '2024-11-09 07:52:20'),
-(59, 27, '672eae945c8d6', 1, 1, 1, NULL, NULL, '09270079301', 27.00, 60.62, 87.62, NULL, '2024-11-09 08:36:36', '2024-11-09 08:36:36'),
-(60, 27, '672ed536dbc31', 1, 1, 1, NULL, NULL, '09270079301', 106.00, 93.90, 199.90, NULL, '2024-11-09 11:21:26', '2024-11-09 11:21:26'),
-(61, 27, '673026e02617f', 1, 1, 1, NULL, NULL, '09270079301', 19.00, 60.74, 79.74, NULL, '2024-11-10 11:22:08', '2024-11-10 11:22:08'),
-(62, 27, '6955cb565401f', 1, 1, 1, NULL, NULL, '09270079301', 5.00, 60.62, 65.62, NULL, '2026-01-01 09:18:14', '2026-01-01 09:18:14'),
-(63, 27, '6955efb2c38ff', 1, 1, 1, NULL, NULL, '09270079301', 134.00, 60.62, 194.62, NULL, '2026-01-01 11:53:22', '2026-01-01 11:53:22'),
-(64, 27, '6955f0930d892', 1, 1, 1, NULL, NULL, '09270079301', 5.00, 60.62, 65.62, NULL, '2026-01-01 11:57:07', '2026-01-01 11:57:07'),
-(65, 27, '6955f14977e00', 1, 1, 1, NULL, NULL, '09270079301', 5.00, 60.62, 65.62, NULL, '2026-01-01 12:00:09', '2026-01-01 12:00:09'),
-(66, 27, '6955f1baac624', 1, 1, 1, NULL, NULL, '09270079301', 5.00, 60.62, 65.62, NULL, '2026-01-01 12:02:02', '2026-01-01 12:02:02'),
-(67, 27, '6955f1c1d495f', 1, 1, 1, NULL, NULL, '09270079301', 134.00, 60.62, 194.62, NULL, '2026-01-01 12:02:09', '2026-01-01 12:02:09'),
-(68, 27, '69562bda2fd1d', 1, 1, 1, NULL, NULL, '09270079301', 14.00, 117.13, 131.13, NULL, '2026-01-01 16:10:02', '2026-01-01 16:10:02'),
-(69, 28, '69576445c9692', 1, 1, 1, NULL, NULL, '9270079301', 13.00, 62.92, 75.92, NULL, '2026-01-02 14:23:01', '2026-01-02 14:23:01'),
-(70, 28, '695764c9c061e', 1, 1, 1, NULL, NULL, '9270079301', 13.00, 305.05, 318.05, NULL, '2026-01-02 14:25:13', '2026-01-02 14:25:13'),
-(71, 27, '69585b7bc4880', 1, 1, 1, NULL, NULL, '09270079301', 120.00, 31.46, 151.46, NULL, '2026-01-03 07:57:47', '2026-01-03 07:57:47'),
-(72, 28, '69587d928c682', 1, 1, 1, NULL, NULL, '9270079301', 10.00, 15.61, 25.61, NULL, '2026-01-03 10:23:14', '2026-01-03 10:23:14'),
-(73, 28, '69587e4326b91', 1, 1, 1, NULL, NULL, '9270079301', 117.00, 206.92, 323.92, NULL, '2026-01-03 10:26:11', '2026-01-03 10:26:11'),
-(74, 27, '6959b70b8afdf', 1, 1, 1, NULL, NULL, '09270079301', 33.00, 77.44, 110.44, NULL, '2026-01-04 08:40:43', '2026-01-04 08:40:43'),
-(75, 28, '6959b974c0894', 1, 3, 3, NULL, NULL, '9270079301', 465.00, 32.31, 497.31, NULL, '2026-01-04 08:51:00', '2026-01-04 08:51:00'),
-(76, 28, '6959beab21dc1', 1, 3, 3, NULL, NULL, '9270079301', 7.00, 31.46, 38.46, NULL, '2026-01-04 09:13:15', '2026-01-04 09:13:15'),
-(77, 28, '6959c025c56ba', 1, 3, 3, NULL, NULL, '9270079301', 33.00, 99.10, 132.10, NULL, '2026-01-04 09:19:33', '2026-01-04 09:19:33'),
-(78, 28, '6959c2e76f59c', 1, 1, 1, NULL, NULL, '9270079301', 33.00, 77.44, 110.44, NULL, '2026-01-04 09:31:19', '2026-01-04 09:31:19');
+INSERT INTO `transactions` (`id`, `store_id`, `user_id`, `reference_id`, `status_id`, `payment_method_id`, `receive_method_id`, `lat`, `lng`, `contact_number`, `delivery_charge`, `total`, `grand_total`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(81, 2033899500, 28, '6973fdebadaf6', 1, 1, 1, 10.36, 123.98, '9270079301', 7.00, 46.46, 53.46, NULL, '2026-01-24 07:02:03', '2026-01-24 07:02:03'),
+(82, 2033899500, 28, '6987f0928bed7', 1, 1, 1, 10.36, 123.99, '9270079301', 13.00, 103.46, 116.46, NULL, '2026-02-08 10:10:26', '2026-02-08 10:10:26'),
+(83, 2033899500, 28, '6987f17a2d1fc', 1, 1, 1, 10.36, 123.99, '9270079301', 13.00, 31.46, 44.46, NULL, '2026-02-08 10:14:18', '2026-02-08 10:14:18');
 
 -- --------------------------------------------------------
 
@@ -9136,7 +9082,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -9196,7 +9142,7 @@ ALTER TABLE `franchisees`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1094;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1101;
 
 --
 -- AUTO_INCREMENT for table `interconnected_cities`
@@ -9238,7 +9184,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `menu_role`
 --
 ALTER TABLE `menu_role`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `menu_role_access_right`
@@ -9286,7 +9232,7 @@ ALTER TABLE `online_prices`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -9436,7 +9382,7 @@ ALTER TABLE `store_ratings`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `transaction_message`
