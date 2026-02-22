@@ -185,6 +185,12 @@ const showStoreList = ref(true)
 const searchString = ref('')
 const origin = ref({ lat: lat.value, lng: lng.value })
 const destination = ref({ lat: 14.609, lng: 120.994 })
+const initialLat = ref<number | null>(null)
+const initialLng = ref<number | null>(null)
+const initialZoom = ref(currentZoom.value)
+const initialOrigin = ref({ lat: origin.value.lat, lng: origin.value.lng })
+const initialDestination = ref({ lat: destination.value.lat, lng: destination.value.lng })
+const initialShowInfoWindow = ref(showInfoWindow.value)
 
 // Create animated location marker element
 const createLocationMarkerElement = (): HTMLElement => {
@@ -237,7 +243,12 @@ const getStoreMarkerOptions = (store: StoreInterface) => {
 }
 
 onMounted(async () => {
-  localGetLocation();
+  await localGetLocation();
+  if (initialLat.value === null || initialLng.value === null) {
+    initialLat.value = lat.value
+    initialLng.value = lng.value
+  }
+  initialOrigin.value = { lat: origin.value.lat, lng: origin.value.lng }
   // Wait for the next tick to ensure the GoogleMap component is mounted
   await nextTick()
 
@@ -250,7 +261,7 @@ onMounted(async () => {
 });
 
 const localGetLocation = () => {
-  getLocation().then((position) => {
+  return getLocation().then((position) => {
     lat.value = position.coords.latitude;
     lng.value = position.coords.longitude;
     origin.value = { lat: lat.value, lng: lng.value }
@@ -530,6 +541,32 @@ const requestDirections = () => {
   }
 }
 
+const resetToInitialDefaults = () => {
+  if (initialLat.value !== null && initialLng.value !== null) {
+    lat.value = initialLat.value
+    lng.value = initialLng.value
+    origin.value = { lat: initialLat.value, lng: initialLng.value }
+  } else {
+    origin.value = { lat: origin.value.lat, lng: origin.value.lng }
+  }
+
+  destination.value = { lat: initialDestination.value.lat, lng: initialDestination.value.lng }
+  currentZoom.value = initialZoom.value
+  showInfoWindow.value = initialShowInfoWindow.value
+  directions.value = null
+
+  if (directionsRenderer.value) {
+    directionsRenderer.value.setMap(null)
+    directionsRenderer.value = null
+  }
+
+  const map = mapRef.value?.$mapObject || mapRef.value?.map || mapRef.value?.$map
+  if (map) {
+    map.setCenter({ lat: lat.value, lng: lng.value })
+    map.setZoom(currentZoom.value)
+  }
+}
+
 watch(searchString, async () => {
   if (searchString.value) {
     const result = await get(
@@ -539,6 +576,9 @@ watch(searchString, async () => {
         query: {
           filters: 'name:' + searchString.value,
           orderBy: 'name:asc',
+          latitude: lat.value,
+          longitude: lng.value,
+          radius: kmRadius.value,
         },
       },
       true
@@ -552,6 +592,7 @@ watch(searchString, async () => {
 
   if (!searchString.value) {
     nearestStores.value = [];
+    resetToInitialDefaults()
   }
 })
 

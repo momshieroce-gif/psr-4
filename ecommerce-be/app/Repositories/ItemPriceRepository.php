@@ -7,7 +7,8 @@ use Illuminate\Support\Arr;
 
 class ItemPriceRepository extends BaseRepository implements BaseInterface
 {
-    
+    protected $params;
+
     public function __construct()
     {
         $this->setModel(new ItemPrice());
@@ -18,7 +19,7 @@ class ItemPriceRepository extends BaseRepository implements BaseInterface
         $this->model = $this->model->whereIn('store_id', $param);
     }
 
-    public function create(){
+    public function createItemPrices(): void {
         $itemPrices = ItemPrice::where('item_id', $this->params['item_id'])->get();
         foreach($itemPrices as $itemPrice){
             $itemPrice->delete();

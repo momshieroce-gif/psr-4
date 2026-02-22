@@ -6,8 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
-
-class MyStoreMiddleware {
+use App\Traits\UtilsTrait;
+class AllTransactionsMiddleware {
+    use UtilsTrait;
     /**
     * Handle an incoming request.
     *
@@ -15,13 +16,10 @@ class MyStoreMiddleware {
     */
 
     public function handle( Request $request, Closure $next ): Response {
-        /**
-        * result is limited to this user_id only.
-        */
-        $request->merge([
-            'filters' => 'user_id:' . Auth::user()->id
-        ]);
 
+        if ( !$this->isSuperAdmin() ) {
+            throw new \App\Exceptions\AccessDeniedException( 'Access Denied!' );
+        }
         return $next( $request );
     }
 }

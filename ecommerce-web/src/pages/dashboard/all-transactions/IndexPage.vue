@@ -1,11 +1,11 @@
 <template>
-  <div class="transactions-page-container">
+  <div class="stores-page-container">
     <!-- Header Section -->
     <div class="page-header q-mb-md">
       <div class="header-content">
         <div class="header-title-section">
           <q-icon name="receipt_long" size="32px" color="primary" class="q-mr-sm" />
-          <h2 class="page-title">My Transactions</h2>
+          <h2 class="page-title">All Transactions</h2>
         </div>
         <div class="header-actions">
           <q-input
@@ -30,26 +30,22 @@
       <div v-if="typedResult.length === 0" class="empty-state-desktop">
         <q-icon name="receipt_long" size="80px" color="grey-4" />
         <div class="text-h5 q-mt-md text-grey-6">No transactions found</div>
-        <div class="text-body2 text-grey-5 q-mt-sm">Try adjusting your search criteria</div>
+        <div class="text-body2 text-grey-5 q-mt-sm">Your transaction history will appear here</div>
       </div>
       <div v-else>
         <!-- Grid Header -->
-        <div class="grid-header">
-          <div class="grid-header-cell header-reference">
+        <div class="grid-header transactions-grid-header">
+          <div class="grid-header-cell header-name">
             <q-icon name="tag" size="20px" color="primary" class="q-mr-xs" />
             <span class="header-label">Reference</span>
           </div>
-          <div class="grid-header-cell header-total">
-            <q-icon name="attach_money" size="20px" color="primary" class="q-mr-xs" />
-            <span class="header-label">Grand Total</span>
+          <div class="grid-header-cell header-name">
+            <q-icon name="tag" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Order Status</span>
           </div>
-          <div class="grid-header-cell header-status">
-            <q-icon name="info" size="20px" color="primary" class="q-mr-xs" />
-            <span class="header-label">Status</span>
-          </div>
-          <div class="grid-header-cell header-date">
-            <q-icon name="calendar_today" size="20px" color="primary" class="q-mr-xs" />
-            <span class="header-label">Date</span>
+          <div class="grid-header-cell header-mobile">
+            <q-icon name="payments" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Summary</span>
           </div>
           <div class="grid-header-cell header-actions">
             <q-icon name="settings" size="20px" color="primary" class="q-mr-xs" />
@@ -58,38 +54,53 @@
         </div>
 
         <!-- Grid Rows -->
-        <div class="transactions-grid">
+        <div class="stores-grid">
           <q-card
             v-for="transaction in typedResult"
             :key="transaction.optimus_id"
             flat
             bordered
-            class="transaction-grid-item"
+            class="store-grid-item"
           >
-            <div class="grid-row">
-              <div class="grid-cell cell-reference">
-                <div class="reference-info">
-                  <q-icon name="tag" color="primary" />
-                  <span>#{{ transaction.reference_id }}</span>
-                </div>
+            <div class="grid-row transaction-grid-row">
+              <div class="grid-cell cell-name">
+                <router-link
+                  :to="`${$route.path}/${transaction.optimus_id}`"
+                  class="transaction-reference"
+                >
+                  <q-icon name="receipt_long" color="primary" />
+                  <div class="transaction-reference-text">
+                    <div class="transaction-reference-id">#{{ transaction.reference_id }}</div>
+                    <div class="transaction-date">
+                      <q-icon name="calendar_today" size="xs" class="q-mr-xs" />
+                      {{ formatDate(transaction.created_at) }}
+                    </div>
+                  </div>
+                </router-link>
               </div>
-              <div class="grid-cell cell-total">
-                <div class="total-info">
-                  <q-icon name="attach_money" color="positive" />
-                  <span class="total-amount">₱{{ formatCurrency(transaction.grand_total) }}</span>
-                </div>
-              </div>
-              <div class="grid-cell cell-status">
-                <q-badge
-                  :color="getStatusColor(transaction.status?.label)"
-                  :label="transaction.status?.label || 'N/A'"
-                  class="status-badge"
-                />
-              </div>
-              <div class="grid-cell cell-date">
-                <div class="date-info">
-                  <q-icon name="calendar_today" color="grey-6" size="16px" />
-                  <span>{{ formatDate(transaction.created_at) }}</span>
+            <div class="grid-cell cell-status">
+              <q-badge
+                :color="getStatusColor(transaction.status?.label)"
+                :label="transaction.status?.label || 'Pending'"
+                class="status-badge"
+              />
+            </div>
+              <div class="grid-cell cell-mobile">
+                <div class="transaction-summary">
+                  <div class="transaction-total">
+                    Grand Total:
+                    <span>{{ transaction.grand_total }}</span>
+                  </div>
+                  <div class="transaction-meta">
+                    <div class="transaction-meta-item">
+                      <q-icon name="payment" size="xs" class="q-mr-xs" />
+                      {{ transaction.payment_method?.name || 'N/A' }}
+                    </div>
+                    <div class="transaction-meta-item">
+                      <q-icon name="local_shipping" size="xs" class="q-mr-xs" />
+                      {{ transaction.receive_method?.name || 'N/A' }}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="grid-cell cell-actions">
@@ -98,23 +109,23 @@
                     unelevated
                     round
                     dense
-                    color="primary"
-                    icon="visibility"
+                    color="negative"
+                    icon="check_circle"
                     :to="`${$route.path}/${transaction.optimus_id}`"
-                    class="action-btn-grid action-btn-view"
+                    class="action-btn-grid action-btn-delete"
                   >
-                    <q-tooltip>View Transaction</q-tooltip>
+                    <q-tooltip>Mark as received</q-tooltip>
                   </q-btn>
                   <q-btn
                     unelevated
                     round
                     dense
-                    color="positive"
-                    icon="check_circle"
+                    color="primary"
+                    icon="visibility"
                     :to="`${$route.path}/${transaction.optimus_id}`"
-                    class="action-btn-grid action-btn-received"
+                    class="action-btn-grid action-btn-edit"
                   >
-                    <q-tooltip>Mark as Received</q-tooltip>
+                    <q-tooltip>View details</q-tooltip>
                   </q-btn>
                 </div>
               </div>
@@ -177,40 +188,56 @@
       <div v-if="typedResult.length === 0" class="empty-state">
         <q-icon name="receipt_long" size="64px" color="grey-4" />
         <div class="text-h6 q-mt-md text-grey-6">No transactions found</div>
+        <div class="text-body2 text-grey-5 q-mt-sm">Your transaction history will appear here</div>
       </div>
-      <div v-else class="transactions-cards">
+      <div v-else class="stores-cards">
         <q-card
           v-for="transaction in typedResult"
           :key="transaction.optimus_id"
           flat
           bordered
-          class="transaction-card q-mb-md"
+          class="store-card q-mb-md"
         >
           <q-card-section>
-            <div class="transaction-card-header">
-              <div class="transaction-card-title">
+            <div class="store-card-header">
+              <div class="store-card-title">
                 <q-icon name="receipt_long" color="primary" size="24px" class="q-mr-sm" />
-                <span class="transaction-reference">#{{ transaction.reference_id }}</span>
+                <div class="transaction-reference-id">#{{ transaction.reference_id }}</div>
               </div>
               <q-badge
                 :color="getStatusColor(transaction.status?.label)"
-                :label="transaction.status?.label || 'N/A'"
-                class="status-badge-mobile"
+                :label="transaction.status?.label || 'Pending'"
+                class="status-badge"
               />
             </div>
-            <div class="transaction-card-info q-mt-sm">
-              <div class="info-row">
-                <q-icon name="attach_money" size="16px" color="positive" class="q-mr-xs" />
-                <span class="text-body2 text-grey-7">
-                  <strong>Grand Total:</strong> ₱{{ formatCurrency(transaction.grand_total) }}
-                </span>
+            <div class="store-card-info">
+              <q-icon name="calendar_today" size="16px" color="grey-6" class="q-mr-xs" />
+              <span class="text-body2 text-grey-7">{{ formatDate(transaction.created_at) }}</span>
+            </div>
+            <div class="transaction-mobile-details">
+              <div class="transaction-detail-row">
+                <span class="transaction-detail-label">Grand Total</span>
+                <span class="transaction-detail-value">{{ transaction.grand_total }}</span>
               </div>
-              <div class="info-row q-mt-xs">
-                <q-icon name="calendar_today" size="16px" color="grey-6" class="q-mr-xs" />
-                <span class="text-body2 text-grey-7">{{ formatDate(transaction.created_at) }}</span>
+              <div class="transaction-detail-row">
+                <span class="transaction-detail-label">Payment</span>
+                <span class="transaction-detail-value">{{ transaction.payment_method?.name || 'N/A' }}</span>
+              </div>
+              <div class="transaction-detail-row">
+                <span class="transaction-detail-label">Receiving</span>
+                <span class="transaction-detail-value">{{ transaction.receive_method?.name || 'N/A' }}</span>
               </div>
             </div>
-            <div class="transaction-card-actions q-mt-md">
+            <div class="store-card-actions q-mt-md">
+              <q-btn
+                unelevated
+                dense
+                color="negative"
+                icon="check_circle"
+                label="Received"
+                :to="`${$route.path}/${transaction.optimus_id}`"
+                class="action-btn-mobile action-btn-delete-mobile"
+              />
               <q-btn
                 unelevated
                 dense
@@ -218,22 +245,12 @@
                 icon="visibility"
                 label="View"
                 :to="`${$route.path}/${transaction.optimus_id}`"
-                class="action-btn-mobile action-btn-view-mobile"
-              />
-              <q-btn
-                unelevated
-                dense
-                color="positive"
-                icon="check_circle"
-                label="Received"
-                :to="`${$route.path}/${transaction.optimus_id}`"
-                class="action-btn-mobile action-btn-received-mobile"
+                class="action-btn-mobile action-btn-edit-mobile"
               />
             </div>
           </q-card-section>
         </q-card>
       </div>
-      <!-- Mobile Pagination -->
       <div v-if="typedResult.length > 0" class="mobile-pagination q-mt-md">
         <q-pagination
           v-model="pagination.page"
@@ -248,25 +265,20 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
 import { onRequest, firstPage, previousPage, nextPage, lastPage } from 'src/boot/axios-call';
-import { storeToRefs } from 'pinia';
 import { useCommonStore } from 'src/stores/common';
+import { onMounted, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import { CustomerTransactionRow } from 'src/boot/interfaces';
-import { useRoute } from 'vue-router';
-
-const route = useRoute();
-const useCommon = useCommonStore();
-const { pagination, result, entityQuery } = storeToRefs(useCommon);
 
 const search = ref('');
+const useCommon = useCommonStore();
+const { entityQuery, pagination, result } = storeToRefs(useCommon);
 
-// Initialize entity query
 entityQuery.value = {
   message: 'Getting transactions...',
-  entity: 'customer-transactions',
+  entity: 'transactions',
   query: {
     with: 'status,paymentMethod,receiveMethod',
     orderBy: 'created_at:desc',
@@ -275,7 +287,6 @@ entityQuery.value = {
   },
 };
 
-// Type the result as CustomerTransactionRow array
 const typedResult = result as unknown as CustomerTransactionRow[];
 
 const handlePageChange = (page: number) => {
@@ -283,24 +294,7 @@ const handlePageChange = (page: number) => {
   onRequest(entityQuery.value);
 };
 
-const goToFirstPage = () => {
-  firstPage(entityQuery.value);
-};
-
-const goToPreviousPage = () => {
-  previousPage(entityQuery.value);
-};
-
-const goToNextPage = () => {
-  nextPage(entityQuery.value);
-};
-
-const goToLastPage = () => {
-  lastPage(entityQuery.value, pagination.value);
-};
-
 onMounted(() => {
-  result.value = [];
   entityQuery.value.query.page = 1;
   onRequest(entityQuery.value, true);
 });
@@ -319,6 +313,22 @@ watch(() => pagination.value.page, (newPage) => {
   entityQuery.value.query.page = newPage;
   onRequest(entityQuery.value);
 });
+
+const goToFirstPage = () => {
+  firstPage(entityQuery.value);
+};
+
+const goToPreviousPage = () => {
+  previousPage(entityQuery.value);
+};
+
+const goToNextPage = () => {
+  nextPage(entityQuery.value);
+};
+
+const goToLastPage = () => {
+  lastPage(entityQuery.value, pagination.value);
+};
 
 // Helper functions for UI
 const getStatusColor = (status: string | undefined): string => {
@@ -339,16 +349,124 @@ const formatDate = (dateString: string | undefined): string => {
     year: 'numeric'
   });
 };
-
-const formatCurrency = (amount: number | undefined): string => {
-  if (!amount) return '0.00';
-  return amount.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
-};
 </script>
 
 <style scoped lang="scss">
-@import 'src/css/dashboard/all-transactions/index.scss';
+@import 'src/css/dashboard/all-stores/index.scss';
+
+.transactions-grid-header {
+  grid-template-columns: 2fr 1.5fr 2fr 1fr;
+}
+
+.transaction-grid-row {
+  grid-template-columns: 2fr 1.5fr 2fr 1fr;
+}
+
+.cell-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 16px;
+}
+
+.transaction-reference {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #1a1a1a;
+}
+
+.transaction-reference-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.transaction-reference-id {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.transaction-date {
+  font-size: 12px;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.transaction-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.transaction-total {
+  font-size: 14px;
+  color: #1a1a1a;
+  font-weight: 600;
+
+  span {
+    font-weight: 700;
+  }
+}
+
+.transaction-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #666;
+  font-size: 13px;
+}
+
+.transaction-meta-item {
+  display: flex;
+  align-items: center;
+}
+
+.transaction-mobile-details {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.transaction-detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.transaction-detail-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.transaction-detail-value {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .transactions-grid-header {
+    display: none;
+  }
+
+  .transaction-grid-row {
+    grid-template-columns: 1fr;
+  }
+
+  .transaction-reference {
+    gap: 10px;
+  }
+
+  .transaction-reference-id {
+    font-size: 18px;
+  }
+}
 </style>

@@ -165,142 +165,142 @@ const myForm = ref<QForm | null>(null);
 const isSubmitting = ref(false);
 
 const onReset = () => {
-  myForm.value?.resetValidation();
+    myForm.value?.resetValidation();
 };
 
 const item = ref<any>({
-  name: '',
-  description: '',
-  images: [],
-  category: undefined,
-  unit: undefined,
+    name: '',
+    description: '',
+    images: [],
+    category: undefined,
+    unit: undefined,
 });
+
 onBeforeMount(async () => {
-  await getItem();
-  loadItemImage();
-  listingApi();
+    await getItem();
+    loadItemImage();
+    listingApi();
 });
 
 const getItem = async () => {
-  item.value = await show({
-    entity: 'items',
-    optimus_id: Number(route.params.itemId),
-    query: {
-      filters: `store_id:${route.params.id}`,
-      with: 'category',
-    },
-  });
+    item.value = await show({
+        entity: 'items',
+        optimus_id: Number(route.params.itemId),
+        query: {
+            filters: `store_id:${route.params.id}`,
+            with: 'category',
+        },
+    });
 };
 
 const categories = ref<any[]>([]);
 
 const listingApi = async () => {
-  const result: any = await get(
-    {
-      entity: 'listing_api',
-      query: {
-        listingApi: 'categories',
-      },
-    },
-    false
-  );
-  categories.value = result.data.data.categories;
+    const result: any = await get(
+        {
+            entity: 'listing_api',
+            query: {
+                listingApi: 'categories',
+            },
+        },
+        false
+    );
+    categories.value = result.data.data.categories;
 };
 
 const selectedFiles = ref<any[]>([]);
 const primaryImageName = ref('');
 const addImage = (files: readonly any[]) => {
-  for (var i = 0; i <= files.length; i++) {
-    if (files[i] != undefined) {
-      selectedFiles.value.push(files[i]);
+    for (var i = 0; i <= files.length; i++) {
+        if (files[i] != undefined) {
+            selectedFiles.value.push(files[i]);
+        }
     }
-  }
-  if (!primaryImageName.value && files[0]?.name) {
-    primaryImageName.value = files[0].name;
-  }
+    if (!primaryImageName.value && files[0]?.name) {
+        primaryImageName.value = files[0].name;
+    }
 };
 
 const deletedFiles = ref<number[]>([]);
 const removeImage = (files: readonly any[]) => {
-  const file = files[0];
-  let newFiles = selectedFiles.value.filter(function (v: { name: string }) {
-    if (v !== undefined) {
-      return v.name !== file?.name;
+    const file = files[0];
+    let newFiles = selectedFiles.value.filter(function (v: { name: string }) {
+        if (v !== undefined) {
+            return v.name !== file?.name;
+        }
+    });
+    selectedFiles.value = newFiles;
+    if (file?.id) {
+        deletedFiles.value.push(file.id);
     }
-  });
-  selectedFiles.value = newFiles;
-  if (file?.id) {
-    deletedFiles.value.push(file.id);
-  }
 };
 
 const uploader = ref<any>(null);
 const loadItemImage = () => {
-  item.value.images?.forEach((file: any) => {
-    if (file.is_primary == 1) {
-      primaryImageName.value = file.name;
-    }
+    item.value.images?.forEach((file: any) => {
+        if (file.is_primary == 1) {
+            primaryImageName.value = file.name;
+        }
 
-    // Avoid fetching the file (CORS); use thumbnail for preview only.
-    const previewUrl = file.path_thumbnail || file.path_url;
-    const placeholderFile = new File([new Blob([''])], file.name || 'image.jpg', {
-      type: 'image/jpeg',
+        // Avoid fetching the file (CORS); use thumbnail for preview only.
+        const previewUrl = file.path_thumbnail || file.path_url;
+        const placeholderFile = new File([new Blob([''])], file.name || 'image.jpg', {
+            type: 'image/jpeg',
+        });
+
+        const uploaderFile = Object.assign(placeholderFile, {
+            __previewUrl: previewUrl,
+            id: file.id,
+        });
+
+        uploader.value?.addFiles([uploaderFile]);
     });
-
-    const uploaderFile = Object.assign(placeholderFile, {
-      __previewUrl: previewUrl,
-      id: file.id,
-    });
-
-    uploader.value?.addFiles([uploaderFile]);
-  });
 };
 
 const onSubmit = async () => {
-  myForm.value?.validate().then(async (success: boolean) => {
-    if (!success || isSubmitting.value) {
-      return;
-    }
-    isSubmitting.value = true;
-    try {
-      const fd = new FormData();
-
-      for (const selectedFile of selectedFiles.value) {
-        if (!selectedFile.id) {
-          fd.append('files[]', selectedFile);
+    myForm.value?.validate().then(async (success: any) => {
+        if (!success || isSubmitting.value) {
+            return;
         }
-      }
+        isSubmitting.value = true;
+        try {
+            const fd = new FormData();
 
-      for (const deletedFile of deletedFiles.value) {
-        fd.append('deletedFiles[]', String(deletedFile));
-      }
+            for (const selectedFile of selectedFiles.value) {
+                if (!selectedFile.id) {
+                    fd.append('files[]', selectedFile);
+                }
+            }
 
-      if (!primaryImageName.value && selectedFiles.value[0]?.name) {
-        primaryImageName.value = selectedFiles.value[0].name;
-      }
+            for (const deletedFile of deletedFiles.value) {
+                fd.append('deletedFiles[]', String(deletedFile));
+            }
 
-      fd.append('primaryImageName', primaryImageName.value);
-      fd.append('description', item.value.description || '');
-      fd.append('name', item.value.name || '');
-      fd.append('store_id', String(route.params.id || ''));
+            if (!primaryImageName.value && selectedFiles.value[0]?.name) {
+                primaryImageName.value = selectedFiles.value[0].name;
+            }
 
-      const categoryId = item.value.category?.id;
-      if (categoryId) {
-        fd.append('category_id', String(categoryId));
-      }
+            fd.append('primaryImageName', primaryImageName.value);
+            fd.append('description', item.value.description || '');
+            fd.append('name', item.value.name || '');
+            fd.append('store_id', String(route.params.id || ''));
 
-      await saveEntityWithImages({
-        store_id: Number(route.params.id),
-        entity: 'item-update',
-        optimus_id: Number(route.params.itemId),
-        fd: fd,
-      });
-    } finally {
-      isSubmitting.value = false;
-    }
-  });
+            const categoryId = item.value.category?.id;
+            if (categoryId) {
+                fd.append('category_id', String(categoryId));
+            }
+
+            await saveEntityWithImages({
+                store_id: Number(route.params.id),
+                entity: 'item-update',
+                optimus_id: Number(route.params.itemId),
+                fd: fd,
+            });
+        } finally {
+            isSubmitting.value = false;
+        }
+    });
 };
-
 </script>
 
 <style scoped lang="scss">

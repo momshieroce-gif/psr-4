@@ -61,7 +61,7 @@ class User extends Authenticatable
 
 
     public function getLabelAttribute(){
-        return $this->name;
+        return $this->name . ' (' . $this->mobile . ')';
     }
     public function getValueAttribute(){
         return $this->id;
@@ -84,6 +84,7 @@ class User extends Authenticatable
     public function enrollees(): HasMany {
         return $this->hasMany(Enrollee::class, 'user_id', 'id');
     }
+
 
     
 }

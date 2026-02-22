@@ -234,10 +234,13 @@ class BaseRepository implements BaseInterface
 
         $relationships = $this->pregSplit('@,@', Arr::get($this->params, 'with'));
         foreach ($relationships as $relationship) {
+            if (!$relationship) {
+                continue;
+            }
 
             $pregSplit = $this->pregSplit('@:@', $relationship);
             if (count($pregSplit) > 1) {
-                [$relationTable, $fieldConditionValue] = $this->pregSplit('@:@', $relationship);
+                [$relationTable, $fieldConditionValue] = $pregSplit;
 
                 $fieldConditionValueArray = $this->pregSplit('@;@', $fieldConditionValue);
                 if (count($fieldConditionValueArray) === 3) {
@@ -262,12 +265,19 @@ class BaseRepository implements BaseInterface
         return $this;
     }
 
-    //relation=itemPrice:price;<;1439664,images:id;1439664
-    //optimus value
+    /***
+     * Example: relation=itemPrice:price;<;1439664,images:id;1439664
+     * Values are Optimus-encoded unless isOptimus=false is set.
+     * @return self
+     * */ 
     public function relation()
     {
         $relationships = $this->pregSplit('@,@', Arr::get($this->params, 'relation', []));
         foreach ($relationships as $relationship) {
+            if (!$relationship) {
+                continue;
+            }
+
             [$relationTable, $fieldConditionValue] = $this->pregSplit('@:@', $relationship);
             $fieldConditionValueArray = $this->pregSplit('@;@', $fieldConditionValue);
             if (count($fieldConditionValueArray) === 3) {
@@ -475,6 +485,24 @@ class BaseRepository implements BaseInterface
             }
         }
         $this->deletedFiles();
+        $this->updatePrimaryImageFromRequest($request);
+    }
+
+    protected function updatePrimaryImageFromRequest($request)
+    {
+        if (!$request->primaryImageName) {
+            return;
+        }
+
+        $model = $this->model->first();
+        if (!$model) {
+            return;
+        }
+
+        $model->images()->update(['is_primary' => 0]);
+        $model->images()
+            ->where('name', $request->primaryImageName)
+            ->update(['is_primary' => 1]);
     }
 
     protected function deletedFiles()

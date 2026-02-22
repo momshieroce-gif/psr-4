@@ -39,6 +39,10 @@
             <q-icon name="tag" size="20px" color="primary" class="q-mr-xs" />
             <span class="header-label">Reference</span>
           </div>
+          <div class="grid-header-cell header-name">
+            <q-icon name="tag" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Order Status</span>
+          </div>
           <div class="grid-header-cell header-mobile">
             <q-icon name="payments" size="20px" color="primary" class="q-mr-xs" />
             <span class="header-label">Summary</span>
@@ -74,13 +78,15 @@
                   </div>
                 </router-link>
               </div>
+            <div class="grid-cell cell-status">
+              <q-badge
+                :color="getStatusColor(transaction.status?.label)"
+                :label="transaction.status?.label || 'Pending'"
+                class="status-badge"
+              />
+            </div>
               <div class="grid-cell cell-mobile">
                 <div class="transaction-summary">
-                  <q-badge
-                    :color="getStatusColor(transaction.status?.label)"
-                    :label="transaction.status?.label || 'Pending'"
-                    class="status-badge"
-                  />
                   <div class="transaction-total">
                     Grand Total:
                     <span>{{ transaction.grand_total }}</span>
@@ -272,7 +278,7 @@ const { entityQuery, pagination, result } = storeToRefs(useCommon);
 
 entityQuery.value = {
   message: 'Getting transactions...',
-  entity: 'customer-transactions',
+  entity: 'my-transactions',
   query: {
     with: 'status,paymentMethod,receiveMethod',
     orderBy: 'created_at:desc',
@@ -349,11 +355,16 @@ const formatDate = (dateString: string | undefined): string => {
 @import 'src/css/dashboard/all-stores/index.scss';
 
 .transactions-grid-header {
-  grid-template-columns: 2fr 2fr 1fr;
+  grid-template-columns: 2fr 1.5fr 2fr 1fr;
 }
 
 .transaction-grid-row {
-  grid-template-columns: 2fr 2fr 1fr;
+  grid-template-columns: 2fr 1.5fr 2fr 1fr;
+}
+
+.cell-status {
+  display: flex;
+  align-items: center;
 }
 
 .status-badge {

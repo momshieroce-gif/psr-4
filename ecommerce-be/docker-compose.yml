@@ -6,7 +6,7 @@ services:
       MYSQL_ROOT_PASSWORD: my_secret_password
       MYSQL_DATABASE: ecommercedb
       MYSQL_USER: root
-      MYSQL_PASSWORD: db_user_pass
+      MYSQL_PASSWORD: my_secret_password
     ports:
       - "3307:3306"
     volumes:
@@ -40,7 +40,7 @@ services:
       - DB_PORT=3306
       - DB_DATABASE=ecommercedb
       - DB_USERNAME=root
-      - DB_PASSWORD=db_user_pass
+      - DB_PASSWORD=my_secret_password
     depends_on:
       - db
 volumes:

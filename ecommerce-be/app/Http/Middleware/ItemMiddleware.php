@@ -23,6 +23,10 @@ class ItemMiddleware {
 
     /**
      * required filters=store_id:1
+     * if store_id is not provided, return 403
+     * if store_id is provided, check if the user has access to the store
+     * if the user has access to the store, return the next request
+     * if the user does not have access to the store, return 403
      */
     public function handle( Request $request, Closure $next ): Response {
 

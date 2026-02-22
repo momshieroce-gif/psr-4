@@ -6,8 +6,9 @@ use App\Repositories\User\UserRepository;
 use App\Http\Requests\BaseIndexRequest;
 use App\Models\User;
 use App\Traits\Obfuscate\OptimusRequiredToModel;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends ApiController
 {
@@ -28,7 +29,7 @@ class UserController extends ApiController
         $this->params = app($this->storeRequest)->all();
         $user = User::where('id', $this->optimus()->decode($id))->first();
         if($user){
-            $user->password = \Hash::make(Arr::get('password', $this->params));
+            $user->password = Hash::make(Arr::get($this->params, 'password'));
             $user->update();
         }
         return response()->json('You have successfully update your password.');
@@ -39,7 +40,4 @@ class UserController extends ApiController
         return response()->json('You have successfully invited the user');
     }
 
-    protected function getResource() : BaseResource {
-        return new BaseResource( $this->result );
-    }
 }
