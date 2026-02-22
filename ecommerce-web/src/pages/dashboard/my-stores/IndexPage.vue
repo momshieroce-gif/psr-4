@@ -1,71 +1,248 @@
 <template>
-  <div class="q-ma-sm">
-    <q-table
-      flat
-      bordered
-      :rows="result"
-      :columns="MyStoreColumns"
-      row-key="name"
-      virtual-scroll
-      v-model:pagination="pagination"
-      @request="onRequest"
-      :rows-per-page-options="[]"
-    >
-      <template v-slot:header="props">
-        <q-tr :props="props">
-          <q-th v-for="col in props.cols" :key="col.name" :props="props">
-            {{ col.label }}
-          </q-th>
-        </q-tr>
-      </template>
+  <div class="stores-page-container">
+    <!-- Header Section -->
+    <div class="page-header q-mb-md">
+      <div class="header-content">
+        <div class="header-title-section">
+          <q-icon name="store" size="32px" color="primary" class="q-mr-sm" />
+          <h2 class="page-title">My Stores</h2>
+        </div>
+        <div class="header-actions">
+          <q-input
+            v-model="search"
+            placeholder="Search stores..."
+            outlined
+            dense
+            clearable
+            debounce="300"
+            class="search-input"
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+    </div>
 
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td v-for="col in props.cols" :key="col.name" :props="props">
-            <span v-if="col.name === 'name'">
-              <router-link :to="`${$route.path}/${props.row.optimus_id}`"
-                >{{ col.value }}
-              </router-link>
-            </span>
-            <span v-else-if="col.name === 'Actions'">
+    <!-- Desktop Grid View -->
+    <div class="desktop-only">
+      <div v-if="typedResult.length === 0" class="empty-state-desktop">
+        <q-icon name="store" size="80px" color="grey-4" />
+        <div class="text-h5 q-mt-md text-grey-6">No stores found</div>
+        <div class="text-body2 text-grey-5 q-mt-sm">Try adjusting your search criteria</div>
+      </div>
+      <div v-else>
+        <!-- Grid Header -->
+        <div class="grid-header">
+          <div class="grid-header-cell header-name">
+            <q-icon name="store" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Store Name</span>
+          </div>
+          <div class="grid-header-cell header-mobile">
+            <q-icon name="phone" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Mobile</span>
+          </div>
+          <div class="grid-header-cell header-actions">
+            <q-icon name="settings" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Actions</span>
+          </div>
+        </div>
+
+        <!-- Grid Rows -->
+        <div class="stores-grid">
+          <q-card
+            v-for="store in typedResult"
+            :key="store.id"
+            flat
+            bordered
+            class="store-grid-item"
+          >
+            <div class="grid-row">
+              <div class="grid-cell cell-name">
+                <router-link
+                  :to="`${$route.path}/${store.optimus_id}`"
+                  class="store-name-grid"
+                >
+                  <q-icon name="store" color="primary" />
+                  <span class="store-name-text">{{ store.name }}</span>
+                </router-link>
+              </div>
+              <div class="grid-cell cell-mobile">
+                <div class="mobile-info">
+                  <q-icon name="phone" color="primary" />
+                  <span>{{ store.mobile || 'N/A' }}</span>
+                </div>
+              </div>
+              <div class="grid-cell cell-actions">
+                <div class="action-buttons">
+                 
+                  <q-btn
+                    unelevated
+                    round
+                    dense
+                    color="primary"
+                    icon="edit_note"
+                    :to="`${$route.path}/${store.optimus_id}`"
+                    class="action-btn-grid action-btn-edit"
+                  >
+                    <q-tooltip>Edit Store</q-tooltip>
+                  </q-btn>
+                  <q-btn
+                    unelevated
+                    round
+                    dense
+                    color="negative"
+                    icon="delete_forever"
+                    @click="handleDeleteStore(store)"
+                    class="action-btn-grid action-btn-delete"
+                  >
+                    <q-tooltip>Delete Store</q-tooltip>
+                  </q-btn>
+                </div>
+              </div>
+            </div>
+          </q-card>
+        </div>
+
+        <!-- Pagination -->
+        <div class="grid-pagination">
+          <div class="pagination-info">
+            Showing {{ pagination.from }} - {{ pagination.to }} of {{ pagination.rowsNumber }} stores
+          </div>
+          <div class="pagination-controls">
+            <q-btn
+              v-if="pagination.lastPage > 2"
+              flat
+              round
+              dense
+              icon="first_page"
+              color="grey-8"
+              :disable="pagination.page === 1"
+              @click="goToFirstPage"
+            />
+            <q-btn
+              flat
+              round
+              dense
+              icon="chevron_left"
+              color="grey-8"
+              :disable="pagination.page === 1"
+              @click="goToPreviousPage"
+            />
+            <span class="page-number">{{ pagination.page }} / {{ pagination.lastPage }}</span>
+            <q-btn
+              flat
+              round
+              dense
+              icon="chevron_right"
+              color="grey-8"
+              :disable="pagination.page === pagination.lastPage"
+              @click="goToNextPage"
+            />
+            <q-btn
+              v-if="pagination.lastPage > 2"
+              flat
+              round
+              dense
+              icon="last_page"
+              color="grey-8"
+              :disable="pagination.page === pagination.lastPage"
+              @click="goToLastPage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="mobile-only">
+      <div v-if="typedResult.length === 0" class="empty-state">
+        <q-icon name="store" size="64px" color="grey-4" />
+        <div class="text-h6 q-mt-md text-grey-6">No stores found</div>
+      </div>
+      <div v-else class="stores-cards">
+        <q-card
+          v-for="store in typedResult"
+          :key="store.id"
+          flat
+          bordered
+          class="store-card q-mb-md"
+        >
+          <q-card-section>
+            <div class="store-card-header">
+              <div class="store-card-title">
+                <q-icon name="store" color="primary" size="24px" class="q-mr-sm" />
+                <router-link
+                  :to="`${$route.path}/${store.optimus_id}`"
+                  class="store-name-link"
+                >
+                  {{ store.name }}
+                </router-link>
+              </div>
+            </div>
+            <div class="store-card-actions q-mt-md">
               <q-btn
-                outline
+                unelevated
                 dense
                 color="primary"
                 icon="list"
-                :to="`${$route.path}/${props.row.optimus_id}/items`"
-              >
-                <q-tooltip>Show Items</q-tooltip>
-              </q-btn>
+                label="Items"
+                :to="`${$route.path}/${store.optimus_id}/items`"
+                class="action-btn-mobile action-btn-edit-mobile"
+              />
               <q-btn
-                class="q-ml-sm"
-                outline
+                unelevated
                 dense
                 color="primary"
-                icon="edit"
-                :to="`${$route.path}/${props.row.optimus_id}`"
-              >
-                <q-tooltip> Edit Store </q-tooltip>
-              </q-btn>
-            </span>
-            <span v-else>{{ col.value }}</span>
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
+                icon="edit_note"
+                label="Edit"
+                :to="`${$route.path}/${store.optimus_id}`"
+                class="action-btn-mobile action-btn-edit-mobile"
+              />
+              <q-btn
+                unelevated
+                dense
+                color="negative"
+                icon="delete_forever"
+                label="Delete"
+                @click="handleDeleteStore(store)"
+                class="action-btn-mobile action-btn-delete-mobile"
+              />
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+      <!-- Mobile Pagination -->
+      <div v-if="typedResult.length > 0" class="mobile-pagination q-mt-md">
+        <q-pagination
+          v-model="pagination.page"
+          :max="pagination.lastPage"
+          :max-pages="5"
+          direction-links
+          boundary-links
+          color="primary"
+          @update:model-value="handlePageChange"
+        />
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onRequest } from 'boot/axios-call';
-import { useCommonStore } from 'src/stores/common';
 import { onMounted, ref, watch } from 'vue';
+import { onRequest, firstPage, previousPage, nextPage, lastPage } from 'src/boot/axios-call';
 import { storeToRefs } from 'pinia';
-import { MyStoreColumns } from 'boot/columns';
+import { useCommonStore } from 'src/stores/common';
+import { onDeleteEntity } from 'src/boot/services';
+import { StoreRow } from 'src/boot/interfaces';
+
+const useCommon = useCommonStore();
+const { pagination, result, entityQuery } = storeToRefs(useCommon);
 
 const search = ref('');
-const useCommon = useCommonStore();
-const { entityQuery, pagination, result } = storeToRefs(useCommon);
+
 entityQuery.value = {
+  message: 'Getting stores...',
   entity: 'my-stores',
   query: {
     orderBy: 'created_at:desc',
@@ -74,27 +251,50 @@ entityQuery.value = {
   },
 };
 
+const typedResult = result as unknown as StoreRow[];
+
+const handleDeleteStore = (store: StoreRow) => {
+  onDeleteEntity('stores', store.optimus_id, store.name);
+};
+
+const handlePageChange = (page: number) => {
+  entityQuery.value.query.page = page;
+  onRequest(entityQuery.value);
+};
+
+const goToFirstPage = () => {
+  firstPage(entityQuery.value);
+};
+
+const goToPreviousPage = () => {
+  previousPage(entityQuery.value);
+};
+
+const goToNextPage = () => {
+  nextPage(entityQuery.value);
+};
+
+const goToLastPage = () => {
+  lastPage(entityQuery.value, pagination.value);
+};
+
 onMounted(() => {
-  result.value = []
+  result.value = [];
   entityQuery.value.query.page = 1;
   onRequest(entityQuery.value, true);
 });
 
 watch(search, (newValue) => {
-  if (!newValue) {
+  if (newValue) {
+    entityQuery.value.query.filters = 'name:' + search.value;
+  } else {
     delete entityQuery.value.query.filters;
-    onRequest(entityQuery.value);
-    return;
   }
-  entityQuery.value.query.filters = 'name:' + search.value;
+  entityQuery.value.query.page = 1;
   onRequest(entityQuery.value);
 });
-
-watch(
-  () => pagination.value.page,
-  (newPage) => {
-    entityQuery.value.query.page = newPage;
-    onRequest(entityQuery.value);
-  }
-);
 </script>
+
+<style scoped lang="scss">
+@import 'src/css/dashboard/all-stores/index.scss';
+</style>

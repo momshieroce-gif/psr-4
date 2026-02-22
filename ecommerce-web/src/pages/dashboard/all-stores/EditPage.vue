@@ -78,6 +78,23 @@
             </div>
           </div>
 
+          <div class="form-row q-mt-md">
+            <div class="form-col">
+              <q-input
+                type="textarea"
+                v-model="store.desc"
+                dense
+                outlined
+                label="Description"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Description is required.',
+                ]"
+                hide-bottom-space
+                class="form-input"
+              />
+            </div>
+          </div>
+
           <!-- Location Section -->
           <div class="form-section q-mt-lg">
             <div class="section-header">
@@ -193,6 +210,7 @@
   const route = useRoute()
   const store = ref({
     name: '',
+    desc: '',
     mobile: '',
     latitude: 14.5995,
     longitude: 120.9842,
@@ -226,6 +244,7 @@
               optimus_id: route.params.id, 
               data: {
                 name: store.value.name,
+                desc: store.value.desc,
                 mobile: store.value.mobile,
                 latitude: store.value.latitude,
                 longitude: store.value.longitude,
@@ -436,9 +455,10 @@
       query: {
         show_mobile: 1
       },
-    }) as { name: string; mobile: string; latitude: number; longitude: number; optimus_id: number };
+    }) as { name: string; mobile: string; desc?: string; latitude: number; longitude: number; optimus_id: number };
     
     store.value.name = result.name || '';
+  store.value.desc = result.desc || '';
     store.value.mobile = result.mobile || '';
     store.value.latitude = result.latitude || 14.5995;
     store.value.longitude = result.longitude || 120.9842;

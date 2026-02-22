@@ -175,17 +175,21 @@
                 <q-icon name="inventory_2" color="primary" size="sm" class="q-mr-xs" />
                 <span class="text-weight-bold">Item {{ index + 1 }}</span>
               </div>
-              <q-chip v-if="order.store" color="primary" text-color="white" size="sm" outline>
-                <q-icon name="store" size="xs" class="q-mr-xs" />
-                {{ order.store.name }}
-              </q-chip>
+              <a v-if="order.store" :href="`/public_stores/${order.store.optimus_id}`" target="_blank">
+                <q-chip color="primary" text-color="white" size="sm" outline>
+                  <q-icon name="store" size="xs" class="q-mr-xs" />
+                  {{ order.store.name }}
+                </q-chip>
+              </a>
             </div>
 
             <div class="order-item-body">
+              <a v-if="order.store"  :href="`/public_stores/${order.store.optimus_id}/item/${order.optimus_item}`"
+                target="_blank">
               <div class="order-item-info">
                 <div class="order-item-name">
-                  <q-icon name="label" color="grey-6" size="sm" class="q-mr-xs" />
-                  <span class="text-weight-medium">{{ order.item_name }}</span>
+                    <q-icon name="label" color="grey-6" size="sm" class="q-mr-xs" />
+                    <span class="text-weight-medium text-grey-8">{{ order.item_name }}</span>
                 </div>
                 <div class="order-item-description" v-if="order.item_description">
                   <p class="text-body2 text-grey-7 q-mt-xs q-mb-none">
@@ -193,6 +197,7 @@
                   </p>
                 </div>
               </div>
+              </a>
 
               <div class="order-item-details">
                 <div class="order-detail-row">
@@ -237,6 +242,7 @@ interface OrderItem {
   transaction_id: number;
   store_id: number;
   item_id: number;
+  optimus_item?: number;
   item_name: string;
   item_description?: string;
   unit_id: number;

@@ -14,8 +14,8 @@
           <div class="hero-actions">
             <q-btn to="/find-store" color="primary" size="lg" unelevated class="hero-btn" icon="explore"
               label="Find Stores Near Me" />
-            <q-btn to="/cart" color="secondary" size="lg" outline class="hero-btn hero-btn--outline" icon="shopping_cart"
-              label="View Cart" />
+            <q-btn to="/cart" color="secondary" size="lg" outline class="hero-btn hero-btn--outline"
+              icon="shopping_cart" label="View Cart" />
           </div>
         </div>
         <div class="hero-image">
