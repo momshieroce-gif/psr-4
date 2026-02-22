@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Traits;
-use Auth;
+
 use App\Enum\Role;
+use Illuminate\Support\Facades\Auth;
 
 trait UtilsTrait
  {
@@ -28,8 +29,13 @@ trait UtilsTrait
         return preg_split( $pattern, $value, 0, PREG_SPLIT_NO_EMPTY );
     }
 
+    /**
+     * Check if the user is a super admin.
+     *
+     * @return bool Returns true if the user is a super admin, false otherwise.
+     */
     public function isSuperAdmin():bool {
-        $user = Auth::User();
+        $user = Auth::user();
         $rolesId = $user->roles->pluck( 'id' )->all();
         if ( in_array( Role::SUPER_ADMIN, $rolesId ) ) {
             return true;

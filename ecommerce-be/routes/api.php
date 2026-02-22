@@ -11,6 +11,7 @@ use App\Http\Controllers\ {
     RegisterController,
     ListingApiController,
     RoleController,
+    RoleUserController,
     PaymentOptionController,
     PaymentController,
     CategoryController,
@@ -40,14 +41,17 @@ Route::group( [ 'middleware' => 'auth:api' ], function () {
     * Updated 10-19-2024
     */
     //todo Limit transaction to it's role as an admin
-    Route::resource('transactions', TransactionController::class);
-    Route::resource('customer-transactions', CustomerTransactionController::class);
+    Route::resource('transactions', TransactionController::class)->middleware('allTransactionsMiddleware');
+    Route::resource('my-transactions', CustomerTransactionController::class)->middleware('myTransactionsMiddleware');
 
     Route::resource('my-stores', MyStoreController::class)->middleware('myStoreMiddleware');
     /**
      * Updated 10-19-2024
      */
     Route::get('profile', [ProfileController::class, 'show']);
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
+    Route::post('role-user', [RoleUserController::class, 'store']);
     Route::patch('profile/ {
     id}
     ', [ProfileController::class, 'update']);
@@ -77,8 +81,6 @@ Route::post('send-email-invitation', [UserController::class, 'inviteByEmail']);
   Route::resource('public_stores', PublicStoreController::class);
   Route::resource('categories', CategoryController::class);
   Route::resource('interconnected_cities', InterConnectedCityController::class);
-  Route::get('google-api-text-search', [GoogleApiController::class, 'textSearch']);
-  Route::get('google-api-nearby-search', [GoogleApiController::class, 'nearBySearch']);
   Route::resource('receive_methods', ReceiveMethodController::class)->only(['index']);
   Route::resource('all_stores', StoreController::class);
   Route::resource('delivery_charges', DeliveryChargeController::class)->only(['index']);
