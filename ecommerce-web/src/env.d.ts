@@ -1,5 +1,9 @@
 /* eslint-disable */
 
+interface ImportMetaEnv {
+  readonly VITE_WEBRTC_ICE_SERVERS?: string;
+}
+
 declare namespace NodeJS {
   interface ProcessEnv {
     NODE_ENV: string;

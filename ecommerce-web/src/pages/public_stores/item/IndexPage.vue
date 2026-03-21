@@ -68,6 +68,54 @@
         </q-card>
       </q-dialog>
 
+      <!-- Live call: Firebase (anonymous auth) + WebRTC — no third-party login -->
+      <q-dialog
+        v-model="agentCallDialogOpen"
+        maximized
+        transition-show="slide-up"
+        transition-hide="slide-down"
+        @show="onAgentCallDialogShow"
+        @hide="onAgentCallDialogHide"
+      >
+        <q-card class="agent-call-dialog-card">
+          <q-inner-loading :showing="agentCallWebRtcBusy" color="primary" label="Connecting camera and call room…" />
+          <q-bar class="bg-primary text-white">
+            <q-icon name="support_agent" class="q-mr-sm" />
+            <div>Talk to Agent — Live call</div>
+            <q-space />
+            <q-btn flat dense round icon="close" v-close-popup />
+          </q-bar>
+          <q-card-section class="q-pa-md">
+            <p class="text-body2 text-grey-8 q-mb-md">
+              Allow camera and microphone. Your agent can join using the link below (no login required for you).
+            </p>
+            <div class="row q-col-gutter-sm q-mb-md">
+              <div class="col-12 col-md-6">
+                <div class="text-caption text-grey-7 q-mb-xs">You</div>
+                <video ref="agentLocalVideoRef" class="agent-call-video" autoplay playsinline muted />
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="text-caption text-grey-7 q-mb-xs">Agent</div>
+                <video ref="agentRemoteVideoRef" class="agent-call-video" autoplay playsinline />
+              </div>
+            </div>
+            <div v-if="agentJoinUrl" class="text-caption q-mb-sm">
+              <strong>Agent link:</strong> {{ agentJoinUrl }}
+            </div>
+          </q-card-section>
+          <q-card-actions align="right" class="q-pa-md">
+            <q-btn
+              v-if="agentJoinUrl"
+              flat
+              color="primary"
+              label="Copy agent link"
+              icon="content_copy"
+              @click="copyAgentJoinLink"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+
       <div class="col-lg-7 col-md-7 col-xs-12">
         <q-card class="product-info-card q-mt-sm" flat bordered>
           <q-card-section>
@@ -118,6 +166,18 @@
                   <q-btn color="primary" @click="userAddCart" size="lg" unelevated class="full-width add-to-cart-btn"
                     icon="shopping_cart" label="Add to Cart" />
                 </div>
+                <div class="col">
+                  <q-btn
+                    color="primary"
+                    @click="needToAssist"
+                    size="lg"
+                    unelevated
+                    class="full-width add-to-cart-btn"
+                    icon="support_agent"
+                    label="Talk to Agent"
+                    :loading="agentCallLoading"
+                  />
+                </div>
               </div>
             </div>
           </q-card-section>
@@ -128,12 +188,15 @@
 </template>
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { onMounted, ref, watch, computed, type Ref } from 'vue';
+import { onMounted, ref, watch, computed, nextTick, type Ref } from 'vue';
 import { show } from 'src/boot/axios-call';
 import { getPriceRange } from 'src/boot/utilities';
 import { useUserCartStore } from 'src/stores/userCart';
 import { useQuasar } from 'quasar';
 import BreadCrumbsWrapper from 'src/components/BreadCrumbsWrapper.vue';
+import { startAgentCallSession } from 'src/helpers/agentCall';
+import { isFirebaseConfigured } from 'src/helpers/firebaseCore';
+import { startCallerSession } from 'src/helpers/webrtcFirebaseCall';
 
 interface ItemPrice {
   id: number;
@@ -184,6 +247,107 @@ const store = ref({
 });
 
 const route = useRoute();
+
+const agentCallLoading = ref(false);
+const agentCallWebRtcBusy = ref(false);
+const agentCallDialogOpen = ref(false);
+const agentRoomId = ref('');
+const agentJoinUrl = ref('');
+const agentLocalVideoRef = ref<HTMLVideoElement | null>(null);
+const agentRemoteVideoRef = ref<HTMLVideoElement | null>(null);
+let agentCallHangUp: (() => void) | null = null;
+
+const copyAgentJoinLink = async () => {
+  if (!agentJoinUrl.value) return;
+  try {
+    await navigator.clipboard.writeText(agentJoinUrl.value);
+    $q.notify({ message: 'Agent link copied.', type: 'positive' });
+  } catch {
+    $q.notify({ message: agentJoinUrl.value, type: 'info', timeout: 8000 });
+  }
+};
+
+/** QDialog mounts dialog content on @show — refs are often null on first nextTick() only. */
+const onAgentCallDialogShow = async () => {
+  agentCallWebRtcBusy.value = true;
+  try {
+    await nextTick();
+    let local = agentLocalVideoRef.value;
+    let remote = agentRemoteVideoRef.value;
+    if (!local || !remote) {
+      await new Promise((r) => setTimeout(r, 100));
+      local = agentLocalVideoRef.value;
+      remote = agentRemoteVideoRef.value;
+    }
+    if (!agentRoomId.value || !local || !remote) {
+      $q.notify({
+        message: 'Video not ready. Close and try “Talk to Agent” again.',
+        type: 'negative',
+      });
+      return;
+    }
+    agentCallHangUp?.();
+    agentCallHangUp = null;
+    try {
+      const handles = await startCallerSession(agentRoomId.value, local, remote, (msg) => {
+        $q.notify({ message: msg, type: 'negative', timeout: 8000 });
+      });
+      agentCallHangUp = handles.hangUp;
+    } catch (e: unknown) {
+      const msg =
+        e instanceof Error
+          ? e.message
+          : 'Could not start the call. Check camera/microphone permissions and try again.';
+      $q.notify({ message: msg, type: 'negative', timeout: 8000 });
+    }
+  } finally {
+    agentCallWebRtcBusy.value = false;
+  }
+};
+
+const onAgentCallDialogHide = () => {
+  agentCallWebRtcBusy.value = false;
+  agentCallHangUp?.();
+  agentCallHangUp = null;
+  agentRoomId.value = '';
+  agentJoinUrl.value = '';
+};
+
+const needToAssist = async () => {
+  if (!isFirebaseConfigured()) {
+    $q.notify({
+      message: 'Live call requires Firebase. Add VITE_FIREBASE_* keys in .env and enable Anonymous sign-in.',
+      type: 'negative',
+      timeout: 6000,
+    });
+    return;
+  }
+  agentCallLoading.value = true;
+  try {
+    const { roomId, joinUrl } = startAgentCallSession({
+      storeOptimusId: route.params.id as string,
+      itemOptimusId: route.params.item_id as string,
+      storeName: store.value.name,
+      itemName: item.value.name,
+    });
+    agentRoomId.value = roomId;
+    agentJoinUrl.value = joinUrl;
+    agentCallDialogOpen.value = true;
+    $q.notify({
+      message:
+        'Live call opened. Allow camera/microphone when prompted. Copy the agent link for your team to join.',
+      type: 'positive',
+      timeout: 5000,
+    });
+  } catch {
+    $q.notify({
+      message: 'Could not start the call. Please try again.',
+      type: 'negative',
+    });
+  } finally {
+    agentCallLoading.value = false;
+  }
+};
 
 const showStore = async () => {
   store.value = await show({
@@ -583,6 +747,23 @@ const zoomStyle = computed(() => {
 
 .purchase-section {
   padding-top: 8px;
+}
+
+.agent-call-dialog-card {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.agent-call-video {
+  width: 100%;
+  max-height: 42vh;
+  min-height: 200px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 @media (max-width: 600px) {

@@ -84,7 +84,29 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf (viteConf) {
+        // Some legacy deps expect Node `global`; browsers use globalThis
+        viteConf.define = {
+          ...(viteConf.define || {}),
+          global: 'globalThis',
+        }
+        // Quasar 2.18+ QField.sass uses nested :has() / :is() — needs modern Sass parsing
+        viteConf.css = viteConf.css || {}
+        viteConf.css.preprocessorOptions = viteConf.css.preprocessorOptions || {}
+        const sassOpts = {
+          // Avoid legacy parser issues with Quasar 2.18+ QField.sass (:has / :is)
+          api: 'modern',
+          silenceDeprecations: ['legacy-js-api', 'import'],
+        }
+        viteConf.css.preprocessorOptions.scss = {
+          ...viteConf.css.preprocessorOptions.scss,
+          ...sassOpts,
+        }
+        viteConf.css.preprocessorOptions.sass = {
+          ...viteConf.css.preprocessorOptions.sass,
+          ...sassOpts,
+        }
+      },
       // viteVuePluginOptions: {},
 
       

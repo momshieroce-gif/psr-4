@@ -42,6 +42,13 @@ const routes: RouteRecordRaw[] = [
       { path: '', component: () => import('pages/LoginPage.vue') }
     ],
   },
+  {
+    path: '/join-call',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: ':roomId', component: () => import('pages/public/JoinCallPage.vue') },
+    ],
+  },
   // {
   //   path: '/',
   //   component: () => import('layouts/MainLayout.vue'),
