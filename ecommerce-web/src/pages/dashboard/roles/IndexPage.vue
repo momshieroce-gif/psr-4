@@ -4,182 +4,299 @@
     <div class="page-header q-mb-md">
       <div class="header-content">
         <div class="header-title-section">
-          <q-icon name="badge" size="32px" color="primary" class="q-mr-sm" />
-          <h2 class="page-title">User Role Assignments</h2>
+          <q-icon name="person" size="32px" color="primary" class="q-mr-sm" />
+          <h2 class="page-title">Users</h2>
+        </div>
+        <div class="header-actions">
+          <q-input
+            v-model="search"
+            placeholder="Search users..."
+            outlined
+            dense
+            clearable
+            debounce="300"
+            class="search-input"
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
         </div>
       </div>
     </div>
 
-    <!-- Assign Role Form -->
-    <q-card flat bordered class="store-grid-item q-mb-lg">
-      <div class="grid-row assign-form-row">
-        <div class="assign-form-inner">
-          <q-form @submit.prevent="onAssignRole" class="row q-col-gutter-md">
-            <div class="col-12 col-md-4">
-              <q-select
-                v-model="selectedUserId"
-                :options="users"
-                option-value="optimus_id"
-                option-label="label"
-                emit-value
-                map-options
-                outlined
-                dense
-                label="Select user"
-                :loading="usersLoading"
-                clearable
-                class="search-input"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="person" />
-                </template>
-              </q-select>
+    <!-- Desktop Grid View -->
+    <div class="desktop-only">
+      <div v-if="typedResult.length === 0" class="empty-state-desktop">
+        <q-icon name="person_off" size="80px" color="grey-4" />
+        <div class="text-h5 q-mt-md text-grey-6">No users found</div>
+        <div class="text-body2 text-grey-5 q-mt-sm">Try adjusting your search criteria</div>
+      </div>
+      <div v-else>
+        <!-- Grid Header -->
+        <div class="grid-header">
+          <div class="grid-header-cell header-name">
+            <q-icon name="person" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">User Name</span>
+          </div>
+          <div class="grid-header-cell header-mobile">
+            <q-icon name="phone" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Mobile</span>
+          </div>
+          <div class="grid-header-cell header-actions">
+            <q-icon name="settings" size="20px" color="primary" class="q-mr-xs" />
+            <span class="header-label">Actions</span>
+          </div>
+        </div>
+
+        <!-- Grid Rows -->
+        <div class="stores-grid">
+          <q-card
+            v-for="user in typedResult"
+            :key="user.id"
+            flat
+            bordered
+            class="store-grid-item"
+          >
+            <div class="grid-row">
+              <div class="grid-cell cell-name">
+                <router-link
+                  :to="`${$route.path}/${user.optimus_id}`"
+                  class="store-name-grid"
+                >
+                  <q-icon name="person" color="primary" />
+                  <span class="store-name-text">{{ user.name || user.label || 'N/A' }}</span>
+                </router-link>
+              </div>
+              <div class="grid-cell cell-mobile">
+                <div class="mobile-info">
+                  <q-icon name="phone" color="primary" />
+                  <span>{{ user.mobile || 'N/A' }}</span>
+                </div>
+              </div>
+              <div class="grid-cell cell-actions">
+                <div class="action-buttons">
+                  <q-btn
+                    unelevated
+                    round
+                    dense
+                    color="primary"
+                    icon="edit_note"
+                    :to="`${$route.path}/${user.optimus_id}`"
+                    class="action-btn-grid action-btn-edit"
+                  >
+                    <q-tooltip>Edit User</q-tooltip>
+                  </q-btn>
+                  <q-btn
+                    unelevated
+                    round
+                    dense
+                    color="negative"
+                    icon="delete_forever"
+                    @click="handleDeleteUser(user)"
+                    class="action-btn-grid action-btn-delete"
+                  >
+                    <q-tooltip>Delete User</q-tooltip>
+                  </q-btn>
+                </div>
+              </div>
             </div>
-            <div class="col-12 col-md-4">
-              <q-select
-                v-model="selectedRoleId"
-                :options="roles"
-                option-value="optimus_id"
-                option-label="label"
-                emit-value
-                map-options
-                outlined
-                dense
-                label="Select role"
-                :loading="rolesLoading"
-                clearable
-                class="search-input"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="badge" />
-                </template>
-              </q-select>
-            </div>
-            <div class="col-12 col-md-4 flex items-center">
-              <q-btn
-                type="submit"
-                unelevated
-                color="primary"
-                icon="add_circle"
-                label="Assign role"
-                :loading="assignLoading"
-                :disable="!selectedUserId || !selectedRoleId"
-                class="action-btn-mobile"
-              />
-            </div>
-          </q-form>
+          </q-card>
+        </div>
+
+        <!-- Pagination -->
+        <div class="grid-pagination">
+          <div class="pagination-info">
+            Showing {{ pagination.from }} - {{ pagination.to }} of {{ pagination.rowsNumber }} users
+          </div>
+          <div class="pagination-controls">
+            <q-btn
+              v-if="pagination.lastPage > 2"
+              flat
+              round
+              dense
+              icon="first_page"
+              color="grey-8"
+              :disable="pagination.page === 1"
+              @click="goToFirstPage"
+            />
+            <q-btn
+              flat
+              round
+              dense
+              icon="chevron_left"
+              color="grey-8"
+              :disable="pagination.page === 1"
+              @click="goToPreviousPage"
+            />
+            <span class="page-number">{{ pagination.page }} / {{ pagination.lastPage }}</span>
+            <q-btn
+              flat
+              round
+              dense
+              icon="chevron_right"
+              color="grey-8"
+              :disable="pagination.page === pagination.lastPage"
+              @click="goToNextPage"
+            />
+            <q-btn
+              v-if="pagination.lastPage > 2"
+              flat
+              round
+              dense
+              icon="last_page"
+              color="grey-8"
+              :disable="pagination.page === pagination.lastPage"
+              @click="goToLastPage"
+            />
+          </div>
         </div>
       </div>
-    </q-card>
+    </div>
 
-    <!-- Empty state when no form action yet -->
-    <div v-if="!users.length && !usersLoading" class="empty-state-desktop">
-      <q-icon name="person_off" size="80px" color="grey-4" />
-      <div class="text-h5 q-mt-md text-grey-6">No users found</div>
-      <div class="text-body2 text-grey-5 q-mt-sm">Users will appear here when loaded</div>
+    <!-- Mobile Card View -->
+    <div class="mobile-only">
+      <div v-if="typedResult.length === 0" class="empty-state">
+        <q-icon name="person_off" size="64px" color="grey-4" />
+        <div class="text-h6 q-mt-md text-grey-6">No users found</div>
+      </div>
+      <div v-else class="stores-cards">
+        <q-card
+          v-for="user in typedResult"
+          :key="user.id"
+          flat
+          bordered
+          class="store-card q-mb-md"
+        >
+          <q-card-section>
+            <div class="store-card-header">
+              <div class="store-card-title">
+                <q-icon name="person" color="primary" size="24px" class="q-mr-sm" />
+                <router-link
+                  :to="`${$route.path}/${user.optimus_id}`"
+                  class="store-name-link"
+                >
+                  {{ user.name || user.label || 'N/A' }}
+                </router-link>
+              </div>
+            </div>
+            <div v-if="user.mobile" class="store-card-info q-mt-sm">
+              <q-icon name="phone" size="16px" color="grey-6" class="q-mr-xs" />
+              <span class="text-body2 text-grey-7">{{ user.mobile }}</span>
+            </div>
+            <div class="store-card-actions q-mt-md">
+              <q-btn
+                unelevated
+                dense
+                color="primary"
+                icon="edit_note"
+                label="Edit"
+                :to="`${$route.path}/${user.optimus_id}`"
+                class="action-btn-mobile action-btn-edit-mobile"
+              />
+              <q-btn
+                unelevated
+                dense
+                color="negative"
+                icon="delete_forever"
+                label="Delete"
+                @click="handleDeleteUser(user)"
+                class="action-btn-mobile action-btn-delete-mobile"
+              />
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+      <!-- Mobile Pagination -->
+      <div v-if="typedResult.length > 0" class="mobile-pagination q-mt-md">
+        <q-pagination
+          v-model="pagination.page"
+          :max="pagination.lastPage"
+          :max-pages="5"
+          direction-links
+          boundary-links
+          color="primary"
+          @update:model-value="handlePageChange"
+        />
+      </div>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { get } from 'src/boot/axios-call';
-import { axios } from 'src/boot/axios';
-import { Notify, Loading } from 'quasar';
-import type { AxiosResponse } from 'axios';
+import { onMounted, ref, watch } from 'vue';
+import { onRequest, firstPage, previousPage, nextPage, lastPage } from 'src/boot/axios-call';
+import { storeToRefs } from 'pinia';
+import { useCommonStore } from 'src/stores/common';
+import { onDeleteEntity } from 'src/boot/services';
 
-interface UserOption {
+interface UserRow {
   id: number;
+  name?: string;
+  label?: string;
+  mobile?: string;
   optimus_id: number;
-  label: string;
 }
 
-interface RoleOption {
-  id: number;
-  optimus_id: number;
-  label: string;
-}
+const useCommon = useCommonStore();
+const { pagination, result, entityQuery } = storeToRefs(useCommon);
 
-const users = ref<UserOption[]>([]);
-const roles = ref<RoleOption[]>([]);
-const usersLoading = ref(false);
-const rolesLoading = ref(false);
-const assignLoading = ref(false);
-const selectedUserId = ref<number | null>(null);
-const selectedRoleId = ref<number | null>(null);
+const search = ref('');
 
-async function loadUsers() {
-  usersLoading.value = true;
-  try {
-    const res = (await get(
-      { entity: 'users', query: { limit: 500 } },
-      false
-    )) as AxiosResponse<{ data: UserOption[] }>;
-    users.value = res?.data?.data ?? [];
-  } finally {
-    usersLoading.value = false;
-  }
-}
+entityQuery.value = {
+  message: 'Getting users...',
+  entity: 'users',
+  query: {
+    orderBy: 'name:asc',
+    page: pagination.value.page,
+    limit: 12,
+  },
+};
 
-async function loadRoles() {
-  rolesLoading.value = true;
-  try {
-    const res = (await get(
-      { entity: 'roles', query: { limit: 500 } },
-      false
-    )) as AxiosResponse<{ data: RoleOption[] }>;
-    roles.value = res?.data?.data ?? [];
-  } finally {
-    rolesLoading.value = false;
-  }
-}
+const typedResult = result as unknown as UserRow[];
 
-async function onAssignRole() {
-  if (selectedUserId.value == null || selectedRoleId.value == null) return;
-  assignLoading.value = true;
-  Loading.show({ message: 'Assigning role...' });
-  try {
-    await axios.post('role-user', {
-      user_id: selectedUserId.value,
-      role_id: selectedRoleId.value,
-    });
-    Loading.hide();
-    Notify.create({
-      position: 'bottom',
-      type: 'positive',
-      message: 'Role assigned successfully.',
-    });
-    selectedUserId.value = null;
-    selectedRoleId.value = null;
-  } catch (e: unknown) {
-    Loading.hide();
-    const msg =
-      (e as { response?: { data?: { message?: string } } })?.response?.data?.message ??
-      'Failed to assign role.';
-    Notify.create({ position: 'bottom', type: 'negative', message: msg });
-  } finally {
-    assignLoading.value = false;
-  }
-}
+const handleDeleteUser = (user: UserRow) => {
+  onDeleteEntity('users', user.optimus_id, user.name || user.label || 'User');
+};
+
+const handlePageChange = (page: number) => {
+  entityQuery.value.query.page = page;
+  onRequest(entityQuery.value);
+};
+
+const goToFirstPage = () => {
+  firstPage(entityQuery.value);
+};
+
+const goToPreviousPage = () => {
+  previousPage(entityQuery.value);
+};
+
+const goToNextPage = () => {
+  nextPage(entityQuery.value);
+};
+
+const goToLastPage = () => {
+  lastPage(entityQuery.value, pagination.value);
+};
 
 onMounted(() => {
-  loadUsers();
-  loadRoles();
+  result.value = [];
+  entityQuery.value.query.page = 1;
+  onRequest(entityQuery.value, true);
+});
+
+watch(search, (newValue) => {
+  if (newValue) {
+    entityQuery.value.query.filters = 'name:' + search.value;
+  } else {
+    delete entityQuery.value.query.filters;
+  }
+  entityQuery.value.query.page = 1;
+  onRequest(entityQuery.value);
 });
 </script>
 
 <style scoped lang="scss">
 @import 'src/css/dashboard/all-stores/index.scss';
-
-.assign-form-row {
-  grid-template-columns: 1fr;
-  padding: 24px;
-}
-
-.assign-form-inner {
-  width: 100%;
-}
-
-.assign-form-row .action-btn-mobile {
-  min-height: 40px;
-}
 </style>
