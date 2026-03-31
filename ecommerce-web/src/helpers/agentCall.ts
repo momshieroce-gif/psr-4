@@ -36,7 +36,7 @@ export function startAgentCallSession(params: StartAgentCallParams): StartAgentC
   const roomId =
     typeof crypto !== 'undefined' && crypto.randomUUID
       ? crypto.randomUUID()
-      : `Zetenpo-${sanitizeRoomSegment(params.storeOptimusId)}-${sanitizeRoomSegment(params.itemOptimusId)}-${Date.now()}`;
+      : `Biliscart-${sanitizeRoomSegment(params.storeOptimusId)}-${sanitizeRoomSegment(params.itemOptimusId)}-${Date.now()}`;
 
   const joinUrl = buildJoinCallUrl(roomId);
 

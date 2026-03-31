@@ -5,10 +5,10 @@
         <!-- Logo Section -->
         <router-link to="/" class="logo-link">
           <div class="logo-container">
-            <ZetenpoLogo :size="48" />
+            <BiliscartLogo :size="48" />
           </div>
           <div class="logo-text">
-            <span class="logo-brand-name">Zetenpo</span>
+            <span class="logo-brand-name">Biliscart</span>
             <span class="logo-tagline">Your Trusted Shop</span>
           </div>
         </router-link>
@@ -82,7 +82,7 @@ import { storeToRefs } from 'pinia';
 import { useUserCartStore } from 'src/stores/userCart';
 import { logout } from 'src/boot/axios-call';
 import AppFooter from 'src/components/AppFooter.vue';
-import ZetenpoLogo from 'src/components/ZetenpoLogo.vue';
+import BiliscartLogo from 'src/components/BiliscartLogo.vue';
 
 const { profile } = storeToRefs(useUserStore());
 const { countTotalItems } = storeToRefs(useUserCartStore());

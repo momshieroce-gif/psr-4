@@ -15,17 +15,18 @@ export default [
           ]
         },
         {
-          path: 'roles',
+          path: 'users',
           children: [
-            { path: '', component: () => import('src/pages/dashboard/roles/IndexPage.vue') },
-            { path: 'create', component: () => import('src/pages/dashboard/roles/CreatePage.vue') },
+            { path: '', component: () => import('src/pages/dashboard/users/IndexPage.vue') },
+            { path: 'create', component: () => import('src/pages/dashboard/users/CreatePage.vue') },
+            { path: ':id', component: () => import('src/pages/dashboard/users/EditPage.vue') },
           ]
         },
         {
-          path: 'customer-transactions',
+          path: 'my-transactions',
           children: [
-            { path: '', component: () => import('src/pages/dashboard/customer-transactions/IndexPage.vue') },
-            { path: ':id', component: () => import('src/pages/dashboard/customer-transactions/ShowPage.vue') },
+            { path: '', component: () => import('src/pages/dashboard/my-transactions/IndexPage.vue') },
+            { path: ':id', component: () => import('src/pages/dashboard/my-transactions/ShowPage.vue') },
           ]
         },
         
