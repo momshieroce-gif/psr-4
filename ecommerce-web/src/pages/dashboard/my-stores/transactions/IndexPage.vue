@@ -106,22 +106,10 @@
               <div class="grid-cell cell-actions">
                 <div class="action-buttons">
                   <q-btn
-                    unelevated
-                    round
-                    dense
-                    color="negative"
-                    icon="check_circle"
-                    :to="`${$route.path}/${transaction.optimus_id}`"
-                    class="action-btn-grid action-btn-delete"
-                  >
-                    <q-tooltip>Mark as received</q-tooltip>
-                  </q-btn>
-                  <q-btn
-                    unelevated
                     round
                     dense
                     color="primary"
-                    icon="visibility"
+                    icon="view_list"
                     :to="`${$route.path}/${transaction.optimus_id}`"
                     class="action-btn-grid action-btn-edit"
                   >
@@ -242,7 +230,7 @@
                 unelevated
                 dense
                 color="primary"
-                icon="visibility"
+                icon="view_list"
                 label="View"
                 :to="`${$route.path}/${transaction.optimus_id}`"
                 class="action-btn-mobile action-btn-edit-mobile"
@@ -278,7 +266,7 @@ const { entityQuery, pagination, result } = storeToRefs(useCommon);
 
 entityQuery.value = {
   message: 'Getting transactions...',
-  entity: 'all-transactions',
+  entity: 'my-store-transactions',
   query: {
     with: 'status,paymentMethod,receiveMethod',
     orderBy: 'created_at:desc',

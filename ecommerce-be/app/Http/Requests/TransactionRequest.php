@@ -29,7 +29,8 @@ class TransactionRequest extends BaseRequest
             'selectedPaymenthMethod'    => 'required',
             'lat'                       => 'required',
             'lng'                       => 'required',
-            'total'                     => 'required'
+            'total'                     => 'required',
+            'status_id'                 => 'required'
 
         ];
     }

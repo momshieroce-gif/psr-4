@@ -54,9 +54,8 @@ abstract class ApiController extends Controller {
      * @return BaseResource
      */
     public function update( int $id ) : BaseResource {
-
         $this->params = app( $this->updateRequest )->all();
-        $result = $this->repository->where( 'id', $id )->first();
+        $result = $this->repository->where( 'id', $id );
         $this->result = tap( $result )->update( $this->params );
         return $this->getResource();
     }

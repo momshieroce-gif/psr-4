@@ -4,16 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ {
     PublicStoreController,
     UserController,
-    ImageController,
     ProfileController,
-    MenuController,
     UserValidationController,
     RegisterController,
     ListingApiController,
     RoleController,
     RoleUserController,
-    PaymentOptionController,
-    PaymentController,
     CategoryController,
     ItemController,
     InterConnectedCityController,
@@ -24,10 +20,12 @@ use App\Http\Controllers\ {
     PaymentMethodController,
     TransactionController,
     CustomerTransactionController,
+    MyStoreTransactionController,
     MyStoreController,
     ItemPriceController,
     PublicStoreItemController,
-    StoreMenuAccessController
+    StoreMenuAccessController,
+    StatusController
 }
 ;
 
@@ -43,7 +41,7 @@ Route::group( [ 'middleware' => 'auth:api' ], function () {
     //todo Limit transaction to it's role as an admin
     Route::resource('all-transactions', TransactionController::class)->middleware('allTransactionsMiddleware');
     Route::resource('my-transactions', CustomerTransactionController::class)->middleware('myTransactionsMiddleware');
-
+    Route::resource('my-store-transactions', MyStoreTransactionController::class)->middleware('myStoreMiddleware');
     Route::resource('my-stores', MyStoreController::class)->middleware('myStoreMiddleware');
     /**
      * Updated 10-19-2024
@@ -61,6 +59,7 @@ Route::group( [ 'middleware' => 'auth:api' ], function () {
     Route::resource('items', ItemController::class)->middleware('itemMiddleware');
     Route::resource('item-prices', ItemPriceController::class);
     Route::resource('store-menu-access', StoreMenuAccessController::class);
+    Route::resource('statuses', StatusController::class);
 });
 
  Route::get('listing_api', [ListingApiController::class, 'index']);

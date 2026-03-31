@@ -17,6 +17,16 @@
             <q-btn
               unelevated
               color="primary"
+              label="View Transactions"
+              icon="receipt"
+              :to="`${$route.path}/transactions`"
+              class="view-items-btn"
+            >
+              <q-tooltip>View store transactions</q-tooltip>
+            </q-btn>
+            <q-btn
+              unelevated
+              color="primary"
               label="View Items"
               icon="inventory_2"
               :to="`${$route.path}/items`"
