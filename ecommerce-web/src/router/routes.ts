@@ -49,6 +49,13 @@ const routes: RouteRecordRaw[] = [
       { path: ':roomId', component: () => import('pages/public/JoinCallPage.vue') },
     ],
   },
+  {
+    path: '/join-chat',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: ':roomId', component: () => import('pages/public/JoinChatPage.vue') },
+    ],
+  },
   // {
   //   path: '/',
   //   component: () => import('layouts/MainLayout.vue'),

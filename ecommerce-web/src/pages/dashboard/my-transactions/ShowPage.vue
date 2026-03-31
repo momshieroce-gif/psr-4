@@ -302,7 +302,7 @@ const localResult = ref<TransactionDetail>({
 onMounted(async () => {
   const result = await show<TransactionDetail>({
     message: 'Getting transaction...',
-    entity: 'customer-transactions',
+    entity: 'my-transactions',
     optimus_id: Number(route.params.id),
     query: {
       with: 'paymentMethod,receiveMethod,status,orders.store',

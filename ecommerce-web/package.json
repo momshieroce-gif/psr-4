@@ -1,8 +1,8 @@
 {
-  "name": "zetenpo",
+  "name": "biliscart",
   "version": "0.0.1",
-  "description": "Zetenpo",
-  "productName": "Zetenpo",
+  "description": "Bilis Cart",
+  "productName": "BilisCart",
   "author": "Bobby Gerez <ugerez@yahoo.com>",
   "private": true,
   "scripts": {

@@ -7,10 +7,10 @@
           color="grey-8" />
         <router-link to="/" class="logo-section">
           <div class="logo-container">
-            <ZetenpoLogo :size="48" />
+            <BiliscartLogo :size="48" />
           </div>
           <q-toolbar-title class="dashboard-title">
-            Zetenpo
+            Biliscart
           </q-toolbar-title>
         </router-link>
 
@@ -125,7 +125,7 @@ import { storeToRefs } from 'pinia';
 import { logout } from 'src/boot/axios-call';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
-import ZetenpoLogo from 'src/components/ZetenpoLogo.vue';
+import BiliscartLogo from 'src/components/BiliscartLogo.vue';
 
 const router = useRouter();
 const $q = useQuasar();

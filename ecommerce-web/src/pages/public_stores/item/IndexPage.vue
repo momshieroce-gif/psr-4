@@ -68,6 +68,66 @@
         </q-card>
       </q-dialog>
 
+      <q-dialog v-model="agentChatDialogOpen" maximized @hide="onAgentChatDialogHide">
+        <q-card class="agent-call-dialog-card">
+          <q-bar class="bg-primary text-white">
+            <q-icon name="chat" class="q-mr-sm" />
+            <div>Chat Agent</div>
+            <q-space />
+            <q-btn flat dense round icon="close" v-close-popup />
+          </q-bar>
+          <q-card-section class="q-pa-md">
+            <div class="q-mb-sm text-caption text-grey-7">
+              Real-time one-on-one chat with your agent.
+            </div>
+            <div class="chat-box q-pa-sm q-mb-md" ref="agentChatBoxRef">
+              <div
+                v-for="msg in agentChatMessages"
+                :key="msg.id"
+                class="chat-row q-mb-sm"
+                :class="msg.sender === 'customer' ? 'mine' : 'theirs'"
+              >
+                <div class="bubble">
+                  <div class="text-caption text-grey-7 q-mb-xs">
+                    {{ msg.sender === 'customer' ? 'You' : 'Agent' }}
+                  </div>
+                  <div class="text-body2">{{ msg.text }}</div>
+                </div>
+              </div>
+            </div>
+            <q-input
+              v-model="agentChatDraft"
+              outlined
+              autogrow
+              type="textarea"
+              placeholder="Type a message..."
+              @keyup.enter.exact.prevent="sendCustomerChatMessage"
+            />
+            <div v-if="agentChatJoinUrl" class="text-caption q-mt-sm">
+              <strong>Agent chat link:</strong> {{ agentChatJoinUrl }}
+            </div>
+          </q-card-section>
+          <q-card-actions align="right" class="q-pa-md">
+            <q-btn
+              v-if="agentChatJoinUrl"
+              flat
+              color="primary"
+              label="Copy agent chat link"
+              icon="content_copy"
+              @click="copyAgentChatJoinLink"
+            />
+            <q-btn
+              flat
+              color="primary"
+              label="Send"
+              icon="send"
+              :loading="agentChatSending"
+              @click="sendCustomerChatMessage"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+
       <!-- Live call: Firebase (anonymous auth) + WebRTC — no third-party login -->
       <q-dialog
         v-model="agentCallDialogOpen"
@@ -169,6 +229,18 @@
                 <div class="col">
                   <q-btn
                     color="primary"
+                    @click="needToChat"
+                    size="lg"
+                    unelevated
+                    class="full-width add-to-cart-btn"
+                    icon="support_agent"
+                    label="Chat Agent"
+                    :loading="agentChatLoading"
+                  />
+                </div>
+                <!-- <div class="col">
+                  <q-btn
+                    color="primary"
                     @click="needToAssist"
                     size="lg"
                     unelevated
@@ -178,6 +250,7 @@
                     :loading="agentCallLoading"
                   />
                 </div>
+                -->
               </div>
             </div>
           </q-card-section>
@@ -197,6 +270,12 @@ import BreadCrumbsWrapper from 'src/components/BreadCrumbsWrapper.vue';
 import { startAgentCallSession } from 'src/helpers/agentCall';
 import { isFirebaseConfigured } from 'src/helpers/firebaseCore';
 import { startCallerSession } from 'src/helpers/webrtcFirebaseCall';
+import {
+  startAgentChatSession,
+  subscribeChatMessages,
+  sendChatMessage,
+  type ChatMessage,
+} from 'src/helpers/firebaseAgentChat';
 
 interface ItemPrice {
   id: number;
@@ -249,6 +328,15 @@ const store = ref({
 const route = useRoute();
 
 const agentCallLoading = ref(false);
+const agentChatLoading = ref(false);
+const agentChatDialogOpen = ref(false);
+const agentChatRoomId = ref('');
+const agentChatJoinUrl = ref('');
+const agentChatDraft = ref('');
+const agentChatSending = ref(false);
+const agentChatMessages = ref<ChatMessage[]>([]);
+const agentChatBoxRef = ref<HTMLElement | null>(null);
+let agentChatUnsub: (() => void) | null = null;
 const agentCallWebRtcBusy = ref(false);
 const agentCallDialogOpen = ref(false);
 const agentRoomId = ref('');
@@ -265,6 +353,50 @@ const copyAgentJoinLink = async () => {
   } catch {
     $q.notify({ message: agentJoinUrl.value, type: 'info', timeout: 8000 });
   }
+};
+
+const copyAgentChatJoinLink = async () => {
+  if (!agentChatJoinUrl.value) return;
+  try {
+    await navigator.clipboard.writeText(agentChatJoinUrl.value);
+    $q.notify({ message: 'Agent chat link copied.', type: 'positive' });
+  } catch {
+    $q.notify({ message: agentChatJoinUrl.value, type: 'info', timeout: 8000 });
+  }
+};
+
+const scrollChatToBottom = async () => {
+  await nextTick();
+  const box = agentChatBoxRef.value;
+  if (!box) return;
+  box.scrollTop = box.scrollHeight;
+};
+
+watch(agentChatMessages, () => {
+  void scrollChatToBottom();
+});
+
+const sendCustomerChatMessage = async () => {
+  if (!agentChatRoomId.value || !agentChatDraft.value.trim()) return;
+  agentChatSending.value = true;
+  try {
+    await sendChatMessage(agentChatRoomId.value, 'customer', agentChatDraft.value);
+    agentChatDraft.value = '';
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : 'Could not send message.';
+    $q.notify({ message: msg, type: 'negative' });
+  } finally {
+    agentChatSending.value = false;
+  }
+};
+
+const onAgentChatDialogHide = () => {
+  agentChatUnsub?.();
+  agentChatUnsub = null;
+  agentChatRoomId.value = '';
+  agentChatJoinUrl.value = '';
+  agentChatDraft.value = '';
+  agentChatMessages.value = [];
 };
 
 /** QDialog mounts dialog content on @show — refs are often null on first nextTick() only. */
@@ -346,6 +478,49 @@ const needToAssist = async () => {
     });
   } finally {
     agentCallLoading.value = false;
+  }
+};
+
+const needToChat = async () => {
+  if (!isFirebaseConfigured()) {
+    $q.notify({
+      message: 'Chat requires Firebase. Add VITE_FIREBASE_* keys in .env and enable Anonymous sign-in.',
+      type: 'negative',
+      timeout: 6000,
+    });
+    return;
+  }
+  agentChatLoading.value = true;
+  try {
+    const { roomId, joinUrl } = startAgentChatSession({
+      storeOptimusId: route.params.id as string,
+      itemOptimusId: route.params.item_id as string,
+      storeName: store.value.name,
+      itemName: item.value.name,
+    });
+    agentChatRoomId.value = roomId;
+    agentChatJoinUrl.value = joinUrl;
+    agentChatUnsub?.();
+    agentChatUnsub = subscribeChatMessages(
+      roomId,
+      (messages) => {
+        agentChatMessages.value = messages;
+      },
+      (message) => {
+        $q.notify({ message, type: 'negative', timeout: 7000 });
+      }
+    );
+    agentChatDialogOpen.value = true;
+    $q.notify({
+      message: 'Chat opened. Share the agent chat link so an agent can join.',
+      type: 'positive',
+      timeout: 4000,
+    });
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : 'Could not start chat. Please try again.';
+    $q.notify({ message: msg, type: 'negative' });
+  } finally {
+    agentChatLoading.value = false;
   }
 };
 
@@ -764,6 +939,40 @@ const zoomStyle = computed(() => {
   background: #1a1a1a;
   border-radius: 8px;
   object-fit: cover;
+}
+
+.chat-box {
+  height: 50vh;
+  max-height: 560px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.chat-row {
+  display: flex;
+}
+
+.chat-row.mine {
+  justify-content: flex-end;
+}
+
+.chat-row.theirs {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: min(80%, 520px);
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #ececec;
+}
+
+.chat-row.mine .bubble {
+  background: #eaf4ff;
+  border-color: #d3e7ff;
 }
 
 @media (max-width: 600px) {

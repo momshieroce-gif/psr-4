@@ -467,7 +467,7 @@ const processCustomerOrder = async () => {
   if (result) {
     userCart.emptyCart();
     router.push({
-      path: '/dashboard/customer-transactions',
+      path: '/dashboard/my-transactions',
     });
   }
 };

@@ -41,7 +41,7 @@ Route::group( [ 'middleware' => 'auth:api' ], function () {
     * Updated 10-19-2024
     */
     //todo Limit transaction to it's role as an admin
-    Route::resource('transactions', TransactionController::class)->middleware('allTransactionsMiddleware');
+    Route::resource('all-transactions', TransactionController::class)->middleware('allTransactionsMiddleware');
     Route::resource('my-transactions', CustomerTransactionController::class)->middleware('myTransactionsMiddleware');
 
     Route::resource('my-stores', MyStoreController::class)->middleware('myStoreMiddleware');
@@ -52,6 +52,7 @@ Route::group( [ 'middleware' => 'auth:api' ], function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::post('role-user', [RoleUserController::class, 'store']);
+    Route::delete('role-user', [RoleUserController::class, 'destroyByPair']);
     Route::patch('profile/ {
     id}
     ', [ProfileController::class, 'update']);

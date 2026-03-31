@@ -278,7 +278,7 @@ const { entityQuery, pagination, result } = storeToRefs(useCommon);
 
 entityQuery.value = {
   message: 'Getting transactions...',
-  entity: 'transactions',
+  entity: 'all-transactions',
   query: {
     with: 'status,paymentMethod,receiveMethod',
     orderBy: 'created_at:desc',

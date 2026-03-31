@@ -5,7 +5,7 @@
       <div class="hero-content">
         <div class="hero-text">
           <h1 class="hero-title">
-            Welcome to <span class="brand-name">Zetenpo</span>
+            Welcome to <span class="brand-name">Biliscart</span>
           </h1>
           <p class="hero-subtitle">
             Your trusted marketplace for daily essentials. Discover multiple stores, compare prices, and shop with
@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="hero-image">
-          <ZetenpoLogo :size="200" />
+          <BiliscartLogo :size="200" />
         </div>
       </div>
     </section>
@@ -27,7 +27,7 @@
     <!-- Features Section -->
     <section class="features-section">
       <div class="features-container">
-        <h2 class="section-title">Why Choose Zetenpo?</h2>
+        <h2 class="section-title">Why Choose Biliscart?</h2>
         <div class="features-grid">
           <q-card flat bordered class="feature-card">
             <q-card-section>
@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import ZetenpoLogo from 'src/components/ZetenpoLogo.vue';
+import BiliscartLogo from 'src/components/BiliscartLogo.vue';
 </script>
 
 <style scoped lang="scss">

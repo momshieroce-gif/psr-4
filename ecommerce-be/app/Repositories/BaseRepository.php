@@ -231,7 +231,6 @@ class BaseRepository implements BaseInterface
      */
     public function with(): self
     {
-
         $relationships = $this->pregSplit('@,@', Arr::get($this->params, 'with'));
         foreach ($relationships as $relationship) {
             if (!$relationship) {

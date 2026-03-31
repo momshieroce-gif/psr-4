@@ -1,9 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "ecommerce-docker"
-		},
-		{
 			"path": "ecommerce-be"
 		},
 		{
