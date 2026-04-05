@@ -15,6 +15,12 @@ class MyStoreMiddleware {
     */
 
     public function handle( Request $request, Closure $next ): Response {
+        if ($request->has('filters')) {
+            $request->merge([
+                'filters' =>  $request->filters  . ',user_id:' . Auth::user()->id
+            ]);
+            return $next( $request );
+        }
         /**
         * result is limited to this user_id only.
         */

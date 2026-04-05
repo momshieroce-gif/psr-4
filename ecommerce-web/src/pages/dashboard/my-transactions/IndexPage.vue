@@ -68,9 +68,8 @@
                   :to="`${$route.path}/${transaction.optimus_id}`"
                   class="transaction-reference"
                 >
-                  <q-icon name="receipt_long" color="primary" />
                   <div class="transaction-reference-text">
-                    <div class="transaction-reference-id">#{{ transaction.reference_id }}</div>
+                    <div class="transaction-reference-id"> {{ transaction.reference_id }}</div>
                     <div class="transaction-date">
                       <q-icon name="calendar_today" size="xs" class="q-mr-xs" />
                       {{ formatDate(transaction.created_at) }}
@@ -106,24 +105,25 @@
               <div class="grid-cell cell-actions">
                 <div class="action-buttons">
                   <q-btn
+                    v-if="transaction.status"
                     unelevated
-                    round
                     dense
+                    round
                     color="negative"
                     icon="check_circle"
                     :to="`${$route.path}/${transaction.optimus_id}`"
-                    class="action-btn-grid action-btn-delete"
+                     class="action-btn-grid action-btn-delete"
                   >
                     <q-tooltip>Mark as received</q-tooltip>
                   </q-btn>
                   <q-btn
-                    unelevated
                     round
+                    unelevated
                     dense
                     color="primary"
                     icon="visibility"
                     :to="`${$route.path}/${transaction.optimus_id}`"
-                    class="action-btn-grid action-btn-edit"
+                      class="action-btn-grid action-btn-edit"
                   >
                     <q-tooltip>View details</q-tooltip>
                   </q-btn>

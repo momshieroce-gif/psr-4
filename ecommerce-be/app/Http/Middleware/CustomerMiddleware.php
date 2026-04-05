@@ -6,8 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
-
-class MyTransactionsMiddleware {
+use App\Traits\UtilsTrait;
+class CustomerMiddleware {
+    use UtilsTrait;
     /**
     * Handle an incoming request.
     *
@@ -15,20 +16,9 @@ class MyTransactionsMiddleware {
     */
 
     public function handle( Request $request, Closure $next ): Response {
-        
-        if ($request->has('filters')) {
-            $request->merge([
-                'filters' =>  $request->filters  . ',user_id:' . Auth::user()->id
-            ]);
-            return $next( $request );
+        if ( !$this->isCustomer() ) {
+            throw new \App\Exceptions\AccessDeniedException( 'Access Denied!' );
         }
-        /**
-        * result is limited to this user_id only.
-        */
-        $request->merge([
-            'filters' => 'user_id:' . Auth::user()->id
-        ]);
-
         return $next( $request );
     }
 }

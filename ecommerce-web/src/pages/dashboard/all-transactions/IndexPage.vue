@@ -68,9 +68,8 @@
                   :to="`${$route.path}/${transaction.optimus_id}`"
                   class="transaction-reference"
                 >
-                  <q-icon name="receipt_long" color="primary" />
                   <div class="transaction-reference-text">
-                    <div class="transaction-reference-id">#{{ transaction.reference_id }}</div>
+                    <div class="transaction-reference-id">{{ transaction.reference_id }}</div>
                     <div class="transaction-date">
                       <q-icon name="calendar_today" size="xs" class="q-mr-xs" />
                       {{ formatDate(transaction.created_at) }}

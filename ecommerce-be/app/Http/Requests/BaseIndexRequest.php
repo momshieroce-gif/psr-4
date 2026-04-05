@@ -65,7 +65,8 @@ class BaseIndexRequest extends BaseRequest
             'task_id'               => 'sometimes',
             'latitude'              => 'sometimes',
             'longitude'             => 'sometimes',
-            'radius'                => 'sometimes'
+            'radius'                => 'sometimes',
+            'reference_id'          => 'sometimes'
         ];
     }
 }

@@ -74,4 +74,13 @@ trait SearchFieldSupport {
         $this->model = $this->model->where('user_id', $value);
     }
 
+    /**
+     * Reference ID the resource
+     * @param string $value
+     * @return void
+     */
+    public function reference_id(string $value): void {
+        $this->model = $this->model->where('reference_id', 'LIKE', '%'. $value . '%');
+    }
+
 }

@@ -31,9 +31,26 @@
               {{ localResult.created_at }}
             </div>
           </div>
-          <div class="col-auto">
-            <q-badge v-if="localResult.status" :color="getStatusColor(localResult.status.label)"
-              :label="localResult.status.label" class="status-badge-large" />
+          <div class="col-auto status-select-wrap">
+            <q-select
+              v-model="selectedStatusId"
+              :options="localStatuses"
+              option-value="id"
+              :option-label="statusOptionLabel"
+              emit-value
+              map-options
+              outlined
+              dense
+              label="Status"
+              :loading="statusUpdateLoading"
+              :disable="localStatuses.length === 0"
+              class="status-select"
+              @update:model-value="onStatusChange"
+            >
+              <template v-slot:prepend>
+                <q-icon name="flag" color="primary" />
+              </template>
+            </q-select>
           </div>
         </div>
       </q-card-section>
@@ -233,9 +250,10 @@
 </template>
 
 <script setup lang="ts">
-import { show } from 'src/boot/axios-call';
+import { show, get, update } from 'src/boot/axios-call';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import type { AxiosResponse } from 'axios';
 
 interface OrderItem {
   id: number;
@@ -280,6 +298,15 @@ interface TransactionDetail {
   orders?: OrderItem[];
 }
 
+/** Matches API `statuses` list (Status model: id, name, label, value). */
+interface Status {
+  id: number;
+  name?: string;
+  label?: string;
+  value?: number;
+  optimus_id?: number;
+}
+
 const route = useRoute();
 
 const localResult = ref<TransactionDetail>({
@@ -299,6 +326,14 @@ const localResult = ref<TransactionDetail>({
   orders: []
 });
 
+const localStatuses = ref<Status[]>([]);
+const selectedStatusId = ref<number | null>(null);
+const statusUpdateLoading = ref(false);
+
+function statusOptionLabel(opt: Status): string {
+  return opt.label || opt.name || '';
+}
+
 onMounted(async () => {
   const result = await show<TransactionDetail>({
     message: 'Getting transaction...',
@@ -310,18 +345,49 @@ onMounted(async () => {
   });
   if (result) {
     localResult.value = result;
+    selectedStatusId.value = result.status_id;
+  }
+  const statusesRes = (await get(
+    { entity: 'statuses', query: { limit: 500 } },
+    false
+  )) as AxiosResponse<{ data: Status[] }> | undefined;
+  if (statusesRes?.data?.data) {
+    localStatuses.value = statusesRes.data.data;
   }
 });
 
-// Helper functions
-const getStatusColor = (status: string | undefined): string => {
-  if (!status) return 'grey';
-  const statusLower = status.toLowerCase();
-  if (statusLower.includes('completed') || statusLower.includes('delivered')) return 'positive';
-  if (statusLower.includes('preparing') || statusLower.includes('processing')) return 'warning';
-  if (statusLower.includes('cancelled') || statusLower.includes('rejected')) return 'negative';
-  return 'primary';
-};
+async function onStatusChange(newStatusId: number | null) {
+  if (newStatusId == null || newStatusId === localResult.value.status_id) return;
+  const previousId = localResult.value.status_id;
+  const previousStatus = localResult.value.status;
+  statusUpdateLoading.value = true;
+  try {
+    const updated = await update(
+      {
+        entity: 'all-transactions',
+        optimus_id: Number(route.params.id),
+        data: { status_id: newStatusId },
+      },
+      true,
+      true
+    );
+    if (updated) {
+      localResult.value.status_id = newStatusId;
+      const s = localStatuses.value.find((x) => x.id === newStatusId);
+      if (s) {
+        localResult.value.status = {
+          label: s.label || s.name || '',
+          name: s.name || '',
+        };
+      }
+    } else {
+      selectedStatusId.value = previousId;
+      localResult.value.status = previousStatus;
+    }
+  } finally {
+    statusUpdateLoading.value = false;
+  }
+}
 
 const formatCurrency = (amount: number | string): string => {
   if (typeof amount === 'string') {
@@ -353,10 +419,13 @@ const formatCurrency = (amount: number | string): string => {
   padding: 24px;
 }
 
-.status-badge-large {
-  font-size: 14px;
-  padding: 8px 16px;
-  border-radius: 20px;
+.status-select-wrap {
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.status-select {
+  width: 100%;
 }
 
 .transaction-info-section {
