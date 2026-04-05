@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ItemResource;
-use App\Repositories\ItemRepository;
+use App\Repositories\PublicStoreItemRepository;
 use App\Http\Requests\BaseIndexRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\BaseResource;
@@ -12,7 +12,7 @@ class PublicStoreItemController extends ApiController
 {
     private $publicStoreItemService; 
 
-    public function __construct(ItemRepository $repository, PublicStoreItemService $publicStoreItemService)
+    public function __construct(PublicStoreItemRepository $repository, PublicStoreItemService $publicStoreItemService)
     {
         $this->repository = $repository;
         $this->indexRequest = BaseIndexRequest::class;

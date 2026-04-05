@@ -22,8 +22,7 @@ class StoreRequest extends BaseRequest
             'items'                 => 'sometimes',
             'delivery_charge'       => 'sometimes',
             'delivery_charge_id'    => 'sometimes',
-            'optimus_id'            => 'sometimes',
-            'status_id'             => 'sometimes'
+            'optimus_id'            => 'sometimes'
         ];  
     }
 

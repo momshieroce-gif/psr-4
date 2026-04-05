@@ -6,6 +6,7 @@ use App\Repositories\TransactionRepository;
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use App\Http\Requests\BaseIndexRequest;
+use App\Http\Requests\Transaction\UpdateRequest;
 use App\Http\Resources\BaseResource;
 
 class TransactionController extends ApiController {
@@ -16,7 +17,7 @@ class TransactionController extends ApiController {
         $this->repository = $repository;
         $this->indexRequest = BaseIndexRequest::class;
         $this->storeRequest    = TransactionRequest::class;
-        $this->updateRequest    = BaseIndexRequest::class;
+        $this->updateRequest    = UpdateRequest::class;
     }
 
     public function isPublicRoute( string $routeName ): Bool {

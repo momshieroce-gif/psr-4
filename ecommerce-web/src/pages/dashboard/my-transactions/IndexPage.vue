@@ -68,9 +68,8 @@
                   :to="`${$route.path}/${transaction.optimus_id}`"
                   class="transaction-reference"
                 >
-                  <q-icon name="receipt_long" color="primary" />
                   <div class="transaction-reference-text">
-                    <div class="transaction-reference-id">#{{ transaction.reference_id }}</div>
+                    <div class="transaction-reference-id"> {{ transaction.reference_id }}</div>
                     <div class="transaction-date">
                       <q-icon name="calendar_today" size="xs" class="q-mr-xs" />
                       {{ formatDate(transaction.created_at) }}
@@ -106,24 +105,25 @@
               <div class="grid-cell cell-actions">
                 <div class="action-buttons">
                   <q-btn
+                    v-if="transaction.status"
                     unelevated
-                    round
                     dense
+                    round
                     color="negative"
                     icon="check_circle"
                     :to="`${$route.path}/${transaction.optimus_id}`"
-                    class="action-btn-grid action-btn-delete"
+                     class="action-btn-grid action-btn-delete"
                   >
                     <q-tooltip>Mark as received</q-tooltip>
                   </q-btn>
                   <q-btn
-                    unelevated
                     round
+                    unelevated
                     dense
                     color="primary"
                     icon="visibility"
                     :to="`${$route.path}/${transaction.optimus_id}`"
-                    class="action-btn-grid action-btn-edit"
+                      class="action-btn-grid action-btn-edit"
                   >
                     <q-tooltip>View details</q-tooltip>
                   </q-btn>
@@ -199,19 +199,19 @@
           class="store-card q-mb-md"
         >
           <q-card-section>
-            <div class="store-card-header">
+            <div class="store-card-header transaction-store-card-header">
               <div class="store-card-title">
-                <q-icon name="receipt_long" color="primary" size="24px" class="q-mr-sm" />
                 <div class="transaction-reference-id">#{{ transaction.reference_id }}</div>
               </div>
-              <q-badge
-                :color="getStatusColor(transaction.status?.label)"
-                :label="transaction.status?.label || 'Pending'"
-                class="status-badge"
-              />
+              <div class="transaction-header-badge">
+                <q-badge
+                  :color="getStatusColor(transaction.status?.label)"
+                  :label="transaction.status?.label || 'Pending'"
+                  class="status-badge"
+                />
+              </div>
             </div>
             <div class="store-card-info">
-              <q-icon name="calendar_today" size="16px" color="grey-6" class="q-mr-xs" />
               <span class="text-body2 text-grey-7">{{ formatDate(transaction.created_at) }}</span>
             </div>
             <div class="transaction-mobile-details">
@@ -372,6 +372,38 @@ const formatDate = (dateString: string | undefined): string => {
   font-weight: 600;
   padding: 6px 12px;
   border-radius: 16px;
+}
+
+/* Mobile card: wrap status badge to next line when header row is too tight */
+.store-card-header.transaction-store-card-header {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px 12px;
+}
+
+.store-card-header.transaction-store-card-header .store-card-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.store-card-header.transaction-store-card-header .transaction-reference-id {
+  word-break: break-word;
+}
+
+.store-card-header.transaction-store-card-header .transaction-header-badge {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.store-card-header.transaction-store-card-header .transaction-header-badge :deep(.q-badge) {
+  white-space: normal;
+  text-align: center;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 .transaction-reference {

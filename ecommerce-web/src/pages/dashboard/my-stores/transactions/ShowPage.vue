@@ -337,8 +337,8 @@ function statusOptionLabel(opt: Status): string {
 onMounted(async () => {
   const result = await show<TransactionDetail>({
     message: 'Getting transaction...',
-    entity: 'all-transactions',
-    optimus_id: Number(route.params.id),
+    entity: 'my-store-transactions',
+    optimus_id: Number(route.params.transactionId),
     query: {
       with: 'paymentMethod,receiveMethod,status,orders.store',
     },
@@ -364,8 +364,8 @@ async function onStatusChange(newStatusId: number | null) {
   try {
     const updated = await update(
       {
-        entity: 'all-transactions',
-        optimus_id: Number(route.params.id),
+        entity: 'my-store-transactions',
+        optimus_id: Number(route.params.transactionId),
         data: { status_id: newStatusId },
       },
       true,

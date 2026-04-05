@@ -22,3 +22,8 @@ export enum DELIVERY_TYPE {
 export enum ERROR_CODE{
   UNAUTHORIZED = 401
 }
+
+
+export enum TRANSACTION_STATUS {
+  CUSTOMER_RECEIVED_THE_ITEM = 4
+}
