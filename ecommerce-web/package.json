@@ -1,8 +1,8 @@
 {
-  "name": "biliscart",
+  "name": "mynearestshop",
   "version": "0.0.1",
-  "description": "Bilis Cart",
-  "productName": "BilisCart",
+  "description": "My Nearest Shop",
+  "productName": "MyNearestShop",
   "author": "Bobby Gerez <ugerez@yahoo.com>",
   "private": true,
   "scripts": {

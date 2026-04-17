@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "ecommerce-be"
+			"path": ".."
 		},
 		{
-			"path": "ecommerce-web"
+			"path": "../../../generic-docker"
 		}
 	],
 	"settings": {}

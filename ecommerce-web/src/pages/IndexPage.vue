@@ -5,7 +5,7 @@
       <div class="hero-content">
         <div class="hero-text">
           <h1 class="hero-title">
-            Welcome to <span class="brand-name">Biliscart</span>
+            Welcome to <span class="brand-name">My Nearest Shop</span>
           </h1>
           <p class="hero-subtitle">
             Your trusted marketplace for daily essentials. Discover multiple stores, compare prices, and shop with
@@ -27,7 +27,7 @@
     <!-- Features Section -->
     <section class="features-section">
       <div class="features-container">
-        <h2 class="section-title">Why Choose Biliscart?</h2>
+        <h2 class="section-title">Why Choose My Nearest Shop?</h2>
         <div class="features-grid">
           <q-card flat bordered class="feature-card">
             <q-card-section>
