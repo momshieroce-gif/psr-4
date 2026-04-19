@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Role;
 
 use App\Enum\Role;
 use Illuminate\Support\Facades\Auth;
 
-trait UtilsTrait
+trait AccessChecker
  {
 
     /**
@@ -28,7 +28,6 @@ trait UtilsTrait
     {
         return preg_split( $pattern, $value, 0, PREG_SPLIT_NO_EMPTY );
     }
-
 
     /**
      * Check if the user is a super admin.

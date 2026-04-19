@@ -108,7 +108,7 @@ class BaseRepository implements BaseInterface
      */
     public function getResults(): LengthAwarePaginator|Collection
     {
-        $limit = Arr::get($this->params, 'limit', 10);
+        $limit = Arr::get($this->params, 'limit', 12);
         $type  = Arr::get($this->params, 'type', false);
         
         if ($type) {

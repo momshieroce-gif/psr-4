@@ -10,7 +10,7 @@
             <BiliscartLogo :size="48" />
           </div>
           <q-toolbar-title class="dashboard-title">
-            My Nearest Shop
+            My Nearest Shops
           </q-toolbar-title>
         </router-link>
 
