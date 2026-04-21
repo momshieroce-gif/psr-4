@@ -35,7 +35,8 @@ class TransactionController extends ApiController {
                 $request->selectedReceiveMethod, $request->selectedPaymenthMethod, 
                 $request->lat, 
                 $request->lng,
-                $request->total
+                $request->total,
+                $request->receivers_mobile
              );
 
         return $this->getResource();

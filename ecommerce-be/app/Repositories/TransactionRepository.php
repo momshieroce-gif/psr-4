@@ -25,6 +25,7 @@ class TransactionRepository extends BaseRepository implements BaseInterface
         string $lat,
         string $lng,
         float $total,
+        string $receivers_mobile
     ): Transaction {
 
         $user = Auth::user();
@@ -40,7 +41,8 @@ class TransactionRepository extends BaseRepository implements BaseInterface
             'lng'                   => $lng,
             'total'                 => $total,
             'grand_total'           => $total + $deliveryCharge,
-            'status_id'             => status::PREPARING_ORDERS
+            'status_id'             => status::PREPARING_ORDERS,
+            'receivers_mobile'     => $receivers_mobile
         ] );
 
     }

@@ -38,6 +38,10 @@ Route::resource('delivery_charges', DeliveryChargeController::class)->only(['ind
 Route::resource('public_store_items', PublicStoreItemController::class)->only(['index', 'show']);
 
 /* Route group */
+Rouge::group(['middleware' => 'auth:api', 'myTransactionMiddleware'], function () {
+  Route::get('my-transactions-marked-as-received/{transactionId}', [MyStoreTransactionController::class, 'markedAsReceived']);
+});
+
 Route::group( [ 'middleware' => 'auth:api' ], function () {
   /* Route resouce */
   Route::resource('all-transactions', TransactionController::class)->middleware(['superAdminMiddleware', 'allTransactionsMiddleware']);

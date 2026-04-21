@@ -82,6 +82,17 @@
 
     <!-- Complete Order Button -->
     <div v-if="profile.token && countTotalItems > 0" class="complete-order-section">
+      <div>
+        <q-input v-model="mobile" class="full-width q-mb-md" outlined label="Receiver's Mobile Number" placeholder="9XX XXX XXXX" :rules="[
+          async (val) =>
+            isValidMobileNumber(val) ||
+            'Please enter a valid mobile number.',
+        ]" hide-bottom-space prefix="+63">
+          <template v-slot:prepend>
+            <q-icon name="phone" />
+          </template>
+        </q-input>
+      </div>
       <q-btn class="complete-order-btn full-width" label="Complete My Order" color="primary"
         @click="processCustomerOrder" unelevated size="lg" icon="check_circle" />
     </div>
@@ -450,7 +461,7 @@ const processCustomerOrder = async () => {
 
   const result = await create(
     {
-      entity: 'transactions',
+      entity: 'all-transactions',
       data: {
         store_id: storeId.value,
         total: total.value,
@@ -460,6 +471,7 @@ const processCustomerOrder = async () => {
         selectedPaymenthMethod: selectedPaymenthMethod.value,
         lat: lat.value,
         lng: lng.value,
+        receivers_mobile: mobile.value,
       },
     },
     false
