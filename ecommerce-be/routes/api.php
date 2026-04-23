@@ -25,11 +25,13 @@ use App\Http\Controllers\ {
     ItemPriceController,
     PublicStoreItemController,
     StoreMenuAccessController,
-    StatusController
+    StatusController,
+    PublicItemController
 };
 
 /* Route resouce */
 Route::resource('public_stores', PublicStoreController::class);
+Route::resource('public_items', PublicItemController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('interconnected_cities', InterConnectedCityController::class);
 Route::resource('receive_methods', ReceiveMethodController::class)->only(['index']);
@@ -38,7 +40,7 @@ Route::resource('delivery_charges', DeliveryChargeController::class)->only(['ind
 Route::resource('public_store_items', PublicStoreItemController::class)->only(['index', 'show']);
 
 /* Route group */
-Rouge::group(['middleware' => 'auth:api', 'myTransactionMiddleware'], function () {
+Route::group(['middleware' => 'auth:api', 'myTransactionMiddleware'], function () {
   Route::get('my-transactions-marked-as-received/{transactionId}', [MyStoreTransactionController::class, 'markedAsReceived']);
 });
 

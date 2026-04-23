@@ -12,13 +12,14 @@
             confidence.
           </p>
           <div class="hero-actions">
-            <q-btn to="/find-store" color="primary" size="lg" unelevated class="hero-btn" icon="explore"
+            <q-btn to="/find-shops" color="primary" size="lg" unelevated class="hero-btn" icon="store"
               label="Find Stores Near Me" />
-            <q-btn to="/cart" color="secondary" size="lg" outline class="hero-btn hero-btn--outline"
-              icon="shopping_cart" label="View Cart" />
+            <q-btn to="/find-items" color="secondary" size="lg" unelevated class="hero-btn" icon="shopping_bag"
+              label="Find Items Near Me" outline />
+            
           </div>
         </div>
-        <div class="hero-image">
+        <div class="hero-image">  
           <BiliscartLogo :size="200" />
         </div>
       </div>
@@ -90,7 +91,7 @@
               Find stores near you and discover amazing products at great prices.
             </p>
           </div>
-          <q-btn to="/find-store" color="primary" size="lg" unelevated class="cta-button" icon="explore"
+          <q-btn to="/find-store" color="primary" size="lg" unelevated class="cta-button" icon="store"
             label="Find Stores Now" />
         </q-card-section>
       </q-card>

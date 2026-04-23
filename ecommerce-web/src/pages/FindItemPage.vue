@@ -5,13 +5,13 @@
       <q-card-section class="map-header-section">
         <div class="map-header-main">
           <div class="map-header-icon-wrapper">
-            <q-icon name="store" size="40px" color="primary" />
+            <q-icon name="shopping_bag" size="40px" color="primary" />
           </div>
           <div class="map-header-text">
             <div class="map-header-title-wrapper">
               <div class="map-header-title-with-icon">
-                <q-icon name="store" size="md" color="primary" class="map-header-inline-icon" />
-                <h1 class="map-header-title">Find Nearby Shops</h1>
+                <q-icon name="shopping_bag" size="md" color="primary" class="map-header-inline-icon" />
+                <h1 class="map-header-title">Find Nearby Items</h1>
               </div>
               <q-chip color="primary" text-color="white" size="sm" class="map-header-badge">
                 <q-icon name="store" size="xs" class="q-mr-xs" />
@@ -19,19 +19,20 @@
               </q-chip>
             </div>
             <p class="map-header-description">
-              Discover stores near you and get directions instantly. Click on store markers to view
-              details. <br /> Looking for items? <router-link to="/find-items" class="find-items-link">FIND NEAREST ITEMS HERE</router-link>
+              Discover Items near you and get directions instantly. Click on product markers to view
+              details.
+              <br /> Looking for shops? <router-link to="/find-shops" class="find-shops-link">FIND NEAREST SHOPS HERE</router-link>
             </p>
           </div>
         </div>
         <div class="map-header-actions">
           <q-btn color="primary" icon="my_location" label="Refresh Location" unelevated @click="localGetLocation"
             class="refresh-location-btn" size="md" />
-           <q-btn color="secondary" icon="search" label="Find Nearest Shops" outline @click="getNearestStore"
-            class="find-stores-btn" size="md" :loading="false" />
+          <q-btn color="secondary" icon="search" label="Find Nearest Items" outline @click="getNearestItems"
+            class="find-stores-btn" size="md" :loading="false" :disabled="!searchString" />
           <q-input 
             v-model="searchString" 
-            placeholder="Search shops..." 
+            placeholder="Search items..." 
             outlined 
             dense 
             debounce="300"
@@ -52,11 +53,11 @@
       <div class="store-list-section" v-if="showStoreList">
         <q-card flat bordered class="store-list-card">
           <q-card-section class="store-list-header">
-            <div class="store-list-title" @click="getNearestStore">
+            <div class="store-list-title" @click="getNearestItems">
               <q-icon name="store" color="primary" size="md" class="q-mr-sm" />
               <div>
-                <div class="text-h6 text-weight-bold">Nearby Shops</div>
-                <div class="text-caption text-grey-6">Click to search for stores</div>
+                <div class="text-h6 text-weight-bold">Nearby Items</div>
+                <div class="text-caption text-grey-6">Click to search for Items</div>
               </div>
             </div>
           </q-card-section>
@@ -168,7 +169,7 @@ import { useCommonStore } from 'src/stores/common';
 import { storeToRefs } from 'pinia';
 import { getLocation } from 'src/boot/utilities';
 import { get } from 'src/boot/axios-call';
-import { StoreInterface } from 'src/boot/interfaces';
+import { ItemInterface, StoreInterface } from 'src/boot/interfaces';
 
 
 const useCommon = useCommonStore();
@@ -273,21 +274,22 @@ const markerDrag = (e: { latLng: google.maps.LatLng }) => {
 };
 
 const kmRadius = ref(30);
-const nearestStores = ref<Array<StoreInterface>>([]);
+const nearestStores = ref<Array<ItemInterface>>([]);
 
-const getNearestStore = async () => {
+const getNearestItems = async () => {
 
   localGetLocation();
   const result = await get(
     {
-      message: 'Searching nearest store',
-      entity: 'public_stores',
+      message: 'Searching nearest items',
+      entity: 'public_items',
       query: {
         orderBy: 'name:asc',
         columns: 'id,name',
         latitude: lat.value,
         longitude: lng.value,
         radius: kmRadius.value,
+        filters: searchString.value,
       },
     },
     true
@@ -300,7 +302,7 @@ const getNearestStore = async () => {
 };
 
 
-const handleClickStoreAdvanceMarker = (store: StoreInterface) => {
+const handleClickStoreAdvanceMarker = (store: ItemInterface) => {
   destination.value = { lat: store.latitude, lng: store.longitude }
   requestDirections()
 
@@ -571,8 +573,8 @@ watch(searchString, async () => {
   if (searchString.value) {
     const result = await get(
       {
-        message: 'Searching nearest store',
-        entity: 'public_stores',
+        message: 'Searching nearest items',
+        entity: 'public_items',
         query: {
           filters: 'name:' + searchString.value,
           orderBy: 'name:asc',
@@ -599,7 +601,7 @@ watch(searchString, async () => {
 </script>
 
 <style scoped lang="scss">
-.find-items-link{
+.find-shops-link{
   font-weight: 600;
   color: #667eea;
   text-decoration: none;

@@ -172,6 +172,15 @@ export interface UpdateInterface {
   query?: GetQuery
 }
 
+export interface ItemInterface {
+  id: number
+  name: string
+  latitude: number
+  longitude: number
+  distance: number
+  optimus_id: number
+}
+
 export interface StoreInterface {
   id: number
   name: string

@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Item;
 use App\Repositories\BaseRepository;
 use App\Traits\UtilsTrait;
+use  Illuminate\Database\Eloquent\Collection;
 class ItemRepository extends BaseRepository
 {
     use UtilsTrait;
@@ -14,13 +15,13 @@ class ItemRepository extends BaseRepository
         $this->cacheKey = 'items-get';
     }
 
-    public function category_id($value)
+    public function category_id($value) : void
     {   
         $this->model = $this->model->where('category_id', $value);
     }
 
-    public function itemUpdateWithImage(int $id, array $params){
-
+    public function itemUpdateWithImage(int $id, array $params): bool
+    {
         /**get fillable should be before accessing the model */
         $this->setFillable();
         $this->where('id', $id);
@@ -33,6 +34,14 @@ class ItemRepository extends BaseRepository
         $this->filesUpload();
         return tap( $this->model->first() )->update( $data );
 
+    }
+
+     public function applyFilters(): Collection{
+
+        if(isset($this->params['filters']) ){
+            
+        }
+        return $this->model->get();
     }
     
 }

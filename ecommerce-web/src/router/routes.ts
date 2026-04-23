@@ -10,10 +10,17 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/find-store',
+    path: '/find-shops',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/FindStorePage.vue') },
+    ],
+  },
+  {
+    path: '/find-items',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/FindItemPage.vue') },
     ],
   },
   {
