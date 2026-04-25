@@ -15,7 +15,7 @@
               </div>
               <q-chip color="primary" text-color="white" size="sm" class="map-header-badge">
                 <q-icon name="store" size="xs" class="q-mr-xs" />
-                {{ nearestStores.length }} {{ nearestStores.length === 1 ? 'store' : 'stores' }} found
+                {{ nearestItems.length }} {{ nearestItems.length === 1 ? 'store' : 'stores' }} found
               </q-chip>
             </div>
             <p class="map-header-description">
@@ -63,21 +63,21 @@
           </q-card-section>
           <q-separator />
           <q-card-section class="store-list-content">
-            <div v-if="nearestStores.length === 0" class="empty-store-list">
+            <div v-if="nearestItems.length === 0" class="empty-store-list">
               <q-icon name="store" size="48px" color="grey-4" />
               <div class="text-body2 text-grey-6 q-mt-md">No stores found yet</div>
               <div class="text-caption text-grey-5 q-mt-xs">Click "Nearby Shops" above to search</div>
             </div>
             <div v-else class="store-list-items">
-              <div v-for="store in nearestStores" :key="store.id" class="store-list-item"
-                @click="handleClickStoreAdvanceMarker(store)">
+              <div v-for="item in nearestItems" :key="item.id" class="store-list-item"
+                @click="handleClickStoreAdvanceMarker(item.store)">
                 <div class="store-item-content">
                   <q-icon name="store" color="positive" size="sm" class="store-item-icon" />
                   <div class="store-item-info">
-                    <div class="text-body1 text-weight-medium store-item-name">{{ store.name }}</div>
-                    <div class="text-caption text-grey-6" v-if="store.distance">
+                    <div class="text-body1 text-weight-medium store-item-name">{{ item.name }}</div>
+                    <div class="text-caption text-grey-6" v-if="item.store.distance">
                       <q-icon name="straighten" size="xs" class="q-mr-xs" />
-                      {{ store.distance }} away
+                      {{ item.store.distance }} away
                     </div>
                   </div>
                 </div>
@@ -113,22 +113,22 @@
                   </InfoWindow>
                 </AdvancedMarker>
 
-                <!-- Store Markers -->
-                <AdvancedMarker v-for="store in nearestStores" :key="store.id" :options="getStoreMarkerOptions(store)"
-                  @click="handleClickStoreAdvanceMarker(store)">
+                <!-- Item Markers -->
+                <AdvancedMarker v-for="item in nearestItems" :key="item.id" :options="getStoreMarkerOptions(item.store)"
+                  @click="handleClickStoreAdvanceMarker(item.store)">
                   <InfoWindow
-                    :options="{ headerContent: '&nbsp;&nbsp;&nbsp;' + store.name, disableAutoPan: false, closeButton: true } as any">
+                    :options="{ headerContent: '&nbsp;&nbsp;&nbsp;' + item.store.name, disableAutoPan: false, closeButton: true } as any">
                     <div class="info-window-content store-info-window">
                       <div class="info-window-header">
                         <q-icon name="store" color="positive" size="sm" class="q-mr-xs" />
-                        <span class="text-weight-bold">{{ store.name }}</span>
+                        <span class="text-weight-bold">{{ item.store.name }}</span>
                       </div>
                       <div class="info-window-body">
-                        <div class="store-details" v-if="store.distance">
+                        <div class="store-details" v-if="item.store.distance">
                           <q-icon name="straighten" size="xs" class="q-mr-xs" />
-                          <span class="text-caption">{{ store.distance }} away</span>
+                          <span class="text-caption">{{ item.store.distance }} away</span>
                         </div>
-                        <q-btn :to="`/public_stores/${store.optimus_id}`" color="primary" size="sm" unelevated
+                        <q-btn :to="`/public_stores/${item.store.optimus_id}`" color="primary" size="sm" unelevated
                           class="q-mt-sm full-width" label="View Store" icon="arrow_forward" />
                       </div>
                     </div>
@@ -233,7 +233,7 @@ const getLocationMarkerOptions = () => {
   }
 }
 
-// Get store marker options
+// Get items marker options
 const getStoreMarkerOptions = (store: StoreInterface) => {
   return {
     position: { lat: store.latitude, lng: store.longitude },
@@ -274,7 +274,7 @@ const markerDrag = (e: { latLng: google.maps.LatLng }) => {
 };
 
 const kmRadius = ref(30);
-const nearestStores = ref<Array<ItemInterface>>([]);
+const nearestItems = ref<Array<ItemInterface>>([]);
 
 const getNearestItems = async () => {
 
@@ -290,19 +290,21 @@ const getNearestItems = async () => {
         longitude: lng.value,
         radius: kmRadius.value,
         filters: searchString.value,
+        type: 'collection',
+        with: 'store' 
       },
     },
     true
   );
 
   if (result && typeof result === 'object' && 'data' in result) {
-    nearestStores.value = (result as any).data.data;
+    nearestItems.value = (result as any).data.data;
     showStoreList.value = true;
   }
 };
 
 
-const handleClickStoreAdvanceMarker = (store: ItemInterface) => {
+const handleClickStoreAdvanceMarker = (store: StoreInterface) => {
   destination.value = { lat: store.latitude, lng: store.longitude }
   requestDirections()
 
@@ -581,19 +583,21 @@ watch(searchString, async () => {
           latitude: lat.value,
           longitude: lng.value,
           radius: kmRadius.value,
+          type: 'collection',
+          with: 'store' // Include store details in the response
         },
       },
       true
     );
 
     if (result && typeof result === 'object' && 'data' in result) {
-      nearestStores.value = (result as any).data.data;
+      nearestItems.value = (result as any).data.data;
       showStoreList.value = true;
     }
   }
 
   if (!searchString.value) {
-    nearestStores.value = [];
+    nearestItems.value = [];
     resetToInitialDefaults()
   }
 })

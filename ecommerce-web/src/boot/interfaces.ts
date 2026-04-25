@@ -175,10 +175,8 @@ export interface UpdateInterface {
 export interface ItemInterface {
   id: number
   name: string
-  latitude: number
-  longitude: number
-  distance: number
-  optimus_id: number
+  optimus_id: number,
+  store: StoreInterface
 }
 
 export interface StoreInterface {

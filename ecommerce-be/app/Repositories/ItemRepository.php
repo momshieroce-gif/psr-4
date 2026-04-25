@@ -5,10 +5,11 @@ namespace App\Repositories;
 use App\Models\Item;
 use App\Repositories\BaseRepository;
 use App\Traits\UtilsTrait;
-use  Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\Support\SearchFieldSupport;
 class ItemRepository extends BaseRepository
 {
-    use UtilsTrait;
+    use UtilsTrait, SearchFieldSupport;
     public function __construct()
     {
         $this->setModel(new Item);
@@ -36,12 +37,4 @@ class ItemRepository extends BaseRepository
 
     }
 
-     public function applyFilters(): Collection{
-
-        if(isset($this->params['filters']) ){
-            
-        }
-        return $this->model->get();
-    }
-    
 }

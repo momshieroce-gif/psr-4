@@ -18,7 +18,10 @@ class IndexRequest extends BaseRequest
             'orderBy'          => 'string',
             'latitude'         => 'string',
             'longitude'        => 'string',
-            'radius'           => 'string'
+            'radius'           => 'string',
+            'type'             => 'string',
+            'limit'            => 'integer',
+            'with'             => 'string',
         ];
     }
 }
