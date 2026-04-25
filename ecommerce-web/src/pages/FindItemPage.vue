@@ -124,12 +124,13 @@
                         <span class="text-weight-bold">{{ item.store.name }}</span>
                       </div>
                       <div class="info-window-body">
+                         <div>{{ item.name }}</div>
                         <div class="store-details" v-if="item.store.distance">
                           <q-icon name="straighten" size="xs" class="q-mr-xs" />
-                          <span class="text-caption">{{ item.store.distance }} away</span>
+                          <span class="text-caption">{{ item.store.distance }}KM away</span>
                         </div>
-                        <q-btn :to="`/public_stores/${item.store.optimus_id}`" color="primary" size="sm" unelevated
-                          class="q-mt-sm full-width" label="View Store" icon="arrow_forward" />
+                        <q-btn :to="`/public_stores/${item.store.optimus_id}/item/${item.optimus_id}`" color="primary" size="sm" unelevated
+                          class="q-mt-sm full-width" label="View Item" icon="arrow_forward" />
                       </div>
                     </div>
                   </InfoWindow>

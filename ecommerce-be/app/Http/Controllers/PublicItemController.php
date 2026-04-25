@@ -19,7 +19,7 @@ class PublicItemController extends ApiController
     public function index(): BaseResource
     {
         $this->params = app($this->indexRequest)->all();
-        $this->result = $this->repository->filterQuery($this->params)->getResults();
+        $this->result = $this->repository->filterQuery($this->params)->getCollection();
         return $this->getResource();
     }
 
