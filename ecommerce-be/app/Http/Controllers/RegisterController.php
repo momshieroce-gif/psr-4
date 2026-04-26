@@ -9,7 +9,7 @@ use Laravel\Passport\RefreshToken;
 use Laravel\Passport\Token;
 use App\Models\User;
 use App\Observers\UserObserver;
-use App\Service\UserMenuService;
+use App\Services\UserMenuService;
 
 class RegisterController extends BaseController
 {
