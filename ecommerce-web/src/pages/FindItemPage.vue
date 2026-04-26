@@ -285,14 +285,13 @@ const getNearestItems = async () => {
       message: 'Searching nearest items',
       entity: 'public_items',
       query: {
+        filters: 'name:' + searchString.value,
         orderBy: 'name:asc',
-        columns: 'id,name',
         latitude: lat.value,
         longitude: lng.value,
         radius: kmRadius.value,
-        filters: searchString.value,
         type: 'collection',
-        with: 'store' 
+        with: 'store' // Include store details in the response
       },
     },
     true
