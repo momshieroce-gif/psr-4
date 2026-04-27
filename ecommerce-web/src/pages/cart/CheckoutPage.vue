@@ -73,62 +73,13 @@
                 <q-icon name="phone" />
               </template>
             </q-input>
-            <q-btn class="full-width" color="primary" unelevated size="lg" icon="verified_user"
-              label="Get Verification Code" type="submit" />
-          </q-form>
-        </q-card-section>
-      </q-card>
-    </div>
-
-    <!-- Complete Order Button -->
-    <div v-if="profile.token && countTotalItems > 0" class="complete-order-section">
-      <div>
-        <q-input v-model="mobile" class="full-width q-mb-md" outlined label="Receiver's Mobile Number" placeholder="9XX XXX XXXX" :rules="[
-          async (val) =>
-            isValidMobileNumber(val) ||
-            'Please enter a valid mobile number.',
-        ]" hide-bottom-space prefix="+63">
-          <template v-slot:prepend>
-            <q-icon name="phone" />
-          </template>
-        </q-input>
-      </div>
-      <q-btn class="complete-order-btn full-width" label="Complete My Order" color="primary"
+            <q-btn class="complete-order-btn full-width" label="Complete My Order" color="primary"
         @click="processCustomerOrder" unelevated size="lg" icon="check_circle" />
-    </div>
-    <!-- Passcode Verification Modal -->
-    <q-dialog v-model="showPassCodeModal" persistent>
-      <q-card class="passcode-modal">
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6 text-weight-bold">
-            <q-icon name="lock" class="q-mr-sm" />
-            Enter Verification Code
-          </div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-
-        <q-card-section>
-          <q-form @submit="verifyPassCode" ref="verifyForm">
-            <div class="text-body2 text-grey-7 q-mb-md">
-              We've sent a verification code to your mobile number. Please enter it below.
-            </div>
-            <q-input v-model="passCode" label="Enter Verification Code" outlined class="full-width q-mb-md" :rules="[
-              (val) => (val && val.length > 0) || 'Verification code is required.',
-            ]" mask="######" placeholder="000000">
-              <template v-slot:prepend>
-                <q-icon name="vpn_key" />
-              </template>
-            </q-input>
-            <div class="row q-gutter-sm">
-              <q-btn flat label="Cancel" color="grey-7" v-close-popup class="col" />
-              <q-btn label="Verify & Complete Order" color="primary" unelevated class="col" icon="check_circle"
-                type="submit" />
-            </div>
           </q-form>
         </q-card-section>
       </q-card>
-    </q-dialog>
+    </div>
+
   </div>
 </template>
 

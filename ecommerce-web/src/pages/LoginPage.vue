@@ -121,9 +121,10 @@ import type { QForm } from 'quasar';
 import { LoginInterface } from 'boot/interfaces';
 import { useQuasar } from 'quasar';
 import { isValidMobileNumber } from 'src/boot/validators';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 const $q = useQuasar();
 const loginInfo = ref<LoginInterface>({
   mobile: '',
@@ -133,6 +134,7 @@ const myForm = ref<QForm | null>(null);
 const showPassword = ref(false);
 const isSubmitting = ref(false);
 
+const redirectTo = route.redirectedFrom?.fullPath;
 const onSubmit = async () => {
   myForm.value?.validate().then(async (success: any) => {
     if (success) {
@@ -149,7 +151,11 @@ const onSubmit = async () => {
             position: 'top',
             icon: 'check_circle'
           });
-          router.push('/');
+          if (redirectTo) {
+            router.push(redirectTo);
+          }else{
+            router.push('/');
+          }
         }
       } catch (error) {
         $q.notify({

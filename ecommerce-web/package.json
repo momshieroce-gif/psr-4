@@ -1,8 +1,8 @@
 {
-  "name": "mynearestshops",
+  "name": "mynearshops",
   "version": "0.0.1",
-  "description": "My Nearest Shops",
-  "productName": "MyNearestShops",
+  "description": "My Near Shops",
+  "productName": "mynearshops",
   "author": "Bobby Gerez <ugerez@yahoo.com>",
   "private": true,
   "scripts": {
