@@ -31,71 +31,37 @@
 
           <!-- Login Form -->
           <q-card-section class="login-form-section">
-            <q-form @submit.prevent="onSubmit" class="login-form" ref="myForm">
-              <!-- Mobile Number Input -->
-              <div class="form-group q-mb-md">
-                <label class="form-label">
-                  <q-icon name="phone_android" size="sm" class="q-mr-xs" />
-                  Mobile Number
-                </label>
-                <q-input v-model="loginInfo.mobile" class="full-width q-mb-md" outlined label="Enter mobile number"
-                  placeholder="9XX XXX XXXX" :rules="[
-                    async (val) =>
-                      isValidMobileNumber(val) ||
-                      'Please enter a valid mobile number.',
-                  ]" hide-bottom-space prefix="+63">
-                  <template v-slot:prepend>
-                    <q-icon name="phone" />
-                  </template>
-                </q-input>
-                <div class="form-helper-text q-mt-xs">
-                  We'll send a verification code to this number
+            <div class="social-login-content">
+              <div class="social-login-copy q-mb-lg">
+                <div class="text-subtitle1 text-weight-medium q-mb-sm">
+                  Continue with Facebook
+                </div>
+                <div class="form-helper-text">
+                  Use your Facebook account to sign in quickly and continue shopping.
                 </div>
               </div>
 
-              <!-- Get Passcode Button -->
-              <q-btn label="Get Verification Code" color="primary" outline class="full-width q-mb-lg"
-                @click="getPassCode" icon="verified_user" size="md" :disable="!isValidMobileNumber(loginInfo.mobile)" />
+              <q-btn
+                label="Continue with Facebook"
+                color="primary"
+                class="login-submit-btn facebook-login-btn full-width"
+                unelevated
+                size="lg"
+                :loading="isSubmitting"
+                @click="loginWithFacebook"
+              />
 
-              <!-- Passcode Input -->
-              <div class="form-group q-mb-md">
-                <label class="form-label">
-                  <q-icon name="vpn_key" size="sm" class="q-mr-xs" />
-                  Verification Code
-                </label>
-                <q-input :type="showPassword ? 'text' : 'password'" v-model="loginInfo.password" outlined
-                  label="Enter verification code" placeholder="Enter the code sent to your mobile" :rules="[
-                    (val) => (val && val.length > 0) || 'Verification code is required.'
-                  ]" hide-bottom-space class="login-input" mask="######">
-                  <template v-slot:prepend>
-                    <q-icon name="lock" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon :name="showPassword ? 'visibility' : 'visibility_off'" class="cursor-pointer"
-                      @click="showPassword = !showPassword" />
-                  </template>
-                </q-input>
-                <div class="form-helper-text q-mt-xs">
-                  Enter the 6-digit code sent to your mobile number
-                </div>
-              </div>
-
-              <!-- Submit Button -->
-              <q-btn label="Sign In" type="submit" color="primary" class="login-submit-btn full-width" unelevated
-                size="lg" icon="login" :loading="isSubmitting" />
-
-              <!-- Trust Indicators -->
               <div class="trust-section q-mt-lg">
                 <div class="trust-item">
                   <q-icon name="lock" size="xs" color="positive" />
-                  <span class="text-caption">Secure Login</span>
+                  <span class="text-caption">Secure OAuth Login</span>
                 </div>
                 <div class="trust-item">
                   <q-icon name="verified" size="xs" color="positive" />
-                  <span class="text-caption">Verified Account</span>
+                  <span class="text-caption">Fast Account Access</span>
                 </div>
               </div>
-            </q-form>
+            </div>
           </q-card-section>
 
           <!-- Footer -->
@@ -115,94 +81,99 @@
 
 <script lang="ts" setup>
 import BreadCrumbsWrapper from 'src/components/BreadCrumbsWrapper.vue';
-import { ref } from 'vue';
-import { login, create } from 'src/boot/axios-call';
-import type { QForm } from 'quasar';
-import { LoginInterface } from 'boot/interfaces';
+import { onMounted, ref } from 'vue';
+import { axios } from 'src/boot/axios';
 import { useQuasar } from 'quasar';
-import { isValidMobileNumber } from 'src/boot/validators';
 import { useRouter, useRoute } from 'vue-router';
+import { useUserStore } from 'src/stores/user';
+import type { ProfileState } from 'boot/interfaces';
 
 const router = useRouter();
 const route = useRoute();
 const $q = useQuasar();
-const loginInfo = ref<LoginInterface>({
-  mobile: '',
-  password: '',
-});
-const myForm = ref<QForm | null>(null);
-const showPassword = ref(false);
+const userStore = useUserStore();
 const isSubmitting = ref(false);
 
 const redirectTo = route.redirectedFrom?.fullPath;
-const onSubmit = async () => {
-  myForm.value?.validate().then(async (success: any) => {
-    if (success) {
-      isSubmitting.value = true;
-      try {
-        const result = await login({
-          mobile: loginInfo.value.mobile,
-          password: loginInfo.value.password,
-        });
-        if (result) {
-          $q.notify({
-            message: 'Login successful! Welcome back.',
-            type: 'positive',
-            position: 'top',
-            icon: 'check_circle'
-          });
-          if (redirectTo) {
-            router.push(redirectTo);
-          }else{
-            router.push('/');
-          }
-        }
-      } catch (error) {
-        $q.notify({
-          message: 'Invalid credentials. Please try again.',
-          type: 'negative',
-          position: 'top',
-          icon: 'error'
-        });
-      } finally {
-        isSubmitting.value = false;
-      }
-    }
-  });
+const getFacebookLoginUrl = () => {
+  return new URL('auth/facebook', axios.defaults.baseURL).toString();
 };
 
-const getPassCode = async () => {
-  if (!isValidMobileNumber(loginInfo.value.mobile)) {
+const getQueryValue = (value: unknown): string => {
+  if (Array.isArray(value)) {
+    return value[0] ?? '';
+  }
+
+  return typeof value === 'string' ? value : '';
+};
+
+const getUserMenuFromQuery = (): ProfileState['userMenu'] => {
+  const userMenu = getQueryValue(route.query.userMenu);
+
+  if (!userMenu) {
+    return [];
+  }
+
+  try {
+    return JSON.parse(userMenu) as ProfileState['userMenu'];
+  } catch (error) {
+    return [];
+  }
+};
+
+const finishLogin = async (token: string) => {
+  const socialProfile: ProfileState = {
+    token,
+    name: getQueryValue(route.query.name) || null,
+    mobile: getQueryValue(route.query.mobile),
+    optimus_id: Number(getQueryValue(route.query.optimus_id) || 0),
+    userMenu: getUserMenuFromQuery(),
+  };
+
+  userStore.setProfile(socialProfile);
+  userStore.setUser(socialProfile);
+
+  $q.notify({
+    message: 'Facebook login successful! Welcome back.',
+    type: 'positive',
+    position: 'top',
+    icon: 'check_circle'
+  });
+
+  await router.replace(redirectTo || '/');
+};
+
+const loginWithFacebook = () => {
+  isSubmitting.value = true;
+  window.location.href = getFacebookLoginUrl();
+};
+
+onMounted(async () => {
+  const token = getQueryValue(route.query.token);
+  const error = getQueryValue(route.query.error);
+
+  if (error) {
     $q.notify({
-      message: 'Please enter a valid mobile number.',
+      message: error === 'facebook_email_required'
+        ? 'Facebook did not return an email address for this account.'
+        : 'Facebook login failed. Please try again.',
       type: 'negative',
-      position: 'top'
+      position: 'top',
+      icon: 'error'
     });
+  }
+
+  if (!token) {
+    isSubmitting.value = false;
     return;
   }
 
   try {
-   await create(
-      {
-        entity: 'create-new-activation-code',
-        data: {
-          mobile: loginInfo.value.mobile,
-        },
-      },
-      true,
-      'Sending verification code to your mobile number...',
-      'Verification code sent! Please check your mobile.'
-    );
-
-  } catch (error) {
-    $q.notify({
-      message: 'Failed to send verification code. Please try again.',
-      type: 'negative',
-      position: 'bottom',
-      icon: 'error'
-    });
+    await finishLogin(token);
+  } finally {
+    isSubmitting.value = false;
   }
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -282,6 +253,12 @@ const getPassCode = async () => {
   }
 }
 
+.social-login-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .form-label {
   display: flex;
   align-items: center;
@@ -329,6 +306,10 @@ const getPassCode = async () => {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
+}
+
+.facebook-login-btn {
+  background: #1877f2 !important;
 }
 
 .trust-section {
