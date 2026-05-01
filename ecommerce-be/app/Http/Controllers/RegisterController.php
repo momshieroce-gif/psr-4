@@ -10,7 +10,8 @@ use Laravel\Passport\Token;
 use App\Models\User;
 use App\Observers\UserObserver;
 use App\Services\UserMenuService;
-
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 class RegisterController extends BaseController
 {
     /**
@@ -92,6 +93,72 @@ class RegisterController extends BaseController
         /** @var User $user */
         $user = Auth::user();
         return $this->sendResponse($user, null);
+    }
+
+    public function facebook()
+    {
+        return Socialite::driver('facebook')
+            ->scopes(['email'])
+            ->stateless()
+            ->redirect();
+    }
+
+    public function facebookCallback()
+    {
+        try {
+            $fbUser = Socialite::driver('facebook')->stateless()->user();
+            $email = $fbUser->getEmail();
+
+            if (!$email) {
+                return redirect($this->getFrontendLoginRedirect([
+                    'error' => 'facebook_email_required',
+                ]));
+            }
+
+            /** @var User $user */
+            $user = User::firstOrNew(['email' => $email]);
+            $user->name = $fbUser->getName() ?: $fbUser->getNickname() ?: 'Facebook User';
+            $user->email = $email;
+
+            if (!$user->exists) {
+                $user->password = bcrypt(Str::random(40));
+            }
+
+            if (isset($user->status) && !$user->status) {
+                $user->status = 1;
+            }
+
+            if (isset($user->email_verified_at) && !$user->email_verified_at) {
+                $user->email_verified_at = now();
+            }
+
+            $user->save();
+
+            Auth::login($user);
+
+            $userMenuService = app(UserMenuService::class);
+            $token = $user->createToken('facebook-login')->accessToken;
+
+            return redirect($this->getFrontendLoginRedirect([
+                'token' => $token,
+                'optimus_id' => $user->optimus_id,
+                'name' => $user->name,
+                'mobile' => $user->mobile,
+                'userMenu' => json_encode($userMenuService->getUserMenus()),
+            ]));
+
+        } catch (\Exception $e) {
+            return redirect($this->getFrontendLoginRedirect([
+                'error' => 'facebook_failed',
+            ]));
+        }
+    }
+
+    private function getFrontendLoginRedirect(array $query = []): string
+    {
+        $frontendUrl = rtrim(env('FRONTEND_URL'), '/');
+
+        return $frontendUrl . '/login?' . http_build_query($query);
     }
 
 }

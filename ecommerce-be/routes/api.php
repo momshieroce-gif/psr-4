@@ -70,6 +70,8 @@ Route::group( [ 'middleware' => 'auth:api' ], function () {
 });
 
 /* Route get */
+Route::get('/auth/facebook', [RegisterController::class, 'facebook']);
+Route::get('/auth/facebook/callback', [RegisterController::class, 'facebookCallback']);
 Route::get( 'user/validator/mobile', [ UserValidationController::class, 'mobile' ] );
 Route::get( 'user/validator/is-mobile-a-user', [ UserValidationController::class, 'isMobileAUser' ] );
 Route::get('listing_api', [ListingApiController::class, 'index']);
@@ -89,6 +91,10 @@ Route::post('create-new-activation-code', [MobileActivationCodeController::class
 Route::post('verify-passcode', [MobileActivationCodeController::class, 'verifyPasscode']);
 Route::post('login', [RegisterController::class, 'login']);
 Route::post( 'login', [ RegisterController::class, 'login' ] );
+
+Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
+    return $request->user();
+});
 
 
 
