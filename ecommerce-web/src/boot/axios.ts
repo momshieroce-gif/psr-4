@@ -4,10 +4,11 @@ import { storeToRefs } from 'pinia';
 
 const checkDevProduction = (): string => {
   const live = 'https://mynearshops.com/api/';
+  const test = 'http://localhost:8081/api/';
   if (window.location.href.includes('mynearshops')) {
     return live;
   }
-  return live;
+  return test;
 };
 
 axios.defaults.baseURL = checkDevProduction();
