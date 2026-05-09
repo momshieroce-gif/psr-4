@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\RefreshToken;
 use Laravel\Passport\Token;
 use App\Models\User;
-use App\Observers\UserObserver;
+use App\Enum\Role;
 use App\Services\UserMenuService;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
+use App\Models\RoleUser;
+use Throwable;
 class RegisterController extends BaseController
 {
     /**
@@ -97,7 +100,10 @@ class RegisterController extends BaseController
 
     public function facebook()
     {
+        $callbackUrl = url('/auth/facebook/callback');
+
         return Socialite::driver('facebook')
+            ->redirectUrl($callbackUrl)
             ->scopes(['email'])
             ->stateless()
             ->redirect();
@@ -106,7 +112,11 @@ class RegisterController extends BaseController
     public function facebookCallback()
     {
         try {
-            $fbUser = Socialite::driver('facebook')->stateless()->user();
+            $callbackUrl = url('/auth/facebook/callback');
+            $fbUser = Socialite::driver('facebook')
+                ->redirectUrl($callbackUrl)
+                ->stateless()
+                ->user();
             $email = $fbUser->getEmail();
 
             if (!$email) {
@@ -119,13 +129,11 @@ class RegisterController extends BaseController
             $user = User::firstOrNew(['email' => $email]);
             $user->name = $fbUser->getName() ?: $fbUser->getNickname() ?: 'Facebook User';
             $user->email = $email;
+            $user->status = 1;
+
 
             if (!$user->exists) {
                 $user->password = bcrypt(Str::random(40));
-            }
-
-            if (isset($user->status) && !$user->status) {
-                $user->status = 1;
             }
 
             if (isset($user->email_verified_at) && !$user->email_verified_at) {
@@ -134,11 +142,23 @@ class RegisterController extends BaseController
 
             $user->save();
 
+            RoleUser::create([
+                'user_id' => $user->id,
+                'role_id' => Role::CUSTOMER
+            ]);
             Auth::login($user);
 
             $userMenuService = app(UserMenuService::class);
             $token = $user->createToken('facebook-login')->accessToken;
 
+            Log::info('Facebook login successful', [
+                'user' => $user,
+                'token' => $token,
+                'optimus_id' => $user->optimus_id,
+                'name' => $user->name,
+                'mobile' => $user->mobile,
+                'userMenu' => json_encode($userMenuService->getUserMenus()),
+            ]);
             return redirect($this->getFrontendLoginRedirect([
                 'token' => $token,
                 'optimus_id' => $user->optimus_id,
@@ -147,16 +167,37 @@ class RegisterController extends BaseController
                 'userMenu' => json_encode($userMenuService->getUserMenus()),
             ]));
 
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
+            Log::error('Facebook login failed', [
+                'message' => $e->getMessage(),
+                'callback_url' => url('/auth/facebook/callback'),
+                'request_url' => request()->fullUrl(),
+            ]);
+
             return redirect($this->getFrontendLoginRedirect([
                 'error' => 'facebook_failed',
             ]));
         }
     }
 
+    public function loginPageRedirect()
+    {
+        return redirect($this->getFrontendLoginRedirect());
+    }
+
     private function getFrontendLoginRedirect(array $query = []): string
     {
-        $frontendUrl = rtrim(env('FRONTEND_URL'), '/');
+        $frontendUrl = rtrim((string) env('FRONTEND_URL', ''), '/');
+
+        if ($frontendUrl === '') {
+            $request = request();
+            $host = (string) $request->getHost();
+            $scheme = (string) $request->getScheme();
+
+            // Common deployment pattern: API on api.example.com, SPA on example.com.
+            $frontendHost = preg_replace('/^api\./i', '', $host) ?: $host;
+            $frontendUrl = $scheme . '://' . $frontendHost;
+        }
 
         return $frontendUrl . '/login?' . http_build_query($query);
     }

@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 
 const checkDevProduction = (): string => {
   const live = 'https://api.mynearshops.com/';
-  const test = 'http://localhost:8081/api/';
+  const test = 'http://localhost:8081/';
   if (window.location.href.includes('mynearshops')) {
     return live;
   }

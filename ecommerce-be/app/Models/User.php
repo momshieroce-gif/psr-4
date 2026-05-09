@@ -27,6 +27,7 @@ class User extends Authenticatable
         'status',
         'mobile_attempt_count',
         'mobile_verified_at',
+        'email_verified_at',
         'password'
     ];
 
@@ -47,6 +48,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'mobile_verified_at' => 'datetime',
     ];
 
     protected $appends = ['optimus_id', 'label', 'value'];

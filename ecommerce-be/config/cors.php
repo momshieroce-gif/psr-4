@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['*', 'sanctum/csrf-cookie', 'public_stores*'],
+    'paths' => ['*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://mynearshops.com', 'https://www.mynearshops.com'],
+    'allowed_origins' => ['https://mynearshops.com', 'https://www.mynearshops.com', 'http://localhost:9000'],
 
     'allowed_origins_patterns' => [],
 

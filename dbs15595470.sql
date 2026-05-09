@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 4.9.11
 -- https://www.phpmyadmin.net/
 --
--- Host: db:3306
--- Generation Time: Apr 21, 2026 at 04:28 AM
--- Server version: 8.4.6
--- PHP Version: 8.3.26
+-- Host: db5020292917.hosting-data.io
+-- Generation Time: May 09, 2026 at 04:39 AM
+-- Server version: 10.11.15-MariaDB-deb11-log
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ecommerce_db`
+-- Database: `dbs15595470`
 --
 
 -- --------------------------------------------------------
@@ -28,8 +29,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `access_rights` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -51,18 +52,18 @@ INSERT INTO `access_rights` (`id`, `name`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `address` (
-  `id` int UNSIGNED NOT NULL,
-  `addressable_id` int NOT NULL,
-  `addressable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `province_id` bigint NOT NULL,
-  `city_id` bigint NOT NULL,
-  `brgy_id` bigint NOT NULL,
-  `country_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `region_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `street_lot_blk` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `landmark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `longitude` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `latitude` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
+  `addressable_id` int(11) NOT NULL,
+  `addressable_type` varchar(255) NOT NULL,
+  `province_id` bigint(20) NOT NULL,
+  `city_id` bigint(20) NOT NULL,
+  `brgy_id` bigint(20) NOT NULL,
+  `country_id` varchar(255) DEFAULT NULL,
+  `region_id` varchar(255) DEFAULT NULL,
+  `street_lot_blk` varchar(255) DEFAULT NULL,
+  `landmark` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
+  `latitude` varchar(255) DEFAULT NULL,
   `default_address` tinyint(1) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -132,18 +133,18 @@ INSERT INTO `address` (`id`, `addressable_id`, `addressable_type`, `province_id`
 --
 
 CREATE TABLE `audits` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `event` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `auditable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `auditable_id` bigint UNSIGNED NOT NULL,
-  `old_values` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `new_values` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` varchar(1023) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_type` varchar(255) DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `event` varchar(255) NOT NULL,
+  `auditable_type` varchar(255) NOT NULL,
+  `auditable_id` bigint(20) UNSIGNED NOT NULL,
+  `old_values` text DEFAULT NULL,
+  `new_values` text DEFAULT NULL,
+  `url` text DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` varchar(1023) DEFAULT NULL,
+  `tags` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -405,7 +406,10 @@ INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `
 (248, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 85, '[]', '{\"store_id\":2033899500,\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":0,\"contact_number\":\"9270079301\",\"reference_id\":\"69e6e9440c559\",\"lat\":\"10.361781388927\",\"lng\":\"123.98705360923\",\"total\":103.46,\"grand_total\":103.46,\"status_id\":1,\"id\":85}', 'http://localhost:8081/api/all-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', NULL, '2026-04-21 02:04:36', '2026-04-21 02:04:36'),
 (249, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 65, '[]', '{\"transaction_id\":85,\"store_id\":2,\"item_id\":949,\"item_name\":\"Enim dolores nulla id illum earum et vitae.\",\"item_description\":\"Molestias eum repellendus cupiditate natus debitis esse hic maiores.\",\"unit_id\":19,\"base_price\":85.5,\"store_price\":94.05,\"online_price\":103.46,\"qty\":1,\"id\":65}', 'http://localhost:8081/api/all-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', NULL, '2026-04-21 02:04:36', '2026-04-21 02:04:36'),
 (250, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 86, '[]', '{\"store_id\":2033899500,\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":0,\"contact_number\":\"9270079301\",\"reference_id\":\"69e6ee3797a53\",\"lat\":\"10.36178112\",\"lng\":\"123.98705291\",\"total\":103.46,\"grand_total\":103.46,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":86}', 'http://localhost:8081/api/all-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', NULL, '2026-04-21 02:25:43', '2026-04-21 02:25:43'),
-(251, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 66, '[]', '{\"transaction_id\":86,\"store_id\":2,\"item_id\":949,\"item_name\":\"Enim dolores nulla id illum earum et vitae.\",\"item_description\":\"Molestias eum repellendus cupiditate natus debitis esse hic maiores.\",\"unit_id\":19,\"base_price\":85.5,\"store_price\":94.05,\"online_price\":103.46,\"qty\":1,\"id\":66}', 'http://localhost:8081/api/all-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', NULL, '2026-04-21 02:25:43', '2026-04-21 02:25:43');
+(251, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 66, '[]', '{\"transaction_id\":86,\"store_id\":2,\"item_id\":949,\"item_name\":\"Enim dolores nulla id illum earum et vitae.\",\"item_description\":\"Molestias eum repellendus cupiditate natus debitis esse hic maiores.\",\"unit_id\":19,\"base_price\":85.5,\"store_price\":94.05,\"online_price\":103.46,\"qty\":1,\"id\":66}', 'http://localhost:8081/api/all-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', NULL, '2026-04-21 02:25:43', '2026-04-21 02:25:43'),
+(252, 'App\\Models\\User', 28, 'created', 'App\\Models\\Transaction', 87, '[]', '{\"store_id\":2033899500,\"user_id\":28,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":145.4,\"contact_number\":\"9270079301\",\"reference_id\":\"69ed8350e59c8\",\"lat\":\"10.361899325615\",\"lng\":\"123.9873518347\",\"total\":211.16,\"grand_total\":356.56,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":87}', 'http://localhost:8081/api/all-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', NULL, '2026-04-26 02:15:29', '2026-04-26 02:15:29'),
+(253, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 67, '[]', '{\"transaction_id\":87,\"store_id\":6,\"item_id\":958,\"item_name\":\"Sed veritatis sed qui consectetur omnis explicabo.\",\"item_description\":\"Natus eos est cum nostrum voluptatem sed quia quae.\",\"unit_id\":10,\"base_price\":27.5,\"store_price\":30.25,\"online_price\":33.28,\"qty\":1,\"id\":67}', 'http://localhost:8081/api/all-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', NULL, '2026-04-26 02:15:29', '2026-04-26 02:15:29'),
+(254, 'App\\Models\\User', 28, 'created', 'App\\Models\\Order', 68, '[]', '{\"transaction_id\":87,\"store_id\":2,\"item_id\":88,\"item_name\":\"Ea soluta reiciendis ex explicabo voluptatum.\",\"item_description\":\"Quis et harum et omnis ut debitis omnis rerum nihil cumque asperiores ut tempore et incidunt impedit.\",\"unit_id\":13,\"base_price\":73.5,\"store_price\":80.85,\"online_price\":88.94,\"qty\":2,\"id\":68}', 'http://localhost:8081/api/all-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', NULL, '2026-04-26 02:15:29', '2026-04-26 02:15:29');
 
 -- --------------------------------------------------------
 
@@ -414,11 +418,11 @@ INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `
 --
 
 CREATE TABLE `categories` (
-  `id` bigint UNSIGNED NOT NULL,
-  `parent_id` int DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `desc` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -459,11 +463,11 @@ INSERT INTO `categories` (`id`, `parent_id`, `name`, `icon`, `desc`, `created_at
 --
 
 CREATE TABLE `cities` (
-  `id` int UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(300) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
-  `zipcode` int NOT NULL,
-  `province_id` int UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `zipcode` int(11) NOT NULL,
+  `province_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `cities`
@@ -2115,10 +2119,10 @@ INSERT INTO `cities` (`id`, `name`, `zipcode`, `province_id`) VALUES
 --
 
 CREATE TABLE `cloud_tokens` (
-  `id` bigint UNSIGNED NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` int NOT NULL,
-  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `tokenable_id` int(11) NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2130,9 +2134,9 @@ CREATE TABLE `cloud_tokens` (
 --
 
 CREATE TABLE `colors` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `desc` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2155,10 +2159,10 @@ INSERT INTO `colors` (`id`, `name`, `desc`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `dashboard_menus` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2182,8 +2186,8 @@ INSERT INTO `dashboard_menus` (`id`, `name`, `icon`, `path`, `created_at`, `upda
 --
 
 CREATE TABLE `delivery_charges` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `base_amount` double(8,2) NOT NULL,
   `per_store_pick_up_amount` double(8,2) NOT NULL,
   `is_default` tinyint(1) NOT NULL,
@@ -2205,12 +2209,12 @@ INSERT INTO `delivery_charges` (`id`, `name`, `base_amount`, `per_store_pick_up_
 --
 
 CREATE TABLE `delivery_franchisee` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` int NOT NULL,
-  `franchisee_id` int NOT NULL,
-  `refprovince_id` int NOT NULL,
-  `refcitymun_id` int NOT NULL,
-  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `franchisee_id` int(11) NOT NULL,
+  `refprovince_id` int(11) NOT NULL,
+  `refcitymun_id` int(11) NOT NULL,
+  `mobile` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2222,13 +2226,13 @@ CREATE TABLE `delivery_franchisee` (
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2238,12 +2242,12 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `franchisees` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `refprovince_id` int NOT NULL,
-  `refcitymun_id` int NOT NULL,
-  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `refprovince_id` int(11) NOT NULL,
+  `refcitymun_id` int(11) NOT NULL,
+  `mobile` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2256,15 +2260,15 @@ CREATE TABLE `franchisees` (
 --
 
 CREATE TABLE `images` (
-  `id` bigint UNSIGNED NOT NULL,
-  `thumbnail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `imageable_id` int NOT NULL,
-  `imageable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_primary` tinyint(1) DEFAULT '0',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `size` bigint DEFAULT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `thumbnail` text NOT NULL,
+  `path` text NOT NULL,
+  `imageable_id` int(11) NOT NULL,
+  `imageable_type` varchar(255) NOT NULL,
+  `is_primary` tinyint(1) DEFAULT 0,
+  `name` varchar(255) DEFAULT NULL,
+  `size` bigint(20) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3341,9 +3345,9 @@ INSERT INTO `images` (`id`, `thumbnail`, `path`, `imageable_id`, `imageable_type
 --
 
 CREATE TABLE `interconnected_cities` (
-  `id` bigint UNSIGNED NOT NULL,
-  `main_city_id` int NOT NULL,
-  `connected_city_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `main_city_id` int(11) NOT NULL,
+  `connected_city_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3365,15 +3369,15 @@ INSERT INTO `interconnected_cities` (`id`, `main_city_id`, `connected_city_id`, 
 --
 
 CREATE TABLE `invoices` (
-  `id` bigint UNSIGNED NOT NULL,
-  `store_id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `created_by` tinyint(1) DEFAULT NULL,
   `updated_by` tinyint(1) DEFAULT NULL,
   `is_approved` tinyint(1) DEFAULT NULL,
-  `approved_by` int DEFAULT NULL,
-  `notes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `approved_by` int(11) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -3386,11 +3390,11 @@ CREATE TABLE `invoices` (
 --
 
 CREATE TABLE `invoice_items` (
-  `id` bigint UNSIGNED NOT NULL,
-  `invoice_id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `invoice_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `amount` double(8,2) NOT NULL,
-  `qty` int NOT NULL,
+  `qty` int(11) NOT NULL,
   `subtotal` double(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -3404,11 +3408,11 @@ CREATE TABLE `invoice_items` (
 --
 
 CREATE TABLE `items` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `category_id` int NOT NULL,
-  `store_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `category_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -4431,13 +4435,13 @@ INSERT INTO `items` (`id`, `name`, `description`, `category_id`, `store_id`, `cr
 --
 
 CREATE TABLE `item_prices` (
-  `id` bigint UNSIGNED NOT NULL,
-  `item_id` int DEFAULT NULL,
-  `unit_id` int DEFAULT NULL,
-  `color_id` int DEFAULT NULL,
-  `size_id` int DEFAULT NULL,
-  `qty` int NOT NULL,
-  `delivery_charge_id` int DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `item_id` int(11) DEFAULT NULL,
+  `unit_id` int(11) DEFAULT NULL,
+  `color_id` int(11) DEFAULT NULL,
+  `size_id` int(11) DEFAULT NULL,
+  `qty` int(11) NOT NULL,
+  `delivery_charge_id` int(11) DEFAULT 1,
   `original_price` decimal(8,2) NOT NULL,
   `selling_price` decimal(8,2) NOT NULL,
   `online_price` decimal(8,2) NOT NULL,
@@ -4450,1011 +4454,1011 @@ CREATE TABLE `item_prices` (
 --
 
 INSERT INTO `item_prices` (`id`, `item_id`, `unit_id`, `color_id`, `size_id`, `qty`, `delivery_charge_id`, `original_price`, `selling_price`, `online_price`, `created_at`, `updated_at`) VALUES
-(1, 28, 11, 0, 0, 0, 1, 70.10, 77.11, 84.82, '2024-08-09 21:39:59', '2024-08-09 21:39:59'),
-(2, 2, 9, 0, 0, 0, 1, 95.00, 104.50, 114.95, '2024-08-09 21:39:59', '2024-08-09 21:39:59'),
-(3, 3, 16, 0, 0, 0, 1, 10.00, 11.00, 12.10, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(4, 4, 18, 0, 0, 0, 1, 84.50, 92.95, 102.25, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(5, 5, 18, 0, 0, 0, 1, 47.40, 52.14, 57.35, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(6, 6, 3, 0, 0, 0, 1, 99.20, 109.12, 120.03, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(7, 7, 15, 0, 0, 0, 1, 24.50, 26.95, 29.65, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(8, 8, 3, 0, 0, 0, 1, 61.00, 67.10, 73.81, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(9, 9, 1, 0, 0, 0, 1, 50.30, 55.33, 60.86, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(10, 10, 5, 0, 0, 0, 1, 13.40, 14.74, 16.21, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(11, 11, 13, 0, 0, 0, 1, 47.20, 51.92, 57.11, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(12, 12, 12, 0, 0, 0, 1, 23.70, 26.07, 28.68, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(13, 13, 5, 0, 0, 0, 1, 84.80, 93.28, 102.61, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(14, 14, 3, 0, 0, 0, 1, 58.50, 64.35, 70.79, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(15, 15, 12, 0, 0, 0, 1, 91.80, 100.98, 111.08, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(16, 16, 7, 0, 0, 0, 1, 77.50, 85.25, 93.78, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(17, 17, 1, 0, 0, 0, 1, 78.10, 85.91, 94.50, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(18, 18, 3, 0, 0, 0, 1, 52.60, 57.86, 63.65, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(19, 19, 11, 0, 0, 0, 1, 27.30, 30.03, 33.03, '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
-(20, 20, 12, 0, 0, 0, 1, 11.80, 12.98, 14.28, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(21, 21, 4, 0, 0, 0, 1, 51.80, 56.98, 62.68, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(22, 22, 8, 0, 0, 0, 1, 36.70, 40.37, 44.41, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(23, 23, 5, 0, 0, 0, 1, 50.20, 55.22, 60.74, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(24, 24, 12, 0, 0, 0, 1, 40.80, 44.88, 49.37, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(25, 25, 1, 0, 0, 0, 1, 71.50, 78.65, 86.52, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(26, 26, 9, 0, 0, 0, 1, 20.50, 22.55, 24.81, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(27, 27, 1, 0, 0, 0, 1, 77.60, 85.36, 93.90, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(28, 28, 18, 0, 0, 0, 1, 28.20, 31.02, 34.12, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(29, 29, 9, 0, 0, 0, 1, 71.60, 78.76, 86.64, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(30, 30, 7, 0, 0, 0, 1, 17.10, 18.81, 20.69, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(31, 31, 8, 0, 0, 0, 1, 66.70, 73.37, 80.71, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(32, 32, 6, 0, 0, 0, 1, 45.30, 49.83, 54.81, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(33, 33, 8, 0, 0, 0, 1, 99.90, 109.89, 120.88, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(34, 34, 16, 0, 0, 0, 1, 50.20, 55.22, 60.74, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(35, 35, 8, 0, 0, 0, 1, 47.30, 52.03, 57.23, '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
-(36, 36, 18, 0, 0, 0, 1, 18.30, 20.13, 22.14, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(37, 37, 16, 0, 0, 0, 1, 75.50, 83.05, 91.36, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(38, 38, 2, 0, 0, 0, 1, 68.50, 75.35, 82.89, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(39, 39, 14, 0, 0, 0, 1, 84.80, 93.28, 102.61, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(40, 40, 1, 0, 0, 0, 1, 99.80, 109.78, 120.76, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(41, 41, 4, 0, 0, 0, 1, 72.40, 79.64, 87.60, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(42, 42, 7, 0, 0, 0, 1, 71.30, 78.43, 86.27, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(43, 43, 16, 0, 0, 0, 1, 85.60, 94.16, 103.58, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(44, 44, 18, 0, 0, 0, 1, 43.40, 47.74, 52.51, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(45, 45, 7, 0, 0, 0, 1, 13.80, 15.18, 16.70, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(46, 46, 3, 0, 0, 0, 1, 14.30, 15.73, 17.30, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(47, 47, 20, 0, 0, 0, 1, 86.30, 94.93, 104.42, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(48, 48, 4, 0, 0, 0, 1, 31.90, 35.09, 38.60, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(49, 49, 14, 0, 0, 0, 1, 63.80, 70.18, 77.20, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(50, 50, 6, 0, 0, 0, 1, 21.60, 23.76, 26.14, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(51, 51, 4, 0, 0, 0, 1, 50.00, 55.00, 60.50, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(52, 52, 10, 0, 0, 0, 1, 13.40, 14.74, 16.21, '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
-(53, 53, 11, 0, 0, 0, 1, 47.60, 52.36, 57.60, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(54, 54, 18, 0, 0, 0, 1, 23.80, 26.18, 28.80, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(55, 55, 14, 0, 0, 0, 1, 65.10, 71.61, 78.77, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(56, 56, 8, 0, 0, 0, 1, 29.30, 32.23, 35.45, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(57, 57, 12, 0, 0, 0, 1, 96.50, 106.15, 116.77, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(58, 58, 9, 0, 0, 0, 1, 16.00, 17.60, 19.36, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(59, 59, 14, 0, 0, 0, 1, 73.20, 80.52, 88.57, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(60, 60, 14, 0, 0, 0, 1, 53.20, 58.52, 64.37, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(61, 61, 8, 0, 0, 0, 1, 30.10, 33.11, 36.42, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(62, 62, 10, 0, 0, 0, 1, 72.40, 79.64, 87.60, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(63, 63, 16, 0, 0, 0, 1, 70.20, 77.22, 84.94, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(64, 64, 8, 0, 0, 0, 1, 18.60, 20.46, 22.51, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(65, 65, 16, 0, 0, 0, 1, 13.80, 15.18, 16.70, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(66, 66, 18, 0, 0, 0, 1, 19.60, 21.56, 23.72, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(67, 67, 5, 0, 0, 0, 1, 64.80, 71.28, 78.41, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(68, 68, 15, 0, 0, 0, 1, 19.40, 21.34, 23.47, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(69, 69, 13, 0, 0, 0, 1, 99.30, 109.23, 120.15, '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
-(70, 70, 11, 0, 0, 0, 1, 26.10, 28.71, 31.58, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(71, 71, 3, 0, 0, 0, 1, 68.80, 75.68, 83.25, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(72, 72, 13, 0, 0, 0, 1, 36.80, 40.48, 44.53, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(73, 73, 12, 0, 0, 0, 1, 91.30, 100.43, 110.47, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(74, 74, 7, 0, 0, 0, 1, 70.10, 77.11, 84.82, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(75, 75, 20, 0, 0, 0, 1, 91.00, 100.10, 110.11, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(76, 76, 12, 0, 0, 0, 1, 32.40, 35.64, 39.20, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(77, 77, 9, 0, 0, 0, 1, 89.60, 98.56, 108.42, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(78, 78, 13, 0, 0, 0, 1, 67.70, 74.47, 81.92, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(79, 79, 5, 0, 0, 0, 1, 36.90, 40.59, 44.65, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(80, 80, 20, 0, 0, 0, 1, 30.80, 33.88, 37.27, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(81, 81, 3, 0, 0, 0, 1, 83.90, 92.29, 101.52, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(82, 82, 6, 0, 0, 0, 1, 37.70, 41.47, 45.62, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(83, 83, 16, 0, 0, 0, 1, 69.80, 76.78, 84.46, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(84, 84, 1, 0, 0, 0, 1, 12.70, 13.97, 15.37, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(85, 85, 12, 0, 0, 0, 1, 65.60, 72.16, 79.38, '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
-(86, 86, 13, 0, 0, 0, 1, 32.90, 36.19, 39.81, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(87, 87, 15, 0, 0, 0, 1, 46.30, 50.93, 56.02, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(88, 88, 13, 0, 0, 0, 1, 73.50, 80.85, 88.94, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(89, 89, 20, 0, 0, 0, 1, 23.60, 25.96, 28.56, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(90, 90, 8, 0, 0, 0, 1, 88.60, 97.46, 107.21, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(91, 91, 12, 0, 0, 0, 1, 24.10, 26.51, 29.16, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(92, 92, 1, 0, 0, 0, 1, 27.80, 30.58, 33.64, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(93, 93, 19, 0, 0, 0, 1, 57.90, 63.69, 70.06, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(94, 94, 10, 0, 0, 0, 1, 72.50, 79.75, 87.73, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(95, 95, 20, 0, 0, 0, 1, 24.80, 27.28, 30.01, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(96, 96, 16, 0, 0, 0, 1, 47.40, 52.14, 57.35, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(97, 97, 16, 0, 0, 0, 1, 75.90, 83.49, 91.84, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(98, 98, 16, 0, 0, 0, 1, 96.50, 106.15, 116.77, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(99, 99, 17, 0, 0, 0, 1, 40.70, 44.77, 49.25, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(100, 100, 14, 0, 0, 0, 1, 79.00, 86.90, 95.59, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(101, 101, 15, 0, 0, 0, 1, 65.30, 71.83, 79.01, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(102, 102, 11, 0, 0, 0, 1, 77.20, 84.92, 93.41, '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
-(103, 103, 2, 0, 0, 0, 1, 85.60, 94.16, 103.58, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(104, 104, 16, 0, 0, 0, 1, 94.70, 104.17, 114.59, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(105, 105, 7, 0, 0, 0, 1, 29.30, 32.23, 35.45, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(106, 106, 18, 0, 0, 0, 1, 56.70, 62.37, 68.61, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(107, 107, 7, 0, 0, 0, 1, 79.50, 87.45, 96.20, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(108, 108, 16, 0, 0, 0, 1, 93.60, 102.96, 113.26, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(109, 109, 1, 0, 0, 0, 1, 27.10, 29.81, 32.79, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(110, 110, 5, 0, 0, 0, 1, 85.70, 94.27, 103.70, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(111, 111, 8, 0, 0, 0, 1, 66.90, 73.59, 80.95, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(112, 112, 9, 0, 0, 0, 1, 14.00, 15.40, 16.94, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(113, 113, 4, 0, 0, 0, 1, 39.60, 43.56, 47.92, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(114, 114, 8, 0, 0, 0, 1, 31.10, 34.21, 37.63, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(115, 115, 6, 0, 0, 0, 1, 82.30, 90.53, 99.58, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(116, 116, 18, 0, 0, 0, 1, 75.10, 82.61, 90.87, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(117, 117, 4, 0, 0, 0, 1, 66.30, 72.93, 80.22, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(118, 118, 10, 0, 0, 0, 1, 44.50, 48.95, 53.85, '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
-(119, 119, 8, 0, 0, 0, 1, 74.00, 81.40, 89.54, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(120, 120, 4, 0, 0, 0, 1, 15.40, 16.94, 18.63, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(121, 121, 11, 0, 0, 0, 1, 98.70, 108.57, 119.43, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(122, 122, 1, 0, 0, 0, 1, 67.70, 74.47, 81.92, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(123, 123, 10, 0, 0, 0, 1, 77.30, 85.03, 93.53, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(124, 124, 11, 0, 0, 0, 1, 23.10, 25.41, 27.95, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(125, 125, 10, 0, 0, 0, 1, 24.50, 26.95, 29.65, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(126, 126, 5, 0, 0, 0, 1, 12.30, 13.53, 14.88, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(127, 127, 8, 0, 0, 0, 1, 99.20, 109.12, 120.03, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(128, 128, 2, 0, 0, 0, 1, 28.30, 31.13, 34.24, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(129, 129, 1, 0, 0, 0, 1, 35.50, 39.05, 42.96, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(130, 130, 12, 0, 0, 0, 1, 33.40, 36.74, 40.41, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(131, 131, 10, 0, 0, 0, 1, 64.60, 71.06, 78.17, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(132, 132, 3, 0, 0, 0, 1, 20.70, 22.77, 25.05, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(133, 133, 14, 0, 0, 0, 1, 50.10, 55.11, 60.62, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(134, 134, 1, 0, 0, 0, 1, 77.70, 85.47, 94.02, '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
-(135, 135, 5, 0, 0, 0, 1, 83.90, 92.29, 101.52, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(136, 136, 12, 0, 0, 0, 1, 64.60, 71.06, 78.17, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(137, 137, 13, 0, 0, 0, 1, 57.00, 62.70, 68.97, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(138, 138, 10, 0, 0, 0, 1, 44.20, 48.62, 53.48, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(139, 139, 11, 0, 0, 0, 1, 73.80, 81.18, 89.30, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(140, 140, 12, 0, 0, 0, 1, 52.20, 57.42, 63.16, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(141, 141, 10, 0, 0, 0, 1, 90.00, 99.00, 108.90, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(142, 142, 19, 0, 0, 0, 1, 83.00, 91.30, 100.43, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(143, 143, 18, 0, 0, 0, 1, 38.20, 42.02, 46.22, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(144, 144, 17, 0, 0, 0, 1, 46.50, 51.15, 56.27, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(145, 145, 9, 0, 0, 0, 1, 51.70, 56.87, 62.56, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(146, 146, 10, 0, 0, 0, 1, 36.70, 40.37, 44.41, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(147, 147, 8, 0, 0, 0, 1, 21.50, 23.65, 26.02, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(148, 148, 11, 0, 0, 0, 1, 24.50, 26.95, 29.65, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(149, 149, 8, 0, 0, 0, 1, 39.90, 43.89, 48.28, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(150, 150, 10, 0, 0, 0, 1, 74.20, 81.62, 89.78, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(151, 151, 1, 0, 0, 0, 1, 16.00, 17.60, 19.36, '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
-(152, 152, 11, 0, 0, 0, 1, 71.10, 78.21, 86.03, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(153, 153, 2, 0, 0, 0, 1, 80.60, 88.66, 97.53, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(154, 154, 1, 0, 0, 0, 1, 45.10, 49.61, 54.57, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(155, 155, 1, 0, 0, 0, 1, 91.50, 100.65, 110.72, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(156, 156, 18, 0, 0, 0, 1, 15.30, 16.83, 18.51, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(157, 157, 13, 0, 0, 0, 1, 88.80, 97.68, 107.45, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(158, 158, 14, 0, 0, 0, 1, 53.40, 58.74, 64.61, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(159, 159, 7, 0, 0, 0, 1, 51.10, 56.21, 61.83, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(160, 160, 4, 0, 0, 0, 1, 21.30, 23.43, 25.77, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(161, 161, 16, 0, 0, 0, 1, 36.60, 40.26, 44.29, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(162, 162, 14, 0, 0, 0, 1, 90.80, 99.88, 109.87, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(163, 163, 9, 0, 0, 0, 1, 74.40, 81.84, 90.02, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(164, 164, 13, 0, 0, 0, 1, 68.50, 75.35, 82.89, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(165, 165, 6, 0, 0, 0, 1, 82.40, 90.64, 99.70, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(166, 166, 16, 0, 0, 0, 1, 51.60, 56.76, 62.44, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(167, 167, 11, 0, 0, 0, 1, 92.70, 101.97, 112.17, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(168, 168, 20, 0, 0, 0, 1, 98.90, 108.79, 119.67, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(169, 169, 3, 0, 0, 0, 1, 72.60, 79.86, 87.85, '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
-(170, 170, 12, 0, 0, 0, 1, 53.40, 58.74, 64.61, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(171, 171, 16, 0, 0, 0, 1, 91.90, 101.09, 111.20, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(172, 172, 16, 0, 0, 0, 1, 28.50, 31.35, 34.49, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(173, 173, 9, 0, 0, 0, 1, 94.20, 103.62, 113.98, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(174, 174, 14, 0, 0, 0, 1, 34.00, 37.40, 41.14, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(175, 175, 9, 0, 0, 0, 1, 39.40, 43.34, 47.67, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(176, 176, 16, 0, 0, 0, 1, 56.50, 62.15, 68.37, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(177, 177, 18, 0, 0, 0, 1, 73.90, 81.29, 89.42, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(178, 178, 13, 0, 0, 0, 1, 42.50, 46.75, 51.43, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(179, 179, 11, 0, 0, 0, 1, 59.20, 65.12, 71.63, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(180, 180, 12, 0, 0, 0, 1, 79.00, 86.90, 95.59, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(181, 181, 12, 0, 0, 0, 1, 25.30, 27.83, 30.61, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(182, 182, 7, 0, 0, 0, 1, 15.10, 16.61, 18.27, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(183, 183, 12, 0, 0, 0, 1, 91.40, 100.54, 110.59, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(184, 184, 7, 0, 0, 0, 1, 82.50, 90.75, 99.83, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(185, 185, 4, 0, 0, 0, 1, 24.80, 27.28, 30.01, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(186, 186, 7, 0, 0, 0, 1, 50.10, 55.11, 60.62, '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
-(187, 187, 6, 0, 0, 0, 1, 10.00, 11.00, 12.10, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(188, 188, 12, 0, 0, 0, 1, 94.30, 103.73, 114.10, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(189, 189, 11, 0, 0, 0, 1, 86.70, 95.37, 104.91, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(190, 190, 2, 0, 0, 0, 1, 77.90, 85.69, 94.26, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(191, 191, 9, 0, 0, 0, 1, 50.60, 55.66, 61.23, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(192, 192, 7, 0, 0, 0, 1, 78.00, 85.80, 94.38, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(193, 193, 19, 0, 0, 0, 1, 90.20, 99.22, 109.14, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(194, 194, 2, 0, 0, 0, 1, 43.90, 48.29, 53.12, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(195, 195, 15, 0, 0, 0, 1, 13.90, 15.29, 16.82, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(196, 196, 12, 0, 0, 0, 1, 31.40, 34.54, 37.99, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(197, 197, 1, 0, 0, 0, 1, 64.50, 70.95, 78.05, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(198, 198, 11, 0, 0, 0, 1, 12.70, 13.97, 15.37, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(199, 199, 15, 0, 0, 0, 1, 39.60, 43.56, 47.92, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(200, 200, 3, 0, 0, 0, 1, 48.80, 53.68, 59.05, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(201, 201, 2, 0, 0, 0, 1, 13.00, 14.30, 15.73, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(202, 202, 10, 0, 0, 0, 1, 56.30, 61.93, 68.12, '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
-(203, 203, 14, 0, 0, 0, 1, 30.90, 33.99, 37.39, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(204, 204, 11, 0, 0, 0, 1, 12.60, 13.86, 15.25, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(205, 205, 7, 0, 0, 0, 1, 64.60, 71.06, 78.17, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(206, 206, 18, 0, 0, 0, 1, 22.20, 24.42, 26.86, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(207, 207, 4, 0, 0, 0, 1, 90.30, 99.33, 109.26, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(208, 208, 7, 0, 0, 0, 1, 58.00, 63.80, 70.18, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(209, 209, 15, 0, 0, 0, 1, 63.80, 70.18, 77.20, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(210, 210, 11, 0, 0, 0, 1, 60.00, 66.00, 72.60, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(211, 211, 18, 0, 0, 0, 1, 59.30, 65.23, 71.75, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(212, 212, 20, 0, 0, 0, 1, 31.40, 34.54, 37.99, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(213, 213, 16, 0, 0, 0, 1, 19.40, 21.34, 23.47, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(214, 214, 6, 0, 0, 0, 1, 19.00, 20.90, 22.99, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(215, 215, 11, 0, 0, 0, 1, 51.00, 56.10, 61.71, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(216, 216, 10, 0, 0, 0, 1, 98.40, 108.24, 119.06, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(217, 217, 11, 0, 0, 0, 1, 37.30, 41.03, 45.13, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(218, 218, 11, 0, 0, 0, 1, 39.40, 43.34, 47.67, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(219, 219, 18, 0, 0, 0, 1, 93.60, 102.96, 113.26, '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
-(220, 220, 16, 0, 0, 0, 1, 98.30, 108.13, 118.94, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(221, 221, 5, 0, 0, 0, 1, 15.20, 16.72, 18.39, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(222, 222, 20, 0, 0, 0, 1, 72.90, 80.19, 88.21, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(223, 223, 14, 0, 0, 0, 1, 73.00, 80.30, 88.33, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(224, 224, 8, 0, 0, 0, 1, 25.00, 27.50, 30.25, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(225, 225, 9, 0, 0, 0, 1, 44.00, 48.40, 53.24, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(226, 226, 20, 0, 0, 0, 1, 44.60, 49.06, 53.97, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(227, 227, 12, 0, 0, 0, 1, 47.20, 51.92, 57.11, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(228, 228, 18, 0, 0, 0, 1, 41.50, 45.65, 50.22, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(229, 229, 18, 0, 0, 0, 1, 34.50, 37.95, 41.75, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(230, 230, 12, 0, 0, 0, 1, 23.30, 25.63, 28.19, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(231, 231, 8, 0, 0, 0, 1, 94.10, 103.51, 113.86, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(232, 232, 12, 0, 0, 0, 1, 34.00, 37.40, 41.14, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(233, 233, 3, 0, 0, 0, 1, 83.80, 92.18, 101.40, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(234, 234, 13, 0, 0, 0, 1, 70.80, 77.88, 85.67, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(235, 235, 9, 0, 0, 0, 1, 93.00, 102.30, 112.53, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(236, 236, 3, 0, 0, 0, 1, 11.20, 12.32, 13.55, '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
-(237, 237, 5, 0, 0, 0, 1, 86.90, 95.59, 105.15, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(238, 238, 5, 0, 0, 0, 1, 13.50, 14.85, 16.34, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(239, 239, 6, 0, 0, 0, 1, 53.80, 59.18, 65.10, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(240, 240, 6, 0, 0, 0, 1, 11.20, 12.32, 13.55, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(241, 241, 1, 0, 0, 0, 1, 92.80, 102.08, 112.29, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(242, 242, 18, 0, 0, 0, 1, 14.90, 16.39, 18.03, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(243, 243, 10, 0, 0, 0, 1, 24.80, 27.28, 30.01, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(244, 244, 5, 0, 0, 0, 1, 52.20, 57.42, 63.16, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(245, 245, 13, 0, 0, 0, 1, 69.10, 76.01, 83.61, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(246, 246, 18, 0, 0, 0, 1, 74.10, 81.51, 89.66, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(247, 247, 12, 0, 0, 0, 1, 77.50, 85.25, 93.78, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(248, 248, 2, 0, 0, 0, 1, 59.40, 65.34, 71.87, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(249, 249, 1, 0, 0, 0, 1, 34.70, 38.17, 41.99, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(250, 250, 2, 0, 0, 0, 1, 27.60, 30.36, 33.40, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(251, 251, 13, 0, 0, 0, 1, 10.90, 11.99, 13.19, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(252, 252, 13, 0, 0, 0, 1, 79.00, 86.90, 95.59, '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
-(253, 253, 13, 0, 0, 0, 1, 76.10, 83.71, 92.08, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(254, 254, 20, 0, 0, 0, 1, 66.60, 73.26, 80.59, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(255, 255, 3, 0, 0, 0, 1, 91.80, 100.98, 111.08, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(256, 256, 11, 0, 0, 0, 1, 86.90, 95.59, 105.15, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(257, 257, 1, 0, 0, 0, 1, 37.10, 40.81, 44.89, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(258, 258, 19, 0, 0, 0, 1, 72.10, 79.31, 87.24, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(259, 259, 2, 0, 0, 0, 1, 11.20, 12.32, 13.55, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(260, 260, 1, 0, 0, 0, 1, 22.60, 24.86, 27.35, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(261, 261, 3, 0, 0, 0, 1, 26.70, 29.37, 32.31, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(262, 262, 5, 0, 0, 0, 1, 98.10, 107.91, 118.70, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(263, 263, 15, 0, 0, 0, 1, 64.80, 71.28, 78.41, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(264, 264, 19, 0, 0, 0, 1, 21.40, 23.54, 25.89, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(265, 265, 7, 0, 0, 0, 1, 47.30, 52.03, 57.23, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(266, 266, 1, 0, 0, 0, 1, 66.80, 73.48, 80.83, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(267, 267, 10, 0, 0, 0, 1, 40.60, 44.66, 49.13, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(268, 268, 10, 0, 0, 0, 1, 57.20, 62.92, 69.21, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(269, 269, 1, 0, 0, 0, 1, 15.80, 17.38, 19.12, '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
-(270, 270, 10, 0, 0, 0, 1, 87.50, 96.25, 105.88, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(271, 271, 3, 0, 0, 0, 1, 87.80, 96.58, 106.24, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(272, 272, 13, 0, 0, 0, 1, 52.20, 57.42, 63.16, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(273, 273, 20, 0, 0, 0, 1, 33.70, 37.07, 40.78, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(274, 274, 7, 0, 0, 0, 1, 87.10, 95.81, 105.39, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(275, 275, 9, 0, 0, 0, 1, 50.70, 55.77, 61.35, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(276, 276, 13, 0, 0, 0, 1, 98.10, 107.91, 118.70, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(277, 277, 17, 0, 0, 0, 1, 20.50, 22.55, 24.81, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(278, 278, 20, 0, 0, 0, 1, 11.90, 13.09, 14.40, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(279, 279, 14, 0, 0, 0, 1, 51.70, 56.87, 62.56, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(280, 280, 12, 0, 0, 0, 1, 74.30, 81.73, 89.90, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(281, 281, 15, 0, 0, 0, 1, 28.80, 31.68, 34.85, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(282, 282, 6, 0, 0, 0, 1, 54.80, 60.28, 66.31, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(283, 283, 11, 0, 0, 0, 1, 87.00, 95.70, 105.27, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(284, 284, 2, 0, 0, 0, 1, 87.10, 95.81, 105.39, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(285, 285, 18, 0, 0, 0, 1, 26.10, 28.71, 31.58, '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
-(286, 286, 4, 0, 0, 0, 1, 41.00, 45.10, 49.61, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(287, 287, 12, 0, 0, 0, 1, 85.30, 93.83, 103.21, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(288, 288, 2, 0, 0, 0, 1, 51.30, 56.43, 62.07, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(289, 289, 9, 0, 0, 0, 1, 95.30, 104.83, 115.31, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(290, 290, 13, 0, 0, 0, 1, 73.70, 81.07, 89.18, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(291, 291, 7, 0, 0, 0, 1, 55.60, 61.16, 67.28, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(292, 292, 14, 0, 0, 0, 1, 31.20, 34.32, 37.75, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(293, 293, 11, 0, 0, 0, 1, 21.20, 23.32, 25.65, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(294, 294, 2, 0, 0, 0, 1, 26.00, 28.60, 31.46, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(295, 295, 6, 0, 0, 0, 1, 12.60, 13.86, 15.25, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(296, 296, 15, 0, 0, 0, 1, 34.30, 37.73, 41.50, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(297, 297, 11, 0, 0, 0, 1, 61.30, 67.43, 74.17, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(298, 298, 16, 0, 0, 0, 1, 80.40, 88.44, 97.28, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(299, 299, 5, 0, 0, 0, 1, 93.20, 102.52, 112.77, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(300, 300, 11, 0, 0, 0, 1, 56.30, 61.93, 68.12, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(301, 301, 18, 0, 0, 0, 1, 83.90, 92.29, 101.52, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(302, 302, 18, 0, 0, 0, 1, 20.00, 22.00, 24.20, '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
-(303, 303, 16, 0, 0, 0, 1, 97.10, 106.81, 117.49, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(304, 304, 15, 0, 0, 0, 1, 56.30, 61.93, 68.12, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(305, 305, 17, 0, 0, 0, 1, 69.00, 75.90, 83.49, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(306, 306, 17, 0, 0, 0, 1, 52.10, 57.31, 63.04, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(307, 307, 10, 0, 0, 0, 1, 98.50, 108.35, 119.19, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(308, 308, 9, 0, 0, 0, 1, 33.00, 36.30, 39.93, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(309, 309, 7, 0, 0, 0, 1, 70.20, 77.22, 84.94, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(310, 310, 15, 0, 0, 0, 1, 96.70, 106.37, 117.01, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(311, 311, 7, 0, 0, 0, 1, 76.00, 83.60, 91.96, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(312, 312, 1, 0, 0, 0, 1, 92.90, 102.19, 112.41, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(313, 313, 7, 0, 0, 0, 1, 18.60, 20.46, 22.51, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(314, 314, 5, 0, 0, 0, 1, 60.40, 66.44, 73.08, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(315, 315, 4, 0, 0, 0, 1, 39.90, 43.89, 48.28, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(316, 316, 4, 0, 0, 0, 1, 92.40, 101.64, 111.80, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(317, 317, 8, 0, 0, 0, 1, 27.90, 30.69, 33.76, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(318, 318, 20, 0, 0, 0, 1, 70.10, 77.11, 84.82, '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
-(319, 319, 18, 0, 0, 0, 1, 96.80, 106.48, 117.13, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(320, 320, 14, 0, 0, 0, 1, 40.10, 44.11, 48.52, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(321, 321, 7, 0, 0, 0, 1, 74.50, 81.95, 90.15, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(322, 322, 19, 0, 0, 0, 1, 97.30, 107.03, 117.73, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(323, 323, 2, 0, 0, 0, 1, 96.30, 105.93, 116.52, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(324, 324, 4, 0, 0, 0, 1, 73.00, 80.30, 88.33, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(325, 325, 11, 0, 0, 0, 1, 47.30, 52.03, 57.23, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(326, 326, 19, 0, 0, 0, 1, 84.90, 93.39, 102.73, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(327, 327, 4, 0, 0, 0, 1, 88.40, 97.24, 106.96, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(328, 328, 20, 0, 0, 0, 1, 36.90, 40.59, 44.65, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(329, 329, 1, 0, 0, 0, 1, 42.30, 46.53, 51.18, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(330, 330, 6, 0, 0, 0, 1, 54.60, 60.06, 66.07, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(331, 331, 11, 0, 0, 0, 1, 50.30, 55.33, 60.86, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(332, 332, 20, 0, 0, 0, 1, 25.20, 27.72, 30.49, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(333, 333, 1, 0, 0, 0, 1, 98.20, 108.02, 118.82, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(334, 334, 7, 0, 0, 0, 1, 19.60, 21.56, 23.72, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(335, 335, 17, 0, 0, 0, 1, 35.50, 39.05, 42.96, '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
-(336, 336, 8, 0, 0, 0, 1, 54.00, 59.40, 65.34, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(337, 337, 13, 0, 0, 0, 1, 78.40, 86.24, 94.86, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(338, 338, 12, 0, 0, 0, 1, 90.50, 99.55, 109.51, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(339, 339, 15, 0, 0, 0, 1, 42.90, 47.19, 51.91, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(340, 340, 5, 0, 0, 0, 1, 95.10, 104.61, 115.07, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(341, 341, 16, 0, 0, 0, 1, 12.00, 13.20, 14.52, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(342, 342, 3, 0, 0, 0, 1, 34.20, 37.62, 41.38, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(343, 343, 17, 0, 0, 0, 1, 15.70, 17.27, 19.00, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(344, 344, 19, 0, 0, 0, 1, 45.60, 50.16, 55.18, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(345, 345, 3, 0, 0, 0, 1, 69.00, 75.90, 83.49, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(346, 346, 15, 0, 0, 0, 1, 72.60, 79.86, 87.85, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(347, 347, 19, 0, 0, 0, 1, 27.00, 29.70, 32.67, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(348, 348, 2, 0, 0, 0, 1, 98.60, 108.46, 119.31, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(349, 349, 2, 0, 0, 0, 1, 68.80, 75.68, 83.25, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(350, 350, 9, 0, 0, 0, 1, 73.10, 80.41, 88.45, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(351, 351, 20, 0, 0, 0, 1, 75.70, 83.27, 91.60, '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
-(352, 352, 16, 0, 0, 0, 1, 41.00, 45.10, 49.61, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(353, 353, 5, 0, 0, 0, 1, 55.50, 61.05, 67.16, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(354, 354, 12, 0, 0, 0, 1, 16.80, 18.48, 20.33, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(355, 355, 10, 0, 0, 0, 1, 61.40, 67.54, 74.29, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(356, 356, 10, 0, 0, 0, 1, 42.90, 47.19, 51.91, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(357, 357, 19, 0, 0, 0, 1, 59.70, 65.67, 72.24, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(358, 358, 11, 0, 0, 0, 1, 86.20, 94.82, 104.30, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(359, 359, 14, 0, 0, 0, 1, 40.00, 44.00, 48.40, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(360, 360, 12, 0, 0, 0, 1, 67.90, 74.69, 82.16, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(361, 361, 5, 0, 0, 0, 1, 30.90, 33.99, 37.39, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(362, 362, 14, 0, 0, 0, 1, 88.60, 97.46, 107.21, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(363, 363, 15, 0, 0, 0, 1, 12.40, 13.64, 15.00, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(364, 364, 9, 0, 0, 0, 1, 59.30, 65.23, 71.75, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(365, 365, 9, 0, 0, 0, 1, 92.10, 101.31, 111.44, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(366, 366, 7, 0, 0, 0, 1, 19.70, 21.67, 23.84, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(367, 367, 13, 0, 0, 0, 1, 30.90, 33.99, 37.39, '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
-(368, 368, 17, 0, 0, 0, 1, 59.50, 65.45, 72.00, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(369, 369, 6, 0, 0, 0, 1, 64.90, 71.39, 78.53, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(370, 370, 16, 0, 0, 0, 1, 65.00, 71.50, 78.65, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(371, 371, 1, 0, 0, 0, 1, 20.20, 22.22, 24.44, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(372, 372, 8, 0, 0, 0, 1, 64.20, 70.62, 77.68, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(373, 373, 7, 0, 0, 0, 1, 26.70, 29.37, 32.31, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(374, 374, 10, 0, 0, 0, 1, 26.50, 29.15, 32.07, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(375, 375, 14, 0, 0, 0, 1, 22.60, 24.86, 27.35, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(376, 376, 6, 0, 0, 0, 1, 73.40, 80.74, 88.81, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(377, 377, 14, 0, 0, 0, 1, 69.40, 76.34, 83.97, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(378, 378, 12, 0, 0, 0, 1, 64.80, 71.28, 78.41, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(379, 379, 17, 0, 0, 0, 1, 62.90, 69.19, 76.11, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(380, 380, 12, 0, 0, 0, 1, 26.90, 29.59, 32.55, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(381, 381, 1, 0, 0, 0, 1, 23.90, 26.29, 28.92, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(382, 382, 9, 0, 0, 0, 1, 17.50, 19.25, 21.18, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(383, 383, 20, 0, 0, 0, 1, 72.70, 79.97, 87.97, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(384, 384, 3, 0, 0, 0, 1, 19.90, 21.89, 24.08, '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
-(385, 385, 8, 0, 0, 0, 1, 65.10, 71.61, 78.77, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(386, 386, 15, 0, 0, 0, 1, 77.00, 84.70, 93.17, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(387, 387, 6, 0, 0, 0, 1, 87.20, 95.92, 105.51, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(388, 388, 12, 0, 0, 0, 1, 99.90, 109.89, 120.88, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(389, 389, 6, 0, 0, 0, 1, 17.00, 18.70, 20.57, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(390, 390, 10, 0, 0, 0, 1, 21.10, 23.21, 25.53, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(391, 391, 1, 0, 0, 0, 1, 42.50, 46.75, 51.43, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(392, 392, 3, 0, 0, 0, 1, 36.10, 39.71, 43.68, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(393, 393, 18, 0, 0, 0, 1, 68.70, 75.57, 83.13, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(394, 394, 6, 0, 0, 0, 1, 26.80, 29.48, 32.43, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(395, 395, 1, 0, 0, 0, 1, 16.70, 18.37, 20.21, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(396, 396, 5, 0, 0, 0, 1, 50.60, 55.66, 61.23, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(397, 397, 11, 0, 0, 0, 1, 61.80, 67.98, 74.78, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(398, 398, 3, 0, 0, 0, 1, 36.30, 39.93, 43.92, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(399, 399, 18, 0, 0, 0, 1, 29.90, 32.89, 36.18, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(400, 400, 10, 0, 0, 0, 1, 44.60, 49.06, 53.97, '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
-(401, 401, 12, 0, 0, 0, 1, 87.50, 96.25, 105.88, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(402, 402, 20, 0, 0, 0, 1, 55.80, 61.38, 67.52, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(403, 403, 13, 0, 0, 0, 1, 38.30, 42.13, 46.34, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(404, 404, 17, 0, 0, 0, 1, 32.50, 35.75, 39.33, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(405, 405, 10, 0, 0, 0, 1, 12.70, 13.97, 15.37, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(406, 406, 7, 0, 0, 0, 1, 37.10, 40.81, 44.89, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(407, 407, 3, 0, 0, 0, 1, 64.40, 70.84, 77.92, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(408, 408, 4, 0, 0, 0, 1, 94.20, 103.62, 113.98, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(409, 409, 20, 0, 0, 0, 1, 24.90, 27.39, 30.13, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(410, 410, 5, 0, 0, 0, 1, 55.70, 61.27, 67.40, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(411, 411, 15, 0, 0, 0, 1, 27.10, 29.81, 32.79, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(412, 412, 12, 0, 0, 0, 1, 39.40, 43.34, 47.67, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(413, 413, 5, 0, 0, 0, 1, 24.20, 26.62, 29.28, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(414, 414, 10, 0, 0, 0, 1, 94.60, 104.06, 114.47, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(415, 415, 17, 0, 0, 0, 1, 40.30, 44.33, 48.76, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(416, 416, 9, 0, 0, 0, 1, 93.80, 103.18, 113.50, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(417, 417, 7, 0, 0, 0, 1, 21.40, 23.54, 25.89, '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
-(418, 418, 12, 0, 0, 0, 1, 48.70, 53.57, 58.93, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(419, 419, 5, 0, 0, 0, 1, 59.80, 65.78, 72.36, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(420, 420, 11, 0, 0, 0, 1, 13.60, 14.96, 16.46, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(421, 421, 17, 0, 0, 0, 1, 13.10, 14.41, 15.85, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(422, 422, 11, 0, 0, 0, 1, 36.90, 40.59, 44.65, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(423, 423, 4, 0, 0, 0, 1, 93.80, 103.18, 113.50, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(424, 424, 18, 0, 0, 0, 1, 68.90, 75.79, 83.37, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(425, 425, 20, 0, 0, 0, 1, 89.50, 98.45, 108.30, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(426, 426, 8, 0, 0, 0, 1, 38.00, 41.80, 45.98, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(427, 427, 3, 0, 0, 0, 1, 42.20, 46.42, 51.06, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(428, 428, 19, 0, 0, 0, 1, 92.50, 101.75, 111.93, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(429, 429, 8, 0, 0, 0, 1, 75.20, 82.72, 90.99, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(430, 430, 12, 0, 0, 0, 1, 24.00, 26.40, 29.04, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(431, 431, 1, 0, 0, 0, 1, 93.40, 102.74, 113.01, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(432, 432, 12, 0, 0, 0, 1, 96.00, 105.60, 116.16, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(433, 433, 3, 0, 0, 0, 1, 55.50, 61.05, 67.16, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(434, 434, 3, 0, 0, 0, 1, 54.10, 59.51, 65.46, '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
-(435, 435, 3, 0, 0, 0, 1, 34.60, 38.06, 41.87, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(436, 436, 6, 0, 0, 0, 1, 26.60, 29.26, 32.19, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(437, 437, 16, 0, 0, 0, 1, 87.30, 96.03, 105.63, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(438, 438, 6, 0, 0, 0, 1, 83.20, 91.52, 100.67, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(439, 439, 6, 0, 0, 0, 1, 17.40, 19.14, 21.05, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(440, 440, 19, 0, 0, 0, 1, 79.40, 87.34, 96.07, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(441, 441, 2, 0, 0, 0, 1, 66.30, 72.93, 80.22, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(442, 442, 10, 0, 0, 0, 1, 53.60, 58.96, 64.86, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(443, 443, 2, 0, 0, 0, 1, 38.60, 42.46, 46.71, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(444, 444, 7, 0, 0, 0, 1, 10.20, 11.22, 12.34, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(445, 445, 16, 0, 0, 0, 1, 38.60, 42.46, 46.71, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(446, 446, 2, 0, 0, 0, 1, 40.60, 44.66, 49.13, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(447, 447, 8, 0, 0, 0, 1, 28.00, 30.80, 33.88, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(448, 448, 20, 0, 0, 0, 1, 81.80, 89.98, 98.98, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(449, 449, 9, 0, 0, 0, 1, 61.40, 67.54, 74.29, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(450, 450, 2, 0, 0, 0, 1, 49.80, 54.78, 60.26, '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
-(451, 451, 18, 0, 0, 0, 1, 11.60, 12.76, 14.04, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(452, 452, 16, 0, 0, 0, 1, 14.80, 16.28, 17.91, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(453, 453, 17, 0, 0, 0, 1, 87.80, 96.58, 106.24, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(454, 454, 5, 0, 0, 0, 1, 24.20, 26.62, 29.28, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(455, 455, 7, 0, 0, 0, 1, 61.70, 67.87, 74.66, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(456, 456, 3, 0, 0, 0, 1, 91.20, 100.32, 110.35, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(457, 457, 4, 0, 0, 0, 1, 97.00, 106.70, 117.37, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(458, 458, 10, 0, 0, 0, 1, 35.20, 38.72, 42.59, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(459, 459, 10, 0, 0, 0, 1, 67.70, 74.47, 81.92, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(460, 460, 4, 0, 0, 0, 1, 79.80, 87.78, 96.56, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(461, 461, 5, 0, 0, 0, 1, 41.50, 45.65, 50.22, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(462, 462, 20, 0, 0, 0, 1, 93.90, 103.29, 113.62, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(463, 463, 19, 0, 0, 0, 1, 92.30, 101.53, 111.68, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(464, 464, 7, 0, 0, 0, 1, 91.30, 100.43, 110.47, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(465, 465, 12, 0, 0, 0, 1, 62.30, 68.53, 75.38, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(466, 466, 16, 0, 0, 0, 1, 98.40, 108.24, 119.06, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(467, 467, 18, 0, 0, 0, 1, 12.30, 13.53, 14.88, '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
-(468, 468, 11, 0, 0, 0, 1, 66.10, 72.71, 79.98, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(469, 469, 1, 0, 0, 0, 1, 42.50, 46.75, 51.43, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(470, 470, 19, 0, 0, 0, 1, 30.80, 33.88, 37.27, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(471, 471, 16, 0, 0, 0, 1, 81.20, 89.32, 98.25, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(472, 472, 10, 0, 0, 0, 1, 10.10, 11.11, 12.22, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(473, 473, 20, 0, 0, 0, 1, 77.30, 85.03, 93.53, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(474, 474, 14, 0, 0, 0, 1, 18.70, 20.57, 22.63, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(475, 475, 13, 0, 0, 0, 1, 57.80, 63.58, 69.94, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(476, 476, 5, 0, 0, 0, 1, 36.20, 39.82, 43.80, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(477, 477, 11, 0, 0, 0, 1, 39.70, 43.67, 48.04, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(478, 478, 14, 0, 0, 0, 1, 49.10, 54.01, 59.41, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(479, 479, 8, 0, 0, 0, 1, 94.00, 103.40, 113.74, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(480, 480, 12, 0, 0, 0, 1, 82.60, 90.86, 99.95, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(481, 481, 20, 0, 0, 0, 1, 56.40, 62.04, 68.24, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(482, 482, 7, 0, 0, 0, 1, 53.80, 59.18, 65.10, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(483, 483, 19, 0, 0, 0, 1, 87.80, 96.58, 106.24, '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
-(484, 484, 2, 0, 0, 0, 1, 56.10, 61.71, 67.88, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(485, 485, 17, 0, 0, 0, 1, 82.20, 90.42, 99.46, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(486, 486, 12, 0, 0, 0, 1, 90.40, 99.44, 109.38, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(487, 487, 16, 0, 0, 0, 1, 35.10, 38.61, 42.47, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(488, 488, 14, 0, 0, 0, 1, 23.80, 26.18, 28.80, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(489, 489, 5, 0, 0, 0, 1, 85.90, 94.49, 103.94, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(490, 490, 16, 0, 0, 0, 1, 22.50, 24.75, 27.23, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(491, 491, 20, 0, 0, 0, 1, 35.70, 39.27, 43.20, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(492, 492, 10, 0, 0, 0, 1, 76.80, 84.48, 92.93, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(493, 493, 17, 0, 0, 0, 1, 74.40, 81.84, 90.02, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(494, 494, 16, 0, 0, 0, 1, 14.40, 15.84, 17.42, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(495, 495, 20, 0, 0, 0, 1, 80.00, 88.00, 96.80, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(496, 496, 16, 0, 0, 0, 1, 38.30, 42.13, 46.34, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(497, 497, 11, 0, 0, 0, 1, 88.60, 97.46, 107.21, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(498, 498, 15, 0, 0, 0, 1, 58.40, 64.24, 70.66, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(499, 499, 8, 0, 0, 0, 1, 69.60, 76.56, 84.22, '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
-(500, 500, 5, 0, 0, 0, 1, 83.60, 91.96, 101.16, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(501, 501, 4, 0, 0, 0, 1, 27.50, 30.25, 33.28, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(502, 502, 4, 0, 0, 0, 1, 23.80, 26.18, 28.80, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(503, 503, 12, 0, 0, 0, 1, 53.80, 59.18, 65.10, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(504, 504, 5, 0, 0, 0, 1, 87.70, 96.47, 106.12, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(505, 505, 9, 0, 0, 0, 1, 92.40, 101.64, 111.80, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(506, 506, 1, 0, 0, 0, 1, 19.80, 21.78, 23.96, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(507, 507, 4, 0, 0, 0, 1, 15.40, 16.94, 18.63, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(508, 508, 5, 0, 0, 0, 1, 57.80, 63.58, 69.94, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(509, 509, 16, 0, 0, 0, 1, 27.10, 29.81, 32.79, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(510, 510, 19, 0, 0, 0, 1, 27.20, 29.92, 32.91, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(511, 511, 19, 0, 0, 0, 1, 83.30, 91.63, 100.79, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(512, 512, 19, 0, 0, 0, 1, 48.70, 53.57, 58.93, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(513, 513, 10, 0, 0, 0, 1, 55.00, 60.50, 66.55, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(514, 514, 8, 0, 0, 0, 1, 75.40, 82.94, 91.23, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(515, 515, 10, 0, 0, 0, 1, 26.40, 29.04, 31.94, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(516, 516, 14, 0, 0, 0, 1, 81.00, 89.10, 98.01, '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
-(517, 517, 6, 0, 0, 0, 1, 78.40, 86.24, 94.86, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(518, 518, 19, 0, 0, 0, 1, 34.60, 38.06, 41.87, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(519, 519, 1, 0, 0, 0, 1, 39.20, 43.12, 47.43, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(520, 520, 8, 0, 0, 0, 1, 67.40, 74.14, 81.55, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(521, 521, 6, 0, 0, 0, 1, 91.60, 100.76, 110.84, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(522, 522, 19, 0, 0, 0, 1, 58.50, 64.35, 70.79, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(523, 523, 19, 0, 0, 0, 1, 82.10, 90.31, 99.34, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(524, 524, 20, 0, 0, 0, 1, 91.70, 100.87, 110.96, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(525, 525, 16, 0, 0, 0, 1, 49.20, 54.12, 59.53, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(526, 526, 15, 0, 0, 0, 1, 90.90, 99.99, 109.99, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(527, 527, 10, 0, 0, 0, 1, 15.20, 16.72, 18.39, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(528, 528, 1, 0, 0, 0, 1, 66.20, 72.82, 80.10, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(529, 529, 7, 0, 0, 0, 1, 90.90, 99.99, 109.99, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(530, 530, 5, 0, 0, 0, 1, 23.90, 26.29, 28.92, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(531, 531, 16, 0, 0, 0, 1, 44.50, 48.95, 53.85, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(532, 532, 14, 0, 0, 0, 1, 37.50, 41.25, 45.38, '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
-(533, 533, 1, 0, 0, 0, 1, 95.60, 105.16, 115.68, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(534, 534, 16, 0, 0, 0, 1, 66.00, 72.60, 79.86, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(535, 535, 2, 0, 0, 0, 1, 31.30, 34.43, 37.87, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(536, 536, 4, 0, 0, 0, 1, 74.30, 81.73, 89.90, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(537, 537, 5, 0, 0, 0, 1, 38.30, 42.13, 46.34, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(538, 538, 14, 0, 0, 0, 1, 39.80, 43.78, 48.16, '2024-08-09 21:40:32', '2024-08-09 21:40:32');
+(1, 28, 11, 0, 0, 0, 1, '70.10', '77.11', '84.82', '2024-08-09 21:39:59', '2024-08-09 21:39:59'),
+(2, 2, 9, 0, 0, 0, 1, '95.00', '104.50', '114.95', '2024-08-09 21:39:59', '2024-08-09 21:39:59'),
+(3, 3, 16, 0, 0, 0, 1, '10.00', '11.00', '12.10', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(4, 4, 18, 0, 0, 0, 1, '84.50', '92.95', '102.25', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(5, 5, 18, 0, 0, 0, 1, '47.40', '52.14', '57.35', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(6, 6, 3, 0, 0, 0, 1, '99.20', '109.12', '120.03', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(7, 7, 15, 0, 0, 0, 1, '24.50', '26.95', '29.65', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(8, 8, 3, 0, 0, 0, 1, '61.00', '67.10', '73.81', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(9, 9, 1, 0, 0, 0, 1, '50.30', '55.33', '60.86', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(10, 10, 5, 0, 0, 0, 1, '13.40', '14.74', '16.21', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(11, 11, 13, 0, 0, 0, 1, '47.20', '51.92', '57.11', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(12, 12, 12, 0, 0, 0, 1, '23.70', '26.07', '28.68', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(13, 13, 5, 0, 0, 0, 1, '84.80', '93.28', '102.61', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(14, 14, 3, 0, 0, 0, 1, '58.50', '64.35', '70.79', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(15, 15, 12, 0, 0, 0, 1, '91.80', '100.98', '111.08', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(16, 16, 7, 0, 0, 0, 1, '77.50', '85.25', '93.78', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(17, 17, 1, 0, 0, 0, 1, '78.10', '85.91', '94.50', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(18, 18, 3, 0, 0, 0, 1, '52.60', '57.86', '63.65', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(19, 19, 11, 0, 0, 0, 1, '27.30', '30.03', '33.03', '2024-08-09 21:40:00', '2024-08-09 21:40:00'),
+(20, 20, 12, 0, 0, 0, 1, '11.80', '12.98', '14.28', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(21, 21, 4, 0, 0, 0, 1, '51.80', '56.98', '62.68', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(22, 22, 8, 0, 0, 0, 1, '36.70', '40.37', '44.41', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(23, 23, 5, 0, 0, 0, 1, '50.20', '55.22', '60.74', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(24, 24, 12, 0, 0, 0, 1, '40.80', '44.88', '49.37', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(25, 25, 1, 0, 0, 0, 1, '71.50', '78.65', '86.52', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(26, 26, 9, 0, 0, 0, 1, '20.50', '22.55', '24.81', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(27, 27, 1, 0, 0, 0, 1, '77.60', '85.36', '93.90', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(28, 28, 18, 0, 0, 0, 1, '28.20', '31.02', '34.12', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(29, 29, 9, 0, 0, 0, 1, '71.60', '78.76', '86.64', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(30, 30, 7, 0, 0, 0, 1, '17.10', '18.81', '20.69', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(31, 31, 8, 0, 0, 0, 1, '66.70', '73.37', '80.71', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(32, 32, 6, 0, 0, 0, 1, '45.30', '49.83', '54.81', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(33, 33, 8, 0, 0, 0, 1, '99.90', '109.89', '120.88', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(34, 34, 16, 0, 0, 0, 1, '50.20', '55.22', '60.74', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(35, 35, 8, 0, 0, 0, 1, '47.30', '52.03', '57.23', '2024-08-09 21:40:01', '2024-08-09 21:40:01'),
+(36, 36, 18, 0, 0, 0, 1, '18.30', '20.13', '22.14', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(37, 37, 16, 0, 0, 0, 1, '75.50', '83.05', '91.36', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(38, 38, 2, 0, 0, 0, 1, '68.50', '75.35', '82.89', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(39, 39, 14, 0, 0, 0, 1, '84.80', '93.28', '102.61', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(40, 40, 1, 0, 0, 0, 1, '99.80', '109.78', '120.76', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(41, 41, 4, 0, 0, 0, 1, '72.40', '79.64', '87.60', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(42, 42, 7, 0, 0, 0, 1, '71.30', '78.43', '86.27', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(43, 43, 16, 0, 0, 0, 1, '85.60', '94.16', '103.58', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(44, 44, 18, 0, 0, 0, 1, '43.40', '47.74', '52.51', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(45, 45, 7, 0, 0, 0, 1, '13.80', '15.18', '16.70', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(46, 46, 3, 0, 0, 0, 1, '14.30', '15.73', '17.30', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(47, 47, 20, 0, 0, 0, 1, '86.30', '94.93', '104.42', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(48, 48, 4, 0, 0, 0, 1, '31.90', '35.09', '38.60', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(49, 49, 14, 0, 0, 0, 1, '63.80', '70.18', '77.20', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(50, 50, 6, 0, 0, 0, 1, '21.60', '23.76', '26.14', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(51, 51, 4, 0, 0, 0, 1, '50.00', '55.00', '60.50', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(52, 52, 10, 0, 0, 0, 1, '13.40', '14.74', '16.21', '2024-08-09 21:40:02', '2024-08-09 21:40:02'),
+(53, 53, 11, 0, 0, 0, 1, '47.60', '52.36', '57.60', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(54, 54, 18, 0, 0, 0, 1, '23.80', '26.18', '28.80', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(55, 55, 14, 0, 0, 0, 1, '65.10', '71.61', '78.77', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(56, 56, 8, 0, 0, 0, 1, '29.30', '32.23', '35.45', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(57, 57, 12, 0, 0, 0, 1, '96.50', '106.15', '116.77', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(58, 58, 9, 0, 0, 0, 1, '16.00', '17.60', '19.36', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(59, 59, 14, 0, 0, 0, 1, '73.20', '80.52', '88.57', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(60, 60, 14, 0, 0, 0, 1, '53.20', '58.52', '64.37', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(61, 61, 8, 0, 0, 0, 1, '30.10', '33.11', '36.42', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(62, 62, 10, 0, 0, 0, 1, '72.40', '79.64', '87.60', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(63, 63, 16, 0, 0, 0, 1, '70.20', '77.22', '84.94', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(64, 64, 8, 0, 0, 0, 1, '18.60', '20.46', '22.51', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(65, 65, 16, 0, 0, 0, 1, '13.80', '15.18', '16.70', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(66, 66, 18, 0, 0, 0, 1, '19.60', '21.56', '23.72', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(67, 67, 5, 0, 0, 0, 1, '64.80', '71.28', '78.41', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(68, 68, 15, 0, 0, 0, 1, '19.40', '21.34', '23.47', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(69, 69, 13, 0, 0, 0, 1, '99.30', '109.23', '120.15', '2024-08-09 21:40:03', '2024-08-09 21:40:03'),
+(70, 70, 11, 0, 0, 0, 1, '26.10', '28.71', '31.58', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(71, 71, 3, 0, 0, 0, 1, '68.80', '75.68', '83.25', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(72, 72, 13, 0, 0, 0, 1, '36.80', '40.48', '44.53', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(73, 73, 12, 0, 0, 0, 1, '91.30', '100.43', '110.47', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(74, 74, 7, 0, 0, 0, 1, '70.10', '77.11', '84.82', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(75, 75, 20, 0, 0, 0, 1, '91.00', '100.10', '110.11', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(76, 76, 12, 0, 0, 0, 1, '32.40', '35.64', '39.20', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(77, 77, 9, 0, 0, 0, 1, '89.60', '98.56', '108.42', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(78, 78, 13, 0, 0, 0, 1, '67.70', '74.47', '81.92', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(79, 79, 5, 0, 0, 0, 1, '36.90', '40.59', '44.65', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(80, 80, 20, 0, 0, 0, 1, '30.80', '33.88', '37.27', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(81, 81, 3, 0, 0, 0, 1, '83.90', '92.29', '101.52', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(82, 82, 6, 0, 0, 0, 1, '37.70', '41.47', '45.62', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(83, 83, 16, 0, 0, 0, 1, '69.80', '76.78', '84.46', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(84, 84, 1, 0, 0, 0, 1, '12.70', '13.97', '15.37', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(85, 85, 12, 0, 0, 0, 1, '65.60', '72.16', '79.38', '2024-08-09 21:40:04', '2024-08-09 21:40:04'),
+(86, 86, 13, 0, 0, 0, 1, '32.90', '36.19', '39.81', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(87, 87, 15, 0, 0, 0, 1, '46.30', '50.93', '56.02', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(88, 88, 13, 0, 0, 0, 1, '73.50', '80.85', '88.94', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(89, 89, 20, 0, 0, 0, 1, '23.60', '25.96', '28.56', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(90, 90, 8, 0, 0, 0, 1, '88.60', '97.46', '107.21', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(91, 91, 12, 0, 0, 0, 1, '24.10', '26.51', '29.16', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(92, 92, 1, 0, 0, 0, 1, '27.80', '30.58', '33.64', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(93, 93, 19, 0, 0, 0, 1, '57.90', '63.69', '70.06', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(94, 94, 10, 0, 0, 0, 1, '72.50', '79.75', '87.73', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(95, 95, 20, 0, 0, 0, 1, '24.80', '27.28', '30.01', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(96, 96, 16, 0, 0, 0, 1, '47.40', '52.14', '57.35', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(97, 97, 16, 0, 0, 0, 1, '75.90', '83.49', '91.84', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(98, 98, 16, 0, 0, 0, 1, '96.50', '106.15', '116.77', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(99, 99, 17, 0, 0, 0, 1, '40.70', '44.77', '49.25', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(100, 100, 14, 0, 0, 0, 1, '79.00', '86.90', '95.59', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(101, 101, 15, 0, 0, 0, 1, '65.30', '71.83', '79.01', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(102, 102, 11, 0, 0, 0, 1, '77.20', '84.92', '93.41', '2024-08-09 21:40:05', '2024-08-09 21:40:05'),
+(103, 103, 2, 0, 0, 0, 1, '85.60', '94.16', '103.58', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(104, 104, 16, 0, 0, 0, 1, '94.70', '104.17', '114.59', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(105, 105, 7, 0, 0, 0, 1, '29.30', '32.23', '35.45', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(106, 106, 18, 0, 0, 0, 1, '56.70', '62.37', '68.61', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(107, 107, 7, 0, 0, 0, 1, '79.50', '87.45', '96.20', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(108, 108, 16, 0, 0, 0, 1, '93.60', '102.96', '113.26', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(109, 109, 1, 0, 0, 0, 1, '27.10', '29.81', '32.79', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(110, 110, 5, 0, 0, 0, 1, '85.70', '94.27', '103.70', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(111, 111, 8, 0, 0, 0, 1, '66.90', '73.59', '80.95', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(112, 112, 9, 0, 0, 0, 1, '14.00', '15.40', '16.94', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(113, 113, 4, 0, 0, 0, 1, '39.60', '43.56', '47.92', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(114, 114, 8, 0, 0, 0, 1, '31.10', '34.21', '37.63', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(115, 115, 6, 0, 0, 0, 1, '82.30', '90.53', '99.58', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(116, 116, 18, 0, 0, 0, 1, '75.10', '82.61', '90.87', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(117, 117, 4, 0, 0, 0, 1, '66.30', '72.93', '80.22', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(118, 118, 10, 0, 0, 0, 1, '44.50', '48.95', '53.85', '2024-08-09 21:40:06', '2024-08-09 21:40:06'),
+(119, 119, 8, 0, 0, 0, 1, '74.00', '81.40', '89.54', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(120, 120, 4, 0, 0, 0, 1, '15.40', '16.94', '18.63', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(121, 121, 11, 0, 0, 0, 1, '98.70', '108.57', '119.43', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(122, 122, 1, 0, 0, 0, 1, '67.70', '74.47', '81.92', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(123, 123, 10, 0, 0, 0, 1, '77.30', '85.03', '93.53', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(124, 124, 11, 0, 0, 0, 1, '23.10', '25.41', '27.95', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(125, 125, 10, 0, 0, 0, 1, '24.50', '26.95', '29.65', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(126, 126, 5, 0, 0, 0, 1, '12.30', '13.53', '14.88', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(127, 127, 8, 0, 0, 0, 1, '99.20', '109.12', '120.03', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(128, 128, 2, 0, 0, 0, 1, '28.30', '31.13', '34.24', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(129, 129, 1, 0, 0, 0, 1, '35.50', '39.05', '42.96', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(130, 130, 12, 0, 0, 0, 1, '33.40', '36.74', '40.41', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(131, 131, 10, 0, 0, 0, 1, '64.60', '71.06', '78.17', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(132, 132, 3, 0, 0, 0, 1, '20.70', '22.77', '25.05', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(133, 133, 14, 0, 0, 0, 1, '50.10', '55.11', '60.62', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(134, 134, 1, 0, 0, 0, 1, '77.70', '85.47', '94.02', '2024-08-09 21:40:07', '2024-08-09 21:40:07'),
+(135, 135, 5, 0, 0, 0, 1, '83.90', '92.29', '101.52', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(136, 136, 12, 0, 0, 0, 1, '64.60', '71.06', '78.17', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(137, 137, 13, 0, 0, 0, 1, '57.00', '62.70', '68.97', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(138, 138, 10, 0, 0, 0, 1, '44.20', '48.62', '53.48', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(139, 139, 11, 0, 0, 0, 1, '73.80', '81.18', '89.30', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(140, 140, 12, 0, 0, 0, 1, '52.20', '57.42', '63.16', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(141, 141, 10, 0, 0, 0, 1, '90.00', '99.00', '108.90', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(142, 142, 19, 0, 0, 0, 1, '83.00', '91.30', '100.43', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(143, 143, 18, 0, 0, 0, 1, '38.20', '42.02', '46.22', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(144, 144, 17, 0, 0, 0, 1, '46.50', '51.15', '56.27', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(145, 145, 9, 0, 0, 0, 1, '51.70', '56.87', '62.56', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(146, 146, 10, 0, 0, 0, 1, '36.70', '40.37', '44.41', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(147, 147, 8, 0, 0, 0, 1, '21.50', '23.65', '26.02', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(148, 148, 11, 0, 0, 0, 1, '24.50', '26.95', '29.65', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(149, 149, 8, 0, 0, 0, 1, '39.90', '43.89', '48.28', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(150, 150, 10, 0, 0, 0, 1, '74.20', '81.62', '89.78', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(151, 151, 1, 0, 0, 0, 1, '16.00', '17.60', '19.36', '2024-08-09 21:40:08', '2024-08-09 21:40:08'),
+(152, 152, 11, 0, 0, 0, 1, '71.10', '78.21', '86.03', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(153, 153, 2, 0, 0, 0, 1, '80.60', '88.66', '97.53', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(154, 154, 1, 0, 0, 0, 1, '45.10', '49.61', '54.57', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(155, 155, 1, 0, 0, 0, 1, '91.50', '100.65', '110.72', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(156, 156, 18, 0, 0, 0, 1, '15.30', '16.83', '18.51', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(157, 157, 13, 0, 0, 0, 1, '88.80', '97.68', '107.45', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(158, 158, 14, 0, 0, 0, 1, '53.40', '58.74', '64.61', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(159, 159, 7, 0, 0, 0, 1, '51.10', '56.21', '61.83', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(160, 160, 4, 0, 0, 0, 1, '21.30', '23.43', '25.77', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(161, 161, 16, 0, 0, 0, 1, '36.60', '40.26', '44.29', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(162, 162, 14, 0, 0, 0, 1, '90.80', '99.88', '109.87', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(163, 163, 9, 0, 0, 0, 1, '74.40', '81.84', '90.02', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(164, 164, 13, 0, 0, 0, 1, '68.50', '75.35', '82.89', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(165, 165, 6, 0, 0, 0, 1, '82.40', '90.64', '99.70', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(166, 166, 16, 0, 0, 0, 1, '51.60', '56.76', '62.44', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(167, 167, 11, 0, 0, 0, 1, '92.70', '101.97', '112.17', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(168, 168, 20, 0, 0, 0, 1, '98.90', '108.79', '119.67', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(169, 169, 3, 0, 0, 0, 1, '72.60', '79.86', '87.85', '2024-08-09 21:40:09', '2024-08-09 21:40:09'),
+(170, 170, 12, 0, 0, 0, 1, '53.40', '58.74', '64.61', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(171, 171, 16, 0, 0, 0, 1, '91.90', '101.09', '111.20', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(172, 172, 16, 0, 0, 0, 1, '28.50', '31.35', '34.49', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(173, 173, 9, 0, 0, 0, 1, '94.20', '103.62', '113.98', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(174, 174, 14, 0, 0, 0, 1, '34.00', '37.40', '41.14', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(175, 175, 9, 0, 0, 0, 1, '39.40', '43.34', '47.67', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(176, 176, 16, 0, 0, 0, 1, '56.50', '62.15', '68.37', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(177, 177, 18, 0, 0, 0, 1, '73.90', '81.29', '89.42', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(178, 178, 13, 0, 0, 0, 1, '42.50', '46.75', '51.43', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(179, 179, 11, 0, 0, 0, 1, '59.20', '65.12', '71.63', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(180, 180, 12, 0, 0, 0, 1, '79.00', '86.90', '95.59', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(181, 181, 12, 0, 0, 0, 1, '25.30', '27.83', '30.61', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(182, 182, 7, 0, 0, 0, 1, '15.10', '16.61', '18.27', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(183, 183, 12, 0, 0, 0, 1, '91.40', '100.54', '110.59', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(184, 184, 7, 0, 0, 0, 1, '82.50', '90.75', '99.83', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(185, 185, 4, 0, 0, 0, 1, '24.80', '27.28', '30.01', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(186, 186, 7, 0, 0, 0, 1, '50.10', '55.11', '60.62', '2024-08-09 21:40:10', '2024-08-09 21:40:10'),
+(187, 187, 6, 0, 0, 0, 1, '10.00', '11.00', '12.10', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(188, 188, 12, 0, 0, 0, 1, '94.30', '103.73', '114.10', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(189, 189, 11, 0, 0, 0, 1, '86.70', '95.37', '104.91', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(190, 190, 2, 0, 0, 0, 1, '77.90', '85.69', '94.26', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(191, 191, 9, 0, 0, 0, 1, '50.60', '55.66', '61.23', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(192, 192, 7, 0, 0, 0, 1, '78.00', '85.80', '94.38', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(193, 193, 19, 0, 0, 0, 1, '90.20', '99.22', '109.14', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(194, 194, 2, 0, 0, 0, 1, '43.90', '48.29', '53.12', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(195, 195, 15, 0, 0, 0, 1, '13.90', '15.29', '16.82', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(196, 196, 12, 0, 0, 0, 1, '31.40', '34.54', '37.99', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(197, 197, 1, 0, 0, 0, 1, '64.50', '70.95', '78.05', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(198, 198, 11, 0, 0, 0, 1, '12.70', '13.97', '15.37', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(199, 199, 15, 0, 0, 0, 1, '39.60', '43.56', '47.92', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(200, 200, 3, 0, 0, 0, 1, '48.80', '53.68', '59.05', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(201, 201, 2, 0, 0, 0, 1, '13.00', '14.30', '15.73', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(202, 202, 10, 0, 0, 0, 1, '56.30', '61.93', '68.12', '2024-08-09 21:40:11', '2024-08-09 21:40:11'),
+(203, 203, 14, 0, 0, 0, 1, '30.90', '33.99', '37.39', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(204, 204, 11, 0, 0, 0, 1, '12.60', '13.86', '15.25', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(205, 205, 7, 0, 0, 0, 1, '64.60', '71.06', '78.17', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(206, 206, 18, 0, 0, 0, 1, '22.20', '24.42', '26.86', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(207, 207, 4, 0, 0, 0, 1, '90.30', '99.33', '109.26', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(208, 208, 7, 0, 0, 0, 1, '58.00', '63.80', '70.18', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(209, 209, 15, 0, 0, 0, 1, '63.80', '70.18', '77.20', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(210, 210, 11, 0, 0, 0, 1, '60.00', '66.00', '72.60', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(211, 211, 18, 0, 0, 0, 1, '59.30', '65.23', '71.75', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(212, 212, 20, 0, 0, 0, 1, '31.40', '34.54', '37.99', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(213, 213, 16, 0, 0, 0, 1, '19.40', '21.34', '23.47', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(214, 214, 6, 0, 0, 0, 1, '19.00', '20.90', '22.99', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(215, 215, 11, 0, 0, 0, 1, '51.00', '56.10', '61.71', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(216, 216, 10, 0, 0, 0, 1, '98.40', '108.24', '119.06', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(217, 217, 11, 0, 0, 0, 1, '37.30', '41.03', '45.13', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(218, 218, 11, 0, 0, 0, 1, '39.40', '43.34', '47.67', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(219, 219, 18, 0, 0, 0, 1, '93.60', '102.96', '113.26', '2024-08-09 21:40:12', '2024-08-09 21:40:12'),
+(220, 220, 16, 0, 0, 0, 1, '98.30', '108.13', '118.94', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(221, 221, 5, 0, 0, 0, 1, '15.20', '16.72', '18.39', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(222, 222, 20, 0, 0, 0, 1, '72.90', '80.19', '88.21', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(223, 223, 14, 0, 0, 0, 1, '73.00', '80.30', '88.33', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(224, 224, 8, 0, 0, 0, 1, '25.00', '27.50', '30.25', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(225, 225, 9, 0, 0, 0, 1, '44.00', '48.40', '53.24', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(226, 226, 20, 0, 0, 0, 1, '44.60', '49.06', '53.97', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(227, 227, 12, 0, 0, 0, 1, '47.20', '51.92', '57.11', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(228, 228, 18, 0, 0, 0, 1, '41.50', '45.65', '50.22', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(229, 229, 18, 0, 0, 0, 1, '34.50', '37.95', '41.75', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(230, 230, 12, 0, 0, 0, 1, '23.30', '25.63', '28.19', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(231, 231, 8, 0, 0, 0, 1, '94.10', '103.51', '113.86', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(232, 232, 12, 0, 0, 0, 1, '34.00', '37.40', '41.14', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(233, 233, 3, 0, 0, 0, 1, '83.80', '92.18', '101.40', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(234, 234, 13, 0, 0, 0, 1, '70.80', '77.88', '85.67', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(235, 235, 9, 0, 0, 0, 1, '93.00', '102.30', '112.53', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(236, 236, 3, 0, 0, 0, 1, '11.20', '12.32', '13.55', '2024-08-09 21:40:13', '2024-08-09 21:40:13'),
+(237, 237, 5, 0, 0, 0, 1, '86.90', '95.59', '105.15', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(238, 238, 5, 0, 0, 0, 1, '13.50', '14.85', '16.34', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(239, 239, 6, 0, 0, 0, 1, '53.80', '59.18', '65.10', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(240, 240, 6, 0, 0, 0, 1, '11.20', '12.32', '13.55', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(241, 241, 1, 0, 0, 0, 1, '92.80', '102.08', '112.29', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(242, 242, 18, 0, 0, 0, 1, '14.90', '16.39', '18.03', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(243, 243, 10, 0, 0, 0, 1, '24.80', '27.28', '30.01', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(244, 244, 5, 0, 0, 0, 1, '52.20', '57.42', '63.16', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(245, 245, 13, 0, 0, 0, 1, '69.10', '76.01', '83.61', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(246, 246, 18, 0, 0, 0, 1, '74.10', '81.51', '89.66', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(247, 247, 12, 0, 0, 0, 1, '77.50', '85.25', '93.78', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(248, 248, 2, 0, 0, 0, 1, '59.40', '65.34', '71.87', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(249, 249, 1, 0, 0, 0, 1, '34.70', '38.17', '41.99', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(250, 250, 2, 0, 0, 0, 1, '27.60', '30.36', '33.40', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(251, 251, 13, 0, 0, 0, 1, '10.90', '11.99', '13.19', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(252, 252, 13, 0, 0, 0, 1, '79.00', '86.90', '95.59', '2024-08-09 21:40:14', '2024-08-09 21:40:14'),
+(253, 253, 13, 0, 0, 0, 1, '76.10', '83.71', '92.08', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(254, 254, 20, 0, 0, 0, 1, '66.60', '73.26', '80.59', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(255, 255, 3, 0, 0, 0, 1, '91.80', '100.98', '111.08', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(256, 256, 11, 0, 0, 0, 1, '86.90', '95.59', '105.15', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(257, 257, 1, 0, 0, 0, 1, '37.10', '40.81', '44.89', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(258, 258, 19, 0, 0, 0, 1, '72.10', '79.31', '87.24', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(259, 259, 2, 0, 0, 0, 1, '11.20', '12.32', '13.55', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(260, 260, 1, 0, 0, 0, 1, '22.60', '24.86', '27.35', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(261, 261, 3, 0, 0, 0, 1, '26.70', '29.37', '32.31', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(262, 262, 5, 0, 0, 0, 1, '98.10', '107.91', '118.70', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(263, 263, 15, 0, 0, 0, 1, '64.80', '71.28', '78.41', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(264, 264, 19, 0, 0, 0, 1, '21.40', '23.54', '25.89', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(265, 265, 7, 0, 0, 0, 1, '47.30', '52.03', '57.23', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(266, 266, 1, 0, 0, 0, 1, '66.80', '73.48', '80.83', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(267, 267, 10, 0, 0, 0, 1, '40.60', '44.66', '49.13', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(268, 268, 10, 0, 0, 0, 1, '57.20', '62.92', '69.21', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(269, 269, 1, 0, 0, 0, 1, '15.80', '17.38', '19.12', '2024-08-09 21:40:15', '2024-08-09 21:40:15'),
+(270, 270, 10, 0, 0, 0, 1, '87.50', '96.25', '105.88', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(271, 271, 3, 0, 0, 0, 1, '87.80', '96.58', '106.24', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(272, 272, 13, 0, 0, 0, 1, '52.20', '57.42', '63.16', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(273, 273, 20, 0, 0, 0, 1, '33.70', '37.07', '40.78', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(274, 274, 7, 0, 0, 0, 1, '87.10', '95.81', '105.39', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(275, 275, 9, 0, 0, 0, 1, '50.70', '55.77', '61.35', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(276, 276, 13, 0, 0, 0, 1, '98.10', '107.91', '118.70', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(277, 277, 17, 0, 0, 0, 1, '20.50', '22.55', '24.81', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(278, 278, 20, 0, 0, 0, 1, '11.90', '13.09', '14.40', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(279, 279, 14, 0, 0, 0, 1, '51.70', '56.87', '62.56', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(280, 280, 12, 0, 0, 0, 1, '74.30', '81.73', '89.90', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(281, 281, 15, 0, 0, 0, 1, '28.80', '31.68', '34.85', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(282, 282, 6, 0, 0, 0, 1, '54.80', '60.28', '66.31', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(283, 283, 11, 0, 0, 0, 1, '87.00', '95.70', '105.27', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(284, 284, 2, 0, 0, 0, 1, '87.10', '95.81', '105.39', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(285, 285, 18, 0, 0, 0, 1, '26.10', '28.71', '31.58', '2024-08-09 21:40:16', '2024-08-09 21:40:16'),
+(286, 286, 4, 0, 0, 0, 1, '41.00', '45.10', '49.61', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(287, 287, 12, 0, 0, 0, 1, '85.30', '93.83', '103.21', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(288, 288, 2, 0, 0, 0, 1, '51.30', '56.43', '62.07', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(289, 289, 9, 0, 0, 0, 1, '95.30', '104.83', '115.31', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(290, 290, 13, 0, 0, 0, 1, '73.70', '81.07', '89.18', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(291, 291, 7, 0, 0, 0, 1, '55.60', '61.16', '67.28', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(292, 292, 14, 0, 0, 0, 1, '31.20', '34.32', '37.75', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(293, 293, 11, 0, 0, 0, 1, '21.20', '23.32', '25.65', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(294, 294, 2, 0, 0, 0, 1, '26.00', '28.60', '31.46', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(295, 295, 6, 0, 0, 0, 1, '12.60', '13.86', '15.25', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(296, 296, 15, 0, 0, 0, 1, '34.30', '37.73', '41.50', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(297, 297, 11, 0, 0, 0, 1, '61.30', '67.43', '74.17', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(298, 298, 16, 0, 0, 0, 1, '80.40', '88.44', '97.28', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(299, 299, 5, 0, 0, 0, 1, '93.20', '102.52', '112.77', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(300, 300, 11, 0, 0, 0, 1, '56.30', '61.93', '68.12', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(301, 301, 18, 0, 0, 0, 1, '83.90', '92.29', '101.52', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(302, 302, 18, 0, 0, 0, 1, '20.00', '22.00', '24.20', '2024-08-09 21:40:17', '2024-08-09 21:40:17'),
+(303, 303, 16, 0, 0, 0, 1, '97.10', '106.81', '117.49', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(304, 304, 15, 0, 0, 0, 1, '56.30', '61.93', '68.12', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(305, 305, 17, 0, 0, 0, 1, '69.00', '75.90', '83.49', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(306, 306, 17, 0, 0, 0, 1, '52.10', '57.31', '63.04', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(307, 307, 10, 0, 0, 0, 1, '98.50', '108.35', '119.19', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(308, 308, 9, 0, 0, 0, 1, '33.00', '36.30', '39.93', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(309, 309, 7, 0, 0, 0, 1, '70.20', '77.22', '84.94', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(310, 310, 15, 0, 0, 0, 1, '96.70', '106.37', '117.01', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(311, 311, 7, 0, 0, 0, 1, '76.00', '83.60', '91.96', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(312, 312, 1, 0, 0, 0, 1, '92.90', '102.19', '112.41', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(313, 313, 7, 0, 0, 0, 1, '18.60', '20.46', '22.51', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(314, 314, 5, 0, 0, 0, 1, '60.40', '66.44', '73.08', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(315, 315, 4, 0, 0, 0, 1, '39.90', '43.89', '48.28', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(316, 316, 4, 0, 0, 0, 1, '92.40', '101.64', '111.80', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(317, 317, 8, 0, 0, 0, 1, '27.90', '30.69', '33.76', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(318, 318, 20, 0, 0, 0, 1, '70.10', '77.11', '84.82', '2024-08-09 21:40:18', '2024-08-09 21:40:18'),
+(319, 319, 18, 0, 0, 0, 1, '96.80', '106.48', '117.13', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(320, 320, 14, 0, 0, 0, 1, '40.10', '44.11', '48.52', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(321, 321, 7, 0, 0, 0, 1, '74.50', '81.95', '90.15', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(322, 322, 19, 0, 0, 0, 1, '97.30', '107.03', '117.73', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(323, 323, 2, 0, 0, 0, 1, '96.30', '105.93', '116.52', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(324, 324, 4, 0, 0, 0, 1, '73.00', '80.30', '88.33', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(325, 325, 11, 0, 0, 0, 1, '47.30', '52.03', '57.23', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(326, 326, 19, 0, 0, 0, 1, '84.90', '93.39', '102.73', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(327, 327, 4, 0, 0, 0, 1, '88.40', '97.24', '106.96', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(328, 328, 20, 0, 0, 0, 1, '36.90', '40.59', '44.65', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(329, 329, 1, 0, 0, 0, 1, '42.30', '46.53', '51.18', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(330, 330, 6, 0, 0, 0, 1, '54.60', '60.06', '66.07', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(331, 331, 11, 0, 0, 0, 1, '50.30', '55.33', '60.86', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(332, 332, 20, 0, 0, 0, 1, '25.20', '27.72', '30.49', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(333, 333, 1, 0, 0, 0, 1, '98.20', '108.02', '118.82', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(334, 334, 7, 0, 0, 0, 1, '19.60', '21.56', '23.72', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(335, 335, 17, 0, 0, 0, 1, '35.50', '39.05', '42.96', '2024-08-09 21:40:19', '2024-08-09 21:40:19'),
+(336, 336, 8, 0, 0, 0, 1, '54.00', '59.40', '65.34', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(337, 337, 13, 0, 0, 0, 1, '78.40', '86.24', '94.86', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(338, 338, 12, 0, 0, 0, 1, '90.50', '99.55', '109.51', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(339, 339, 15, 0, 0, 0, 1, '42.90', '47.19', '51.91', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(340, 340, 5, 0, 0, 0, 1, '95.10', '104.61', '115.07', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(341, 341, 16, 0, 0, 0, 1, '12.00', '13.20', '14.52', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(342, 342, 3, 0, 0, 0, 1, '34.20', '37.62', '41.38', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(343, 343, 17, 0, 0, 0, 1, '15.70', '17.27', '19.00', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(344, 344, 19, 0, 0, 0, 1, '45.60', '50.16', '55.18', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(345, 345, 3, 0, 0, 0, 1, '69.00', '75.90', '83.49', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(346, 346, 15, 0, 0, 0, 1, '72.60', '79.86', '87.85', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(347, 347, 19, 0, 0, 0, 1, '27.00', '29.70', '32.67', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(348, 348, 2, 0, 0, 0, 1, '98.60', '108.46', '119.31', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(349, 349, 2, 0, 0, 0, 1, '68.80', '75.68', '83.25', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(350, 350, 9, 0, 0, 0, 1, '73.10', '80.41', '88.45', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(351, 351, 20, 0, 0, 0, 1, '75.70', '83.27', '91.60', '2024-08-09 21:40:20', '2024-08-09 21:40:20'),
+(352, 352, 16, 0, 0, 0, 1, '41.00', '45.10', '49.61', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(353, 353, 5, 0, 0, 0, 1, '55.50', '61.05', '67.16', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(354, 354, 12, 0, 0, 0, 1, '16.80', '18.48', '20.33', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(355, 355, 10, 0, 0, 0, 1, '61.40', '67.54', '74.29', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(356, 356, 10, 0, 0, 0, 1, '42.90', '47.19', '51.91', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(357, 357, 19, 0, 0, 0, 1, '59.70', '65.67', '72.24', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(358, 358, 11, 0, 0, 0, 1, '86.20', '94.82', '104.30', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(359, 359, 14, 0, 0, 0, 1, '40.00', '44.00', '48.40', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(360, 360, 12, 0, 0, 0, 1, '67.90', '74.69', '82.16', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(361, 361, 5, 0, 0, 0, 1, '30.90', '33.99', '37.39', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(362, 362, 14, 0, 0, 0, 1, '88.60', '97.46', '107.21', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(363, 363, 15, 0, 0, 0, 1, '12.40', '13.64', '15.00', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(364, 364, 9, 0, 0, 0, 1, '59.30', '65.23', '71.75', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(365, 365, 9, 0, 0, 0, 1, '92.10', '101.31', '111.44', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(366, 366, 7, 0, 0, 0, 1, '19.70', '21.67', '23.84', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(367, 367, 13, 0, 0, 0, 1, '30.90', '33.99', '37.39', '2024-08-09 21:40:21', '2024-08-09 21:40:21'),
+(368, 368, 17, 0, 0, 0, 1, '59.50', '65.45', '72.00', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(369, 369, 6, 0, 0, 0, 1, '64.90', '71.39', '78.53', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(370, 370, 16, 0, 0, 0, 1, '65.00', '71.50', '78.65', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(371, 371, 1, 0, 0, 0, 1, '20.20', '22.22', '24.44', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(372, 372, 8, 0, 0, 0, 1, '64.20', '70.62', '77.68', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(373, 373, 7, 0, 0, 0, 1, '26.70', '29.37', '32.31', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(374, 374, 10, 0, 0, 0, 1, '26.50', '29.15', '32.07', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(375, 375, 14, 0, 0, 0, 1, '22.60', '24.86', '27.35', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(376, 376, 6, 0, 0, 0, 1, '73.40', '80.74', '88.81', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(377, 377, 14, 0, 0, 0, 1, '69.40', '76.34', '83.97', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(378, 378, 12, 0, 0, 0, 1, '64.80', '71.28', '78.41', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(379, 379, 17, 0, 0, 0, 1, '62.90', '69.19', '76.11', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(380, 380, 12, 0, 0, 0, 1, '26.90', '29.59', '32.55', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(381, 381, 1, 0, 0, 0, 1, '23.90', '26.29', '28.92', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(382, 382, 9, 0, 0, 0, 1, '17.50', '19.25', '21.18', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(383, 383, 20, 0, 0, 0, 1, '72.70', '79.97', '87.97', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(384, 384, 3, 0, 0, 0, 1, '19.90', '21.89', '24.08', '2024-08-09 21:40:22', '2024-08-09 21:40:22'),
+(385, 385, 8, 0, 0, 0, 1, '65.10', '71.61', '78.77', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(386, 386, 15, 0, 0, 0, 1, '77.00', '84.70', '93.17', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(387, 387, 6, 0, 0, 0, 1, '87.20', '95.92', '105.51', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(388, 388, 12, 0, 0, 0, 1, '99.90', '109.89', '120.88', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(389, 389, 6, 0, 0, 0, 1, '17.00', '18.70', '20.57', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(390, 390, 10, 0, 0, 0, 1, '21.10', '23.21', '25.53', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(391, 391, 1, 0, 0, 0, 1, '42.50', '46.75', '51.43', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(392, 392, 3, 0, 0, 0, 1, '36.10', '39.71', '43.68', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(393, 393, 18, 0, 0, 0, 1, '68.70', '75.57', '83.13', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(394, 394, 6, 0, 0, 0, 1, '26.80', '29.48', '32.43', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(395, 395, 1, 0, 0, 0, 1, '16.70', '18.37', '20.21', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(396, 396, 5, 0, 0, 0, 1, '50.60', '55.66', '61.23', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(397, 397, 11, 0, 0, 0, 1, '61.80', '67.98', '74.78', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(398, 398, 3, 0, 0, 0, 1, '36.30', '39.93', '43.92', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(399, 399, 18, 0, 0, 0, 1, '29.90', '32.89', '36.18', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(400, 400, 10, 0, 0, 0, 1, '44.60', '49.06', '53.97', '2024-08-09 21:40:23', '2024-08-09 21:40:23'),
+(401, 401, 12, 0, 0, 0, 1, '87.50', '96.25', '105.88', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(402, 402, 20, 0, 0, 0, 1, '55.80', '61.38', '67.52', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(403, 403, 13, 0, 0, 0, 1, '38.30', '42.13', '46.34', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(404, 404, 17, 0, 0, 0, 1, '32.50', '35.75', '39.33', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(405, 405, 10, 0, 0, 0, 1, '12.70', '13.97', '15.37', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(406, 406, 7, 0, 0, 0, 1, '37.10', '40.81', '44.89', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(407, 407, 3, 0, 0, 0, 1, '64.40', '70.84', '77.92', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(408, 408, 4, 0, 0, 0, 1, '94.20', '103.62', '113.98', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(409, 409, 20, 0, 0, 0, 1, '24.90', '27.39', '30.13', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(410, 410, 5, 0, 0, 0, 1, '55.70', '61.27', '67.40', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(411, 411, 15, 0, 0, 0, 1, '27.10', '29.81', '32.79', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(412, 412, 12, 0, 0, 0, 1, '39.40', '43.34', '47.67', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(413, 413, 5, 0, 0, 0, 1, '24.20', '26.62', '29.28', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(414, 414, 10, 0, 0, 0, 1, '94.60', '104.06', '114.47', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(415, 415, 17, 0, 0, 0, 1, '40.30', '44.33', '48.76', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(416, 416, 9, 0, 0, 0, 1, '93.80', '103.18', '113.50', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(417, 417, 7, 0, 0, 0, 1, '21.40', '23.54', '25.89', '2024-08-09 21:40:24', '2024-08-09 21:40:24'),
+(418, 418, 12, 0, 0, 0, 1, '48.70', '53.57', '58.93', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(419, 419, 5, 0, 0, 0, 1, '59.80', '65.78', '72.36', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(420, 420, 11, 0, 0, 0, 1, '13.60', '14.96', '16.46', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(421, 421, 17, 0, 0, 0, 1, '13.10', '14.41', '15.85', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(422, 422, 11, 0, 0, 0, 1, '36.90', '40.59', '44.65', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(423, 423, 4, 0, 0, 0, 1, '93.80', '103.18', '113.50', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(424, 424, 18, 0, 0, 0, 1, '68.90', '75.79', '83.37', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(425, 425, 20, 0, 0, 0, 1, '89.50', '98.45', '108.30', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(426, 426, 8, 0, 0, 0, 1, '38.00', '41.80', '45.98', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(427, 427, 3, 0, 0, 0, 1, '42.20', '46.42', '51.06', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(428, 428, 19, 0, 0, 0, 1, '92.50', '101.75', '111.93', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(429, 429, 8, 0, 0, 0, 1, '75.20', '82.72', '90.99', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(430, 430, 12, 0, 0, 0, 1, '24.00', '26.40', '29.04', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(431, 431, 1, 0, 0, 0, 1, '93.40', '102.74', '113.01', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(432, 432, 12, 0, 0, 0, 1, '96.00', '105.60', '116.16', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(433, 433, 3, 0, 0, 0, 1, '55.50', '61.05', '67.16', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(434, 434, 3, 0, 0, 0, 1, '54.10', '59.51', '65.46', '2024-08-09 21:40:25', '2024-08-09 21:40:25'),
+(435, 435, 3, 0, 0, 0, 1, '34.60', '38.06', '41.87', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(436, 436, 6, 0, 0, 0, 1, '26.60', '29.26', '32.19', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(437, 437, 16, 0, 0, 0, 1, '87.30', '96.03', '105.63', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(438, 438, 6, 0, 0, 0, 1, '83.20', '91.52', '100.67', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(439, 439, 6, 0, 0, 0, 1, '17.40', '19.14', '21.05', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(440, 440, 19, 0, 0, 0, 1, '79.40', '87.34', '96.07', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(441, 441, 2, 0, 0, 0, 1, '66.30', '72.93', '80.22', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(442, 442, 10, 0, 0, 0, 1, '53.60', '58.96', '64.86', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(443, 443, 2, 0, 0, 0, 1, '38.60', '42.46', '46.71', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(444, 444, 7, 0, 0, 0, 1, '10.20', '11.22', '12.34', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(445, 445, 16, 0, 0, 0, 1, '38.60', '42.46', '46.71', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(446, 446, 2, 0, 0, 0, 1, '40.60', '44.66', '49.13', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(447, 447, 8, 0, 0, 0, 1, '28.00', '30.80', '33.88', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(448, 448, 20, 0, 0, 0, 1, '81.80', '89.98', '98.98', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(449, 449, 9, 0, 0, 0, 1, '61.40', '67.54', '74.29', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(450, 450, 2, 0, 0, 0, 1, '49.80', '54.78', '60.26', '2024-08-09 21:40:26', '2024-08-09 21:40:26'),
+(451, 451, 18, 0, 0, 0, 1, '11.60', '12.76', '14.04', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(452, 452, 16, 0, 0, 0, 1, '14.80', '16.28', '17.91', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(453, 453, 17, 0, 0, 0, 1, '87.80', '96.58', '106.24', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(454, 454, 5, 0, 0, 0, 1, '24.20', '26.62', '29.28', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(455, 455, 7, 0, 0, 0, 1, '61.70', '67.87', '74.66', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(456, 456, 3, 0, 0, 0, 1, '91.20', '100.32', '110.35', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(457, 457, 4, 0, 0, 0, 1, '97.00', '106.70', '117.37', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(458, 458, 10, 0, 0, 0, 1, '35.20', '38.72', '42.59', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(459, 459, 10, 0, 0, 0, 1, '67.70', '74.47', '81.92', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(460, 460, 4, 0, 0, 0, 1, '79.80', '87.78', '96.56', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(461, 461, 5, 0, 0, 0, 1, '41.50', '45.65', '50.22', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(462, 462, 20, 0, 0, 0, 1, '93.90', '103.29', '113.62', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(463, 463, 19, 0, 0, 0, 1, '92.30', '101.53', '111.68', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(464, 464, 7, 0, 0, 0, 1, '91.30', '100.43', '110.47', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(465, 465, 12, 0, 0, 0, 1, '62.30', '68.53', '75.38', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(466, 466, 16, 0, 0, 0, 1, '98.40', '108.24', '119.06', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(467, 467, 18, 0, 0, 0, 1, '12.30', '13.53', '14.88', '2024-08-09 21:40:27', '2024-08-09 21:40:27'),
+(468, 468, 11, 0, 0, 0, 1, '66.10', '72.71', '79.98', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(469, 469, 1, 0, 0, 0, 1, '42.50', '46.75', '51.43', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(470, 470, 19, 0, 0, 0, 1, '30.80', '33.88', '37.27', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(471, 471, 16, 0, 0, 0, 1, '81.20', '89.32', '98.25', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(472, 472, 10, 0, 0, 0, 1, '10.10', '11.11', '12.22', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(473, 473, 20, 0, 0, 0, 1, '77.30', '85.03', '93.53', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(474, 474, 14, 0, 0, 0, 1, '18.70', '20.57', '22.63', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(475, 475, 13, 0, 0, 0, 1, '57.80', '63.58', '69.94', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(476, 476, 5, 0, 0, 0, 1, '36.20', '39.82', '43.80', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(477, 477, 11, 0, 0, 0, 1, '39.70', '43.67', '48.04', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(478, 478, 14, 0, 0, 0, 1, '49.10', '54.01', '59.41', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(479, 479, 8, 0, 0, 0, 1, '94.00', '103.40', '113.74', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(480, 480, 12, 0, 0, 0, 1, '82.60', '90.86', '99.95', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(481, 481, 20, 0, 0, 0, 1, '56.40', '62.04', '68.24', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(482, 482, 7, 0, 0, 0, 1, '53.80', '59.18', '65.10', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(483, 483, 19, 0, 0, 0, 1, '87.80', '96.58', '106.24', '2024-08-09 21:40:28', '2024-08-09 21:40:28'),
+(484, 484, 2, 0, 0, 0, 1, '56.10', '61.71', '67.88', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(485, 485, 17, 0, 0, 0, 1, '82.20', '90.42', '99.46', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(486, 486, 12, 0, 0, 0, 1, '90.40', '99.44', '109.38', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(487, 487, 16, 0, 0, 0, 1, '35.10', '38.61', '42.47', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(488, 488, 14, 0, 0, 0, 1, '23.80', '26.18', '28.80', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(489, 489, 5, 0, 0, 0, 1, '85.90', '94.49', '103.94', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(490, 490, 16, 0, 0, 0, 1, '22.50', '24.75', '27.23', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(491, 491, 20, 0, 0, 0, 1, '35.70', '39.27', '43.20', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(492, 492, 10, 0, 0, 0, 1, '76.80', '84.48', '92.93', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(493, 493, 17, 0, 0, 0, 1, '74.40', '81.84', '90.02', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(494, 494, 16, 0, 0, 0, 1, '14.40', '15.84', '17.42', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(495, 495, 20, 0, 0, 0, 1, '80.00', '88.00', '96.80', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(496, 496, 16, 0, 0, 0, 1, '38.30', '42.13', '46.34', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(497, 497, 11, 0, 0, 0, 1, '88.60', '97.46', '107.21', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(498, 498, 15, 0, 0, 0, 1, '58.40', '64.24', '70.66', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(499, 499, 8, 0, 0, 0, 1, '69.60', '76.56', '84.22', '2024-08-09 21:40:29', '2024-08-09 21:40:29'),
+(500, 500, 5, 0, 0, 0, 1, '83.60', '91.96', '101.16', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(501, 501, 4, 0, 0, 0, 1, '27.50', '30.25', '33.28', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(502, 502, 4, 0, 0, 0, 1, '23.80', '26.18', '28.80', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(503, 503, 12, 0, 0, 0, 1, '53.80', '59.18', '65.10', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(504, 504, 5, 0, 0, 0, 1, '87.70', '96.47', '106.12', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(505, 505, 9, 0, 0, 0, 1, '92.40', '101.64', '111.80', '2024-08-09 21:40:30', '2024-08-09 21:40:30');
 INSERT INTO `item_prices` (`id`, `item_id`, `unit_id`, `color_id`, `size_id`, `qty`, `delivery_charge_id`, `original_price`, `selling_price`, `online_price`, `created_at`, `updated_at`) VALUES
-(539, 539, 11, 0, 0, 0, 1, 51.60, 56.76, 62.44, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(540, 540, 4, 0, 0, 0, 1, 92.20, 101.42, 111.56, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(541, 541, 17, 0, 0, 0, 1, 37.00, 40.70, 44.77, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(542, 542, 19, 0, 0, 0, 1, 50.30, 55.33, 60.86, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(543, 543, 1, 0, 0, 0, 1, 25.30, 27.83, 30.61, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(544, 544, 7, 0, 0, 0, 1, 45.00, 49.50, 54.45, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(545, 545, 9, 0, 0, 0, 1, 81.40, 89.54, 98.49, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(546, 546, 13, 0, 0, 0, 1, 77.90, 85.69, 94.26, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(547, 547, 2, 0, 0, 0, 1, 98.70, 108.57, 119.43, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(548, 548, 7, 0, 0, 0, 1, 22.40, 24.64, 27.10, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(549, 549, 1, 0, 0, 0, 1, 19.40, 21.34, 23.47, '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
-(550, 550, 19, 0, 0, 0, 1, 91.10, 100.21, 110.23, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(551, 551, 10, 0, 0, 0, 1, 26.10, 28.71, 31.58, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(552, 552, 6, 0, 0, 0, 1, 89.80, 98.78, 108.66, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(553, 553, 18, 0, 0, 0, 1, 51.40, 56.54, 62.19, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(554, 554, 10, 0, 0, 0, 1, 24.60, 27.06, 29.77, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(555, 555, 3, 0, 0, 0, 1, 44.10, 48.51, 53.36, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(556, 556, 14, 0, 0, 0, 1, 65.10, 71.61, 78.77, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(557, 557, 19, 0, 0, 0, 1, 37.60, 41.36, 45.50, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(558, 558, 15, 0, 0, 0, 1, 82.00, 90.20, 99.22, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(559, 559, 13, 0, 0, 0, 1, 20.90, 22.99, 25.29, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(560, 560, 5, 0, 0, 0, 1, 51.20, 56.32, 61.95, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(561, 561, 8, 0, 0, 0, 1, 43.70, 48.07, 52.88, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(562, 562, 6, 0, 0, 0, 1, 34.10, 37.51, 41.26, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(563, 563, 5, 0, 0, 0, 1, 17.40, 19.14, 21.05, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(564, 564, 10, 0, 0, 0, 1, 74.50, 81.95, 90.15, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(565, 565, 13, 0, 0, 0, 1, 14.30, 15.73, 17.30, '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
-(566, 566, 9, 0, 0, 0, 1, 78.10, 85.91, 94.50, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(567, 567, 6, 0, 0, 0, 1, 88.40, 97.24, 106.96, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(568, 568, 18, 0, 0, 0, 1, 88.10, 96.91, 106.60, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(569, 569, 10, 0, 0, 0, 1, 26.90, 29.59, 32.55, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(570, 570, 1, 0, 0, 0, 1, 43.70, 48.07, 52.88, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(571, 571, 12, 0, 0, 0, 1, 22.20, 24.42, 26.86, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(572, 572, 2, 0, 0, 0, 1, 31.80, 34.98, 38.48, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(573, 573, 11, 0, 0, 0, 1, 93.80, 103.18, 113.50, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(574, 574, 5, 0, 0, 0, 1, 79.80, 87.78, 96.56, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(575, 575, 16, 0, 0, 0, 1, 69.30, 76.23, 83.85, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(576, 576, 11, 0, 0, 0, 1, 90.50, 99.55, 109.51, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(577, 577, 7, 0, 0, 0, 1, 90.10, 99.11, 109.02, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(578, 578, 4, 0, 0, 0, 1, 89.70, 98.67, 108.54, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(579, 579, 3, 0, 0, 0, 1, 21.40, 23.54, 25.89, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(580, 580, 5, 0, 0, 0, 1, 22.60, 24.86, 27.35, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(581, 581, 6, 0, 0, 0, 1, 78.60, 86.46, 95.11, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(582, 582, 19, 0, 0, 0, 1, 48.30, 53.13, 58.44, '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
-(583, 583, 20, 0, 0, 0, 1, 32.10, 35.31, 38.84, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(584, 584, 19, 0, 0, 0, 1, 25.30, 27.83, 30.61, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(585, 585, 3, 0, 0, 0, 1, 31.00, 34.10, 37.51, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(586, 586, 16, 0, 0, 0, 1, 95.80, 105.38, 115.92, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(587, 587, 5, 0, 0, 0, 1, 62.70, 68.97, 75.87, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(588, 588, 14, 0, 0, 0, 1, 61.50, 67.65, 74.42, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(589, 589, 3, 0, 0, 0, 1, 32.00, 35.20, 38.72, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(590, 590, 18, 0, 0, 0, 1, 56.10, 61.71, 67.88, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(591, 591, 12, 0, 0, 0, 1, 71.10, 78.21, 86.03, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(592, 592, 8, 0, 0, 0, 1, 94.50, 103.95, 114.35, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(593, 593, 7, 0, 0, 0, 1, 75.00, 82.50, 90.75, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(594, 594, 6, 0, 0, 0, 1, 52.50, 57.75, 63.53, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(595, 595, 19, 0, 0, 0, 1, 50.90, 55.99, 61.59, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(596, 596, 20, 0, 0, 0, 1, 51.30, 56.43, 62.07, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(597, 597, 11, 0, 0, 0, 1, 84.50, 92.95, 102.25, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(598, 598, 18, 0, 0, 0, 1, 82.00, 90.20, 99.22, '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
-(599, 599, 3, 0, 0, 0, 1, 11.70, 12.87, 14.16, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(600, 600, 20, 0, 0, 0, 1, 58.20, 64.02, 70.42, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(601, 601, 14, 0, 0, 0, 1, 45.10, 49.61, 54.57, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(602, 602, 16, 0, 0, 0, 1, 32.80, 36.08, 39.69, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(603, 603, 19, 0, 0, 0, 1, 23.20, 25.52, 28.07, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(604, 604, 11, 0, 0, 0, 1, 29.20, 32.12, 35.33, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(605, 605, 18, 0, 0, 0, 1, 18.00, 19.80, 21.78, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(606, 606, 18, 0, 0, 0, 1, 85.80, 94.38, 103.82, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(607, 607, 6, 0, 0, 0, 1, 17.20, 18.92, 20.81, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(608, 608, 8, 0, 0, 0, 1, 59.20, 65.12, 71.63, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(609, 609, 12, 0, 0, 0, 1, 39.30, 43.23, 47.55, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(610, 610, 3, 0, 0, 0, 1, 37.50, 41.25, 45.38, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(611, 611, 6, 0, 0, 0, 1, 33.90, 37.29, 41.02, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(612, 612, 1, 0, 0, 0, 1, 86.30, 94.93, 104.42, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(613, 613, 10, 0, 0, 0, 1, 54.70, 60.17, 66.19, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(614, 614, 11, 0, 0, 0, 1, 11.50, 12.65, 13.92, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(615, 615, 20, 0, 0, 0, 1, 49.40, 54.34, 59.77, '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
-(616, 616, 12, 0, 0, 0, 1, 53.60, 58.96, 64.86, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(617, 617, 2, 0, 0, 0, 1, 37.10, 40.81, 44.89, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(618, 618, 3, 0, 0, 0, 1, 58.60, 64.46, 70.91, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(619, 619, 2, 0, 0, 0, 1, 29.10, 32.01, 35.21, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(620, 620, 3, 0, 0, 0, 1, 91.80, 100.98, 111.08, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(621, 621, 19, 0, 0, 0, 1, 47.30, 52.03, 57.23, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(622, 622, 18, 0, 0, 0, 1, 91.90, 101.09, 111.20, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(623, 623, 10, 0, 0, 0, 1, 34.00, 37.40, 41.14, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(624, 624, 6, 0, 0, 0, 1, 87.80, 96.58, 106.24, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(625, 625, 20, 0, 0, 0, 1, 18.40, 20.24, 22.26, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(626, 626, 17, 0, 0, 0, 1, 50.70, 55.77, 61.35, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(627, 627, 13, 0, 0, 0, 1, 62.40, 68.64, 75.50, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(628, 628, 14, 0, 0, 0, 1, 42.20, 46.42, 51.06, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(629, 629, 5, 0, 0, 0, 1, 61.80, 67.98, 74.78, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(630, 630, 3, 0, 0, 0, 1, 17.40, 19.14, 21.05, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(631, 631, 1, 0, 0, 0, 1, 35.80, 39.38, 43.32, '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
-(632, 632, 17, 0, 0, 0, 1, 23.30, 25.63, 28.19, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(633, 633, 19, 0, 0, 0, 1, 11.70, 12.87, 14.16, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(634, 634, 3, 0, 0, 0, 1, 52.30, 57.53, 63.28, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(635, 635, 19, 0, 0, 0, 1, 29.10, 32.01, 35.21, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(636, 636, 20, 0, 0, 0, 1, 14.50, 15.95, 17.55, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(637, 637, 17, 0, 0, 0, 1, 74.90, 82.39, 90.63, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(638, 638, 5, 0, 0, 0, 1, 87.70, 96.47, 106.12, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(639, 639, 9, 0, 0, 0, 1, 70.00, 77.00, 84.70, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(640, 640, 11, 0, 0, 0, 1, 57.90, 63.69, 70.06, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(641, 641, 17, 0, 0, 0, 1, 38.20, 42.02, 46.22, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(642, 642, 3, 0, 0, 0, 1, 16.80, 18.48, 20.33, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(643, 643, 19, 0, 0, 0, 1, 12.10, 13.31, 14.64, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(644, 644, 13, 0, 0, 0, 1, 55.80, 61.38, 67.52, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(645, 645, 1, 0, 0, 0, 1, 60.50, 66.55, 73.21, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(646, 646, 18, 0, 0, 0, 1, 80.60, 88.66, 97.53, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(647, 647, 7, 0, 0, 0, 1, 40.00, 44.00, 48.40, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(648, 648, 14, 0, 0, 0, 1, 52.50, 57.75, 63.53, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(649, 649, 3, 0, 0, 0, 1, 68.70, 75.57, 83.13, '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
-(650, 650, 17, 0, 0, 0, 1, 21.80, 23.98, 26.38, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(651, 651, 9, 0, 0, 0, 1, 26.70, 29.37, 32.31, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(652, 652, 1, 0, 0, 0, 1, 26.30, 28.93, 31.82, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(653, 653, 19, 0, 0, 0, 1, 82.20, 90.42, 99.46, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(654, 654, 10, 0, 0, 0, 1, 37.80, 41.58, 45.74, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(655, 655, 2, 0, 0, 0, 1, 37.50, 41.25, 45.38, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(656, 656, 8, 0, 0, 0, 1, 43.00, 47.30, 52.03, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(657, 657, 15, 0, 0, 0, 1, 54.30, 59.73, 65.70, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(658, 658, 13, 0, 0, 0, 1, 92.30, 101.53, 111.68, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(659, 659, 8, 0, 0, 0, 1, 62.40, 68.64, 75.50, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(660, 660, 2, 0, 0, 0, 1, 11.70, 12.87, 14.16, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(661, 661, 8, 0, 0, 0, 1, 94.40, 103.84, 114.22, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(662, 662, 2, 0, 0, 0, 1, 97.50, 107.25, 117.98, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(663, 663, 4, 0, 0, 0, 1, 17.90, 19.69, 21.66, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(664, 664, 4, 0, 0, 0, 1, 36.30, 39.93, 43.92, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(665, 665, 11, 0, 0, 0, 1, 47.60, 52.36, 57.60, '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
-(667, 667, 9, 0, 0, 0, 1, 68.60, 75.46, 83.01, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(668, 668, 17, 0, 0, 0, 1, 13.20, 14.52, 15.97, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(669, 669, 8, 0, 0, 0, 1, 39.80, 43.78, 48.16, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(670, 670, 4, 0, 0, 0, 1, 13.10, 14.41, 15.85, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(671, 671, 14, 0, 0, 0, 1, 61.60, 67.76, 74.54, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(673, 673, 15, 0, 0, 0, 1, 58.30, 64.13, 70.54, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(674, 674, 16, 0, 0, 0, 1, 14.40, 15.84, 17.42, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(675, 675, 4, 0, 0, 0, 1, 18.50, 20.35, 22.39, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(676, 676, 20, 0, 0, 0, 1, 32.70, 35.97, 39.57, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(677, 677, 18, 0, 0, 0, 1, 11.10, 12.21, 13.43, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(678, 678, 18, 0, 0, 0, 1, 46.70, 51.37, 56.51, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(679, 679, 15, 0, 0, 0, 1, 53.40, 58.74, 64.61, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(680, 680, 5, 0, 0, 0, 1, 95.60, 105.16, 115.68, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(681, 681, 11, 0, 0, 0, 1, 18.60, 20.46, 22.51, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(682, 682, 1, 0, 0, 0, 1, 31.50, 34.65, 38.12, '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
-(683, 683, 18, 0, 0, 0, 1, 40.00, 44.00, 48.40, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(684, 684, 11, 0, 0, 0, 1, 70.20, 77.22, 84.94, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(685, 685, 7, 0, 0, 0, 1, 12.40, 13.64, 15.00, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(686, 686, 10, 0, 0, 0, 1, 38.40, 42.24, 46.46, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(687, 687, 18, 0, 0, 0, 1, 20.20, 22.22, 24.44, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(688, 688, 18, 0, 0, 0, 1, 91.60, 100.76, 110.84, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(689, 689, 10, 0, 0, 0, 1, 89.80, 98.78, 108.66, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(690, 690, 12, 0, 0, 0, 1, 15.20, 16.72, 18.39, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(691, 691, 10, 0, 0, 0, 1, 80.60, 88.66, 97.53, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(692, 692, 20, 0, 0, 0, 1, 78.90, 86.79, 95.47, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(693, 693, 5, 0, 0, 0, 1, 29.80, 32.78, 36.06, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(694, 694, 2, 0, 0, 0, 1, 82.60, 90.86, 99.95, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(695, 695, 17, 0, 0, 0, 1, 24.80, 27.28, 30.01, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(696, 696, 17, 0, 0, 0, 1, 12.50, 13.75, 15.13, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(697, 697, 5, 0, 0, 0, 1, 65.40, 71.94, 79.13, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(698, 698, 5, 0, 0, 0, 1, 22.50, 24.75, 27.23, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(699, 699, 12, 0, 0, 0, 1, 79.20, 87.12, 95.83, '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
-(700, 700, 16, 0, 0, 0, 1, 86.10, 94.71, 104.18, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(701, 701, 11, 0, 0, 0, 1, 91.30, 100.43, 110.47, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(702, 702, 19, 0, 0, 0, 1, 12.60, 13.86, 15.25, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(703, 703, 18, 0, 0, 0, 1, 93.00, 102.30, 112.53, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(704, 704, 2, 0, 0, 0, 1, 76.00, 83.60, 91.96, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(705, 705, 11, 0, 0, 0, 1, 19.80, 21.78, 23.96, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(706, 706, 6, 0, 0, 0, 1, 98.80, 108.68, 119.55, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(707, 707, 20, 0, 0, 0, 1, 17.40, 19.14, 21.05, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(708, 708, 15, 0, 0, 0, 1, 43.80, 48.18, 53.00, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(709, 709, 18, 0, 0, 0, 1, 17.70, 19.47, 21.42, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(710, 710, 19, 0, 0, 0, 1, 26.80, 29.48, 32.43, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(711, 711, 7, 0, 0, 0, 1, 79.20, 87.12, 95.83, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(712, 712, 14, 0, 0, 0, 1, 12.40, 13.64, 15.00, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(713, 713, 9, 0, 0, 0, 1, 50.30, 55.33, 60.86, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(714, 714, 5, 0, 0, 0, 1, 22.60, 24.86, 27.35, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(715, 715, 18, 0, 0, 0, 1, 95.70, 105.27, 115.80, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(716, 716, 15, 0, 0, 0, 1, 19.10, 21.01, 23.11, '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
-(717, 717, 20, 0, 0, 0, 1, 38.20, 42.02, 46.22, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(718, 718, 10, 0, 0, 0, 1, 94.80, 104.28, 114.71, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(719, 719, 5, 0, 0, 0, 1, 18.00, 19.80, 21.78, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(720, 720, 20, 0, 0, 0, 1, 16.10, 17.71, 19.48, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(721, 721, 12, 0, 0, 0, 1, 53.70, 59.07, 64.98, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(722, 722, 1, 0, 0, 0, 1, 83.30, 91.63, 100.79, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(723, 723, 6, 0, 0, 0, 1, 47.60, 52.36, 57.60, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(724, 724, 19, 0, 0, 0, 1, 13.30, 14.63, 16.09, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(725, 725, 20, 0, 0, 0, 1, 44.00, 48.40, 53.24, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(726, 726, 14, 0, 0, 0, 1, 23.60, 25.96, 28.56, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(727, 727, 19, 0, 0, 0, 1, 23.70, 26.07, 28.68, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(728, 728, 4, 0, 0, 0, 1, 75.20, 82.72, 90.99, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(729, 729, 9, 0, 0, 0, 1, 20.00, 22.00, 24.20, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(730, 730, 1, 0, 0, 0, 1, 66.90, 73.59, 80.95, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(731, 731, 14, 0, 0, 0, 1, 75.60, 83.16, 91.48, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(732, 732, 5, 0, 0, 0, 1, 12.30, 13.53, 14.88, '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
-(733, 733, 15, 0, 0, 0, 1, 42.20, 46.42, 51.06, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(734, 734, 10, 0, 0, 0, 1, 79.90, 87.89, 96.68, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(735, 735, 7, 0, 0, 0, 1, 13.00, 14.30, 15.73, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(736, 736, 15, 0, 0, 0, 1, 89.00, 97.90, 107.69, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(737, 737, 17, 0, 0, 0, 1, 81.40, 89.54, 98.49, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(738, 738, 16, 0, 0, 0, 1, 82.60, 90.86, 99.95, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(739, 739, 12, 0, 0, 0, 1, 71.10, 78.21, 86.03, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(740, 740, 9, 0, 0, 0, 1, 24.20, 26.62, 29.28, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(741, 741, 13, 0, 0, 0, 1, 64.20, 70.62, 77.68, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(742, 742, 12, 0, 0, 21, 1, 19.20, 21.12, 23.23, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(743, 743, 16, 0, 0, 0, 1, 35.90, 39.49, 43.44, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(744, 744, 15, 0, 0, 0, 1, 87.30, 96.03, 105.63, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(745, 745, 15, 0, 0, 0, 1, 98.80, 108.68, 119.55, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(746, 746, 11, 0, 0, 0, 1, 16.10, 17.71, 19.48, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(747, 747, 1, 0, 0, 0, 1, 97.30, 107.03, 117.73, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(748, 748, 16, 0, 0, 0, 1, 75.10, 82.61, 90.87, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(749, 749, 12, 0, 0, 0, 1, 12.30, 13.53, 14.88, '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
-(750, 750, 19, 0, 0, 0, 1, 48.30, 53.13, 58.44, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(751, 751, 8, 0, 0, 0, 1, 85.60, 94.16, 103.58, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(752, 752, 8, 0, 0, 0, 1, 70.70, 77.77, 85.55, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(753, 753, 11, 0, 0, 0, 1, 47.70, 52.47, 57.72, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(754, 754, 13, 0, 0, 0, 1, 64.00, 70.40, 77.44, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(755, 755, 8, 0, 0, 0, 1, 16.90, 18.59, 20.45, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(756, 756, 7, 0, 0, 0, 1, 58.50, 64.35, 70.79, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(757, 757, 15, 0, 0, 0, 1, 63.40, 69.74, 76.71, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(758, 758, 9, 0, 0, 0, 1, 16.30, 17.93, 19.72, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(759, 759, 15, 0, 0, 0, 1, 71.80, 78.98, 86.88, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(760, 760, 1, 0, 0, 0, 1, 11.00, 12.10, 13.31, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(761, 761, 19, 0, 0, 0, 1, 84.20, 92.62, 101.88, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(762, 762, 10, 0, 0, 0, 1, 95.60, 105.16, 115.68, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(763, 763, 16, 0, 0, 0, 1, 93.80, 103.18, 113.50, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(764, 764, 13, 0, 0, 0, 1, 77.50, 85.25, 93.78, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(765, 765, 2, 0, 0, 0, 1, 19.50, 21.45, 23.60, '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
-(766, 766, 20, 0, 0, 0, 1, 52.00, 57.20, 62.92, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(767, 767, 4, 0, 0, 0, 1, 54.10, 59.51, 65.46, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(768, 768, 14, 0, 0, 0, 1, 40.00, 44.00, 48.40, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(769, 769, 18, 0, 0, 0, 1, 36.30, 39.93, 43.92, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(770, 770, 14, 0, 0, 0, 1, 28.40, 31.24, 34.36, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(771, 771, 4, 0, 0, 0, 1, 42.60, 46.86, 51.55, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(772, 772, 6, 0, 0, 0, 1, 83.80, 92.18, 101.40, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(773, 773, 19, 0, 0, 0, 1, 91.00, 100.10, 110.11, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(774, 774, 7, 0, 0, 0, 1, 59.70, 65.67, 72.24, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(775, 775, 6, 0, 0, 0, 1, 31.50, 34.65, 38.12, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(776, 776, 3, 0, 0, 0, 1, 30.80, 33.88, 37.27, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(777, 777, 20, 0, 0, 0, 1, 64.90, 71.39, 78.53, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(778, 778, 3, 0, 0, 0, 1, 29.60, 32.56, 35.82, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(779, 779, 20, 0, 0, 0, 1, 32.60, 35.86, 39.45, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(780, 780, 8, 0, 0, 0, 1, 29.40, 32.34, 35.57, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(781, 781, 18, 0, 0, 0, 1, 77.10, 84.81, 93.29, '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
-(782, 782, 8, 0, 0, 0, 1, 75.90, 83.49, 91.84, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(783, 783, 1, 0, 0, 0, 1, 11.20, 12.32, 13.55, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(784, 784, 5, 0, 0, 0, 1, 22.10, 24.31, 26.74, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(785, 785, 10, 0, 0, 0, 1, 30.40, 33.44, 36.78, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(786, 786, 5, 0, 0, 0, 1, 94.90, 104.39, 114.83, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(787, 787, 4, 0, 0, 0, 1, 33.20, 36.52, 40.17, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(788, 788, 11, 0, 0, 0, 1, 13.50, 14.85, 16.34, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(789, 789, 12, 0, 0, 0, 1, 70.90, 77.99, 85.79, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(790, 790, 16, 0, 0, 0, 1, 73.90, 81.29, 89.42, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(791, 791, 7, 0, 0, 0, 1, 42.10, 46.31, 50.94, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(792, 792, 16, 0, 0, 0, 1, 26.20, 28.82, 31.70, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(793, 793, 8, 0, 0, 0, 1, 41.70, 45.87, 50.46, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(794, 794, 7, 0, 0, 0, 1, 42.50, 46.75, 51.43, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(795, 795, 11, 0, 0, 0, 1, 33.40, 36.74, 40.41, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(796, 796, 9, 0, 0, 0, 1, 52.10, 57.31, 63.04, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(797, 797, 2, 0, 0, 0, 1, 73.60, 80.96, 89.06, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(798, 798, 6, 0, 0, 0, 1, 38.00, 41.80, 45.98, '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
-(799, 799, 2, 0, 0, 0, 1, 26.70, 29.37, 32.31, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(800, 800, 10, 0, 0, 0, 1, 35.30, 38.83, 42.71, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(801, 801, 7, 0, 0, 0, 1, 81.10, 89.21, 98.13, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(802, 802, 12, 0, 0, 0, 1, 48.30, 53.13, 58.44, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(803, 803, 6, 0, 0, 0, 1, 44.40, 48.84, 53.72, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(804, 804, 19, 0, 0, 0, 1, 75.20, 82.72, 90.99, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(805, 805, 2, 0, 0, 0, 1, 37.30, 41.03, 45.13, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(806, 806, 7, 0, 0, 0, 1, 51.80, 56.98, 62.68, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(807, 807, 4, 0, 0, 0, 1, 11.90, 13.09, 14.40, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(808, 808, 8, 0, 0, 0, 1, 21.70, 23.87, 26.26, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(809, 809, 10, 0, 0, 0, 1, 59.50, 65.45, 72.00, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(810, 810, 2, 0, 0, 0, 1, 80.90, 88.99, 97.89, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(811, 811, 15, 0, 0, 0, 1, 58.30, 64.13, 70.54, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(812, 812, 5, 0, 0, 0, 1, 60.40, 66.44, 73.08, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(813, 813, 8, 0, 0, 0, 1, 44.50, 48.95, 53.85, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(814, 814, 7, 0, 0, 0, 1, 97.60, 107.36, 118.10, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(815, 815, 12, 0, 0, 0, 1, 14.40, 15.84, 17.42, '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
-(816, 816, 4, 0, 0, 0, 1, 60.20, 66.22, 72.84, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(817, 817, 15, 0, 0, 0, 1, 59.50, 65.45, 72.00, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(818, 818, 14, 0, 0, 0, 1, 26.70, 29.37, 32.31, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(819, 819, 15, 0, 0, 0, 1, 13.80, 15.18, 16.70, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(820, 820, 8, 0, 0, 0, 1, 28.60, 31.46, 34.61, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(821, 821, 12, 0, 0, 0, 1, 73.70, 81.07, 89.18, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(822, 822, 12, 0, 0, 0, 1, 92.50, 101.75, 111.93, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(823, 823, 19, 0, 0, 0, 1, 68.10, 74.91, 82.40, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(824, 824, 12, 0, 0, 0, 1, 81.20, 89.32, 98.25, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(825, 825, 4, 0, 0, 0, 1, 33.90, 37.29, 41.02, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(826, 826, 1, 0, 0, 0, 1, 42.40, 46.64, 51.30, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(827, 827, 14, 0, 0, 0, 1, 59.20, 65.12, 71.63, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(828, 828, 18, 0, 0, 0, 1, 99.20, 109.12, 120.03, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(829, 829, 4, 0, 0, 0, 1, 11.30, 12.43, 13.67, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(830, 830, 12, 0, 0, 0, 1, 88.40, 97.24, 106.96, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(831, 831, 11, 0, 0, 0, 1, 41.30, 45.43, 49.97, '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
-(832, 832, 16, 0, 0, 0, 1, 94.40, 103.84, 114.22, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(833, 833, 11, 0, 0, 0, 1, 85.60, 94.16, 103.58, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(834, 834, 3, 0, 0, 0, 1, 79.80, 87.78, 96.56, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(835, 835, 9, 0, 0, 0, 1, 38.60, 42.46, 46.71, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(836, 836, 2, 0, 0, 0, 1, 50.30, 55.33, 60.86, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(837, 837, 4, 0, 0, 0, 1, 68.10, 74.91, 82.40, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(838, 838, 1, 0, 0, 0, 1, 72.20, 79.42, 87.36, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(839, 839, 11, 0, 0, 0, 1, 87.40, 96.14, 105.75, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(840, 840, 14, 0, 0, 0, 1, 69.90, 76.89, 84.58, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(841, 841, 12, 0, 0, 0, 1, 42.00, 46.20, 50.82, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(842, 842, 14, 0, 0, 0, 1, 25.90, 28.49, 31.34, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(843, 843, 13, 0, 0, 0, 1, 65.70, 72.27, 79.50, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(844, 844, 1, 0, 0, 0, 1, 52.40, 57.64, 63.40, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(845, 845, 18, 0, 0, 0, 1, 46.90, 51.59, 56.75, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(846, 846, 15, 0, 0, 0, 1, 30.30, 33.33, 36.66, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(847, 847, 10, 0, 0, 0, 1, 35.80, 39.38, 43.32, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(848, 848, 15, 0, 0, 0, 1, 37.30, 41.03, 45.13, '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
-(849, 849, 12, 0, 0, 0, 1, 21.80, 23.98, 26.38, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(850, 850, 9, 0, 0, 0, 1, 33.30, 36.63, 40.29, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(851, 851, 13, 0, 0, 0, 1, 28.80, 31.68, 34.85, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(852, 852, 11, 0, 0, 0, 1, 12.90, 14.19, 15.61, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(853, 853, 15, 0, 0, 0, 1, 62.90, 69.19, 76.11, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(854, 854, 3, 0, 0, 0, 1, 60.10, 66.11, 72.72, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(855, 855, 1, 0, 0, 0, 1, 56.30, 61.93, 68.12, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(856, 856, 18, 0, 0, 0, 1, 18.20, 20.02, 22.02, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(857, 857, 7, 0, 0, 0, 1, 30.60, 33.66, 37.03, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(858, 858, 18, 0, 0, 0, 1, 81.90, 90.09, 99.10, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(859, 859, 20, 0, 0, 0, 1, 68.40, 75.24, 82.76, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(860, 860, 19, 0, 0, 0, 1, 79.80, 87.78, 96.56, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(861, 861, 2, 0, 0, 0, 1, 70.30, 77.33, 85.06, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(862, 862, 13, 0, 0, 0, 1, 29.60, 32.56, 35.82, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(863, 863, 9, 0, 0, 0, 1, 32.40, 35.64, 39.20, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(864, 864, 7, 0, 0, 0, 1, 31.40, 34.54, 37.99, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(865, 865, 8, 0, 0, 0, 1, 54.50, 59.95, 65.95, '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
-(866, 866, 2, 0, 0, 0, 1, 95.60, 105.16, 115.68, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(867, 867, 2, 0, 0, 0, 1, 27.80, 30.58, 33.64, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(868, 868, 13, 0, 0, 0, 1, 74.80, 82.28, 90.51, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(869, 869, 8, 0, 0, 0, 1, 52.80, 58.08, 63.89, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(870, 870, 19, 0, 0, 0, 1, 85.60, 94.16, 103.58, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(871, 871, 3, 0, 0, 0, 1, 97.40, 107.14, 117.85, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(872, 872, 17, 0, 0, 0, 1, 68.10, 74.91, 82.40, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(873, 873, 1, 0, 0, 0, 1, 32.30, 35.53, 39.08, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(874, 874, 2, 0, 0, 0, 1, 49.50, 54.45, 59.90, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(875, 875, 16, 0, 0, 0, 1, 11.30, 12.43, 13.67, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(876, 876, 8, 0, 0, 0, 1, 79.90, 87.89, 96.68, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(877, 877, 15, 0, 0, 0, 1, 78.30, 86.13, 94.74, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(878, 878, 9, 0, 0, 0, 1, 51.40, 56.54, 62.19, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(879, 879, 2, 0, 0, 0, 1, 96.80, 106.48, 117.13, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(880, 880, 16, 0, 0, 0, 1, 27.80, 30.58, 33.64, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(881, 881, 8, 0, 0, 0, 1, 63.00, 69.30, 76.23, '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
-(882, 882, 17, 0, 0, 0, 1, 18.10, 19.91, 21.90, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(883, 883, 11, 0, 0, 0, 1, 89.70, 98.67, 108.54, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(884, 884, 13, 0, 0, 0, 1, 92.80, 102.08, 112.29, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(885, 885, 5, 0, 0, 0, 1, 34.40, 37.84, 41.62, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(886, 886, 9, 0, 0, 0, 1, 54.30, 59.73, 65.70, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(887, 887, 15, 0, 0, 0, 1, 42.70, 46.97, 51.67, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(888, 888, 20, 0, 0, 0, 1, 60.20, 66.22, 72.84, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(889, 889, 10, 0, 0, 0, 1, 25.00, 27.50, 30.25, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(890, 890, 9, 0, 0, 0, 1, 27.20, 29.92, 32.91, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(891, 891, 4, 0, 0, 0, 1, 30.10, 33.11, 36.42, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(892, 892, 16, 0, 0, 0, 1, 59.70, 65.67, 72.24, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(893, 893, 6, 0, 0, 0, 1, 36.50, 40.15, 44.17, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(894, 894, 5, 0, 0, 0, 1, 59.20, 65.12, 71.63, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(895, 895, 17, 0, 0, 0, 1, 23.30, 25.63, 28.19, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(896, 896, 15, 0, 0, 0, 1, 30.10, 33.11, 36.42, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(897, 897, 11, 0, 0, 0, 1, 89.10, 98.01, 107.81, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(898, 898, 17, 0, 0, 0, 1, 15.40, 16.94, 18.63, '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
-(899, 899, 6, 0, 0, 0, 1, 51.90, 57.09, 62.80, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(900, 900, 7, 0, 0, 0, 1, 31.80, 34.98, 38.48, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(901, 901, 11, 0, 0, 0, 1, 67.20, 73.92, 81.31, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(902, 902, 5, 0, 0, 0, 1, 25.60, 28.16, 30.98, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(903, 903, 5, 0, 0, 0, 1, 25.90, 28.49, 31.34, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(904, 904, 9, 0, 0, 0, 1, 51.90, 57.09, 62.80, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(905, 905, 3, 0, 0, 0, 1, 18.00, 19.80, 21.78, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(906, 906, 6, 0, 0, 0, 1, 34.70, 38.17, 41.99, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(907, 907, 6, 0, 0, 0, 1, 64.80, 71.28, 78.41, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(908, 908, 20, 0, 0, 0, 1, 26.50, 29.15, 32.07, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(909, 909, 14, 0, 0, 0, 1, 21.90, 24.09, 26.50, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(910, 910, 10, 0, 0, 0, 1, 23.00, 25.30, 27.83, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(911, 911, 12, 0, 0, 0, 1, 81.00, 89.10, 98.01, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(912, 912, 4, 0, 0, 0, 1, 13.40, 14.74, 16.21, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(913, 913, 12, 0, 0, 0, 1, 87.10, 95.81, 105.39, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(914, 914, 9, 0, 0, 0, 1, 24.30, 26.73, 29.40, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(915, 915, 4, 0, 0, 0, 1, 41.50, 45.65, 50.22, '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
-(916, 916, 11, 0, 0, 0, 1, 66.20, 72.82, 80.10, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(917, 917, 20, 0, 0, 0, 1, 96.20, 105.82, 116.40, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(918, 918, 6, 0, 0, 0, 1, 79.40, 87.34, 96.07, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(919, 919, 4, 0, 0, 0, 1, 63.70, 70.07, 77.08, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(920, 920, 13, 0, 0, 0, 1, 82.60, 90.86, 99.95, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(921, 921, 7, 0, 0, 0, 1, 95.30, 104.83, 115.31, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(922, 922, 13, 0, 0, 0, 1, 95.70, 105.27, 115.80, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(923, 923, 7, 0, 0, 0, 1, 19.80, 21.78, 23.96, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(924, 924, 6, 0, 0, 0, 1, 41.30, 45.43, 49.97, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(925, 925, 11, 0, 0, 0, 1, 55.50, 61.05, 67.16, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(926, 926, 10, 0, 0, 0, 1, 38.10, 41.91, 46.10, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(927, 927, 12, 0, 0, 0, 1, 63.60, 69.96, 76.96, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(928, 928, 20, 0, 0, 0, 1, 29.00, 31.90, 35.09, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(929, 929, 8, 0, 0, 0, 1, 94.70, 104.17, 114.59, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(930, 930, 7, 0, 0, 0, 1, 24.80, 27.28, 30.01, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(931, 931, 3, 0, 0, 0, 1, 96.60, 106.26, 116.89, '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
-(932, 932, 18, 0, 0, 0, 1, 41.60, 45.76, 50.34, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(933, 933, 8, 0, 0, 0, 1, 24.50, 26.95, 29.65, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(934, 934, 19, 0, 0, 0, 1, 91.80, 100.98, 111.08, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(935, 935, 10, 0, 0, 0, 1, 36.50, 40.15, 44.17, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(936, 936, 9, 0, 0, 0, 1, 74.20, 81.62, 89.78, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(937, 937, 18, 0, 0, 0, 1, 14.60, 16.06, 17.67, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(938, 938, 11, 0, 0, 0, 1, 76.50, 84.15, 92.57, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(939, 939, 4, 0, 0, 0, 1, 32.90, 36.19, 39.81, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(940, 940, 4, 0, 0, 0, 1, 13.40, 14.74, 16.21, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(941, 941, 16, 0, 0, 0, 1, 49.00, 53.90, 59.29, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(942, 942, 13, 0, 0, 0, 1, 99.60, 109.56, 120.52, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(943, 943, 16, 0, 0, 0, 1, 26.00, 28.60, 31.46, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(944, 944, 16, 0, 0, 0, 1, 60.60, 66.66, 73.33, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(945, 945, 13, 0, 0, 0, 1, 51.30, 56.43, 62.07, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(946, 946, 11, 0, 0, 0, 1, 12.70, 13.97, 15.37, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(947, 947, 5, 0, 0, 0, 1, 17.30, 19.03, 20.93, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(948, 948, 17, 0, 0, 0, 1, 55.20, 60.72, 66.79, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(949, 949, 19, 0, 0, 0, 1, 85.50, 94.05, 103.46, '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
-(950, 950, 9, 0, 0, 0, 1, 44.60, 49.06, 53.97, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(951, 951, 12, 0, 0, 0, 1, 43.00, 47.30, 52.03, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(953, 953, 20, 0, 0, 0, 1, 18.70, 20.57, 22.63, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(954, 954, 8, 0, 0, 0, 1, 80.30, 88.33, 97.16, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(955, 955, 11, 0, 0, 0, 1, 36.70, 40.37, 44.41, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(956, 956, 14, 0, 0, 0, 1, 98.00, 107.80, 118.58, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(957, 957, 17, 0, 0, 0, 1, 26.70, 29.37, 32.31, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(958, 958, 10, 0, 0, 0, 1, 27.50, 30.25, 33.28, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(959, 959, 11, 0, 0, 0, 1, 62.90, 69.19, 76.11, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(960, 960, 3, 0, 0, 0, 1, 81.70, 89.87, 98.86, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(961, 961, 17, 0, 0, 0, 1, 47.60, 52.36, 57.60, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(962, 962, 13, 0, 0, 0, 1, 77.20, 84.92, 93.41, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(963, 963, 5, 0, 0, 0, 1, 37.90, 41.69, 45.86, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(964, 964, 2, 0, 0, 0, 1, 64.90, 71.39, 78.53, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(965, 965, 17, 0, 0, 0, 1, 67.90, 74.69, 82.16, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(966, 966, 15, 0, 0, 0, 1, 97.50, 107.25, 117.98, '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
-(967, 967, 6, 0, 0, 0, 1, 45.50, 50.05, 55.06, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(968, 968, 2, 0, 0, 0, 1, 32.70, 35.97, 39.57, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(969, 969, 10, 0, 0, 0, 1, 21.10, 23.21, 25.53, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(970, 970, 17, 0, 0, 0, 1, 12.10, 13.31, 14.64, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(971, 971, 11, 0, 0, 0, 1, 53.80, 59.18, 65.10, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(972, 972, 8, 0, 0, 0, 1, 37.20, 40.92, 45.01, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(973, 973, 6, 0, 0, 0, 1, 77.00, 84.70, 93.17, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(974, 974, 1, 0, 0, 0, 1, 40.90, 44.99, 49.49, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(975, 975, 5, 0, 0, 0, 1, 88.00, 96.80, 106.48, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(976, 976, 19, 0, 0, 0, 1, 50.90, 55.99, 61.59, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(977, 977, 4, 0, 0, 0, 1, 25.20, 27.72, 30.49, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(978, 978, 9, 0, 0, 0, 1, 25.00, 27.50, 30.25, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(979, 979, 4, 0, 0, 0, 1, 95.50, 105.05, 115.56, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(980, 980, 4, 0, 0, 0, 1, 29.40, 32.34, 35.57, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(981, 981, 17, 0, 0, 0, 1, 89.00, 97.90, 107.69, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(982, 982, 10, 0, 0, 0, 1, 64.80, 71.28, 78.41, '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
-(983, 983, 3, 0, 0, 0, 1, 51.50, 56.65, 62.32, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(984, 984, 5, 0, 0, 0, 1, 29.40, 32.34, 35.57, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(985, 985, 20, 0, 0, 0, 1, 80.50, 88.55, 97.41, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(986, 986, 15, 0, 0, 0, 1, 74.20, 81.62, 89.78, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(987, 987, 20, 0, 0, 0, 1, 25.10, 27.61, 30.37, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(988, 988, 10, 0, 0, 0, 1, 93.20, 102.52, 112.77, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(989, 989, 12, 0, 0, 0, 1, 71.20, 78.32, 86.15, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(990, 990, 17, 0, 0, 0, 1, 16.60, 18.26, 20.09, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(991, 991, 3, 0, 0, 0, 1, 47.30, 52.03, 57.23, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(992, 992, 12, 0, 0, 0, 1, 81.10, 89.21, 98.13, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(993, 993, 15, 0, 0, 0, 1, 86.70, 95.37, 104.91, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(994, 994, 1, 0, 0, 0, 1, 90.80, 99.88, 109.87, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(995, 995, 3, 0, 0, 0, 1, 38.00, 41.80, 45.98, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(996, 996, 18, 0, 0, 0, 1, 93.00, 102.30, 112.53, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(997, 997, 4, 0, 0, 0, 1, 12.70, 13.97, 15.37, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(998, 998, 12, 0, 0, 0, 1, 23.80, 26.18, 28.80, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(999, 999, 4, 0, 0, 0, 1, 82.60, 90.86, 99.95, '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
-(1000, 1000, 2, 0, 0, 0, 1, 93.70, 103.07, 113.38, '2024-08-09 21:41:00', '2024-08-09 21:41:00'),
-(1004, 672, 2, 3, 4, 2, 1, 56.00, 100.00, 89.90, '2024-12-27 07:49:48', '2024-12-27 07:49:48'),
-(1005, 672, 5, 4, 3, 6, 1, 1.00, 3.00, 2.00, '2024-12-27 07:49:48', '2024-12-27 07:49:48'),
-(1006, 672, 6, 1, 2, 5, 1, 23.00, 25.00, 24.00, '2024-12-27 07:49:48', '2024-12-27 07:49:48'),
-(1012, 666, 17, 1, 1, 1, 1, 64.80, 71.28, 78.41, '2025-01-05 08:29:07', '2025-01-05 08:29:07'),
-(1027, 952, 17, NULL, NULL, 3, 1, 74.40, 81.84, 90.02, '2026-02-17 06:42:55', '2026-02-17 06:42:55'),
-(1028, 952, 7, NULL, NULL, 5, 1, 23.00, 1200.00, 1200.00, '2026-02-17 06:42:55', '2026-02-17 06:42:55'),
-(1029, 952, 9, NULL, NULL, 3, 1, 3.00, 6.00, 4.00, '2026-02-17 06:42:55', '2026-02-17 06:42:55');
+(506, 506, 1, 0, 0, 0, 1, '19.80', '21.78', '23.96', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(507, 507, 4, 0, 0, 0, 1, '15.40', '16.94', '18.63', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(508, 508, 5, 0, 0, 0, 1, '57.80', '63.58', '69.94', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(509, 509, 16, 0, 0, 0, 1, '27.10', '29.81', '32.79', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(510, 510, 19, 0, 0, 0, 1, '27.20', '29.92', '32.91', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(511, 511, 19, 0, 0, 0, 1, '83.30', '91.63', '100.79', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(512, 512, 19, 0, 0, 0, 1, '48.70', '53.57', '58.93', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(513, 513, 10, 0, 0, 0, 1, '55.00', '60.50', '66.55', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(514, 514, 8, 0, 0, 0, 1, '75.40', '82.94', '91.23', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(515, 515, 10, 0, 0, 0, 1, '26.40', '29.04', '31.94', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(516, 516, 14, 0, 0, 0, 1, '81.00', '89.10', '98.01', '2024-08-09 21:40:30', '2024-08-09 21:40:30'),
+(517, 517, 6, 0, 0, 0, 1, '78.40', '86.24', '94.86', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(518, 518, 19, 0, 0, 0, 1, '34.60', '38.06', '41.87', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(519, 519, 1, 0, 0, 0, 1, '39.20', '43.12', '47.43', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(520, 520, 8, 0, 0, 0, 1, '67.40', '74.14', '81.55', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(521, 521, 6, 0, 0, 0, 1, '91.60', '100.76', '110.84', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(522, 522, 19, 0, 0, 0, 1, '58.50', '64.35', '70.79', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(523, 523, 19, 0, 0, 0, 1, '82.10', '90.31', '99.34', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(524, 524, 20, 0, 0, 0, 1, '91.70', '100.87', '110.96', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(525, 525, 16, 0, 0, 0, 1, '49.20', '54.12', '59.53', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(526, 526, 15, 0, 0, 0, 1, '90.90', '99.99', '109.99', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(527, 527, 10, 0, 0, 0, 1, '15.20', '16.72', '18.39', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(528, 528, 1, 0, 0, 0, 1, '66.20', '72.82', '80.10', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(529, 529, 7, 0, 0, 0, 1, '90.90', '99.99', '109.99', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(530, 530, 5, 0, 0, 0, 1, '23.90', '26.29', '28.92', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(531, 531, 16, 0, 0, 0, 1, '44.50', '48.95', '53.85', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(532, 532, 14, 0, 0, 0, 1, '37.50', '41.25', '45.38', '2024-08-09 21:40:31', '2024-08-09 21:40:31'),
+(533, 533, 1, 0, 0, 0, 1, '95.60', '105.16', '115.68', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(534, 534, 16, 0, 0, 0, 1, '66.00', '72.60', '79.86', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(535, 535, 2, 0, 0, 0, 1, '31.30', '34.43', '37.87', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(536, 536, 4, 0, 0, 0, 1, '74.30', '81.73', '89.90', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(537, 537, 5, 0, 0, 0, 1, '38.30', '42.13', '46.34', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(538, 538, 14, 0, 0, 0, 1, '39.80', '43.78', '48.16', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(539, 539, 11, 0, 0, 0, 1, '51.60', '56.76', '62.44', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(540, 540, 4, 0, 0, 0, 1, '92.20', '101.42', '111.56', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(541, 541, 17, 0, 0, 0, 1, '37.00', '40.70', '44.77', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(542, 542, 19, 0, 0, 0, 1, '50.30', '55.33', '60.86', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(543, 543, 1, 0, 0, 0, 1, '25.30', '27.83', '30.61', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(544, 544, 7, 0, 0, 0, 1, '45.00', '49.50', '54.45', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(545, 545, 9, 0, 0, 0, 1, '81.40', '89.54', '98.49', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(546, 546, 13, 0, 0, 0, 1, '77.90', '85.69', '94.26', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(547, 547, 2, 0, 0, 0, 1, '98.70', '108.57', '119.43', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(548, 548, 7, 0, 0, 0, 1, '22.40', '24.64', '27.10', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(549, 549, 1, 0, 0, 0, 1, '19.40', '21.34', '23.47', '2024-08-09 21:40:32', '2024-08-09 21:40:32'),
+(550, 550, 19, 0, 0, 0, 1, '91.10', '100.21', '110.23', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(551, 551, 10, 0, 0, 0, 1, '26.10', '28.71', '31.58', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(552, 552, 6, 0, 0, 0, 1, '89.80', '98.78', '108.66', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(553, 553, 18, 0, 0, 0, 1, '51.40', '56.54', '62.19', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(554, 554, 10, 0, 0, 0, 1, '24.60', '27.06', '29.77', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(555, 555, 3, 0, 0, 0, 1, '44.10', '48.51', '53.36', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(556, 556, 14, 0, 0, 0, 1, '65.10', '71.61', '78.77', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(557, 557, 19, 0, 0, 0, 1, '37.60', '41.36', '45.50', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(558, 558, 15, 0, 0, 0, 1, '82.00', '90.20', '99.22', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(559, 559, 13, 0, 0, 0, 1, '20.90', '22.99', '25.29', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(560, 560, 5, 0, 0, 0, 1, '51.20', '56.32', '61.95', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(561, 561, 8, 0, 0, 0, 1, '43.70', '48.07', '52.88', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(562, 562, 6, 0, 0, 0, 1, '34.10', '37.51', '41.26', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(563, 563, 5, 0, 0, 0, 1, '17.40', '19.14', '21.05', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(564, 564, 10, 0, 0, 0, 1, '74.50', '81.95', '90.15', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(565, 565, 13, 0, 0, 0, 1, '14.30', '15.73', '17.30', '2024-08-09 21:40:33', '2024-08-09 21:40:33'),
+(566, 566, 9, 0, 0, 0, 1, '78.10', '85.91', '94.50', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(567, 567, 6, 0, 0, 0, 1, '88.40', '97.24', '106.96', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(568, 568, 18, 0, 0, 0, 1, '88.10', '96.91', '106.60', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(569, 569, 10, 0, 0, 0, 1, '26.90', '29.59', '32.55', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(570, 570, 1, 0, 0, 0, 1, '43.70', '48.07', '52.88', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(571, 571, 12, 0, 0, 0, 1, '22.20', '24.42', '26.86', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(572, 572, 2, 0, 0, 0, 1, '31.80', '34.98', '38.48', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(573, 573, 11, 0, 0, 0, 1, '93.80', '103.18', '113.50', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(574, 574, 5, 0, 0, 0, 1, '79.80', '87.78', '96.56', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(575, 575, 16, 0, 0, 0, 1, '69.30', '76.23', '83.85', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(576, 576, 11, 0, 0, 0, 1, '90.50', '99.55', '109.51', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(577, 577, 7, 0, 0, 0, 1, '90.10', '99.11', '109.02', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(578, 578, 4, 0, 0, 0, 1, '89.70', '98.67', '108.54', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(579, 579, 3, 0, 0, 0, 1, '21.40', '23.54', '25.89', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(580, 580, 5, 0, 0, 0, 1, '22.60', '24.86', '27.35', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(581, 581, 6, 0, 0, 0, 1, '78.60', '86.46', '95.11', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(582, 582, 19, 0, 0, 0, 1, '48.30', '53.13', '58.44', '2024-08-09 21:40:34', '2024-08-09 21:40:34'),
+(583, 583, 20, 0, 0, 0, 1, '32.10', '35.31', '38.84', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(584, 584, 19, 0, 0, 0, 1, '25.30', '27.83', '30.61', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(585, 585, 3, 0, 0, 0, 1, '31.00', '34.10', '37.51', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(586, 586, 16, 0, 0, 0, 1, '95.80', '105.38', '115.92', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(587, 587, 5, 0, 0, 0, 1, '62.70', '68.97', '75.87', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(588, 588, 14, 0, 0, 0, 1, '61.50', '67.65', '74.42', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(589, 589, 3, 0, 0, 0, 1, '32.00', '35.20', '38.72', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(590, 590, 18, 0, 0, 0, 1, '56.10', '61.71', '67.88', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(591, 591, 12, 0, 0, 0, 1, '71.10', '78.21', '86.03', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(592, 592, 8, 0, 0, 0, 1, '94.50', '103.95', '114.35', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(593, 593, 7, 0, 0, 0, 1, '75.00', '82.50', '90.75', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(594, 594, 6, 0, 0, 0, 1, '52.50', '57.75', '63.53', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(595, 595, 19, 0, 0, 0, 1, '50.90', '55.99', '61.59', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(596, 596, 20, 0, 0, 0, 1, '51.30', '56.43', '62.07', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(597, 597, 11, 0, 0, 0, 1, '84.50', '92.95', '102.25', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(598, 598, 18, 0, 0, 0, 1, '82.00', '90.20', '99.22', '2024-08-09 21:40:35', '2024-08-09 21:40:35'),
+(599, 599, 3, 0, 0, 0, 1, '11.70', '12.87', '14.16', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(600, 600, 20, 0, 0, 0, 1, '58.20', '64.02', '70.42', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(601, 601, 14, 0, 0, 0, 1, '45.10', '49.61', '54.57', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(602, 602, 16, 0, 0, 0, 1, '32.80', '36.08', '39.69', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(603, 603, 19, 0, 0, 0, 1, '23.20', '25.52', '28.07', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(604, 604, 11, 0, 0, 0, 1, '29.20', '32.12', '35.33', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(605, 605, 18, 0, 0, 0, 1, '18.00', '19.80', '21.78', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(606, 606, 18, 0, 0, 0, 1, '85.80', '94.38', '103.82', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(607, 607, 6, 0, 0, 0, 1, '17.20', '18.92', '20.81', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(608, 608, 8, 0, 0, 0, 1, '59.20', '65.12', '71.63', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(609, 609, 12, 0, 0, 0, 1, '39.30', '43.23', '47.55', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(610, 610, 3, 0, 0, 0, 1, '37.50', '41.25', '45.38', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(611, 611, 6, 0, 0, 0, 1, '33.90', '37.29', '41.02', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(612, 612, 1, 0, 0, 0, 1, '86.30', '94.93', '104.42', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(613, 613, 10, 0, 0, 0, 1, '54.70', '60.17', '66.19', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(614, 614, 11, 0, 0, 0, 1, '11.50', '12.65', '13.92', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(615, 615, 20, 0, 0, 0, 1, '49.40', '54.34', '59.77', '2024-08-09 21:40:36', '2024-08-09 21:40:36'),
+(616, 616, 12, 0, 0, 0, 1, '53.60', '58.96', '64.86', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(617, 617, 2, 0, 0, 0, 1, '37.10', '40.81', '44.89', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(618, 618, 3, 0, 0, 0, 1, '58.60', '64.46', '70.91', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(619, 619, 2, 0, 0, 0, 1, '29.10', '32.01', '35.21', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(620, 620, 3, 0, 0, 0, 1, '91.80', '100.98', '111.08', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(621, 621, 19, 0, 0, 0, 1, '47.30', '52.03', '57.23', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(622, 622, 18, 0, 0, 0, 1, '91.90', '101.09', '111.20', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(623, 623, 10, 0, 0, 0, 1, '34.00', '37.40', '41.14', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(624, 624, 6, 0, 0, 0, 1, '87.80', '96.58', '106.24', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(625, 625, 20, 0, 0, 0, 1, '18.40', '20.24', '22.26', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(626, 626, 17, 0, 0, 0, 1, '50.70', '55.77', '61.35', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(627, 627, 13, 0, 0, 0, 1, '62.40', '68.64', '75.50', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(628, 628, 14, 0, 0, 0, 1, '42.20', '46.42', '51.06', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(629, 629, 5, 0, 0, 0, 1, '61.80', '67.98', '74.78', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(630, 630, 3, 0, 0, 0, 1, '17.40', '19.14', '21.05', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(631, 631, 1, 0, 0, 0, 1, '35.80', '39.38', '43.32', '2024-08-09 21:40:37', '2024-08-09 21:40:37'),
+(632, 632, 17, 0, 0, 0, 1, '23.30', '25.63', '28.19', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(633, 633, 19, 0, 0, 0, 1, '11.70', '12.87', '14.16', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(634, 634, 3, 0, 0, 0, 1, '52.30', '57.53', '63.28', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(635, 635, 19, 0, 0, 0, 1, '29.10', '32.01', '35.21', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(636, 636, 20, 0, 0, 0, 1, '14.50', '15.95', '17.55', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(637, 637, 17, 0, 0, 0, 1, '74.90', '82.39', '90.63', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(638, 638, 5, 0, 0, 0, 1, '87.70', '96.47', '106.12', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(639, 639, 9, 0, 0, 0, 1, '70.00', '77.00', '84.70', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(640, 640, 11, 0, 0, 0, 1, '57.90', '63.69', '70.06', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(641, 641, 17, 0, 0, 0, 1, '38.20', '42.02', '46.22', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(642, 642, 3, 0, 0, 0, 1, '16.80', '18.48', '20.33', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(643, 643, 19, 0, 0, 0, 1, '12.10', '13.31', '14.64', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(644, 644, 13, 0, 0, 0, 1, '55.80', '61.38', '67.52', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(645, 645, 1, 0, 0, 0, 1, '60.50', '66.55', '73.21', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(646, 646, 18, 0, 0, 0, 1, '80.60', '88.66', '97.53', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(647, 647, 7, 0, 0, 0, 1, '40.00', '44.00', '48.40', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(648, 648, 14, 0, 0, 0, 1, '52.50', '57.75', '63.53', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(649, 649, 3, 0, 0, 0, 1, '68.70', '75.57', '83.13', '2024-08-09 21:40:38', '2024-08-09 21:40:38'),
+(650, 650, 17, 0, 0, 0, 1, '21.80', '23.98', '26.38', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(651, 651, 9, 0, 0, 0, 1, '26.70', '29.37', '32.31', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(652, 652, 1, 0, 0, 0, 1, '26.30', '28.93', '31.82', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(653, 653, 19, 0, 0, 0, 1, '82.20', '90.42', '99.46', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(654, 654, 10, 0, 0, 0, 1, '37.80', '41.58', '45.74', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(655, 655, 2, 0, 0, 0, 1, '37.50', '41.25', '45.38', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(656, 656, 8, 0, 0, 0, 1, '43.00', '47.30', '52.03', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(657, 657, 15, 0, 0, 0, 1, '54.30', '59.73', '65.70', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(658, 658, 13, 0, 0, 0, 1, '92.30', '101.53', '111.68', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(659, 659, 8, 0, 0, 0, 1, '62.40', '68.64', '75.50', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(660, 660, 2, 0, 0, 0, 1, '11.70', '12.87', '14.16', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(661, 661, 8, 0, 0, 0, 1, '94.40', '103.84', '114.22', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(662, 662, 2, 0, 0, 0, 1, '97.50', '107.25', '117.98', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(663, 663, 4, 0, 0, 0, 1, '17.90', '19.69', '21.66', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(664, 664, 4, 0, 0, 0, 1, '36.30', '39.93', '43.92', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(665, 665, 11, 0, 0, 0, 1, '47.60', '52.36', '57.60', '2024-08-09 21:40:39', '2024-08-09 21:40:39'),
+(667, 667, 9, 0, 0, 0, 1, '68.60', '75.46', '83.01', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(668, 668, 17, 0, 0, 0, 1, '13.20', '14.52', '15.97', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(669, 669, 8, 0, 0, 0, 1, '39.80', '43.78', '48.16', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(670, 670, 4, 0, 0, 0, 1, '13.10', '14.41', '15.85', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(671, 671, 14, 0, 0, 0, 1, '61.60', '67.76', '74.54', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(673, 673, 15, 0, 0, 0, 1, '58.30', '64.13', '70.54', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(674, 674, 16, 0, 0, 0, 1, '14.40', '15.84', '17.42', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(675, 675, 4, 0, 0, 0, 1, '18.50', '20.35', '22.39', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(676, 676, 20, 0, 0, 0, 1, '32.70', '35.97', '39.57', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(677, 677, 18, 0, 0, 0, 1, '11.10', '12.21', '13.43', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(678, 678, 18, 0, 0, 0, 1, '46.70', '51.37', '56.51', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(679, 679, 15, 0, 0, 0, 1, '53.40', '58.74', '64.61', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(680, 680, 5, 0, 0, 0, 1, '95.60', '105.16', '115.68', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(681, 681, 11, 0, 0, 0, 1, '18.60', '20.46', '22.51', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(682, 682, 1, 0, 0, 0, 1, '31.50', '34.65', '38.12', '2024-08-09 21:40:40', '2024-08-09 21:40:40'),
+(683, 683, 18, 0, 0, 0, 1, '40.00', '44.00', '48.40', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(684, 684, 11, 0, 0, 0, 1, '70.20', '77.22', '84.94', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(685, 685, 7, 0, 0, 0, 1, '12.40', '13.64', '15.00', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(686, 686, 10, 0, 0, 0, 1, '38.40', '42.24', '46.46', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(687, 687, 18, 0, 0, 0, 1, '20.20', '22.22', '24.44', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(688, 688, 18, 0, 0, 0, 1, '91.60', '100.76', '110.84', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(689, 689, 10, 0, 0, 0, 1, '89.80', '98.78', '108.66', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(690, 690, 12, 0, 0, 0, 1, '15.20', '16.72', '18.39', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(691, 691, 10, 0, 0, 0, 1, '80.60', '88.66', '97.53', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(692, 692, 20, 0, 0, 0, 1, '78.90', '86.79', '95.47', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(693, 693, 5, 0, 0, 0, 1, '29.80', '32.78', '36.06', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(694, 694, 2, 0, 0, 0, 1, '82.60', '90.86', '99.95', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(695, 695, 17, 0, 0, 0, 1, '24.80', '27.28', '30.01', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(696, 696, 17, 0, 0, 0, 1, '12.50', '13.75', '15.13', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(697, 697, 5, 0, 0, 0, 1, '65.40', '71.94', '79.13', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(698, 698, 5, 0, 0, 0, 1, '22.50', '24.75', '27.23', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(699, 699, 12, 0, 0, 0, 1, '79.20', '87.12', '95.83', '2024-08-09 21:40:41', '2024-08-09 21:40:41'),
+(700, 700, 16, 0, 0, 0, 1, '86.10', '94.71', '104.18', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(701, 701, 11, 0, 0, 0, 1, '91.30', '100.43', '110.47', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(702, 702, 19, 0, 0, 0, 1, '12.60', '13.86', '15.25', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(703, 703, 18, 0, 0, 0, 1, '93.00', '102.30', '112.53', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(704, 704, 2, 0, 0, 0, 1, '76.00', '83.60', '91.96', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(705, 705, 11, 0, 0, 0, 1, '19.80', '21.78', '23.96', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(706, 706, 6, 0, 0, 0, 1, '98.80', '108.68', '119.55', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(707, 707, 20, 0, 0, 0, 1, '17.40', '19.14', '21.05', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(708, 708, 15, 0, 0, 0, 1, '43.80', '48.18', '53.00', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(709, 709, 18, 0, 0, 0, 1, '17.70', '19.47', '21.42', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(710, 710, 19, 0, 0, 0, 1, '26.80', '29.48', '32.43', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(711, 711, 7, 0, 0, 0, 1, '79.20', '87.12', '95.83', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(712, 712, 14, 0, 0, 0, 1, '12.40', '13.64', '15.00', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(713, 713, 9, 0, 0, 0, 1, '50.30', '55.33', '60.86', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(714, 714, 5, 0, 0, 0, 1, '22.60', '24.86', '27.35', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(715, 715, 18, 0, 0, 0, 1, '95.70', '105.27', '115.80', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(716, 716, 15, 0, 0, 0, 1, '19.10', '21.01', '23.11', '2024-08-09 21:40:42', '2024-08-09 21:40:42'),
+(717, 717, 20, 0, 0, 0, 1, '38.20', '42.02', '46.22', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(718, 718, 10, 0, 0, 0, 1, '94.80', '104.28', '114.71', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(719, 719, 5, 0, 0, 0, 1, '18.00', '19.80', '21.78', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(720, 720, 20, 0, 0, 0, 1, '16.10', '17.71', '19.48', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(721, 721, 12, 0, 0, 0, 1, '53.70', '59.07', '64.98', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(722, 722, 1, 0, 0, 0, 1, '83.30', '91.63', '100.79', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(723, 723, 6, 0, 0, 0, 1, '47.60', '52.36', '57.60', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(724, 724, 19, 0, 0, 0, 1, '13.30', '14.63', '16.09', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(725, 725, 20, 0, 0, 0, 1, '44.00', '48.40', '53.24', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(726, 726, 14, 0, 0, 0, 1, '23.60', '25.96', '28.56', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(727, 727, 19, 0, 0, 0, 1, '23.70', '26.07', '28.68', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(728, 728, 4, 0, 0, 0, 1, '75.20', '82.72', '90.99', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(729, 729, 9, 0, 0, 0, 1, '20.00', '22.00', '24.20', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(730, 730, 1, 0, 0, 0, 1, '66.90', '73.59', '80.95', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(731, 731, 14, 0, 0, 0, 1, '75.60', '83.16', '91.48', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(732, 732, 5, 0, 0, 0, 1, '12.30', '13.53', '14.88', '2024-08-09 21:40:43', '2024-08-09 21:40:43'),
+(733, 733, 15, 0, 0, 0, 1, '42.20', '46.42', '51.06', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(734, 734, 10, 0, 0, 0, 1, '79.90', '87.89', '96.68', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(735, 735, 7, 0, 0, 0, 1, '13.00', '14.30', '15.73', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(736, 736, 15, 0, 0, 0, 1, '89.00', '97.90', '107.69', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(737, 737, 17, 0, 0, 0, 1, '81.40', '89.54', '98.49', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(738, 738, 16, 0, 0, 0, 1, '82.60', '90.86', '99.95', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(739, 739, 12, 0, 0, 0, 1, '71.10', '78.21', '86.03', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(740, 740, 9, 0, 0, 0, 1, '24.20', '26.62', '29.28', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(741, 741, 13, 0, 0, 0, 1, '64.20', '70.62', '77.68', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(742, 742, 12, 0, 0, 21, 1, '19.20', '21.12', '23.23', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(743, 743, 16, 0, 0, 0, 1, '35.90', '39.49', '43.44', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(744, 744, 15, 0, 0, 0, 1, '87.30', '96.03', '105.63', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(745, 745, 15, 0, 0, 0, 1, '98.80', '108.68', '119.55', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(746, 746, 11, 0, 0, 0, 1, '16.10', '17.71', '19.48', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(747, 747, 1, 0, 0, 0, 1, '97.30', '107.03', '117.73', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(748, 748, 16, 0, 0, 0, 1, '75.10', '82.61', '90.87', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(749, 749, 12, 0, 0, 0, 1, '12.30', '13.53', '14.88', '2024-08-09 21:40:44', '2024-08-09 21:40:44'),
+(750, 750, 19, 0, 0, 0, 1, '48.30', '53.13', '58.44', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(751, 751, 8, 0, 0, 0, 1, '85.60', '94.16', '103.58', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(752, 752, 8, 0, 0, 0, 1, '70.70', '77.77', '85.55', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(753, 753, 11, 0, 0, 0, 1, '47.70', '52.47', '57.72', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(754, 754, 13, 0, 0, 0, 1, '64.00', '70.40', '77.44', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(755, 755, 8, 0, 0, 0, 1, '16.90', '18.59', '20.45', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(756, 756, 7, 0, 0, 0, 1, '58.50', '64.35', '70.79', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(757, 757, 15, 0, 0, 0, 1, '63.40', '69.74', '76.71', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(758, 758, 9, 0, 0, 0, 1, '16.30', '17.93', '19.72', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(759, 759, 15, 0, 0, 0, 1, '71.80', '78.98', '86.88', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(760, 760, 1, 0, 0, 0, 1, '11.00', '12.10', '13.31', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(761, 761, 19, 0, 0, 0, 1, '84.20', '92.62', '101.88', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(762, 762, 10, 0, 0, 0, 1, '95.60', '105.16', '115.68', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(763, 763, 16, 0, 0, 0, 1, '93.80', '103.18', '113.50', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(764, 764, 13, 0, 0, 0, 1, '77.50', '85.25', '93.78', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(765, 765, 2, 0, 0, 0, 1, '19.50', '21.45', '23.60', '2024-08-09 21:40:45', '2024-08-09 21:40:45'),
+(766, 766, 20, 0, 0, 0, 1, '52.00', '57.20', '62.92', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(767, 767, 4, 0, 0, 0, 1, '54.10', '59.51', '65.46', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(768, 768, 14, 0, 0, 0, 1, '40.00', '44.00', '48.40', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(769, 769, 18, 0, 0, 0, 1, '36.30', '39.93', '43.92', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(770, 770, 14, 0, 0, 0, 1, '28.40', '31.24', '34.36', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(771, 771, 4, 0, 0, 0, 1, '42.60', '46.86', '51.55', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(772, 772, 6, 0, 0, 0, 1, '83.80', '92.18', '101.40', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(773, 773, 19, 0, 0, 0, 1, '91.00', '100.10', '110.11', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(774, 774, 7, 0, 0, 0, 1, '59.70', '65.67', '72.24', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(775, 775, 6, 0, 0, 0, 1, '31.50', '34.65', '38.12', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(776, 776, 3, 0, 0, 0, 1, '30.80', '33.88', '37.27', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(777, 777, 20, 0, 0, 0, 1, '64.90', '71.39', '78.53', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(778, 778, 3, 0, 0, 0, 1, '29.60', '32.56', '35.82', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(779, 779, 20, 0, 0, 0, 1, '32.60', '35.86', '39.45', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(780, 780, 8, 0, 0, 0, 1, '29.40', '32.34', '35.57', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(781, 781, 18, 0, 0, 0, 1, '77.10', '84.81', '93.29', '2024-08-09 21:40:46', '2024-08-09 21:40:46'),
+(782, 782, 8, 0, 0, 0, 1, '75.90', '83.49', '91.84', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(783, 783, 1, 0, 0, 0, 1, '11.20', '12.32', '13.55', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(784, 784, 5, 0, 0, 0, 1, '22.10', '24.31', '26.74', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(785, 785, 10, 0, 0, 0, 1, '30.40', '33.44', '36.78', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(786, 786, 5, 0, 0, 0, 1, '94.90', '104.39', '114.83', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(787, 787, 4, 0, 0, 0, 1, '33.20', '36.52', '40.17', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(788, 788, 11, 0, 0, 0, 1, '13.50', '14.85', '16.34', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(789, 789, 12, 0, 0, 0, 1, '70.90', '77.99', '85.79', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(790, 790, 16, 0, 0, 0, 1, '73.90', '81.29', '89.42', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(791, 791, 7, 0, 0, 0, 1, '42.10', '46.31', '50.94', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(792, 792, 16, 0, 0, 0, 1, '26.20', '28.82', '31.70', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(793, 793, 8, 0, 0, 0, 1, '41.70', '45.87', '50.46', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(794, 794, 7, 0, 0, 0, 1, '42.50', '46.75', '51.43', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(795, 795, 11, 0, 0, 0, 1, '33.40', '36.74', '40.41', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(796, 796, 9, 0, 0, 0, 1, '52.10', '57.31', '63.04', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(797, 797, 2, 0, 0, 0, 1, '73.60', '80.96', '89.06', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(798, 798, 6, 0, 0, 0, 1, '38.00', '41.80', '45.98', '2024-08-09 21:40:47', '2024-08-09 21:40:47'),
+(799, 799, 2, 0, 0, 0, 1, '26.70', '29.37', '32.31', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(800, 800, 10, 0, 0, 0, 1, '35.30', '38.83', '42.71', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(801, 801, 7, 0, 0, 0, 1, '81.10', '89.21', '98.13', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(802, 802, 12, 0, 0, 0, 1, '48.30', '53.13', '58.44', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(803, 803, 6, 0, 0, 0, 1, '44.40', '48.84', '53.72', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(804, 804, 19, 0, 0, 0, 1, '75.20', '82.72', '90.99', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(805, 805, 2, 0, 0, 0, 1, '37.30', '41.03', '45.13', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(806, 806, 7, 0, 0, 0, 1, '51.80', '56.98', '62.68', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(807, 807, 4, 0, 0, 0, 1, '11.90', '13.09', '14.40', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(808, 808, 8, 0, 0, 0, 1, '21.70', '23.87', '26.26', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(809, 809, 10, 0, 0, 0, 1, '59.50', '65.45', '72.00', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(810, 810, 2, 0, 0, 0, 1, '80.90', '88.99', '97.89', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(811, 811, 15, 0, 0, 0, 1, '58.30', '64.13', '70.54', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(812, 812, 5, 0, 0, 0, 1, '60.40', '66.44', '73.08', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(813, 813, 8, 0, 0, 0, 1, '44.50', '48.95', '53.85', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(814, 814, 7, 0, 0, 0, 1, '97.60', '107.36', '118.10', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(815, 815, 12, 0, 0, 0, 1, '14.40', '15.84', '17.42', '2024-08-09 21:40:48', '2024-08-09 21:40:48'),
+(816, 816, 4, 0, 0, 0, 1, '60.20', '66.22', '72.84', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(817, 817, 15, 0, 0, 0, 1, '59.50', '65.45', '72.00', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(818, 818, 14, 0, 0, 0, 1, '26.70', '29.37', '32.31', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(819, 819, 15, 0, 0, 0, 1, '13.80', '15.18', '16.70', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(820, 820, 8, 0, 0, 0, 1, '28.60', '31.46', '34.61', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(821, 821, 12, 0, 0, 0, 1, '73.70', '81.07', '89.18', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(822, 822, 12, 0, 0, 0, 1, '92.50', '101.75', '111.93', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(823, 823, 19, 0, 0, 0, 1, '68.10', '74.91', '82.40', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(824, 824, 12, 0, 0, 0, 1, '81.20', '89.32', '98.25', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(825, 825, 4, 0, 0, 0, 1, '33.90', '37.29', '41.02', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(826, 826, 1, 0, 0, 0, 1, '42.40', '46.64', '51.30', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(827, 827, 14, 0, 0, 0, 1, '59.20', '65.12', '71.63', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(828, 828, 18, 0, 0, 0, 1, '99.20', '109.12', '120.03', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(829, 829, 4, 0, 0, 0, 1, '11.30', '12.43', '13.67', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(830, 830, 12, 0, 0, 0, 1, '88.40', '97.24', '106.96', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(831, 831, 11, 0, 0, 0, 1, '41.30', '45.43', '49.97', '2024-08-09 21:40:49', '2024-08-09 21:40:49'),
+(832, 832, 16, 0, 0, 0, 1, '94.40', '103.84', '114.22', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(833, 833, 11, 0, 0, 0, 1, '85.60', '94.16', '103.58', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(834, 834, 3, 0, 0, 0, 1, '79.80', '87.78', '96.56', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(835, 835, 9, 0, 0, 0, 1, '38.60', '42.46', '46.71', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(836, 836, 2, 0, 0, 0, 1, '50.30', '55.33', '60.86', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(837, 837, 4, 0, 0, 0, 1, '68.10', '74.91', '82.40', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(838, 838, 1, 0, 0, 0, 1, '72.20', '79.42', '87.36', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(839, 839, 11, 0, 0, 0, 1, '87.40', '96.14', '105.75', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(840, 840, 14, 0, 0, 0, 1, '69.90', '76.89', '84.58', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(841, 841, 12, 0, 0, 0, 1, '42.00', '46.20', '50.82', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(842, 842, 14, 0, 0, 0, 1, '25.90', '28.49', '31.34', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(843, 843, 13, 0, 0, 0, 1, '65.70', '72.27', '79.50', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(844, 844, 1, 0, 0, 0, 1, '52.40', '57.64', '63.40', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(845, 845, 18, 0, 0, 0, 1, '46.90', '51.59', '56.75', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(846, 846, 15, 0, 0, 0, 1, '30.30', '33.33', '36.66', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(847, 847, 10, 0, 0, 0, 1, '35.80', '39.38', '43.32', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(848, 848, 15, 0, 0, 0, 1, '37.30', '41.03', '45.13', '2024-08-09 21:40:50', '2024-08-09 21:40:50'),
+(849, 849, 12, 0, 0, 0, 1, '21.80', '23.98', '26.38', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(850, 850, 9, 0, 0, 0, 1, '33.30', '36.63', '40.29', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(851, 851, 13, 0, 0, 0, 1, '28.80', '31.68', '34.85', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(852, 852, 11, 0, 0, 0, 1, '12.90', '14.19', '15.61', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(853, 853, 15, 0, 0, 0, 1, '62.90', '69.19', '76.11', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(854, 854, 3, 0, 0, 0, 1, '60.10', '66.11', '72.72', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(855, 855, 1, 0, 0, 0, 1, '56.30', '61.93', '68.12', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(856, 856, 18, 0, 0, 0, 1, '18.20', '20.02', '22.02', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(857, 857, 7, 0, 0, 0, 1, '30.60', '33.66', '37.03', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(858, 858, 18, 0, 0, 0, 1, '81.90', '90.09', '99.10', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(859, 859, 20, 0, 0, 0, 1, '68.40', '75.24', '82.76', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(860, 860, 19, 0, 0, 0, 1, '79.80', '87.78', '96.56', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(861, 861, 2, 0, 0, 0, 1, '70.30', '77.33', '85.06', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(862, 862, 13, 0, 0, 0, 1, '29.60', '32.56', '35.82', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(863, 863, 9, 0, 0, 0, 1, '32.40', '35.64', '39.20', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(864, 864, 7, 0, 0, 0, 1, '31.40', '34.54', '37.99', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(865, 865, 8, 0, 0, 0, 1, '54.50', '59.95', '65.95', '2024-08-09 21:40:51', '2024-08-09 21:40:51'),
+(866, 866, 2, 0, 0, 0, 1, '95.60', '105.16', '115.68', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(867, 867, 2, 0, 0, 0, 1, '27.80', '30.58', '33.64', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(868, 868, 13, 0, 0, 0, 1, '74.80', '82.28', '90.51', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(869, 869, 8, 0, 0, 0, 1, '52.80', '58.08', '63.89', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(870, 870, 19, 0, 0, 0, 1, '85.60', '94.16', '103.58', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(871, 871, 3, 0, 0, 0, 1, '97.40', '107.14', '117.85', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(872, 872, 17, 0, 0, 0, 1, '68.10', '74.91', '82.40', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(873, 873, 1, 0, 0, 0, 1, '32.30', '35.53', '39.08', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(874, 874, 2, 0, 0, 0, 1, '49.50', '54.45', '59.90', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(875, 875, 16, 0, 0, 0, 1, '11.30', '12.43', '13.67', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(876, 876, 8, 0, 0, 0, 1, '79.90', '87.89', '96.68', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(877, 877, 15, 0, 0, 0, 1, '78.30', '86.13', '94.74', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(878, 878, 9, 0, 0, 0, 1, '51.40', '56.54', '62.19', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(879, 879, 2, 0, 0, 0, 1, '96.80', '106.48', '117.13', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(880, 880, 16, 0, 0, 0, 1, '27.80', '30.58', '33.64', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(881, 881, 8, 0, 0, 0, 1, '63.00', '69.30', '76.23', '2024-08-09 21:40:52', '2024-08-09 21:40:52'),
+(882, 882, 17, 0, 0, 0, 1, '18.10', '19.91', '21.90', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(883, 883, 11, 0, 0, 0, 1, '89.70', '98.67', '108.54', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(884, 884, 13, 0, 0, 0, 1, '92.80', '102.08', '112.29', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(885, 885, 5, 0, 0, 0, 1, '34.40', '37.84', '41.62', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(886, 886, 9, 0, 0, 0, 1, '54.30', '59.73', '65.70', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(887, 887, 15, 0, 0, 0, 1, '42.70', '46.97', '51.67', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(888, 888, 20, 0, 0, 0, 1, '60.20', '66.22', '72.84', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(889, 889, 10, 0, 0, 0, 1, '25.00', '27.50', '30.25', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(890, 890, 9, 0, 0, 0, 1, '27.20', '29.92', '32.91', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(891, 891, 4, 0, 0, 0, 1, '30.10', '33.11', '36.42', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(892, 892, 16, 0, 0, 0, 1, '59.70', '65.67', '72.24', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(893, 893, 6, 0, 0, 0, 1, '36.50', '40.15', '44.17', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(894, 894, 5, 0, 0, 0, 1, '59.20', '65.12', '71.63', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(895, 895, 17, 0, 0, 0, 1, '23.30', '25.63', '28.19', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(896, 896, 15, 0, 0, 0, 1, '30.10', '33.11', '36.42', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(897, 897, 11, 0, 0, 0, 1, '89.10', '98.01', '107.81', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(898, 898, 17, 0, 0, 0, 1, '15.40', '16.94', '18.63', '2024-08-09 21:40:53', '2024-08-09 21:40:53'),
+(899, 899, 6, 0, 0, 0, 1, '51.90', '57.09', '62.80', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(900, 900, 7, 0, 0, 0, 1, '31.80', '34.98', '38.48', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(901, 901, 11, 0, 0, 0, 1, '67.20', '73.92', '81.31', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(902, 902, 5, 0, 0, 0, 1, '25.60', '28.16', '30.98', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(903, 903, 5, 0, 0, 0, 1, '25.90', '28.49', '31.34', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(904, 904, 9, 0, 0, 0, 1, '51.90', '57.09', '62.80', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(905, 905, 3, 0, 0, 0, 1, '18.00', '19.80', '21.78', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(906, 906, 6, 0, 0, 0, 1, '34.70', '38.17', '41.99', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(907, 907, 6, 0, 0, 0, 1, '64.80', '71.28', '78.41', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(908, 908, 20, 0, 0, 0, 1, '26.50', '29.15', '32.07', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(909, 909, 14, 0, 0, 0, 1, '21.90', '24.09', '26.50', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(910, 910, 10, 0, 0, 0, 1, '23.00', '25.30', '27.83', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(911, 911, 12, 0, 0, 0, 1, '81.00', '89.10', '98.01', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(912, 912, 4, 0, 0, 0, 1, '13.40', '14.74', '16.21', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(913, 913, 12, 0, 0, 0, 1, '87.10', '95.81', '105.39', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(914, 914, 9, 0, 0, 0, 1, '24.30', '26.73', '29.40', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(915, 915, 4, 0, 0, 0, 1, '41.50', '45.65', '50.22', '2024-08-09 21:40:54', '2024-08-09 21:40:54'),
+(916, 916, 11, 0, 0, 0, 1, '66.20', '72.82', '80.10', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(917, 917, 20, 0, 0, 0, 1, '96.20', '105.82', '116.40', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(918, 918, 6, 0, 0, 0, 1, '79.40', '87.34', '96.07', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(919, 919, 4, 0, 0, 0, 1, '63.70', '70.07', '77.08', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(920, 920, 13, 0, 0, 0, 1, '82.60', '90.86', '99.95', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(921, 921, 7, 0, 0, 0, 1, '95.30', '104.83', '115.31', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(922, 922, 13, 0, 0, 0, 1, '95.70', '105.27', '115.80', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(923, 923, 7, 0, 0, 0, 1, '19.80', '21.78', '23.96', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(924, 924, 6, 0, 0, 0, 1, '41.30', '45.43', '49.97', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(925, 925, 11, 0, 0, 0, 1, '55.50', '61.05', '67.16', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(926, 926, 10, 0, 0, 0, 1, '38.10', '41.91', '46.10', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(927, 927, 12, 0, 0, 0, 1, '63.60', '69.96', '76.96', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(928, 928, 20, 0, 0, 0, 1, '29.00', '31.90', '35.09', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(929, 929, 8, 0, 0, 0, 1, '94.70', '104.17', '114.59', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(930, 930, 7, 0, 0, 0, 1, '24.80', '27.28', '30.01', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(931, 931, 3, 0, 0, 0, 1, '96.60', '106.26', '116.89', '2024-08-09 21:40:55', '2024-08-09 21:40:55'),
+(932, 932, 18, 0, 0, 0, 1, '41.60', '45.76', '50.34', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(933, 933, 8, 0, 0, 0, 1, '24.50', '26.95', '29.65', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(934, 934, 19, 0, 0, 0, 1, '91.80', '100.98', '111.08', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(935, 935, 10, 0, 0, 0, 1, '36.50', '40.15', '44.17', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(936, 936, 9, 0, 0, 0, 1, '74.20', '81.62', '89.78', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(937, 937, 18, 0, 0, 0, 1, '14.60', '16.06', '17.67', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(938, 938, 11, 0, 0, 0, 1, '76.50', '84.15', '92.57', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(939, 939, 4, 0, 0, 0, 1, '32.90', '36.19', '39.81', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(940, 940, 4, 0, 0, 0, 1, '13.40', '14.74', '16.21', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(941, 941, 16, 0, 0, 0, 1, '49.00', '53.90', '59.29', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(942, 942, 13, 0, 0, 0, 1, '99.60', '109.56', '120.52', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(943, 943, 16, 0, 0, 0, 1, '26.00', '28.60', '31.46', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(944, 944, 16, 0, 0, 0, 1, '60.60', '66.66', '73.33', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(945, 945, 13, 0, 0, 0, 1, '51.30', '56.43', '62.07', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(946, 946, 11, 0, 0, 0, 1, '12.70', '13.97', '15.37', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(947, 947, 5, 0, 0, 0, 1, '17.30', '19.03', '20.93', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(948, 948, 17, 0, 0, 0, 1, '55.20', '60.72', '66.79', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(949, 949, 19, 0, 0, 0, 1, '85.50', '94.05', '103.46', '2024-08-09 21:40:56', '2024-08-09 21:40:56'),
+(950, 950, 9, 0, 0, 0, 1, '44.60', '49.06', '53.97', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(951, 951, 12, 0, 0, 0, 1, '43.00', '47.30', '52.03', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(953, 953, 20, 0, 0, 0, 1, '18.70', '20.57', '22.63', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(954, 954, 8, 0, 0, 0, 1, '80.30', '88.33', '97.16', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(955, 955, 11, 0, 0, 0, 1, '36.70', '40.37', '44.41', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(956, 956, 14, 0, 0, 0, 1, '98.00', '107.80', '118.58', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(957, 957, 17, 0, 0, 0, 1, '26.70', '29.37', '32.31', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(958, 958, 10, 0, 0, 0, 1, '27.50', '30.25', '33.28', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(959, 959, 11, 0, 0, 0, 1, '62.90', '69.19', '76.11', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(960, 960, 3, 0, 0, 0, 1, '81.70', '89.87', '98.86', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(961, 961, 17, 0, 0, 0, 1, '47.60', '52.36', '57.60', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(962, 962, 13, 0, 0, 0, 1, '77.20', '84.92', '93.41', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(963, 963, 5, 0, 0, 0, 1, '37.90', '41.69', '45.86', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(964, 964, 2, 0, 0, 0, 1, '64.90', '71.39', '78.53', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(965, 965, 17, 0, 0, 0, 1, '67.90', '74.69', '82.16', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(966, 966, 15, 0, 0, 0, 1, '97.50', '107.25', '117.98', '2024-08-09 21:40:57', '2024-08-09 21:40:57'),
+(967, 967, 6, 0, 0, 0, 1, '45.50', '50.05', '55.06', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(968, 968, 2, 0, 0, 0, 1, '32.70', '35.97', '39.57', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(969, 969, 10, 0, 0, 0, 1, '21.10', '23.21', '25.53', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(970, 970, 17, 0, 0, 0, 1, '12.10', '13.31', '14.64', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(971, 971, 11, 0, 0, 0, 1, '53.80', '59.18', '65.10', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(972, 972, 8, 0, 0, 0, 1, '37.20', '40.92', '45.01', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(973, 973, 6, 0, 0, 0, 1, '77.00', '84.70', '93.17', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(974, 974, 1, 0, 0, 0, 1, '40.90', '44.99', '49.49', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(975, 975, 5, 0, 0, 0, 1, '88.00', '96.80', '106.48', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(976, 976, 19, 0, 0, 0, 1, '50.90', '55.99', '61.59', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(977, 977, 4, 0, 0, 0, 1, '25.20', '27.72', '30.49', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(978, 978, 9, 0, 0, 0, 1, '25.00', '27.50', '30.25', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(979, 979, 4, 0, 0, 0, 1, '95.50', '105.05', '115.56', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(980, 980, 4, 0, 0, 0, 1, '29.40', '32.34', '35.57', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(981, 981, 17, 0, 0, 0, 1, '89.00', '97.90', '107.69', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(982, 982, 10, 0, 0, 0, 1, '64.80', '71.28', '78.41', '2024-08-09 21:40:58', '2024-08-09 21:40:58'),
+(983, 983, 3, 0, 0, 0, 1, '51.50', '56.65', '62.32', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(984, 984, 5, 0, 0, 0, 1, '29.40', '32.34', '35.57', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(985, 985, 20, 0, 0, 0, 1, '80.50', '88.55', '97.41', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(986, 986, 15, 0, 0, 0, 1, '74.20', '81.62', '89.78', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(987, 987, 20, 0, 0, 0, 1, '25.10', '27.61', '30.37', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(988, 988, 10, 0, 0, 0, 1, '93.20', '102.52', '112.77', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(989, 989, 12, 0, 0, 0, 1, '71.20', '78.32', '86.15', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(990, 990, 17, 0, 0, 0, 1, '16.60', '18.26', '20.09', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(991, 991, 3, 0, 0, 0, 1, '47.30', '52.03', '57.23', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(992, 992, 12, 0, 0, 0, 1, '81.10', '89.21', '98.13', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(993, 993, 15, 0, 0, 0, 1, '86.70', '95.37', '104.91', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(994, 994, 1, 0, 0, 0, 1, '90.80', '99.88', '109.87', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(995, 995, 3, 0, 0, 0, 1, '38.00', '41.80', '45.98', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(996, 996, 18, 0, 0, 0, 1, '93.00', '102.30', '112.53', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(997, 997, 4, 0, 0, 0, 1, '12.70', '13.97', '15.37', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(998, 998, 12, 0, 0, 0, 1, '23.80', '26.18', '28.80', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(999, 999, 4, 0, 0, 0, 1, '82.60', '90.86', '99.95', '2024-08-09 21:40:59', '2024-08-09 21:40:59'),
+(1000, 1000, 2, 0, 0, 0, 1, '93.70', '103.07', '113.38', '2024-08-09 21:41:00', '2024-08-09 21:41:00'),
+(1004, 672, 2, 3, 4, 2, 1, '56.00', '100.00', '89.90', '2024-12-27 07:49:48', '2024-12-27 07:49:48'),
+(1005, 672, 5, 4, 3, 6, 1, '1.00', '3.00', '2.00', '2024-12-27 07:49:48', '2024-12-27 07:49:48'),
+(1006, 672, 6, 1, 2, 5, 1, '23.00', '25.00', '24.00', '2024-12-27 07:49:48', '2024-12-27 07:49:48'),
+(1012, 666, 17, 1, 1, 1, 1, '64.80', '71.28', '78.41', '2025-01-05 08:29:07', '2025-01-05 08:29:07'),
+(1027, 952, 17, NULL, NULL, 3, 1, '74.40', '81.84', '90.02', '2026-02-17 06:42:55', '2026-02-17 06:42:55'),
+(1028, 952, 7, NULL, NULL, 5, 1, '23.00', '1200.00', '1200.00', '2026-02-17 06:42:55', '2026-02-17 06:42:55'),
+(1029, 952, 9, NULL, NULL, 3, 1, '3.00', '6.00', '4.00', '2026-02-17 06:42:55', '2026-02-17 06:42:55');
 
 -- --------------------------------------------------------
 
@@ -5463,12 +5467,12 @@ INSERT INTO `item_prices` (`id`, `item_id`, `unit_id`, `color_id`, `size_id`, `q
 --
 
 CREATE TABLE `menus` (
-  `id` bigint UNSIGNED NOT NULL,
-  `parent_id` int NOT NULL,
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `is_visible` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -5502,9 +5506,9 @@ INSERT INTO `menus` (`id`, `parent_id`, `icon`, `name`, `path`, `is_visible`, `c
 --
 
 CREATE TABLE `menu_role` (
-  `id` bigint UNSIGNED NOT NULL,
-  `menu_id` bigint UNSIGNED DEFAULT NULL,
-  `role_id` bigint UNSIGNED DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `menu_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `role_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -5518,10 +5522,31 @@ INSERT INTO `menu_role` (`id`, `menu_id`, `role_id`, `created_at`, `updated_at`)
 (2, 2, 1, '2024-11-01 08:19:01', '2024-11-01 08:19:04'),
 (3, 3, 1, '2024-11-08 08:18:53', '2024-11-15 08:18:58'),
 (19, 4, 1, '2024-01-04 06:52:45', '2024-01-04 06:52:45'),
-(20, 5, 1, '2024-07-07 08:59:53', '2024-07-07 08:59:53'),
-(22, 16, 1, '2024-01-04 06:52:45', '2024-01-04 06:52:45'),
-(23, 17, 1, '2024-11-29 08:19:37', '2024-11-29 08:19:37'),
-(24, 15, 1, '2026-01-25 06:19:12', '2026-01-25 06:19:12');
+(20, 8, 1, '2024-07-07 08:59:53', '2024-07-07 08:59:53'),
+(22, 9, 1, '2024-01-04 06:52:45', '2024-01-04 06:52:45'),
+(23, 11, 1, '2024-11-29 08:19:37', '2024-11-29 08:19:37'),
+(24, 15, 1, '2026-01-25 06:19:12', '2026-01-25 06:19:12'),
+(26, 16, 1, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(27, 1, 2, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(28, 2, 2, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(31, 3, 2, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(32, 4, 2, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(33, 8, 2, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(34, 9, 2, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(35, 11, 2, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(36, 15, 2, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(37, 16, 2, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(38, 1, 3, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(39, 2, 3, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(40, 3, 3, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(41, 5, 3, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(42, 6, 3, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(43, 7, 3, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(44, 11, 3, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(45, 12, 3, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(46, 1, 7, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
+(47, 2, 7, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
+(48, 3, 7, '2026-05-08 16:19:25', '2026-05-08 16:19:25');
 
 -- --------------------------------------------------------
 
@@ -5530,9 +5555,9 @@ INSERT INTO `menu_role` (`id`, `menu_id`, `role_id`, `created_at`, `updated_at`)
 --
 
 CREATE TABLE `menu_role_access_right` (
-  `id` bigint UNSIGNED NOT NULL,
-  `menu_role_id` bigint NOT NULL,
-  `access_right_id` bigint NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `menu_role_id` bigint(20) NOT NULL,
+  `access_right_id` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -5640,9 +5665,9 @@ INSERT INTO `menu_role_access_right` (`id`, `menu_role_id`, `access_right_id`, `
 --
 
 CREATE TABLE `migrations` (
-  `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -5722,9 +5747,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `mobile_otp` (
-  `id` bigint UNSIGNED NOT NULL,
-  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reset_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `mobile` varchar(255) NOT NULL,
+  `reset_code` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -5737,8 +5762,8 @@ CREATE TABLE `mobile_otp` (
 --
 
 CREATE TABLE `normal_balance` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -5758,11 +5783,11 @@ INSERT INTO `normal_balance` (`id`, `name`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `oauth_access_tokens` (
-  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `client_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` varchar(100) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `scopes` text DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -5774,105 +5799,123 @@ CREATE TABLE `oauth_access_tokens` (
 --
 
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
-('064543e9b97e5964342ec60cd109b680c8e493313b72479a5dfde9ac8de8cefc10bb787403a525a2', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:38:14', '2026-04-19 04:55:51', '2027-01-02 11:38:14'),
-('07ec07e758ebc73940fcc5543e19facdad296fc4cbc77ec4532a3a68070ba29cd8526977b9593665', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:17:16', '2026-04-19 04:55:51', '2027-01-03 08:17:16'),
+('064543e9b97e5964342ec60cd109b680c8e493313b72479a5dfde9ac8de8cefc10bb787403a525a2', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:38:14', '2026-04-27 07:28:27', '2027-01-02 11:38:14'),
+('07ec07e758ebc73940fcc5543e19facdad296fc4cbc77ec4532a3a68070ba29cd8526977b9593665', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:17:16', '2026-04-27 07:28:27', '2027-01-03 08:17:16'),
 ('08dc80a72f980b7aa94a6629c938f24ed87c4a55c7052220e1c356758225bddea3655536500131d7', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:16:30', '2024-12-27 10:11:23', '2025-12-27 08:16:30'),
 ('0d693be89a6b2905b345816f76c70e9b78e9382c454cbd2d6ce744b3c79b1874b209670642bac991', 27, 1, 'MyApp', '[]', 1, '2026-01-04 08:40:43', '2026-01-04 08:42:12', '2027-01-04 08:40:43'),
-('0e0d0624fdf40436f9480d1e9c973385284470c45f035e7570adfbaf07979930282bb9b5bb0b9a08', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:33', '2026-04-19 04:55:51', '2027-01-02 11:58:33'),
-('0e5985ed6f4cffc9a12a22d0c913acdaf057de42a721d7f89aedb45410904dafa135d54f796486e2', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:31:59', '2026-04-19 04:55:51', '2027-01-02 11:31:59'),
+('0e0d0624fdf40436f9480d1e9c973385284470c45f035e7570adfbaf07979930282bb9b5bb0b9a08', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:33', '2026-04-27 07:28:27', '2027-01-02 11:58:33'),
+('0e5985ed6f4cffc9a12a22d0c913acdaf057de42a721d7f89aedb45410904dafa135d54f796486e2', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:31:59', '2026-04-27 07:28:27', '2027-01-02 11:31:59'),
 ('0e7cd543282dd95ef73fadb14e5b0bfc3844bd2cd80e2765237b1a0ff9c672667cbbc9972b18de06', 26, 1, 'MyApp', '[]', 1, '2024-11-17 06:37:17', '2024-12-27 10:11:23', '2025-11-17 06:37:17'),
 ('10081106e46a3e24711516b8e3257c4ad8a40a275929044cb8c622df6281936c14499166b8ecac70', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:16:41', '2026-01-04 08:42:12', '2025-11-09 08:16:41'),
 ('1008f4f07521284c7e17043b317c08584f8492d3a451df44b855f4180099d1bf7fadebf6ac782b4f', 26, 1, 'MyApp', '[]', 1, '2024-11-16 08:08:58', '2024-12-27 10:11:23', '2025-11-16 08:08:58'),
 ('11644d96ae94fe55f91b298c8b79345de122fa67f8904eaaaf1d3166e53035fea3069ffee68b811f', 24, 1, 'MyApp', '[]', 1, '2024-10-16 06:25:13', '2024-10-21 06:08:02', '2025-10-16 06:25:13'),
 ('17f6ba3a4db5eb71a2c0257747fedcd094fea2b8cb94a87596f17ffec21684e273de0390cd878c97', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:18:20', '2026-01-04 08:42:12', '2025-11-09 08:18:20'),
-('19408563346c578755fc17f6a3bd10cd904e9787ae639ec295caeabeefd7c52a2c17d587e7699f9f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:58', '2026-04-19 04:55:51', '2027-01-03 08:37:58'),
+('19408563346c578755fc17f6a3bd10cd904e9787ae639ec295caeabeefd7c52a2c17d587e7699f9f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:58', '2026-04-27 07:28:27', '2027-01-03 08:37:58'),
 ('1a3a4751731ebcee7c11a05c042503ddd378d7ae80af0a4b7001ee5c7cbd660bcb4325f37182c5b8', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:59', '2026-01-04 08:42:12', '2025-11-09 07:54:59'),
 ('1e2e92e2a63fbca9ea8cf6c19705c690600c2262210134cb5b3ada0cc4f525785b76d4452016456f', 27, 1, 'MyApp', '[]', 1, '2026-01-03 07:57:47', '2026-01-04 08:42:12', '2027-01-03 07:57:47'),
-('1e72e53414e234bea7f57cdcf0ce3c0a18d701ded130b22ba16f818712302339addc8205f894e446', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:16', '2026-04-19 04:55:51', '2027-01-03 08:36:16'),
+('1e72e53414e234bea7f57cdcf0ce3c0a18d701ded130b22ba16f818712302339addc8205f894e446', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:16', '2026-04-27 07:28:27', '2027-01-03 08:36:16'),
+('21d0789251dc3dd482761978336bc026993561886a49bd01733ba3252f68dbe4d9a0dbcc7b59e3e0', 28, 1, 'MyApp', '[]', 1, '2026-04-27 07:14:56', '2026-04-27 07:28:27', '2027-04-27 16:14:56'),
 ('2420749a34d4c84867c148d03337f2e4b9c0d2dc09e282194447377882ad89784c95bf6bed9b4e60', 26, 1, 'MyApp', '[]', 1, '2024-12-23 10:07:37', '2024-12-27 10:11:23', '2025-12-23 10:07:37'),
-('2708725498c3009a7a45798057934682bd1d979a2d2702a171a38fde7c6468bfd3d1363f943220c2', 28, 1, 'MyApp', '[]', 1, '2026-01-04 09:31:19', '2026-04-19 04:55:51', '2027-01-04 09:31:19'),
-('2777c2d347f1258b7b88239a96959f406c266bbc7233877f63134e59b74d1ba8ab31096c1d1de39f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:40', '2026-04-19 04:55:51', '2027-01-03 08:33:40'),
-('27fd36eec2a3e6ce014e2c4a403e8e38c21a5702138c0bb15aa662ca8e3eaaca3d29d1a7f8b18fcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:15', '2026-04-19 04:55:51', '2027-01-03 08:37:15'),
-('29c14f491f59b7240a6c66d023bf2d38a0e82aba32d36330885ed6c56c9e65908a3a2b8b174a62a3', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:18:58', '2026-04-19 04:55:51', '2027-03-31 10:18:58'),
-('2daac5065de5b214e513ebb8a649c6583ee70afd11a17b6aa2812e7cb6835e031ca2603123b538ae', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:41:40', '2026-04-19 04:55:51', '2027-01-02 11:41:40'),
+('263b3960e4ba02f372fdd9e4bc4bac1aa2f52a265b573c6a838dabae4675c40357bf603427fdf26b', 36, 1, 'facebook-login', '[]', 0, '2026-05-09 16:23:40', '2026-05-09 16:23:40', '2027-05-09 12:23:40'),
+('2708725498c3009a7a45798057934682bd1d979a2d2702a171a38fde7c6468bfd3d1363f943220c2', 28, 1, 'MyApp', '[]', 1, '2026-01-04 09:31:19', '2026-04-27 07:28:27', '2027-01-04 09:31:19'),
+('2777c2d347f1258b7b88239a96959f406c266bbc7233877f63134e59b74d1ba8ab31096c1d1de39f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:40', '2026-04-27 07:28:27', '2027-01-03 08:33:40'),
+('27fd36eec2a3e6ce014e2c4a403e8e38c21a5702138c0bb15aa662ca8e3eaaca3d29d1a7f8b18fcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:15', '2026-04-27 07:28:27', '2027-01-03 08:37:15'),
+('29c14f491f59b7240a6c66d023bf2d38a0e82aba32d36330885ed6c56c9e65908a3a2b8b174a62a3', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:18:58', '2026-04-27 07:28:27', '2027-03-31 10:18:58'),
+('2daac5065de5b214e513ebb8a649c6583ee70afd11a17b6aa2812e7cb6835e031ca2603123b538ae', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:41:40', '2026-04-27 07:28:27', '2027-01-02 11:41:40'),
 ('2de729b26beb70a47c598ab2681c580419752643a29106de0934144368ba89b4d3516dd2f28b784b', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:15:00', '2026-01-04 08:42:12', '2025-11-09 08:15:00'),
 ('2f15e591fbb22e4a1171b78e4fa276c4b1e9f9494e4eaf96e7d4cadbe370f539456bd56b80900bac', 22, 1, 'MyApp', '[]', 1, '2024-11-02 15:04:39', '2024-11-02 15:51:39', '2025-11-02 15:04:39'),
-('33e1c28de0b645acd67f8d83e4750b620ab77c07eadc3adc831f7d8fd2cd5d03ed7d58cf1ab42fe7', 28, 1, 'MyApp', '[]', 1, '2026-02-08 12:51:18', '2026-04-19 04:55:51', '2027-02-08 12:51:18'),
+('3388358016d1d758698885c22188f6137e49c287c7c0cbf0f3e521e7e1f49de46abfd326a4969b43', 33, 1, 'facebook-login', '[]', 0, '2026-05-09 15:51:01', '2026-05-09 15:51:01', '2027-05-09 11:51:01'),
+('33e1c28de0b645acd67f8d83e4750b620ab77c07eadc3adc831f7d8fd2cd5d03ed7d58cf1ab42fe7', 28, 1, 'MyApp', '[]', 1, '2026-02-08 12:51:18', '2026-04-27 07:28:27', '2027-02-08 12:51:18'),
 ('398b15860b85a0801b87e6a5551b799b7e457c18e01c699f9bf84cb9429ac1f516a0d8053a58399c', 26, 1, 'MyApp', '[]', 1, '2024-12-01 08:38:50', '2024-12-27 10:11:23', '2025-12-01 08:38:50'),
+('3b7ddf7304219d31721222a22bfc48b47b9f0db5b87c70c60c33d61700aaf1121679b074db3c0c65', 33, 1, 'facebook-login', '[]', 0, '2026-05-09 15:44:19', '2026-05-09 15:44:19', '2027-05-09 11:44:19'),
+('3bee9cb4389a6bda80c1465d43454edfdf4c9fa837e973efaf580a6c38742149ddd4bac4fee1da9e', 28, 1, 'MyApp', '[]', 1, '2026-04-27 07:09:47', '2026-04-27 07:28:27', '2027-04-27 16:09:47'),
 ('3cc4ef471b4e5d6a059a4f673d6374b160c4434f96606c63ea2a151b998fefb8494c8f985950a065', 25, 1, 'MyApp', '[]', 0, '2024-10-16 05:29:51', '2024-10-16 05:29:51', '2025-10-16 05:29:51'),
-('40eb2ef42e85b84edec253014fdbf99cad9600a3be992fd4d6825f62eacf75219a556e3b0120df96', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:25:24', '2026-04-19 04:55:51', '2027-01-03 08:25:24'),
-('40fcc5186228e9f612dd3c834332773b231625a293f72b7a79b52cab324cf94928cc94e7f88479fd', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:17:13', '2026-04-19 04:55:51', '2027-03-31 10:17:13'),
+('40eb2ef42e85b84edec253014fdbf99cad9600a3be992fd4d6825f62eacf75219a556e3b0120df96', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:25:24', '2026-04-27 07:28:27', '2027-01-03 08:25:24'),
+('40fcc5186228e9f612dd3c834332773b231625a293f72b7a79b52cab324cf94928cc94e7f88479fd', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:17:13', '2026-04-27 07:28:27', '2027-03-31 10:17:13'),
 ('419f506a30f79d338ffa4bc08352cf642a44e6936606b333864ed38a790dea1629b73f3d8e83476d', 26, 1, 'MyApp', '[]', 0, '2024-12-27 10:11:51', '2024-12-27 10:11:51', '2025-12-27 10:11:51'),
+('41a0a6afc666f2c3e2e3f65d7a107edb29f411d72f3a8ffb1feb6fd61a1f00d1724d0c4242d75166', 34, 1, 'facebook-login', '[]', 0, '2026-05-09 16:04:35', '2026-05-09 16:04:35', '2027-05-09 12:04:35'),
 ('42fe3fe21ebb6a28499a8450bbd3057246572d10b62637a798c49a118e4f0fbf3cfcffafb29b8d8d', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:16:45', '2024-12-27 10:11:23', '2025-12-27 08:16:45'),
-('453c9f023ddd895c7a25a77adaf763ae83aa3815acfa4277638091daa181a8605d1e0337b946725b', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:44', '2026-04-19 04:55:51', '2027-01-03 08:38:44'),
-('477457618e9077e84d40507e09633a51087a7fd5703525c511df1cecc2c810587c03d64bfe4e9dcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:36', '2026-04-19 04:55:51', '2027-01-03 08:37:36'),
-('48111d11a7cc0752747e8d9d006314e1693e10e8a32bb85b4079e2a7f1453823344171c83500bf2a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 07:59:20', '2026-04-19 04:55:51', '2027-01-03 07:59:20'),
-('4b8f9121c9f01408ba8ecfac65d5d25dddce344323a4aaf94b1a4204281897fca1875f1540f1aeda', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:47', '2026-04-19 04:55:51', '2027-01-03 08:36:47'),
-('4bd2007d7151a9acc2df965ffb4504830e086469d5499dfe57162097dcb5108498141464949bfc23', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:24:45', '2026-04-19 04:55:51', '2027-01-03 08:24:45'),
+('453c9f023ddd895c7a25a77adaf763ae83aa3815acfa4277638091daa181a8605d1e0337b946725b', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:44', '2026-04-27 07:28:27', '2027-01-03 08:38:44'),
+('46acae5386aa6ff7b491393c0ae3b6f119ff59ffc8c5cbdb32368a960566b4495d321b44dd5db327', 30, 1, 'facebook-login', '[]', 0, '2026-05-09 15:29:53', '2026-05-09 15:29:53', '2027-05-09 11:29:53'),
+('477457618e9077e84d40507e09633a51087a7fd5703525c511df1cecc2c810587c03d64bfe4e9dcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:36', '2026-04-27 07:28:27', '2027-01-03 08:37:36'),
+('48111d11a7cc0752747e8d9d006314e1693e10e8a32bb85b4079e2a7f1453823344171c83500bf2a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 07:59:20', '2026-04-27 07:28:27', '2027-01-03 07:59:20'),
+('481d3b88d098252fe4a22bfc3209cf68322f6ae978eaea35939b993c120cd493505d7dfe5a146e44', 28, 1, 'MyApp', '[]', 1, '2026-04-27 07:27:41', '2026-04-27 07:28:27', '2027-04-27 16:27:41'),
+('4b8f9121c9f01408ba8ecfac65d5d25dddce344323a4aaf94b1a4204281897fca1875f1540f1aeda', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:47', '2026-04-27 07:28:27', '2027-01-03 08:36:47'),
+('4bd2007d7151a9acc2df965ffb4504830e086469d5499dfe57162097dcb5108498141464949bfc23', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:24:45', '2026-04-27 07:28:27', '2027-01-03 08:24:45'),
 ('4d16abaa62e5c0374b208e34f2af8c256847f67d17c52ab45dcc950062863ee1b293dc960106c607', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:17:05', '2026-01-04 08:42:12', '2025-11-09 08:17:05'),
 ('4fc2287824c1d4a7728b195ebf5656df58d454de4e07ec433e4d147fd61d6a045164c5f5b49240bd', 26, 1, 'MyApp', '[]', 1, '2024-12-15 04:32:50', '2024-12-27 10:11:23', '2025-12-15 04:32:50'),
-('5183829e514f2d8284f732b07718957b511eaa7f2e7e5de8c89415def592ab07094a67b2210b034f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:31:23', '2026-04-19 04:55:51', '2027-01-03 08:31:23'),
+('5183829e514f2d8284f732b07718957b511eaa7f2e7e5de8c89415def592ab07094a67b2210b034f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:31:23', '2026-04-27 07:28:27', '2027-01-03 08:31:23'),
 ('52b301d2025ceebe4a01eaaa670ac95a64e36b0213d7112a3e8cf9e01218544015a071e37b392052', 26, 1, 'MyApp', '[]', 1, '2024-10-21 06:09:56', '2024-12-27 10:11:23', '2025-10-21 06:09:56'),
-('53a096f7e3bbd1108b923a37135d0c24ce311d2c4a8c8ae7f22d91a131931a7384838ea21c857f4c', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:13:42', '2026-04-19 04:55:51', '2027-03-31 10:13:42'),
-('5573e5e410180cea12939e726af44b6f1a102ba24173020988e8e5c058dd2a68220964c81707aa71', 28, 1, 'MyApp', '[]', 1, '2026-04-19 03:21:00', '2026-04-19 04:55:51', '2027-04-19 12:21:00'),
-('5672843e461bc5548ae8ea92a7d6c6f5ba2d4fe0c47a2982d491e0e38f130db0c61c6e6616d34986', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:42', '2026-04-19 04:55:51', '2027-01-03 08:35:42'),
+('53a096f7e3bbd1108b923a37135d0c24ce311d2c4a8c8ae7f22d91a131931a7384838ea21c857f4c', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:13:42', '2026-04-27 07:28:27', '2027-03-31 10:13:42'),
+('5573e5e410180cea12939e726af44b6f1a102ba24173020988e8e5c058dd2a68220964c81707aa71', 28, 1, 'MyApp', '[]', 1, '2026-04-19 03:21:00', '2026-04-27 07:28:27', '2027-04-19 12:21:00'),
+('5672843e461bc5548ae8ea92a7d6c6f5ba2d4fe0c47a2982d491e0e38f130db0c61c6e6616d34986', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:42', '2026-04-27 07:28:27', '2027-01-03 08:35:42'),
 ('576037debeaa758bf8e9ef1517c0930a3f6f106325a08ce0cc1527482711f9b13609bcf40809ad1d', 24, 1, 'MyApp', '[]', 1, '2024-10-13 06:55:13', '2024-10-21 06:08:02', '2025-10-13 06:55:13'),
 ('5970843354c52a61ae896de5c41eddca3e67a638c6ba8c497d36c19bcd40928062779f579c2852aa', 24, 1, 'MyApp', '[]', 1, '2024-10-13 06:53:32', '2024-10-21 06:08:02', '2025-10-13 06:53:32'),
+('598d123291b1e173a2208bc854646d2226f112e01dc9f58a8696843579439c61b9e542ec076abdec', 33, 1, 'facebook-login', '[]', 0, '2026-05-09 15:45:31', '2026-05-09 15:45:31', '2027-05-09 11:45:31'),
 ('605ef3ff38b8242189f6d816836a1e3202c67c4746179abf9be69f09c66d5aee30684ad8d7bd1cde', 24, 1, 'MyApp', '[]', 1, '2024-10-18 08:29:46', '2024-10-21 06:08:02', '2025-10-18 08:29:46'),
+('607753615fda77b416efa09c9dacbb1e110c243056cf4f333b7dbb361a77845bea45634b8763fe96', 34, 1, 'facebook-login', '[]', 0, '2026-05-09 16:03:53', '2026-05-09 16:03:53', '2027-05-09 12:03:53'),
 ('64cbf37f173e7c108ebf3bcc5f4370bf635f2e9df257dcc1f0e45658351362900fbb6d89382bc887', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:17:32', '2026-01-04 08:42:12', '2025-11-09 08:17:32'),
-('66bd63aeff4fb3aa9d8bb60d797a161a7b6ff03e6489ff7684a56053e371c4c7832a70adbf746c22', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:32:44', '2026-04-19 04:55:51', '2027-01-03 08:32:44'),
+('66bd63aeff4fb3aa9d8bb60d797a161a7b6ff03e6489ff7684a56053e371c4c7832a70adbf746c22', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:32:44', '2026-04-27 07:28:27', '2027-01-03 08:32:44'),
 ('6793101e4b8b6e8f33c4b771cda4aad7e07c71b61c352a10349e2c2cbf1ec32b0d8ae5077e83d8a7', 27, 1, 'MyApp', '[]', 1, '2024-11-09 11:21:24', '2026-01-04 08:42:12', '2025-11-09 11:21:24'),
-('684a6010dc575ab96498e9a394982fb859504f37701a408909c1370c414740d8047241e31efae806', 28, 1, 'MyApp', '[]', 1, '2026-01-24 09:09:25', '2026-04-19 04:55:51', '2027-01-24 09:09:25'),
-('7023f2f68cf10bc00a024dc5640f5ef3385a2733670375ea9391fe86604ec55b3ad5cee2794686b6', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:00', '2026-04-19 04:55:51', '2027-01-03 08:35:00'),
+('684a6010dc575ab96498e9a394982fb859504f37701a408909c1370c414740d8047241e31efae806', 28, 1, 'MyApp', '[]', 1, '2026-01-24 09:09:25', '2026-04-27 07:28:27', '2027-01-24 09:09:25'),
+('7023f2f68cf10bc00a024dc5640f5ef3385a2733670375ea9391fe86604ec55b3ad5cee2794686b6', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:00', '2026-04-27 07:28:27', '2027-01-03 08:35:00'),
 ('73aacc0261a61a6a27ddfde32dcbcdde4a9c048f498cbee041694fc3bbdc7081b3eb621edee883ef', 27, 1, 'MyApp', '[]', 1, '2024-11-10 10:40:01', '2026-01-04 08:42:12', '2025-11-10 10:40:01'),
-('749d5d4eb2362cc13610d62559cc6b467e6ba56baafcf4030393f111b6a03035508022c64eb50ff5', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:41:58', '2026-04-19 04:55:51', '2027-01-03 08:41:58'),
-('78bd59f1ae72d32b2af501a9ec5f3942577ade545c19b467a48cb21fdfbc60b794db6adc26e111a7', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:42:20', '2026-04-19 04:55:51', '2027-01-02 11:42:20'),
-('7a002c114e833ca9c273e429f45245986b83e0c250d73ae147cd2cd8125c7d177227639c3c4b264e', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:39:10', '2026-04-19 04:55:51', '2027-01-02 11:39:10'),
-('7ebb4b3cb84dc2dfef16ae8827f80ff2624dc53ec377800dde918b97e49f2fd7c3b7cd7037f98efe', 28, 1, 'MyApp', '[]', 1, '2026-01-25 06:55:24', '2026-04-19 04:55:51', '2027-01-25 06:55:24'),
+('749d5d4eb2362cc13610d62559cc6b467e6ba56baafcf4030393f111b6a03035508022c64eb50ff5', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:41:58', '2026-04-27 07:28:27', '2027-01-03 08:41:58'),
+('74d0c8847d022adcfa94f55d07b0ae61eeb0ea57259f2f460173eab0719013854a33aed62a740af9', 31, 1, 'facebook-login', '[]', 0, '2026-05-09 15:33:53', '2026-05-09 15:33:53', '2027-05-09 11:33:53'),
+('78bd59f1ae72d32b2af501a9ec5f3942577ade545c19b467a48cb21fdfbc60b794db6adc26e111a7', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:42:20', '2026-04-27 07:28:27', '2027-01-02 11:42:20'),
+('7a002c114e833ca9c273e429f45245986b83e0c250d73ae147cd2cd8125c7d177227639c3c4b264e', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:39:10', '2026-04-27 07:28:27', '2027-01-02 11:39:10'),
+('7ebb4b3cb84dc2dfef16ae8827f80ff2624dc53ec377800dde918b97e49f2fd7c3b7cd7037f98efe', 28, 1, 'MyApp', '[]', 1, '2026-01-25 06:55:24', '2026-04-27 07:28:27', '2027-01-25 06:55:24'),
+('81342413f4087eb1ee3094067edbe2f2591600bd59b39c06a14eaf2c23f4f86fee797b19c9e6651c', 29, 1, 'facebook-login', '[]', 0, '2026-05-09 15:15:12', '2026-05-09 15:15:12', '2027-05-09 11:15:12'),
 ('81e70348462760e1b9578f69d864fbd332eb4e759a7cb3238df15a68dd483d5175b28945022de803', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:52:17', '2026-01-04 08:42:12', '2025-11-09 07:52:17'),
-('84c69f640fcf9d0f7ed2a11ca4b195b7a1962198d88ba456eeb3bc5ca81c3c3cccf9ee2fb9af4196', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:04:28', '2026-04-19 04:55:51', '2027-01-02 12:04:28'),
-('84cd113fe921f3aae3e14ac2c82107f1cacec2ee280a2c31003eb5583e65a895dde8f1087e9f0e6d', 28, 1, 'MyApp', '[]', 1, '2026-01-25 06:16:09', '2026-04-19 04:55:51', '2027-01-25 06:16:09'),
+('84c69f640fcf9d0f7ed2a11ca4b195b7a1962198d88ba456eeb3bc5ca81c3c3cccf9ee2fb9af4196', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:04:28', '2026-04-27 07:28:27', '2027-01-02 12:04:28'),
+('84cd113fe921f3aae3e14ac2c82107f1cacec2ee280a2c31003eb5583e65a895dde8f1087e9f0e6d', 28, 1, 'MyApp', '[]', 1, '2026-01-25 06:16:09', '2026-04-27 07:28:27', '2027-01-25 06:16:09'),
 ('87a65251d2b06656d51e9f25012ba6319ae46657b11565d577c7f45ba8e650dae6c10b3909edb529', 23, 1, 'MyApp', '[]', 0, '2024-10-13 06:35:15', '2024-10-13 06:35:15', '2025-10-13 06:35:15'),
 ('87aec5d048f4293a100c83deb3eadffe694bdecd6b5882427083d513f41ebc776eed7c329bcb7493', 27, 1, 'MyApp', '[]', 1, '2025-12-30 08:59:27', '2026-01-04 08:42:12', '2026-12-30 08:59:27'),
-('897c3ec58b37b29092e35226f8af0b2a6864d76f23203e5fdf45a273c043de1184b06fb7782c6e98', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:53', '2026-04-19 04:55:51', '2027-01-02 11:58:53'),
-('8bbdd03adfd33d5e85d73fde3b2976a39d8c5eda64bbb9ec946c28923dfacaf8cc0cba22fcff5756', 28, 1, 'MyApp', '[]', 0, '2026-04-21 01:35:26', '2026-04-21 01:35:26', '2027-04-21 10:35:26'),
-('8d59609d992514fe04c01b6b4773a4ce2afc3e8d47c3fbe1fb0dcccc30b458e27ef7b68851e5f3d5', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:59:34', '2026-04-19 04:55:51', '2027-01-02 11:59:34'),
+('897c3ec58b37b29092e35226f8af0b2a6864d76f23203e5fdf45a273c043de1184b06fb7782c6e98', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:53', '2026-04-27 07:28:27', '2027-01-02 11:58:53'),
+('8bbdd03adfd33d5e85d73fde3b2976a39d8c5eda64bbb9ec946c28923dfacaf8cc0cba22fcff5756', 28, 1, 'MyApp', '[]', 1, '2026-04-21 01:35:26', '2026-04-27 07:28:27', '2027-04-21 10:35:26'),
+('8d59609d992514fe04c01b6b4773a4ce2afc3e8d47c3fbe1fb0dcccc30b458e27ef7b68851e5f3d5', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:59:34', '2026-04-27 07:28:27', '2027-01-02 11:59:34'),
 ('8d7169ffafe380572c9ddb7d7482c778532da60b661eebdfde65feb0f97e790008e32a27f06deede', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:07', '2026-01-04 08:42:12', '2025-11-09 07:54:07'),
 ('912ec3193a684f170e4ff796e19c0e79733c00654012dfcc7b51a91b751d2f4e131a0648076b760d', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:18:47', '2024-12-27 10:11:23', '2025-12-27 08:18:47'),
 ('99d91f4820b2024068933cdd2eacf4bb0d85c33f8e3794eaeb5a738dbd938964494bc23944f0a487', 26, 1, 'MyApp', '[]', 1, '2024-11-16 09:15:00', '2024-12-27 10:11:23', '2025-11-16 09:15:00'),
 ('9d647f9e304ecfacdb3f362a72d0153227d21678c1090533e2914b95e62af6d723fde7edd73edad9', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:16:04', '2026-01-04 08:42:12', '2025-11-09 08:16:04'),
-('a97b52dc4a10e69cb06656590132c2298ec6e9bc92fbf6b570f61beb1f261ed70b3dace4657fe974', 28, 1, 'MyApp', '[]', 1, '2026-01-04 08:51:00', '2026-04-19 04:55:51', '2027-01-04 08:51:00'),
-('ac28a0356a0a92d8ef39c5ae70f9d12cbf3dc35b56bd209a4b31212783a5c4349abf8e832a6f72e7', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:16:08', '2026-04-19 04:55:51', '2027-03-31 10:16:08'),
-('addc34f84de345442322abef9d9cd3c32e819cad317f3d6074e2f7e6cbde6128e37495e1bf6057bd', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:21', '2026-04-19 04:55:51', '2027-01-02 11:58:21'),
-('ae9f7e815550c19616d5484d23b9a1bf70291c78fffb32620596283c917ccdc559d6b06270f5313a', 28, 1, 'MyApp', '[]', 1, '2026-04-18 06:19:18', '2026-04-19 04:55:51', '2027-04-18 15:19:18'),
-('aed22c26f0486598455ff065d8a36bec12b259cdeb8fb9d32aa7867d10e4c72d7ab2fda1772af056', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:27:57', '2026-04-19 04:55:51', '2027-01-03 08:27:57'),
-('b21b0ac9396ab2d58b490f33c941c4f528aad6b405a5fa4d3884498c61b084060ff56d8c6d53bddf', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:26:33', '2026-04-19 04:55:51', '2027-01-03 08:26:33'),
+('a97b52dc4a10e69cb06656590132c2298ec6e9bc92fbf6b570f61beb1f261ed70b3dace4657fe974', 28, 1, 'MyApp', '[]', 1, '2026-01-04 08:51:00', '2026-04-27 07:28:27', '2027-01-04 08:51:00'),
+('ac28a0356a0a92d8ef39c5ae70f9d12cbf3dc35b56bd209a4b31212783a5c4349abf8e832a6f72e7', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:16:08', '2026-04-27 07:28:27', '2027-03-31 10:16:08'),
+('addc34f84de345442322abef9d9cd3c32e819cad317f3d6074e2f7e6cbde6128e37495e1bf6057bd', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:21', '2026-04-27 07:28:27', '2027-01-02 11:58:21'),
+('ae92df663d19f1a93dcaacd0e2fd0dd5d372f21461dda738b323b49c72fd49d998f3569d8ad4c813', 28, 1, 'MyApp', '[]', 1, '2026-04-27 02:01:03', '2026-04-27 07:28:27', '2027-04-27 11:01:03'),
+('ae9f7e815550c19616d5484d23b9a1bf70291c78fffb32620596283c917ccdc559d6b06270f5313a', 28, 1, 'MyApp', '[]', 1, '2026-04-18 06:19:18', '2026-04-27 07:28:27', '2027-04-18 15:19:18'),
+('aed22c26f0486598455ff065d8a36bec12b259cdeb8fb9d32aa7867d10e4c72d7ab2fda1772af056', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:27:57', '2026-04-27 07:28:27', '2027-01-03 08:27:57'),
+('b0b083a7a1776989a03c51835a21478db4b16a79fa6e6d13c42869a3a76505c3fb95dbdb088e30ee', 28, 1, 'MyApp', '[]', 1, '2026-04-27 07:26:28', '2026-04-27 07:28:27', '2027-04-27 16:26:28'),
+('b21b0ac9396ab2d58b490f33c941c4f528aad6b405a5fa4d3884498c61b084060ff56d8c6d53bddf', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:26:33', '2026-04-27 07:28:27', '2027-01-03 08:26:33'),
 ('b3bf45a510ca423059a9380bcbf8f6f5f5f8b213ef81a8b0a3fbaa25bb75de64077a37317226e04d', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:27', '2026-01-04 08:42:12', '2025-11-09 07:54:27'),
-('bc6a6484dbfe15bbc1f481d67569a6f7e47eb76b4cf6921356a2a1dcad7c7055655ad74d1d044f4d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:59', '2026-04-19 04:55:51', '2027-01-03 08:33:59'),
-('bd73558a74772ba7a9a8d5720c61fa3ed0ff9f9d4f2c16a9ff18640aa5c04a0cfeffd810e25d4b9a', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:21:21', '2026-04-19 04:55:51', '2027-03-31 10:21:21'),
+('bc6a6484dbfe15bbc1f481d67569a6f7e47eb76b4cf6921356a2a1dcad7c7055655ad74d1d044f4d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:59', '2026-04-27 07:28:27', '2027-01-03 08:33:59'),
+('bd73558a74772ba7a9a8d5720c61fa3ed0ff9f9d4f2c16a9ff18640aa5c04a0cfeffd810e25d4b9a', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:21:21', '2026-04-27 07:28:27', '2027-03-31 10:21:21'),
+('be8c7f239b907688cc369f1e6576a295c346d330fcadc159669e47f93910e07b12da3be791ed814b', 32, 1, 'facebook-login', '[]', 0, '2026-05-09 15:39:22', '2026-05-09 15:39:22', '2027-05-09 11:39:22'),
 ('c0c0e24c4820c844e7b4f1de956cef510ee47d87eae6dad0493a72399a07a965baa87bbd5e1cb425', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:04', '2026-01-04 08:42:12', '2025-11-09 08:13:04'),
-('c26c68807dc164fab874c409ae970b584fd04d5b75d5091cc6cc8973f362e6e4eb7d1a30456d13e8', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:40:30', '2026-04-19 04:55:51', '2027-01-03 08:40:30'),
-('cc824b2942c2d638645cad7db5058f85b5a9b3f0ddeffbd258fc3a5da9ea1c062ca97298c5b0f0cd', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:49', '2026-04-19 04:55:51', '2027-01-03 08:38:49'),
-('d09877fdb46309a39f069609830a3f33768d31d03083533e57e94fa25f5f0b025d7cff8a1d92a825', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:09', '2026-04-19 04:55:51', '2027-01-03 08:39:09'),
-('d0c5eb51c198db805992c3ccf98c5c875ec2e387bf41eaf1fc77b6b257fa448176c7f5004086c62d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:42:26', '2026-04-19 04:55:51', '2027-01-03 08:42:26'),
-('d490d081096e9519aeb3affb0ca3b4d71be71e5d51baee7d370b8658719ba9f13c5558b29064bd54', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:00:02', '2026-04-19 04:55:51', '2027-01-02 12:00:02'),
+('c26c68807dc164fab874c409ae970b584fd04d5b75d5091cc6cc8973f362e6e4eb7d1a30456d13e8', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:40:30', '2026-04-27 07:28:27', '2027-01-03 08:40:30'),
+('cbcddd3bd5ff18f8227c4edf8698ab49005f84dcdd1e220a53d0c3828a59be774fcd433a986cbc28', 29, 1, 'facebook-login', '[]', 0, '2026-05-09 15:22:42', '2026-05-09 15:22:42', '2027-05-09 11:22:42'),
+('cc824b2942c2d638645cad7db5058f85b5a9b3f0ddeffbd258fc3a5da9ea1c062ca97298c5b0f0cd', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:49', '2026-04-27 07:28:27', '2027-01-03 08:38:49'),
+('d09877fdb46309a39f069609830a3f33768d31d03083533e57e94fa25f5f0b025d7cff8a1d92a825', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:09', '2026-04-27 07:28:27', '2027-01-03 08:39:09'),
+('d0c5eb51c198db805992c3ccf98c5c875ec2e387bf41eaf1fc77b6b257fa448176c7f5004086c62d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:42:26', '2026-04-27 07:28:27', '2027-01-03 08:42:26'),
+('d10afa80df9b4e584652016dad3c46131b466ee7d3e7c7403cbe040f686f160d0de28811756d34ef', 35, 1, 'facebook-login', '[]', 0, '2026-05-09 16:08:53', '2026-05-09 16:08:53', '2027-05-09 12:08:53'),
+('d490d081096e9519aeb3affb0ca3b4d71be71e5d51baee7d370b8658719ba9f13c5558b29064bd54', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:00:02', '2026-04-27 07:28:27', '2027-01-02 12:00:02'),
 ('d5a8de12179a27b1c6f243e8722ed183346bfe1883b67d7c097bb3b5b35d0c1f1b628e407f6a3b19', 27, 1, 'MyApp', '[]', 1, '2024-10-21 06:17:34', '2026-01-04 08:42:12', '2025-10-21 06:17:34'),
-('d76fd93f9b7d4fefc43026291e6808a52f9cf41b7611ecb16da2c48beabacfd8c49a9454a596927f', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:55:10', '2026-04-19 04:55:51', '2027-01-02 11:55:10'),
+('d76fd93f9b7d4fefc43026291e6808a52f9cf41b7611ecb16da2c48beabacfd8c49a9454a596927f', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:55:10', '2026-04-27 07:28:27', '2027-01-02 11:55:10'),
+('d926503a4e14c5b45a22ea58fd16f91f93af747268e8f6865d6dfbe9324fa581475eee4428d78f7a', 29, 1, 'facebook-login', '[]', 0, '2026-05-09 15:15:41', '2026-05-09 15:15:41', '2027-05-09 11:15:41'),
 ('da38243a2ba02f7ce04eb156390e5fb30006882963b304e4a1944018e779d6ee4b53ec80d7274a8e', 11, 1, 'MyApp', '[]', 1, '2024-11-02 15:55:07', '2024-11-09 07:43:32', '2025-11-02 15:55:07'),
 ('dc6bb1b59adc2b1ad274d5c2fa984e907fe0a63794cf1b509bd883fa188d71484bd112a47a5f8190', 26, 1, 'MyApp', '[]', 1, '2024-12-15 04:26:18', '2024-12-27 10:11:23', '2025-12-15 04:26:18'),
 ('de4cd7e43e450b1bb006da6ec6c23a4b1eabe4a8166dd9e93e265fed503b0c189662b7a5d8e06135', 26, 1, 'MyApp', '[]', 1, '2024-11-17 06:36:24', '2024-12-27 10:11:23', '2025-11-17 06:36:24'),
 ('df1ea0409e7d47b74718a5c00bcd56fd53ed0f8c88e8f9ff177ff985ef8735ff1089f87f1debb62c', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:16', '2026-01-04 08:42:12', '2025-11-09 08:13:16'),
 ('e0d551a2f15ea926573450cae08fe95e067ee7e95503c6dfe9a56c82b007ef1d39607516b369c41f', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:48', '2026-01-04 08:42:12', '2025-11-09 08:13:48'),
-('e21c3d7cacc635201db49dda1b04d0c767d914c3e886deb9363549f734f09f656b352fd91ecd0ca0', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:46', '2026-04-19 04:55:51', '2027-01-02 11:57:46'),
-('e2ec1ffb912c238cc7ce6402aa433ffe1fbf48f7cf222334b05c0d2bbe3dfd4f10e61ba1bd69521d', 28, 1, 'MyApp', '[]', 1, '2026-02-08 12:54:44', '2026-04-19 04:55:51', '2027-02-08 12:54:44'),
+('e21c3d7cacc635201db49dda1b04d0c767d914c3e886deb9363549f734f09f656b352fd91ecd0ca0', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:46', '2026-04-27 07:28:27', '2027-01-02 11:57:46'),
+('e2ec1ffb912c238cc7ce6402aa433ffe1fbf48f7cf222334b05c0d2bbe3dfd4f10e61ba1bd69521d', 28, 1, 'MyApp', '[]', 1, '2026-02-08 12:54:44', '2026-04-27 07:28:27', '2027-02-08 12:54:44'),
 ('e3efa5ca063a378328d97d6a8c066a276ac364a07ee83f7a6da16d23cff8318eff5e7fb1ab9a00e4', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:53:53', '2026-01-04 08:42:12', '2025-11-09 07:53:53'),
 ('e46ca33a86935399ad01c1841d319735ea9b534ac64e9009abb5628e3ec9953f8d141d1de8ead1fc', 26, 1, 'MyApp', '[]', 1, '2024-11-17 06:34:53', '2024-12-27 10:11:23', '2025-11-17 06:34:53'),
 ('e8db9e20cfab7066f2823e652cb10d479f4776992fb280a12e293390c1f8e738eeb26ced6ab149bd', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:26:30', '2024-12-27 10:11:23', '2025-12-27 08:26:30'),
-('ecbfa6e7b5f286f1093e53aaedee67128016561acd3da905ef2800be59d3f87f4fbc0f60d1bf1d1b', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:27', '2026-04-19 04:55:51', '2027-01-02 11:57:27'),
+('ecbfa6e7b5f286f1093e53aaedee67128016561acd3da905ef2800be59d3f87f4fbc0f60d1bf1d1b', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:27', '2026-04-27 07:28:27', '2027-01-02 11:57:27'),
 ('f18b5bd2970d7b955bf155f478024cfa31f4b82b89a918578c4be91eac53422adc2c27a266183ef8', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:36:32', '2026-01-04 08:42:12', '2025-11-09 08:36:32'),
 ('f63948153056dd1d61e77f9afc83f0928c461868e03b4cb8106a6c6219f07fe9c16fc0ebe0845743', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:15:22', '2026-01-04 08:42:12', '2025-11-09 08:15:22'),
 ('fa797315f4466873c5caea339a427415a6936d9e519005e284f078a314c7f06a36fc2570293c69fe', 27, 1, 'MyApp', '[]', 1, '2024-11-10 11:21:40', '2026-01-04 08:42:12', '2025-11-10 11:21:40'),
-('fc550ab7753a23dc9e748bc0581fbc8aeab3b4908a61152036764e261b2f94be408d0169c0368c8a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:40', '2026-04-19 04:55:51', '2027-01-03 08:39:40');
+('fc550ab7753a23dc9e748bc0581fbc8aeab3b4908a61152036764e261b2f94be408d0169c0368c8a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:40', '2026-04-27 07:28:27', '2027-01-03 08:39:40');
 
 -- --------------------------------------------------------
 
@@ -5881,10 +5924,10 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 --
 
 CREATE TABLE `oauth_auth_codes` (
-  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `client_id` bigint UNSIGNED NOT NULL,
-  `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` varchar(100) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `scopes` text DEFAULT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -5896,12 +5939,12 @@ CREATE TABLE `oauth_auth_codes` (
 --
 
 CREATE TABLE `oauth_clients` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `secret` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `redirect` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `secret` varchar(100) DEFAULT NULL,
+  `provider` varchar(255) DEFAULT NULL,
+  `redirect` text NOT NULL,
   `personal_access_client` tinyint(1) NOT NULL,
   `password_client` tinyint(1) NOT NULL,
   `revoked` tinyint(1) NOT NULL,
@@ -5924,8 +5967,8 @@ INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `red
 --
 
 CREATE TABLE `oauth_personal_access_clients` (
-  `id` bigint UNSIGNED NOT NULL,
-  `client_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -5944,8 +5987,8 @@ INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `u
 --
 
 CREATE TABLE `oauth_refresh_tokens` (
-  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `access_token_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(100) NOT NULL,
+  `access_token_id` varchar(100) NOT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -5957,7 +6000,7 @@ CREATE TABLE `oauth_refresh_tokens` (
 --
 
 CREATE TABLE `online_prices` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `percentage` decimal(8,2) NOT NULL,
   `is_default` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -5969,7 +6012,7 @@ CREATE TABLE `online_prices` (
 --
 
 INSERT INTO `online_prices` (`id`, `percentage`, `is_default`, `created_at`, `updated_at`) VALUES
-(1, 0.05, 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20');
+(1, '0.05', 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20');
 
 -- --------------------------------------------------------
 
@@ -5978,17 +6021,17 @@ INSERT INTO `online_prices` (`id`, `percentage`, `is_default`, `created_at`, `up
 --
 
 CREATE TABLE `orders` (
-  `id` bigint UNSIGNED NOT NULL,
-  `transaction_id` bigint NOT NULL,
-  `store_id` bigint NOT NULL,
-  `item_id` bigint NOT NULL,
-  `item_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `item_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `unit_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `transaction_id` bigint(20) NOT NULL,
+  `store_id` bigint(20) NOT NULL,
+  `item_id` bigint(20) NOT NULL,
+  `item_name` varchar(255) NOT NULL,
+  `item_description` varchar(255) NOT NULL,
+  `unit_id` int(11) NOT NULL,
   `base_price` double(8,2) NOT NULL,
   `store_price` double(8,2) NOT NULL,
   `online_price` double(8,2) NOT NULL,
-  `qty` bigint NOT NULL,
+  `qty` bigint(20) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -6039,7 +6082,9 @@ INSERT INTO `orders` (`id`, `transaction_id`, `store_id`, `item_id`, `item_name`
 (63, 83, 2, 943, 'Consequatur assumenda et rem et eos.', 'Ut accusantium dolore aperiam tempora hic architecto rerum rerum voluptatem non consequatur ipsa nam.', 16, 26.00, 28.60, 31.46, 1, NULL, '2026-02-08 10:14:18', '2026-02-08 10:14:18'),
 (64, 84, 2, 982, 'Dignissimos omnis exercitationem sed sunt eligendi eos quia quia.', 'Odit suscipit aut numquam omnis culpa quia eos.', 10, 64.80, 71.28, 78.41, 1, NULL, '2026-04-21 01:55:00', '2026-04-21 01:55:00'),
 (65, 85, 2, 949, 'Enim dolores nulla id illum earum et vitae.', 'Molestias eum repellendus cupiditate natus debitis esse hic maiores.', 19, 85.50, 94.05, 103.46, 1, NULL, '2026-04-21 02:04:36', '2026-04-21 02:04:36'),
-(66, 86, 2, 949, 'Enim dolores nulla id illum earum et vitae.', 'Molestias eum repellendus cupiditate natus debitis esse hic maiores.', 19, 85.50, 94.05, 103.46, 1, NULL, '2026-04-21 02:25:43', '2026-04-21 02:25:43');
+(66, 86, 2, 949, 'Enim dolores nulla id illum earum et vitae.', 'Molestias eum repellendus cupiditate natus debitis esse hic maiores.', 19, 85.50, 94.05, 103.46, 1, NULL, '2026-04-21 02:25:43', '2026-04-21 02:25:43'),
+(67, 87, 6, 958, 'Sed veritatis sed qui consectetur omnis explicabo.', 'Natus eos est cum nostrum voluptatem sed quia quae.', 10, 27.50, 30.25, 33.28, 1, NULL, '2026-04-26 02:15:29', '2026-04-26 02:15:29'),
+(68, 87, 2, 88, 'Ea soluta reiciendis ex explicabo voluptatum.', 'Quis et harum et omnis ut debitis omnis rerum nihil cumque asperiores ut tempore et incidunt impedit.', 13, 73.50, 80.85, 88.94, 2, NULL, '2026-04-26 02:15:29', '2026-04-26 02:15:29');
 
 -- --------------------------------------------------------
 
@@ -6048,8 +6093,8 @@ INSERT INTO `orders` (`id`, `transaction_id`, `store_id`, `item_id`, `item_name`
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -6060,8 +6105,8 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `payment_methods` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `is_default` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -6083,12 +6128,12 @@ INSERT INTO `payment_methods` (`id`, `name`, `is_default`, `created_at`, `update
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -6102,12 +6147,12 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `pickup_time` (
-  `id` bigint UNSIGNED NOT NULL,
-  `transaction_id` bigint NOT NULL,
-  `store_id` bigint NOT NULL,
-  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `store_approval` tinyint(1) NOT NULL DEFAULT '1',
-  `customer_approval` tinyint(1) NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `transaction_id` bigint(20) NOT NULL,
+  `store_id` bigint(20) NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `store_approval` tinyint(1) NOT NULL DEFAULT 1,
+  `customer_approval` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -6119,9 +6164,9 @@ CREATE TABLE `pickup_time` (
 --
 
 CREATE TABLE `provinces` (
-  `id` int UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(300) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `provinces`
@@ -6216,7 +6261,7 @@ INSERT INTO `provinces` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `ratings` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -6228,8 +6273,8 @@ CREATE TABLE `ratings` (
 --
 
 CREATE TABLE `receive_methods` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `is_default` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -6250,13 +6295,13 @@ INSERT INTO `receive_methods` (`id`, `name`, `is_default`, `created_at`, `update
 --
 
 CREATE TABLE `refcitymun` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `psgcCode` varchar(255) DEFAULT NULL,
-  `citymunDesc` text,
+  `citymunDesc` text DEFAULT NULL,
   `regDesc` varchar(255) DEFAULT NULL,
   `provCode` varchar(255) DEFAULT NULL,
   `citymunCode` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `refcitymun`
@@ -7919,12 +7964,12 @@ INSERT INTO `refcitymun` (`id`, `psgcCode`, `citymunDesc`, `regDesc`, `provCode`
 --
 
 CREATE TABLE `refprovince` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `psgcCode` varchar(255) DEFAULT NULL,
-  `provDesc` text,
+  `provDesc` text DEFAULT NULL,
   `regCode` varchar(255) DEFAULT NULL,
   `provCode` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `refprovince`
@@ -8027,9 +8072,9 @@ INSERT INTO `refprovince` (`id`, `psgcCode`, `provDesc`, `regCode`, `provCode`) 
 --
 
 CREATE TABLE `request_count` (
-  `id` bigint UNSIGNED NOT NULL,
-  `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `ip` varchar(255) NOT NULL,
+  `route` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8042,9 +8087,9 @@ CREATE TABLE `request_count` (
 --
 
 CREATE TABLE `roles` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8069,9 +8114,9 @@ INSERT INTO `roles` (`id`, `name`, `description`, `created_at`, `updated_at`) VA
 --
 
 CREATE TABLE `role_user` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `role_id` bigint UNSIGNED DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `role_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8081,13 +8126,7 @@ CREATE TABLE `role_user` (
 --
 
 INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(2, 1, 7, NULL, NULL),
-(3, 2, 7, NULL, NULL),
-(4, 3, 2, NULL, NULL),
-(5, 4, 7, NULL, NULL),
 (6, 5, 3, NULL, NULL),
-(7, 6, 5, NULL, NULL),
-(8, 7, 6, NULL, NULL),
 (9, 8, 2, NULL, NULL),
 (10, 9, 3, NULL, NULL),
 (11, 10, 1, NULL, NULL),
@@ -8098,7 +8137,9 @@ INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`)
 (26, 11, 1, '2026-03-31 13:30:41', '2026-03-31 13:30:41'),
 (27, 19, 1, '2026-03-31 13:30:49', '2026-03-31 13:30:49'),
 (30, 28, 7, '2026-04-19 03:03:45', '2026-04-19 03:03:45'),
-(31, 28, 3, '2026-04-19 03:05:38', '2026-04-19 03:05:38');
+(31, 28, 3, '2026-04-19 03:05:38', '2026-04-19 03:05:38'),
+(52, 36, 4, NULL, NULL),
+(53, 36, 7, '2026-05-09 16:23:40', '2026-05-09 16:23:40');
 
 -- --------------------------------------------------------
 
@@ -8107,15 +8148,15 @@ INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`)
 --
 
 CREATE TABLE `scheduled_calls` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `date` timestamp NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `security_question_id` int NOT NULL,
-  `security_answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `scheduled_call_status_id` int NOT NULL DEFAULT '1',
-  `created_by` int NOT NULL,
-  `updated_by` int NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `desc` text NOT NULL,
+  `security_question_id` int(11) NOT NULL,
+  `security_answer` text NOT NULL,
+  `scheduled_call_status_id` int(11) NOT NULL DEFAULT 1,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8127,8 +8168,8 @@ CREATE TABLE `scheduled_calls` (
 --
 
 CREATE TABLE `scheduled_call_status` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8151,8 +8192,8 @@ INSERT INTO `scheduled_call_status` (`id`, `name`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `security_questions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8179,8 +8220,8 @@ INSERT INTO `security_questions` (`id`, `name`, `created_at`, `updated_at`) VALU
 --
 
 CREATE TABLE `selling_prices` (
-  `id` bigint UNSIGNED NOT NULL,
-  `store_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` int(11) NOT NULL,
   `percentage` decimal(8,2) NOT NULL,
   `is_default` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -8192,106 +8233,106 @@ CREATE TABLE `selling_prices` (
 --
 
 INSERT INTO `selling_prices` (`id`, `store_id`, `percentage`, `is_default`, `created_at`, `updated_at`) VALUES
-(1, 1, 0.05, 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
-(2, 2, 0.05, 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
-(3, 3, 0.05, 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
-(4, 4, 0.05, 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
-(5, 5, 0.05, 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
-(6, 6, 0.05, 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
-(7, 7, 0.05, 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
-(8, 8, 0.05, 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
-(9, 9, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(10, 10, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(11, 11, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(12, 12, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(13, 13, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(14, 14, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(15, 15, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(16, 16, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(17, 17, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(18, 18, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(19, 19, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(20, 20, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(21, 21, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(22, 22, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(23, 23, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(24, 24, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(25, 25, 0.05, 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
-(26, 26, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(27, 27, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(28, 28, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(29, 29, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(30, 30, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(31, 31, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(32, 32, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(33, 33, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(34, 34, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(35, 35, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(36, 36, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(37, 37, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(38, 38, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(39, 39, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(40, 40, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(41, 41, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(42, 42, 0.05, 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
-(43, 43, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(44, 44, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(45, 45, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(46, 46, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(47, 47, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(48, 48, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(49, 49, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(50, 50, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(51, 51, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(52, 52, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(53, 53, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(54, 54, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(55, 55, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(56, 56, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(57, 57, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(58, 58, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(59, 59, 0.05, 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
-(60, 60, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(61, 61, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(62, 62, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(63, 63, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(64, 64, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(65, 65, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(66, 66, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(67, 67, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(68, 68, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(69, 69, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(70, 70, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(71, 71, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(72, 72, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(73, 73, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(74, 74, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(75, 75, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(76, 76, 0.05, 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
-(77, 77, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(78, 78, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(79, 79, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(80, 80, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(81, 81, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(82, 82, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(83, 83, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(84, 84, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(85, 85, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(86, 86, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(87, 87, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(88, 88, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(89, 89, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(90, 90, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(91, 91, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(92, 92, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(93, 93, 0.05, 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
-(94, 94, 0.05, 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
-(95, 95, 0.05, 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
-(96, 96, 0.05, 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
-(97, 97, 0.05, 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
-(98, 98, 0.05, 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
-(99, 99, 0.05, 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
-(100, 100, 0.05, 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20');
+(1, 1, '0.05', 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
+(2, 2, '0.05', 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
+(3, 3, '0.05', 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
+(4, 4, '0.05', 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
+(5, 5, '0.05', 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
+(6, 6, '0.05', 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
+(7, 7, '0.05', 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
+(8, 8, '0.05', 1, '2024-08-09 21:42:14', '2024-08-09 21:42:14'),
+(9, 9, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(10, 10, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(11, 11, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(12, 12, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(13, 13, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(14, 14, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(15, 15, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(16, 16, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(17, 17, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(18, 18, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(19, 19, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(20, 20, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(21, 21, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(22, 22, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(23, 23, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(24, 24, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(25, 25, '0.05', 1, '2024-08-09 21:42:15', '2024-08-09 21:42:15'),
+(26, 26, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(27, 27, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(28, 28, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(29, 29, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(30, 30, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(31, 31, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(32, 32, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(33, 33, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(34, 34, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(35, 35, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(36, 36, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(37, 37, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(38, 38, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(39, 39, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(40, 40, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(41, 41, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(42, 42, '0.05', 1, '2024-08-09 21:42:16', '2024-08-09 21:42:16'),
+(43, 43, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(44, 44, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(45, 45, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(46, 46, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(47, 47, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(48, 48, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(49, 49, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(50, 50, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(51, 51, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(52, 52, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(53, 53, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(54, 54, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(55, 55, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(56, 56, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(57, 57, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(58, 58, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(59, 59, '0.05', 1, '2024-08-09 21:42:17', '2024-08-09 21:42:17'),
+(60, 60, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(61, 61, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(62, 62, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(63, 63, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(64, 64, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(65, 65, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(66, 66, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(67, 67, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(68, 68, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(69, 69, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(70, 70, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(71, 71, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(72, 72, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(73, 73, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(74, 74, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(75, 75, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(76, 76, '0.05', 1, '2024-08-09 21:42:18', '2024-08-09 21:42:18'),
+(77, 77, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(78, 78, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(79, 79, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(80, 80, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(81, 81, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(82, 82, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(83, 83, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(84, 84, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(85, 85, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(86, 86, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(87, 87, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(88, 88, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(89, 89, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(90, 90, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(91, 91, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(92, 92, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(93, 93, '0.05', 1, '2024-08-09 21:42:19', '2024-08-09 21:42:19'),
+(94, 94, '0.05', 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
+(95, 95, '0.05', 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
+(96, 96, '0.05', 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
+(97, 97, '0.05', 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
+(98, 98, '0.05', 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
+(99, 99, '0.05', 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20'),
+(100, 100, '0.05', 1, '2024-08-09 21:42:20', '2024-08-09 21:42:20');
 
 -- --------------------------------------------------------
 
@@ -8300,10 +8341,10 @@ INSERT INTO `selling_prices` (`id`, `store_id`, `percentage`, `is_default`, `cre
 --
 
 CREATE TABLE `sidebar_menus` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8324,9 +8365,9 @@ INSERT INTO `sidebar_menus` (`id`, `title`, `icon`, `path`, `created_at`, `updat
 --
 
 CREATE TABLE `sizes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `desc` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8349,11 +8390,11 @@ INSERT INTO `sizes` (`id`, `name`, `desc`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `static_menus` (
-  `id` bigint UNSIGNED NOT NULL,
-  `parent_id` int NOT NULL,
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8374,8 +8415,8 @@ INSERT INTO `static_menus` (`id`, `parent_id`, `icon`, `name`, `path`, `created_
 --
 
 CREATE TABLE `status` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8400,14 +8441,14 @@ INSERT INTO `status` (`id`, `name`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `stores` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `desc` text DEFAULT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
   `is_active` tinyint(1) DEFAULT NULL,
-  `user_id` int DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -8476,14 +8517,14 @@ INSERT INTO `stores` (`id`, `name`, `mobile`, `desc`, `latitude`, `longitude`, `
 --
 
 CREATE TABLE `store_advertisements` (
-  `id` bigint UNSIGNED NOT NULL,
-  `franchisee_id` int NOT NULL,
-  `rank` int NOT NULL,
-  `store_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `franchisee_id` int(11) NOT NULL,
+  `rank` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
   `amount` double(8,2) NOT NULL,
   `start_at` date NOT NULL,
   `end_at` date NOT NULL,
-  `city_id` int NOT NULL,
+  `city_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8495,9 +8536,9 @@ CREATE TABLE `store_advertisements` (
 --
 
 CREATE TABLE `store_menus` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8520,12 +8561,12 @@ INSERT INTO `store_menus` (`id`, `name`, `icon`, `created_at`, `updated_at`) VAL
 --
 
 CREATE TABLE `store_menu_access` (
-  `id` bigint UNSIGNED NOT NULL,
-  `access_right_id` int DEFAULT NULL,
-  `store_menu_id` int DEFAULT NULL,
-  `user_id` int NOT NULL,
-  `store_id` int NOT NULL,
-  `invitation_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `access_right_id` int(11) DEFAULT NULL,
+  `store_menu_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `invitation_code` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -8561,10 +8602,10 @@ INSERT INTO `store_menu_access` (`id`, `access_right_id`, `store_menu_id`, `user
 --
 
 CREATE TABLE `store_ratings` (
-  `id` bigint UNSIGNED NOT NULL,
-  `store_id` int NOT NULL,
-  `transaction_id` int NOT NULL,
-  `rate_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `transaction_id` int(11) NOT NULL,
+  `rate_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8576,17 +8617,17 @@ CREATE TABLE `store_ratings` (
 --
 
 CREATE TABLE `transactions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `store_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL,
-  `reference_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status_id` bigint NOT NULL,
-  `payment_method_id` bigint NOT NULL,
-  `receive_method_id` bigint NOT NULL,
-  `receivers_mobile` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `reference_id` varchar(255) NOT NULL,
+  `status_id` bigint(20) NOT NULL,
+  `payment_method_id` bigint(20) NOT NULL,
+  `receive_method_id` bigint(20) NOT NULL,
+  `receivers_mobile` varchar(11) NOT NULL,
   `lat` double(8,2) DEFAULT NULL,
   `lng` double(8,2) DEFAULT NULL,
-  `contact_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_number` varchar(255) NOT NULL,
   `delivery_charge` double(8,2) NOT NULL,
   `total` double(10,2) NOT NULL,
   `grand_total` double(10,2) NOT NULL,
@@ -8605,7 +8646,8 @@ INSERT INTO `transactions` (`id`, `store_id`, `user_id`, `reference_id`, `status
 (83, 2033899500, 28, '6987f17a2d1fc', 1, 1, 1, '', 10.36, 123.99, '9270079301', 13.00, 31.46, 44.46, NULL, '2026-02-08 10:14:18', '2026-02-08 10:14:18'),
 (84, 2033899500, 28, '69e6e7041ddba', 1, 1, 1, '', 10.36, 123.99, '9270079301', 0.00, 78.41, 78.41, NULL, '2026-04-21 01:55:00', '2026-04-21 01:55:00'),
 (85, 2033899500, 28, '69e6e9440c559', 1, 1, 1, '', 10.36, 123.99, '9270079301', 0.00, 103.46, 103.46, NULL, '2026-04-21 02:04:36', '2026-04-21 02:04:36'),
-(86, 2033899500, 28, '69e6ee3797a53', 1, 1, 1, '9270079302', 10.36, 123.99, '9270079301', 0.00, 103.46, 103.46, NULL, '2026-04-21 02:25:43', '2026-04-21 02:25:43');
+(86, 2033899500, 28, '69e6ee3797a53', 1, 1, 1, '9270079302', 10.36, 123.99, '9270079301', 0.00, 103.46, 103.46, NULL, '2026-04-21 02:25:43', '2026-04-21 02:25:43'),
+(87, 2033899500, 28, '69ed8350e59c8', 1, 1, 1, '9270079301', 10.36, 123.99, '9270079301', 145.40, 211.16, 356.56, NULL, '2026-04-26 02:15:28', '2026-04-26 02:15:28');
 
 -- --------------------------------------------------------
 
@@ -8614,10 +8656,10 @@ INSERT INTO `transactions` (`id`, `store_id`, `user_id`, `reference_id`, `status
 --
 
 CREATE TABLE `transaction_message` (
-  `id` bigint UNSIGNED NOT NULL,
-  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `transaction_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `message` text NOT NULL,
+  `transaction_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -8630,8 +8672,8 @@ CREATE TABLE `transaction_message` (
 --
 
 CREATE TABLE `units` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -8669,8 +8711,8 @@ INSERT INTO `units` (`id`, `name`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `upscale_prices` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
   `percentage` double(8,2) NOT NULL,
   `is_default` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -8691,16 +8733,20 @@ INSERT INTO `upscale_prices` (`id`, `name`, `percentage`, `is_default`, `created
 --
 
 CREATE TABLE `users` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `passcode` int DEFAULT NULL,
-  `activation_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile_attempt_count` int NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `facebook_id` varchar(100) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `avatar` varchar(100) DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `passcode` int(11) DEFAULT NULL,
+  `activation_code` varchar(255) DEFAULT NULL,
+  `mobile_attempt_count` int(11) NOT NULL DEFAULT 0,
   `mobile_verified_at` timestamp NULL DEFAULT NULL,
+  `email_verified_at` datetime(6) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -8710,35 +8756,36 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `mobile`, `passcode`, `activation_code`, `mobile_attempt_count`, `mobile_verified_at`, `status`, `password`, `remember_token`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Vicky Gusikowski I', NULL, NULL, NULL, 0, NULL, NULL, '', 'PZhBKiN7NM', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(2, 'Brooke Kihn', NULL, NULL, NULL, 0, NULL, NULL, '', 'xe2JLvhV06', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(3, 'Dr. Alec Paucek Jr.', NULL, NULL, NULL, 0, NULL, NULL, '', 'BEPzO21hsW', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(4, 'Tomasa Kuvalis', NULL, NULL, NULL, 0, NULL, NULL, '', '6q2pbqMjr1', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(5, 'Jewell Orn', NULL, NULL, NULL, 0, NULL, NULL, '', 'Cw4ugVP73W', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(6, 'Ms. Theresia Gulgowski DVM', NULL, NULL, NULL, 0, NULL, NULL, '', 'Mfgl7ShvMV', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(7, 'Miss Erica Toy Sr.', NULL, NULL, NULL, 0, NULL, NULL, '', 'pLudcSCJX6', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(8, 'Noah Boyer', NULL, NULL, NULL, 0, NULL, NULL, '', 'y98yiQ4SwM', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(9, 'Itzel Denesik', NULL, NULL, NULL, 0, NULL, NULL, '', 'qDTXvOg3BX', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(10, 'Kianna Pollich', NULL, NULL, NULL, 0, NULL, NULL, '', 'bJUG1vd0aU', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
-(11, 'Super Admin', '09993088141', 1234, NULL, 0, NULL, 1, '$2y$10$Fk0xZRbVzyTv6E588Iek5O63xkCNMXNkxJhkeKoOry0yUmzB/V56i', 'NIrmClTB0E', NULL, '2024-08-09 21:38:47', '2024-11-02 15:54:49'),
-(12, NULL, '09993088142', 1234, NULL, 0, NULL, NULL, '$2y$10$4VQ/Nvn2FP0JV1Ewpng.HePgIfvYhMmO//mTSZA.w6N0hqh6KJ72m', NULL, NULL, '2024-10-09 06:12:23', '2024-10-13 04:41:55'),
-(13, NULL, '123', 1234, NULL, 0, NULL, NULL, '$2y$10$5Q0MOOxWxIU8BkHMaCAIC.4bpa9bNK1K7rgHBJen/...O.z6qHLui', NULL, NULL, '2024-10-09 07:00:35', '2024-10-13 05:05:48'),
-(14, NULL, '09282918212', 1234, NULL, 0, NULL, NULL, '$2y$10$jpPlKsww35/6ekKcM.3/9e0aCnhyKPngvw7D6w3NBy9gux6087VoS', NULL, NULL, '2024-10-13 05:07:08', '2024-10-13 05:09:15'),
-(15, NULL, '09229877621', 1234, NULL, 0, NULL, NULL, '$2y$10$03xhAipjhp.31DqPruqSnuMQCPCnqmScH6up4NsTumdzOzBjlzIpK', NULL, NULL, '2024-10-13 05:11:54', '2024-10-13 05:12:19'),
-(16, NULL, '09229877625', 1234, NULL, 0, NULL, NULL, '$2y$10$er3lkmSp2el3J2Y9g6Fio.U548QtkX9zOTqD6q89EJIexxNiJHb9C', NULL, NULL, '2024-10-13 05:14:51', '2024-10-13 05:20:28'),
-(17, NULL, '09283726331', 1234, 'YtcecHf4mOxmI8V1irdHZYfDSQD3EhcE', 0, NULL, NULL, '$2y$10$Ljngx07qfRQpNuREZ.cGjeFVNxAKO6h8dx0NP1qSN/yGhNo7SDFo2', NULL, NULL, '2024-10-13 05:22:33', '2024-10-13 05:23:41'),
-(18, NULL, '09876543212', 1234, NULL, 0, NULL, NULL, '$2y$10$7SZkSnAaHVW1NZQ0HwCsLudWymkKUknKL.kPAr8XeOx6/sWVgJenC', NULL, NULL, '2024-10-13 05:58:24', '2024-10-13 05:58:24'),
-(19, NULL, '09876543219', 1234, NULL, 0, NULL, NULL, '$2y$10$d52hdLTmjpXnqM/kh.i.Cux7QwZw7HhhJhQeP4Qtu6gIsCZBxzqTO', NULL, NULL, '2024-10-13 06:01:12', '2024-10-13 06:01:12'),
-(20, NULL, '09278971625', 1234, NULL, 0, NULL, NULL, '$2y$10$7mzjcNCjdul0lsw5fjMHZeWsJRMjVjSEueWwxsXlN6iRz590S21A2', NULL, NULL, '2024-10-13 06:02:55', '2024-10-13 06:02:55'),
-(21, NULL, '09298177167', 1234, NULL, 0, NULL, NULL, '$2y$10$SsrTT81OtfEWeAnIQaREQex/AhskxSRuFlcX5FFA5yrtO1FGDL0bm', NULL, NULL, '2024-10-13 06:05:21', '2024-10-13 06:05:21'),
-(22, NULL, '09289828272', 1234, NULL, 0, NULL, 1, '$2y$10$VVmbV4ShHx30y9j3OVwsnexkOaW0hKIS27Og8v5wKCXoWdjue7VjS', NULL, NULL, '2024-10-13 06:08:11', '2024-11-02 15:04:06'),
-(23, NULL, '09234567890', 1234, NULL, 0, NULL, 1, '$2y$10$L8383qvbfwUaWy81nOwiROw6JZG8.qMqCmLH5xeAE2h6gv5F8SFhy', NULL, NULL, '2024-10-13 06:35:04', '2024-10-13 06:35:04'),
-(24, NULL, '09123456789', 1234, NULL, 0, NULL, 1, '$2y$10$hXdNCreWj3e1APPS/g7mEOD6NYOpiCjYDEFsm9V5a3QZpytPhUuO2', NULL, NULL, '2024-10-13 06:53:22', '2024-10-18 08:29:31'),
-(25, NULL, '1234', 1234, NULL, 0, NULL, 1, '$2y$10$usVf2NIzebTUjQ4oFxsZOOiOZAkwRzXAZcl8jq5h99lztVtu5WmTW', NULL, NULL, '2024-10-16 05:29:33', '2024-10-16 05:29:33'),
-(26, 'abbb', '09670079115', 1234, NULL, 0, NULL, 1, '$2y$10$5CjUuNRWmOZG7/0Znh5NAO52H9qCnJNvtYhlSFvvf3zIEgPRYF43i', NULL, NULL, '2024-10-21 06:09:26', '2024-12-01 11:04:02'),
-(27, NULL, '09270079301', 1234, NULL, 0, NULL, 1, '$2y$10$zdT543Bya4UIgeFpv0HR2ukmhNEpfRWp1ALy1xXsPDDGDq87VlFq2', NULL, NULL, '2024-10-21 06:12:32', '2026-01-04 09:31:13'),
-(28, '28 ID', '9270079301', 1234, 'SwxRs5VCRp4LjyPoDkuhK7TteOpkW3W4', 0, NULL, 1, '$2y$10$4uq9iL/FXvDPI4X97ZQto.PzX9/9qGrgotrdvO5OnjMnTZL8mfUka', NULL, NULL, '2026-01-02 11:25:40', '2026-03-31 10:13:37');
+INSERT INTO `users` (`id`, `email`, `facebook_id`, `name`, `avatar`, `mobile`, `passcode`, `activation_code`, `mobile_attempt_count`, `mobile_verified_at`, `email_verified_at`, `status`, `password`, `remember_token`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '', '', 'Vicky Gusikowski I', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'PZhBKiN7NM', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(2, '', '', 'Brooke Kihn', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'xe2JLvhV06', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(3, '', '', 'Dr. Alec Paucek Jr.', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'BEPzO21hsW', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(4, '', '', 'Tomasa Kuvalis', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', '6q2pbqMjr1', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(5, '', '', 'Jewell Orn', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'Cw4ugVP73W', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(6, '', '', 'Ms. Theresia Gulgowski DVM', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'Mfgl7ShvMV', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(7, '', '', 'Miss Erica Toy Sr.', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'pLudcSCJX6', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(8, '', '', 'Noah Boyer', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'y98yiQ4SwM', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(9, '', '', 'Itzel Denesik', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'qDTXvOg3BX', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(10, '', '', 'Kianna Pollich', '', NULL, NULL, NULL, 0, NULL, NULL, NULL, '', 'bJUG1vd0aU', NULL, '2024-08-09 21:38:47', '2024-08-09 21:38:47'),
+(11, '', '', 'Super Admin', '', '09993088141', 1234, NULL, 0, NULL, NULL, 1, '$2y$10$Fk0xZRbVzyTv6E588Iek5O63xkCNMXNkxJhkeKoOry0yUmzB/V56i', 'NIrmClTB0E', NULL, '2024-08-09 21:38:47', '2024-11-02 15:54:49'),
+(12, '', '', NULL, '', '09993088142', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$4VQ/Nvn2FP0JV1Ewpng.HePgIfvYhMmO//mTSZA.w6N0hqh6KJ72m', NULL, NULL, '2024-10-09 06:12:23', '2024-10-13 04:41:55'),
+(13, '', '', NULL, '', '123', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$5Q0MOOxWxIU8BkHMaCAIC.4bpa9bNK1K7rgHBJen/...O.z6qHLui', NULL, NULL, '2024-10-09 07:00:35', '2024-10-13 05:05:48'),
+(14, '', '', NULL, '', '09282918212', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$jpPlKsww35/6ekKcM.3/9e0aCnhyKPngvw7D6w3NBy9gux6087VoS', NULL, NULL, '2024-10-13 05:07:08', '2024-10-13 05:09:15'),
+(15, '', '', NULL, '', '09229877621', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$03xhAipjhp.31DqPruqSnuMQCPCnqmScH6up4NsTumdzOzBjlzIpK', NULL, NULL, '2024-10-13 05:11:54', '2024-10-13 05:12:19'),
+(16, '', '', NULL, '', '09229877625', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$er3lkmSp2el3J2Y9g6Fio.U548QtkX9zOTqD6q89EJIexxNiJHb9C', NULL, NULL, '2024-10-13 05:14:51', '2024-10-13 05:20:28'),
+(17, '', '', NULL, '', '09283726331', 1234, 'YtcecHf4mOxmI8V1irdHZYfDSQD3EhcE', 0, NULL, NULL, NULL, '$2y$10$Ljngx07qfRQpNuREZ.cGjeFVNxAKO6h8dx0NP1qSN/yGhNo7SDFo2', NULL, NULL, '2024-10-13 05:22:33', '2024-10-13 05:23:41'),
+(18, '', '', NULL, '', '09876543212', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$7SZkSnAaHVW1NZQ0HwCsLudWymkKUknKL.kPAr8XeOx6/sWVgJenC', NULL, NULL, '2024-10-13 05:58:24', '2024-10-13 05:58:24'),
+(19, '', '', NULL, '', '09876543219', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$d52hdLTmjpXnqM/kh.i.Cux7QwZw7HhhJhQeP4Qtu6gIsCZBxzqTO', NULL, NULL, '2024-10-13 06:01:12', '2024-10-13 06:01:12'),
+(20, '', '', NULL, '', '09278971625', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$7mzjcNCjdul0lsw5fjMHZeWsJRMjVjSEueWwxsXlN6iRz590S21A2', NULL, NULL, '2024-10-13 06:02:55', '2024-10-13 06:02:55'),
+(21, '', '', NULL, '', '09298177167', 1234, NULL, 0, NULL, NULL, NULL, '$2y$10$SsrTT81OtfEWeAnIQaREQex/AhskxSRuFlcX5FFA5yrtO1FGDL0bm', NULL, NULL, '2024-10-13 06:05:21', '2024-10-13 06:05:21'),
+(22, '', '', NULL, '', '09289828272', 1234, NULL, 0, NULL, NULL, 1, '$2y$10$VVmbV4ShHx30y9j3OVwsnexkOaW0hKIS27Og8v5wKCXoWdjue7VjS', NULL, NULL, '2024-10-13 06:08:11', '2024-11-02 15:04:06'),
+(23, '', '', NULL, '', '09234567890', 1234, NULL, 0, NULL, NULL, 1, '$2y$10$L8383qvbfwUaWy81nOwiROw6JZG8.qMqCmLH5xeAE2h6gv5F8SFhy', NULL, NULL, '2024-10-13 06:35:04', '2024-10-13 06:35:04'),
+(24, '', '', NULL, '', '09123456789', 1234, NULL, 0, NULL, NULL, 1, '$2y$10$hXdNCreWj3e1APPS/g7mEOD6NYOpiCjYDEFsm9V5a3QZpytPhUuO2', NULL, NULL, '2024-10-13 06:53:22', '2024-10-18 08:29:31'),
+(25, '', '', NULL, '', '1234', 1234, NULL, 0, NULL, NULL, 1, '$2y$10$usVf2NIzebTUjQ4oFxsZOOiOZAkwRzXAZcl8jq5h99lztVtu5WmTW', NULL, NULL, '2024-10-16 05:29:33', '2024-10-16 05:29:33'),
+(26, '', '', 'abbb', '', '09670079115', 1234, NULL, 0, NULL, NULL, 1, '$2y$10$5CjUuNRWmOZG7/0Znh5NAO52H9qCnJNvtYhlSFvvf3zIEgPRYF43i', NULL, NULL, '2024-10-21 06:09:26', '2024-12-01 11:04:02'),
+(27, '', '', NULL, '', '09270079301', 1234, NULL, 0, NULL, NULL, 1, '$2y$10$6xZaXfyz8Ebw6FPnbzE4H.mmAilE31KQ4X2B0kb6tJAjDCKSpK5Sy', NULL, NULL, '2024-10-21 06:12:32', '2026-04-27 02:00:47'),
+(28, '', '', '28 ID', '', '9270079301', 1234, 'SwxRs5VCRp4LjyPoDkuhK7TteOpkW3W4', 0, NULL, NULL, 1, '$2y$10$4uq9iL/FXvDPI4X97ZQto.PzX9/9qGrgotrdvO5OnjMnTZL8mfUka', NULL, NULL, '2026-01-02 11:25:40', '2026-03-31 10:13:37'),
+(36, 'ugerez@yahoo.com', NULL, 'Bob Ger', NULL, NULL, NULL, 'AOZkK9pjgMYduW8VImPc3yaPZgeFndYn', 0, NULL, NULL, 1, '$2y$10$6b/7QRG/7DpLKG4wESeg7.BOU/o2IQou4Y9l19W2VyAuxkKuCnMoi', NULL, NULL, '2026-05-09 16:23:40', '2026-05-09 16:23:40');
 
 --
 -- Indexes for dumped tables
@@ -9128,343 +9175,343 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `access_rights`
 --
 ALTER TABLE `access_rights`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=255;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1638;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1638;
 
 --
 -- AUTO_INCREMENT for table `cloud_tokens`
 --
 ALTER TABLE `cloud_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `colors`
 --
 ALTER TABLE `colors`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `dashboard_menus`
 --
 ALTER TABLE `dashboard_menus`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `delivery_charges`
 --
 ALTER TABLE `delivery_charges`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `delivery_franchisee`
 --
 ALTER TABLE `delivery_franchisee`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `franchisees`
 --
 ALTER TABLE `franchisees`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1101;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1101;
 
 --
 -- AUTO_INCREMENT for table `interconnected_cities`
 --
 ALTER TABLE `interconnected_cities`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `invoice_items`
 --
 ALTER TABLE `invoice_items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
 
 --
 -- AUTO_INCREMENT for table `item_prices`
 --
 ALTER TABLE `item_prices`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1030;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1030;
 
 --
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `menu_role`
 --
 ALTER TABLE `menu_role`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `menu_role_access_right`
 --
 ALTER TABLE `menu_role_access_right`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `mobile_otp`
 --
 ALTER TABLE `mobile_otp`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `normal_balance`
 --
 ALTER TABLE `normal_balance`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
 --
 ALTER TABLE `oauth_clients`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `oauth_personal_access_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `online_prices`
 --
 ALTER TABLE `online_prices`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
 --
 ALTER TABLE `payment_methods`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pickup_time`
 --
 ALTER TABLE `pickup_time`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `provinces`
 --
 ALTER TABLE `provinces`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `receive_methods`
 --
 ALTER TABLE `receive_methods`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `refcitymun`
 --
 ALTER TABLE `refcitymun`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1648;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1648;
 
 --
 -- AUTO_INCREMENT for table `refprovince`
 --
 ALTER TABLE `refprovince`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `request_count`
 --
 ALTER TABLE `request_count`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `scheduled_calls`
 --
 ALTER TABLE `scheduled_calls`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `scheduled_call_status`
 --
 ALTER TABLE `scheduled_call_status`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `security_questions`
 --
 ALTER TABLE `security_questions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `selling_prices`
 --
 ALTER TABLE `selling_prices`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `sidebar_menus`
 --
 ALTER TABLE `sidebar_menus`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sizes`
 --
 ALTER TABLE `sizes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `static_menus`
 --
 ALTER TABLE `static_menus`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `store_advertisements`
 --
 ALTER TABLE `store_advertisements`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `store_menus`
 --
 ALTER TABLE `store_menus`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `store_menu_access`
 --
 ALTER TABLE `store_menu_access`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `store_ratings`
 --
 ALTER TABLE `store_ratings`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `transaction_message`
 --
 ALTER TABLE `transaction_message`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `upscale_prices`
 --
 ALTER TABLE `upscale_prices`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
