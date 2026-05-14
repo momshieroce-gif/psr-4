@@ -25,23 +25,38 @@ class RegisterController extends BaseController
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'firstname'     => 'required',
-            'lastname'      => 'required',
-            'email'         => 'required|email',
-            'password'      => 'required'
+            'name' => 'required_without_all:firstname,lastname|string|max:255',
+            'firstname' => 'required_without:name|string|max:255',
+            'lastname' => 'required_without:name|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
         ]);
-   
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
         }
-   
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+
+        $input = [];
+        $input['email'] = $request->email;
+        $input['password'] = bcrypt($request->password);
+        $input['status'] = 0;
+
+        if ($request->filled('name')) {
+            $trimmed = trim((string) $request->name);
+            $parts = preg_split('/\s+/u', $trimmed, 2, PREG_SPLIT_NO_EMPTY);
+            $input['firstname'] = $parts[0] ?? $trimmed;
+            $input['lastname'] = $parts[1] ?? '-';
+            $input['name'] = isset($parts[1]) ? $trimmed : $input['firstname'];
+        } else {
+            $input['firstname'] = $request->firstname;
+            $input['lastname'] = $request->lastname;
+            $input['name'] = trim($input['firstname'].' '.$input['lastname']);
+        }
+
         /** @var User $user */
         $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')->accessToken;
-        $success['name'] =  $user->name;
-   
+        $success['name'] = $user->name;
+        $success['success'] = true;
         return $this->sendResponse($success, 'User register successfully.');
     }
    
@@ -52,29 +67,42 @@ class RegisterController extends BaseController
      */
     public function login(UserRequest $request)
     {
-        $user = User::where('mobile', $request->mobile)->first();
+        $user = null;
+        if ($request->filled('email')) {
+            $user = User::where('email', $request->email)->first();
+        } elseif ($request->filled('mobile')) {
+            $user = User::where('mobile', $request->mobile)->first();
+        }
 
-        if(!$user->status){
+        if (!$user) {
+            return $this->sendError('Invalid Credentials', [], 401);
+        }
+
+        if (array_key_exists('status', $user->getAttributes()) && ! $user->status) {
             return $this->sendError('Please verify your number.');
         }
 
-        if(Auth::attempt(['mobile' => $request->mobile, 'password' => $request->password, 'status' => 1]))
-        {
+        $credentials = ['password' => $request->password, 'status' => 1];
+        if ($request->filled('email')) {
+            $credentials['email'] = $request->email;
+        } else {
+            $credentials['mobile'] = $request->mobile;
+        }
+
+        if (Auth::attempt($credentials)) {
             $userMenuService = app(UserMenuService::class);
             /** @var User $user */
-            $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')->accessToken;
-            $success['optimus_id'] =  $user->optimus_id;
-            $success['name'] =  $user->name;
-            $success['mobile'] =  $user->mobile;
-            $success['userMenu'] = $userMenuService->getUserMenus();
+            $user = Auth::user();
+            $success['token'] = $user->createToken('MyApp')->accessToken;
+            $success['optimus_id'] = $user->optimus_id;
+            $success['name'] = $user->name;
+            $success['mobile'] = $user->mobile ?? '';
+            $success['userMenu'] = json_encode($userMenuService->getUserMenus());
 
             return $this->sendResponse($success, 'You have login successfully.');
-            
-        } 
-        else{ 
-            return $this->sendError('Invalid Credentials');
-        } 
+        }
+
+        return $this->sendError('Invalid Credentials', [], 401);
     }
 
     /**

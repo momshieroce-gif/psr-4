@@ -50,6 +50,13 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/register',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/RegisterPage.vue') },
+    ],
+  },
+  {
     path: '/join-call',
     component: () => import('layouts/MainLayout.vue'),
     children: [

@@ -44,7 +44,7 @@ export const login = async (attributes: LoginInterface): Promise<void | boolean>
 export const register = async (params: object): Promise<void | boolean> => {
   Loading.show();
   return await axios
-    .post('user-register', params)
+    .post('register', params)
     .then(() => {
       Loading.hide();
 
@@ -52,16 +52,21 @@ export const register = async (params: object): Promise<void | boolean> => {
         timeout: 5000,
         position: 'bottom',
         type: 'positive',
-        message: 'Please check your email for confirmation.',
+        message: 'Account created successfully.',
       });
       return true;
     })
     .catch((err) => {
       Loading.hide();
+      const data = err.response?.data;
+      const fromValidation =
+        data?.data && typeof data.data === 'object'
+          ? errorToString(data.data as { errors: object[] })
+          : undefined;
       Notify.create({
         position: 'bottom',
         type: 'negative',
-        message: errorToString(err.response.data.errors),
+        message: fromValidation ?? data?.message ?? 'Registration failed.',
       });
     });
 };

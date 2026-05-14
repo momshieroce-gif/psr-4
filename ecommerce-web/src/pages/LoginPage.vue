@@ -32,7 +32,79 @@
           <!-- Login Form -->
           <q-card-section class="login-form-section">
             <div class="social-login-content">
-              <div class="social-login-copy q-mb-lg">
+              <div class="social-login-copy q-mb-md">
+                <div class="text-subtitle1 text-weight-medium q-mb-sm">
+                  Sign in with email
+                </div>
+                <div class="form-helper-text">
+                  Use the email and password for your account.
+                </div>
+              </div>
+
+              <q-form class="q-gutter-y-md" @submit.prevent="loginWithEmail">
+                <q-input
+                  v-model="email"
+                  outlined
+                  dense
+                  type="email"
+                  label="Email"
+                  class="login-input"
+                  :rules="[
+                    (val) => !!val?.trim() || 'Email is required',
+                    (val) => /.+@.+\..+/.test(val) || 'Enter a valid email',
+                  ]"
+                  lazy-rules
+                  autocomplete="email"
+                >
+                  <template #prepend>
+                    <q-icon name="email" />
+                  </template>
+                </q-input>
+
+                <q-input
+                  v-model="password"
+                  outlined
+                  dense
+                  :type="showPassword ? 'text' : 'password'"
+                  label="Password"
+                  class="login-input"
+                  :rules="[(val) => !!val || 'Password is required']"
+                  lazy-rules
+                  autocomplete="current-password"
+                >
+                  <template #prepend>
+                    <q-icon name="lock" />
+                  </template>
+                  <template #append>
+                    <q-btn
+                      flat
+                      round
+                      dense
+                      :icon="showPassword ? 'visibility_off' : 'visibility'"
+                      tabindex="-1"
+                      @click="showPassword = !showPassword"
+                    />
+                  </template>
+                </q-input>
+
+                <q-btn
+                  type="submit"
+                  label="Sign in"
+                  color="primary"
+                  class="login-submit-btn full-width"
+                  unelevated
+                  size="lg"
+                  :loading="isEmailSubmitting"
+                />
+              </q-form>
+
+              <div class="or-separator q-my-lg">
+                <q-separator />
+                <span class="or-separator-label text-caption text-grey-6">or</span>
+                <q-separator />
+              </div>
+
+              <div class="social-login-copy q-mb-md">
                 <div class="text-subtitle1 text-weight-medium q-mb-sm">
                   Continue with Facebook
                 </div>
@@ -47,18 +119,19 @@
                 class="login-submit-btn facebook-login-btn full-width"
                 unelevated
                 size="lg"
-                :loading="isSubmitting"
+                :loading="isFacebookRedirecting"
+                :disable="isEmailSubmitting"
                 @click="loginWithFacebook"
               />
 
               <div class="trust-section q-mt-lg">
                 <div class="trust-item">
                   <q-icon name="lock" size="xs" color="positive" />
-                  <span class="text-caption">Secure OAuth Login</span>
+                  <span class="text-caption">Secure sign-in</span>
                 </div>
                 <div class="trust-item">
                   <q-icon name="verified" size="xs" color="positive" />
-                  <span class="text-caption">Fast Account Access</span>
+                  <span class="text-caption">Fast account access</span>
                 </div>
               </div>
             </div>
@@ -92,7 +165,12 @@ const router = useRouter();
 const route = useRoute();
 const $q = useQuasar();
 const userStore = useUserStore();
-const isSubmitting = ref(false);
+
+const email = ref('');
+const password = ref('');
+const showPassword = ref(false);
+const isEmailSubmitting = ref(false);
+const isFacebookRedirecting = ref(false);
 
 const redirectTo = route.redirectedFrom?.fullPath;
 const getFacebookLoginUrl = () => {
@@ -121,7 +199,18 @@ const getUserMenuFromQuery = (): ProfileState['userMenu'] => {
   }
 };
 
-const finishLogin = async (token: string) => {
+const applyAuthPayload = (profile: ProfileState, successMessage: string) => {
+  userStore.setProfile(profile);
+  userStore.setUser(profile);
+  $q.notify({
+    message: successMessage,
+    type: 'positive',
+    position: 'top',
+    icon: 'check_circle',
+  });
+};
+
+const finishFacebookLoginFromQuery = async (token: string) => {
   const socialProfile: ProfileState = {
     token,
     name: getQueryValue(route.query.name) || null,
@@ -130,21 +219,44 @@ const finishLogin = async (token: string) => {
     userMenu: getUserMenuFromQuery(),
   };
 
-  userStore.setProfile(socialProfile);
-  userStore.setUser(socialProfile);
-
-  $q.notify({
-    message: 'Facebook login successful! Welcome back.',
-    type: 'positive',
-    position: 'top',
-    icon: 'check_circle'
-  });
-
+  applyAuthPayload(socialProfile, 'Facebook login successful! Welcome back.');
   await router.replace(redirectTo || '/');
 };
 
+const loginWithEmail = async () => {
+  isEmailSubmitting.value = true;
+  try {
+    const res = await axios.post('login', {
+      email: email.value.trim(),
+      password: password.value,
+    });
+    if (res.data?.success && res.data.data?.token) {
+      const data = res.data.data as ProfileState;
+      const profile: ProfileState = {
+        token: data.token,
+        name: data.name ?? null,
+        mobile: data.mobile ?? '',
+        optimus_id: Number(data.optimus_id ?? 0),
+        userMenu: Array.isArray(data.userMenu) ? data.userMenu : [],
+      };
+      applyAuthPayload(profile, 'Signed in successfully. Welcome back.');
+      await router.replace(redirectTo || '/');
+    }
+  } catch (err: unknown) {
+    const ax = err as { response?: { data?: { message?: string } } };
+    $q.notify({
+      message: ax.response?.data?.message ?? 'Sign in failed. Please try again.',
+      type: 'negative',
+      position: 'top',
+      icon: 'error',
+    });
+  } finally {
+    isEmailSubmitting.value = false;
+  }
+};
+
 const loginWithFacebook = () => {
-  isSubmitting.value = true;
+  isFacebookRedirecting.value = true;
   window.location.href = getFacebookLoginUrl();
 };
 
@@ -164,14 +276,14 @@ onMounted(async () => {
   }
 
   if (!token) {
-    isSubmitting.value = false;
+    isFacebookRedirecting.value = false;
     return;
   }
 
   try {
-    await finishLogin(token);
+    await finishFacebookLoginFromQuery(token);
   } finally {
-    isSubmitting.value = false;
+    isFacebookRedirecting.value = false;
   }
 });
 </script>
@@ -310,6 +422,19 @@ onMounted(async () => {
 
 .facebook-login-btn {
   background: #1877f2 !important;
+}
+
+.or-separator {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.or-separator-label {
+  text-transform: lowercase;
+  letter-spacing: 0.08em;
 }
 
 .trust-section {

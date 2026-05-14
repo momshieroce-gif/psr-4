@@ -146,7 +146,8 @@ export interface CustomerOrder {
 }
 
 export interface LoginInterface {
-  mobile: string
+  mobile?: string
+  email?: string
   password: string
 }
 
