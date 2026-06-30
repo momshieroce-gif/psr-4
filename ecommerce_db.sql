@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Jun 16, 2026 at 03:22 AM
+-- Generation Time: Jun 30, 2026 at 02:40 AM
 -- Server version: 10.11.18-MariaDB-ubu2204
 -- PHP Version: 8.3.26
 
@@ -572,7 +572,29 @@ INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `
 (413, 'App\\Models\\User', 66, 'updated', 'App\\Models\\Transaction', 103, '{\"status_id\":1}', '{\"status_id\":5}', 'http://localhost:8081/my-transactions-marked-as-received/559851197', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-14 07:18:03', '2026-06-14 07:18:03'),
 (414, 'App\\Models\\User', 66, 'created', 'App\\Models\\Transaction', 105, '[]', '{\"store_id\":458047115,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":2,\"delivery_charge\":0,\"contact_number\":\"9270079301\",\"reference_id\":\"6a2e8a0543ea2\",\"lat\":\"10.36183929\",\"lng\":\"123.98711395\",\"total\":25,\"grand_total\":25,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":105}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-14 10:01:25', '2026-06-14 10:01:25'),
 (415, 'App\\Models\\User', 66, 'updated', 'App\\Models\\Transaction', 105, '{\"store_id\":null,\"user_id\":null,\"payment_method_id\":null,\"receive_method_id\":null,\"delivery_charge\":null,\"contact_number\":null,\"reference_id\":null,\"lat\":null,\"lng\":null,\"total\":null,\"grand_total\":null,\"status_id\":null,\"receivers_mobile\":null,\"id\":null}', '{\"store_id\":1,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":2,\"delivery_charge\":0,\"contact_number\":\"9270079301\",\"reference_id\":\"6a2e8a0543ea2\",\"lat\":\"10.36183929\",\"lng\":\"123.98711395\",\"total\":25,\"grand_total\":25,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":105}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-14 10:01:25', '2026-06-14 10:01:25'),
-(416, 'App\\Models\\User', 66, 'created', 'App\\Models\\Order', 92, '[]', '{\"transaction_id\":105,\"store_id\":1,\"item_id\":666,\"item_name\":\"aus tempora.\",\"item_description\":\"The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height<\\/li><li>Deliver<\\/li><li>sample<\\/li><\\/ul><div>The quick brown fox jumps <b>over the lazy dog near the river<\\/b><\\/div><\\/div><div>The quick brown fox jumps <u style=\\\"\\\">over the lazy dog near the river<\\/u><\\/div><div>The quick brown fox jumps <i style=\\\"\\\">over the lazy dog near the river<\\/i><u style=\\\"\\\"><\\/u><\\/div><div>&lt;script&gt;&lt;\\/script&gt;<\\/div>\",\"unit_id\":4,\"base_price\":23,\"store_price\":56,\"online_price\":25,\"qty\":1,\"id\":92}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-14 10:01:25', '2026-06-14 10:01:25');
+(416, 'App\\Models\\User', 66, 'created', 'App\\Models\\Order', 92, '[]', '{\"transaction_id\":105,\"store_id\":1,\"item_id\":666,\"item_name\":\"aus tempora.\",\"item_description\":\"The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height<\\/li><li>Deliver<\\/li><li>sample<\\/li><\\/ul><div>The quick brown fox jumps <b>over the lazy dog near the river<\\/b><\\/div><\\/div><div>The quick brown fox jumps <u style=\\\"\\\">over the lazy dog near the river<\\/u><\\/div><div>The quick brown fox jumps <i style=\\\"\\\">over the lazy dog near the river<\\/i><u style=\\\"\\\"><\\/u><\\/div><div>&lt;script&gt;&lt;\\/script&gt;<\\/div>\",\"unit_id\":4,\"base_price\":23,\"store_price\":56,\"online_price\":25,\"qty\":1,\"id\":92}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-14 10:01:25', '2026-06-14 10:01:25'),
+(417, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 18, '[]', '{\"store_user_id\":19,\"store_menu_id\":1,\"id\":18}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-22 23:55:48', '2026-06-22 23:55:48'),
+(418, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 19, '[]', '{\"store_user_id\":19,\"store_menu_id\":4,\"id\":19}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-23 00:17:31', '2026-06-23 00:17:31'),
+(419, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 20, '[]', '{\"store_user_id\":19,\"store_menu_id\":2,\"id\":20}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-23 00:42:18', '2026-06-23 00:42:18'),
+(420, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 21, '[]', '{\"store_user_id\":19,\"store_menu_id\":2,\"id\":21}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-23 00:46:27', '2026-06-23 00:46:27'),
+(421, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 22, '[]', '{\"store_user_id\":19,\"store_menu_id\":2,\"id\":22}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-23 00:51:06', '2026-06-23 00:51:06'),
+(422, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 23, '[]', '{\"store_user_id\":19,\"store_menu_id\":1,\"id\":23}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-23 01:27:32', '2026-06-23 01:27:32'),
+(423, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 24, '[]', '{\"store_user_id\":19,\"store_menu_id\":2,\"id\":24}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-23 01:27:41', '2026-06-23 01:27:41'),
+(424, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 25, '[]', '{\"store_user_id\":19,\"store_menu_id\":3,\"id\":25}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-23 01:33:25', '2026-06-23 01:33:25'),
+(425, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 26, '[]', '{\"store_user_id\":19,\"store_menu_id\":6,\"id\":26}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-23 01:33:36', '2026-06-23 01:33:36'),
+(426, 'App\\Models\\User', 66, 'created', 'App\\Models\\Transaction', 106, '[]', '{\"store_id\":458047115,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":5.2,\"contact_number\":\"9270079301\",\"reference_id\":\"6a3e22bb9e3fb\",\"lat\":\"10.361936811331\",\"lng\":\"123.98734336216\",\"total\":78.41,\"grand_total\":83.61,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":106}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-26 05:56:59', '2026-06-26 05:56:59'),
+(427, 'App\\Models\\User', 66, 'updated', 'App\\Models\\Transaction', 106, '{\"store_id\":null,\"user_id\":null,\"payment_method_id\":null,\"receive_method_id\":null,\"delivery_charge\":null,\"contact_number\":null,\"reference_id\":null,\"lat\":null,\"lng\":null,\"total\":null,\"grand_total\":null,\"status_id\":null,\"receivers_mobile\":null,\"id\":null}', '{\"store_id\":1,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":5.2,\"contact_number\":\"9270079301\",\"reference_id\":\"6a3e22bb9e3fb\",\"lat\":\"10.361936811331\",\"lng\":\"123.98734336216\",\"total\":78.41,\"grand_total\":83.61,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":106}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-26 05:56:59', '2026-06-26 05:56:59'),
+(428, 'App\\Models\\User', 66, 'created', 'App\\Models\\Order', 93, '[]', '{\"transaction_id\":106,\"store_id\":1,\"item_id\":666,\"item_name\":\"aus tempora.\",\"item_description\":\"The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height<\\/li><li>Deliver<\\/li><li>sample<\\/li><\\/ul><div>The quick brown fox jumps <b>over the lazy dog near the river<\\/b><\\/div><\\/div><div>The quick brown fox jumps <u style=\\\"\\\">over the lazy dog near the river<\\/u><\\/div><div>The quick brown fox jumps <i style=\\\"\\\">over the lazy dog near the river<\\/i><u style=\\\"\\\"><\\/u><\\/div><div>&lt;script&gt;&lt;\\/script&gt;<\\/div>\",\"unit_id\":17,\"base_price\":4,\"store_price\":56,\"online_price\":78.41,\"qty\":1,\"id\":93}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-26 05:57:00', '2026-06-26 05:57:00'),
+(429, 'App\\Models\\User', 66, 'created', 'App\\Models\\Transaction', 107, '[]', '{\"store_id\":458047115,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":4.6000000000000005,\"contact_number\":\"9270079301\",\"reference_id\":\"6a3e231069a9b\",\"lat\":\"10.361846865593\",\"lng\":\"123.98711380401\",\"total\":56,\"grand_total\":60.6,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":107}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-26 05:58:24', '2026-06-26 05:58:24'),
+(430, 'App\\Models\\User', 66, 'updated', 'App\\Models\\Transaction', 107, '{\"store_id\":null,\"user_id\":null,\"payment_method_id\":null,\"receive_method_id\":null,\"delivery_charge\":null,\"contact_number\":null,\"reference_id\":null,\"lat\":null,\"lng\":null,\"total\":null,\"grand_total\":null,\"status_id\":null,\"receivers_mobile\":null,\"id\":null}', '{\"store_id\":1,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":4.6000000000000005,\"contact_number\":\"9270079301\",\"reference_id\":\"6a3e231069a9b\",\"lat\":\"10.361846865593\",\"lng\":\"123.98711380401\",\"total\":56,\"grand_total\":60.6,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":107}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-26 05:58:24', '2026-06-26 05:58:24'),
+(431, 'App\\Models\\User', 66, 'created', 'App\\Models\\Order', 94, '[]', '{\"transaction_id\":107,\"store_id\":1,\"item_id\":666,\"item_name\":\"aus tempora.\",\"item_description\":\"The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height<\\/li><li>Deliver<\\/li><li>sample<\\/li><\\/ul><div>The quick brown fox jumps <b>over the lazy dog near the river<\\/b><\\/div><\\/div><div>The quick brown fox jumps <u style=\\\"\\\">over the lazy dog near the river<\\/u><\\/div><div>The quick brown fox jumps <i style=\\\"\\\">over the lazy dog near the river<\\/i><u style=\\\"\\\"><\\/u><\\/div><div>&lt;script&gt;&lt;\\/script&gt;<\\/div>\",\"unit_id\":9,\"base_price\":45,\"store_price\":90,\"online_price\":56,\"qty\":1,\"id\":94}', 'http://localhost:8081/my-transactions', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-26 05:58:24', '2026-06-26 05:58:24'),
+(432, 'App\\Models\\User', 66, 'created', 'App\\Models\\Store', 51, '[]', '{\"name\":\"Sample Store 1\",\"mobile\":\"09270079301\",\"desc\":\"This is a sample store 1\",\"latitude\":\"10.361846919999996\",\"longitude\":\"123.98710631999994\",\"user_id\":66,\"is_active\":false,\"id\":51}', 'http://localhost:8081/apply-store', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-27 06:24:53', '2026-06-27 06:24:53'),
+(433, 'App\\Models\\User', 66, 'created', 'App\\Models\\Store', 52, '[]', '{\"name\":\"sample store 2\",\"mobile\":\"09270079301\",\"desc\":\"sample store 2\",\"latitude\":\"10.361846919999996\",\"longitude\":\"123.98710631999994\",\"user_id\":66,\"is_active\":false,\"id\":52}', 'http://localhost:8081/apply-store', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-27 10:53:02', '2026-06-27 10:53:02'),
+(434, 'App\\Models\\User', 66, 'created', 'App\\Models\\Store', 53, '[]', '{\"name\":\"Sample store 4\",\"mobile\":\"09270079301\",\"desc\":\"Sample store 4\",\"latitude\":\"10.361846920003144\",\"longitude\":\"123.98710632000814\",\"user_id\":66,\"is_active\":false,\"id\":53}', 'http://localhost:8081/apply-store', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-28 01:11:30', '2026-06-28 01:11:30'),
+(435, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUser', 20, '[]', '{\"store_id\":53,\"email\":\"momshieroce@gmail.com\",\"verification_code\":\"6a41cd0c290c4\",\"is_verified\":false,\"id\":20}', 'http://localhost:8081/invite-user', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-29 00:40:28', '2026-06-29 00:40:28'),
+(436, NULL, NULL, 'updated', 'App\\Models\\StoreUser', 20, '{\"verification_code\":\"6a41cd0c290c4\",\"is_verified\":0}', '{\"verification_code\":null,\"is_verified\":1}', 'http://localhost:8081/store-users/verification_code/6a41cd0c290c4', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-29 00:43:30', '2026-06-29 00:43:30'),
+(437, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 27, '[]', '{\"store_user_id\":20,\"store_menu_id\":6,\"id\":27}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-29 01:22:48', '2026-06-29 01:22:48'),
+(438, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 28, '[]', '{\"store_user_id\":20,\"store_menu_id\":1,\"id\":28}', 'http://localhost:8081/store-user-menus', '192.168.65.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-06-29 01:27:14', '2026-06-29 01:27:14');
 
 -- --------------------------------------------------------
 
@@ -3503,7 +3525,11 @@ INSERT INTO `images` (`id`, `thumbnail`, `path`, `imageable_id`, `imageable_type
 (1104, 'images/uploads/6a0ff8523ed88-1.jpg', 'images/uploads/6a0ff8523ed88-1.jpg', 666, 'App\\Models\\Item', 1, '1.jpg', 284706, NULL, '2026-05-22 05:31:46', '2026-06-13 04:05:39'),
 (1105, 'images/uploads/6a0ff8524a313-2.jpg', 'images/uploads/6a0ff8524a313-2.jpg', 666, 'App\\Models\\Item', 0, '2.jpg', 274976, NULL, '2026-05-22 05:31:46', '2026-06-13 04:05:39'),
 (1106, 'images/uploads/6a0ff91c37ccc-4.jpg', 'images/uploads/6a0ff91c37ccc-4.jpg', 666, 'App\\Models\\Item', 0, '4.jpg', 204225, NULL, '2026-05-22 05:35:08', '2026-06-13 04:05:39'),
-(1107, 'images/uploads/6a10f928933b0-battery_charger1.jpg', 'images/uploads/6a10f928933b0-battery_charger1.jpg', 666, 'App\\Models\\Item', 0, 'battery_charger1.jpg', 155491, NULL, '2026-05-22 23:47:36', '2026-06-13 04:05:39');
+(1107, 'images/uploads/6a10f928933b0-battery_charger1.jpg', 'images/uploads/6a10f928933b0-battery_charger1.jpg', 666, 'App\\Models\\Item', 0, 'battery_charger1.jpg', 155491, NULL, '2026-05-22 23:47:36', '2026-06-13 04:05:39'),
+(1111, 'images/uploads/6a3fb99e2c9b7-11.jpg', 'images/uploads/6a3fb99e2c9b7-11.jpg', 52, 'App\\Models\\Store', 1, '11.jpg', 92441, NULL, '2026-06-27 10:53:02', '2026-06-27 10:53:02'),
+(1112, 'images/uploads/6a3fb99e328c8-21.jpg', 'images/uploads/6a3fb99e328c8-21.jpg', 52, 'App\\Models\\Store', 1, '21.jpg', 98697, NULL, '2026-06-27 10:53:02', '2026-06-27 10:53:02'),
+(1113, 'images/uploads/6a4082d2b8534-11.jpg', 'images/uploads/6a4082d2b8534-11.jpg', 53, 'App\\Models\\Store', 1, '11.jpg', 92441, NULL, '2026-06-28 01:11:30', '2026-06-28 01:11:30'),
+(1114, 'images/uploads/6a4082d2bdaa1-21.jpg', 'images/uploads/6a4082d2bdaa1-21.jpg', 53, 'App\\Models\\Store', 1, '21.jpg', 98697, NULL, '2026-06-28 01:11:30', '2026-06-28 01:11:30');
 
 -- --------------------------------------------------------
 
@@ -5709,7 +5735,6 @@ INSERT INTO `menu_role` (`id`, `menu_id`, `role_id`, `created_at`, `updated_at`)
 (40, 3, 3, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
 (41, 5, 3, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
 (42, 6, 3, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
-(43, 7, 3, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
 (44, 11, 3, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
 (45, 12, 3, '2026-05-09 16:30:21', '2026-05-09 16:30:21'),
 (46, 1, 7, '2026-05-08 16:19:25', '2026-05-08 16:19:25'),
@@ -5841,76 +5866,6 @@ CREATE TABLE `migrations` (
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2016_06_01_000001_create_oauth_auth_codes_table', 1),
-(4, '2016_06_01_000002_create_oauth_access_tokens_table', 1),
-(5, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1),
-(6, '2016_06_01_000004_create_oauth_clients_table', 1),
-(7, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1),
-(8, '2019_02_05_010642_create_address_table', 1),
-(9, '2019_08_19_000000_create_failed_jobs_table', 1),
-(10, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(11, '2021_04_02_031410_create_roles_table', 1),
-(12, '2021_04_02_031940_create_role_user_table', 1),
-(13, '2021_04_12_002454_create_categories_table', 1),
-(14, '2021_04_13_033320_create_stores_table', 1),
-(15, '2021_04_16_233458_create_menus_table', 1),
-(16, '2021_04_16_234251_create_menu_role_table', 1),
-(17, '2021_07_06_222059_create_units_table', 1),
-(18, '2021_07_07_022223_create_items_table', 1),
-(19, '2021_07_11_002949_create_sizes_table', 1),
-(20, '2021_07_11_003104_create_colors_table', 1),
-(21, '2021_07_11_003217_create_item_prices_table', 1),
-(22, '2021_07_31_020548_create_images_table', 1),
-(23, '2022_04_15_022007_create_access_rights_table', 1),
-(24, '2022_08_24_222328_create_sidebar_menus_table', 1),
-(25, '2022_11_03_001701_create_dashboard_menus_table', 1),
-(26, '2022_11_22_225106_create_payment_methods_table', 1),
-(27, '2022_11_23_013147_create_delivery_charge_table', 1),
-(28, '2022_11_23_032256_create_receiving_method_table', 1),
-(29, '2022_11_23_234306_create_status_table', 1),
-(30, '2022_11_23_234440_create_transactions_table', 1),
-(31, '2022_11_23_235043_create_transaction_message_table', 1),
-(32, '2022_11_23_235307_create_orders_table', 1),
-(33, '2022_12_04_032351_create_pickup_time_table', 1),
-(34, '2022_12_10_082720_create_static_menus_table', 1),
-(35, '2022_12_11_005553_create_security_questions_table', 1),
-(36, '2022_12_11_233400_create_scheduled_calls_table', 1),
-(37, '2022_12_14_004046_create_scheduled_call_status_table', 1),
-(38, '2022_12_14_233712_create_menu_role_access_right_table', 1),
-(39, '2022_12_18_080626_create_cloud_tokens_table', 1),
-(40, '2022_12_20_230302_create_upscale_price_table', 1),
-(41, '2023_01_08_004400_create_store_rating_table', 1),
-(42, '2023_01_08_004724_create_ratings_table', 1),
-(43, '2023_04_02_043913_create_normal_balance_table', 1),
-(44, '2023_04_05_073434_create_store_menus_table', 1),
-(45, '2023_04_05_204926_create_store_user_table', 1),
-(46, '2023_04_05_214910_create_store_menu_access_table', 1),
-(47, '2023_04_06_025639_create_invoices_table', 1),
-(48, '2023_04_06_063134_create_invoice_items_table', 1),
-(49, '2023_05_09_005825_create_item_quantity_table', 1),
-(50, '2023_06_22_025527_create_mobile_otp_table', 1),
-(51, '2023_06_23_010832_create_request_count_table', 1),
-(52, '2023_06_26_000607_create_selling_prices_table', 1),
-(53, '2023_06_26_013144_create_online_prices_table', 1),
-(54, '2023_06_29_212407_create_franchisees_table', 1),
-(55, '2023_07_11_222825_create_delivery_franchisee_table', 1),
-(56, '2023_07_27_012016_create_store_user_menu_table', 1),
-(57, '2023_08_06_224625_create_store_advertisements_table', 1),
-(58, '2024_01_01_233013_create_audits_table', 1),
-(60, '2024_09_08_073337_create_interconnected_cities_table', 2),
-(61, '2024_12_24_102651_create_item_attributes_table', 3),
-(62, '2024_12_24_143851_create_item_selection_attributes', 4),
-(63, '2024_12_26_070727_create_item_price_attributes_table', 5),
-(64, '2024_12_26_072155_create_item_values_attributes_table', 6),
-(65, '2024_12_26_080152_create_item_quantity_table', 7);
-
 -- --------------------------------------------------------
 
 --
@@ -5980,26 +5935,26 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('10081106e46a3e24711516b8e3257c4ad8a40a275929044cb8c622df6281936c14499166b8ecac70', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:16:41', '2026-01-04 08:42:12', '2025-11-09 08:16:41'),
 ('1008f4f07521284c7e17043b317c08584f8492d3a451df44b855f4180099d1bf7fadebf6ac782b4f', 26, 1, 'MyApp', '[]', 1, '2024-11-16 08:08:58', '2024-12-27 10:11:23', '2025-11-16 08:08:58'),
 ('11644d96ae94fe55f91b298c8b79345de122fa67f8904eaaaf1d3166e53035fea3069ffee68b811f', 24, 1, 'MyApp', '[]', 1, '2024-10-16 06:25:13', '2024-10-21 06:08:02', '2025-10-16 06:25:13'),
-('17a5e786e0bd18930c0095ca7b1752630d0ea8691666ce0358f9a305f392bc07f9b0636622b1ede0', 66, 1, 'google-login', '[]', 1, '2026-05-20 11:48:19', '2026-06-13 04:05:53', '2027-05-20 07:48:19'),
+('17a5e786e0bd18930c0095ca7b1752630d0ea8691666ce0358f9a305f392bc07f9b0636622b1ede0', 66, 1, 'google-login', '[]', 1, '2026-05-20 11:48:19', '2026-06-26 02:39:32', '2027-05-20 07:48:19'),
 ('17f6ba3a4db5eb71a2c0257747fedcd094fea2b8cb94a87596f17ffec21684e273de0390cd878c97', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:18:20', '2026-01-04 08:42:12', '2025-11-09 08:18:20'),
 ('19408563346c578755fc17f6a3bd10cd904e9787ae639ec295caeabeefd7c52a2c17d587e7699f9f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:58', '2026-04-27 07:28:27', '2027-01-03 08:37:58'),
 ('1a3a4751731ebcee7c11a05c042503ddd378d7ae80af0a4b7001ee5c7cbd660bcb4325f37182c5b8', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:59', '2026-01-04 08:42:12', '2025-11-09 07:54:59'),
 ('1e2e92e2a63fbca9ea8cf6c19705c690600c2262210134cb5b3ada0cc4f525785b76d4452016456f', 27, 1, 'MyApp', '[]', 1, '2026-01-03 07:57:47', '2026-01-04 08:42:12', '2027-01-03 07:57:47'),
 ('1e72e53414e234bea7f57cdcf0ce3c0a18d701ded130b22ba16f818712302339addc8205f894e446', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:16', '2026-04-27 07:28:27', '2027-01-03 08:36:16'),
-('1ebb9724c980200679b02bf276c7ad080d78f9eb7dd82a8ad495eae0cd47f85bc1dcbdcf73857e56', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:44:51', '2026-06-10 00:57:11', '2027-05-20 11:44:51'),
+('1ebb9724c980200679b02bf276c7ad080d78f9eb7dd82a8ad495eae0cd47f85bc1dcbdcf73857e56', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:44:51', '2026-06-22 20:14:02', '2027-05-20 11:44:51'),
 ('21d0789251dc3dd482761978336bc026993561886a49bd01733ba3252f68dbe4d9a0dbcc7b59e3e0', 28, 1, 'MyApp', '[]', 1, '2026-04-27 07:14:56', '2026-04-27 07:28:27', '2027-04-27 16:14:56'),
 ('22e7a3295f9a2c597e2ce5d55a36b26c5d02808cb5d69bfc8cbc6cb971b9c1393abe390f9077e90d', 39, 1, 'MyApp', '[]', 0, '2026-05-14 00:55:47', '2026-05-14 00:55:47', '2027-05-14 09:55:47'),
 ('2420749a34d4c84867c148d03337f2e4b9c0d2dc09e282194447377882ad89784c95bf6bed9b4e60', 26, 1, 'MyApp', '[]', 1, '2024-12-23 10:07:37', '2024-12-27 10:11:23', '2025-12-23 10:07:37'),
 ('263b3960e4ba02f372fdd9e4bc4bac1aa2f52a265b573c6a838dabae4675c40357bf603427fdf26b', 36, 1, 'facebook-login', '[]', 0, '2026-05-09 16:23:40', '2026-05-09 16:23:40', '2027-05-09 12:23:40'),
 ('2708725498c3009a7a45798057934682bd1d979a2d2702a171a38fde7c6468bfd3d1363f943220c2', 28, 1, 'MyApp', '[]', 1, '2026-01-04 09:31:19', '2026-04-27 07:28:27', '2027-01-04 09:31:19'),
 ('2777c2d347f1258b7b88239a96959f406c266bbc7233877f63134e59b74d1ba8ab31096c1d1de39f', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:40', '2026-04-27 07:28:27', '2027-01-03 08:33:40'),
-('278d9e54e7e50571dc2ddc2dfd5716b3b5ef01dc0f00228ec573eeca71e8c2566881c2cb92015c6d', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:20:19', '2026-06-10 00:57:11', '2027-05-20 11:20:19'),
+('278d9e54e7e50571dc2ddc2dfd5716b3b5ef01dc0f00228ec573eeca71e8c2566881c2cb92015c6d', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:20:19', '2026-06-22 20:14:02', '2027-05-20 11:20:19'),
 ('27fd36eec2a3e6ce014e2c4a403e8e38c21a5702138c0bb15aa662ca8e3eaaca3d29d1a7f8b18fcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:15', '2026-04-27 07:28:27', '2027-01-03 08:37:15'),
 ('29c14f491f59b7240a6c66d023bf2d38a0e82aba32d36330885ed6c56c9e65908a3a2b8b174a62a3', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:18:58', '2026-04-27 07:28:27', '2027-03-31 10:18:58'),
 ('2daac5065de5b214e513ebb8a649c6583ee70afd11a17b6aa2812e7cb6835e031ca2603123b538ae', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:41:40', '2026-04-27 07:28:27', '2027-01-02 11:41:40'),
 ('2de729b26beb70a47c598ab2681c580419752643a29106de0934144368ba89b4d3516dd2f28b784b', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:15:00', '2026-01-04 08:42:12', '2025-11-09 08:15:00'),
 ('2f15e591fbb22e4a1171b78e4fa276c4b1e9f9494e4eaf96e7d4cadbe370f539456bd56b80900bac', 22, 1, 'MyApp', '[]', 1, '2024-11-02 15:04:39', '2024-11-02 15:51:39', '2025-11-02 15:04:39'),
-('319f3f429d1140bce872596dbc85ee417051dcadebcd7703a3c7106a121cc10ec140b00da3fe67d7', 68, 1, 'MyApp', '[]', 1, '2026-05-25 23:57:27', '2026-06-10 00:57:11', '2027-05-26 08:57:27'),
+('319f3f429d1140bce872596dbc85ee417051dcadebcd7703a3c7106a121cc10ec140b00da3fe67d7', 68, 1, 'MyApp', '[]', 1, '2026-05-25 23:57:27', '2026-06-22 20:14:02', '2027-05-26 08:57:27'),
 ('3388358016d1d758698885c22188f6137e49c287c7c0cbf0f3e521e7e1f49de46abfd326a4969b43', 33, 1, 'facebook-login', '[]', 0, '2026-05-09 15:51:01', '2026-05-09 15:51:01', '2027-05-09 11:51:01'),
 ('33e1c28de0b645acd67f8d83e4750b620ab77c07eadc3adc831f7d8fd2cd5d03ed7d58cf1ab42fe7', 28, 1, 'MyApp', '[]', 1, '2026-02-08 12:51:18', '2026-04-27 07:28:27', '2027-02-08 12:51:18'),
 ('398b15860b85a0801b87e6a5551b799b7e457c18e01c699f9bf84cb9429ac1f516a0d8053a58399c', 26, 1, 'MyApp', '[]', 1, '2024-12-01 08:38:50', '2024-12-27 10:11:23', '2025-12-01 08:38:50'),
@@ -6008,7 +5963,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('3cc4ef471b4e5d6a059a4f673d6374b160c4434f96606c63ea2a151b998fefb8494c8f985950a065', 25, 1, 'MyApp', '[]', 0, '2024-10-16 05:29:51', '2024-10-16 05:29:51', '2025-10-16 05:29:51'),
 ('40eb2ef42e85b84edec253014fdbf99cad9600a3be992fd4d6825f62eacf75219a556e3b0120df96', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:25:24', '2026-04-27 07:28:27', '2027-01-03 08:25:24'),
 ('40fcc5186228e9f612dd3c834332773b231625a293f72b7a79b52cab324cf94928cc94e7f88479fd', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:17:13', '2026-04-27 07:28:27', '2027-03-31 10:17:13'),
-('417ffe7c610788d93d0eae8b2d7ae446298ae68cc411b2f2c5379a4b2fd90bab11d28b7154cb66fd', 68, 1, 'MyApp', '[]', 1, '2026-05-23 22:16:55', '2026-06-10 00:57:11', '2027-05-24 07:16:55'),
+('417ffe7c610788d93d0eae8b2d7ae446298ae68cc411b2f2c5379a4b2fd90bab11d28b7154cb66fd', 68, 1, 'MyApp', '[]', 1, '2026-05-23 22:16:55', '2026-06-22 20:14:02', '2027-05-24 07:16:55'),
 ('419f506a30f79d338ffa4bc08352cf642a44e6936606b333864ed38a790dea1629b73f3d8e83476d', 26, 1, 'MyApp', '[]', 0, '2024-12-27 10:11:51', '2024-12-27 10:11:51', '2025-12-27 10:11:51'),
 ('41a0a6afc666f2c3e2e3f65d7a107edb29f411d72f3a8ffb1feb6fd61a1f00d1724d0c4242d75166', 34, 1, 'facebook-login', '[]', 0, '2026-05-09 16:04:35', '2026-05-09 16:04:35', '2027-05-09 12:04:35'),
 ('42fe3fe21ebb6a28499a8450bbd3057246572d10b62637a798c49a118e4f0fbf3cfcffafb29b8d8d', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:16:45', '2024-12-27 10:11:23', '2025-12-27 08:16:45'),
@@ -6017,7 +5972,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('477457618e9077e84d40507e09633a51087a7fd5703525c511df1cecc2c810587c03d64bfe4e9dcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:36', '2026-04-27 07:28:27', '2027-01-03 08:37:36'),
 ('48111d11a7cc0752747e8d9d006314e1693e10e8a32bb85b4079e2a7f1453823344171c83500bf2a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 07:59:20', '2026-04-27 07:28:27', '2027-01-03 07:59:20'),
 ('481d3b88d098252fe4a22bfc3209cf68322f6ae978eaea35939b993c120cd493505d7dfe5a146e44', 28, 1, 'MyApp', '[]', 1, '2026-04-27 07:27:41', '2026-04-27 07:28:27', '2027-04-27 16:27:41'),
-('48650a6c962bb5eaafed341b1c63effa394ea6383d5b52dc8d6e395e91c1f32d83c68ad670e71589', 66, 1, 'MyApp', '[]', 1, '2026-06-10 00:57:57', '2026-06-13 04:05:53', '2027-06-10 09:57:57'),
+('48650a6c962bb5eaafed341b1c63effa394ea6383d5b52dc8d6e395e91c1f32d83c68ad670e71589', 66, 1, 'MyApp', '[]', 1, '2026-06-10 00:57:57', '2026-06-26 02:39:32', '2027-06-10 09:57:57'),
 ('4b8f9121c9f01408ba8ecfac65d5d25dddce344323a4aaf94b1a4204281897fca1875f1540f1aeda', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:36:47', '2026-04-27 07:28:27', '2027-01-03 08:36:47'),
 ('4bd2007d7151a9acc2df965ffb4504830e086469d5499dfe57162097dcb5108498141464949bfc23', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:24:45', '2026-04-27 07:28:27', '2027-01-03 08:24:45'),
 ('4d16abaa62e5c0374b208e34f2af8c256847f67d17c52ab45dcc950062863ee1b293dc960106c607', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:17:05', '2026-01-04 08:42:12', '2025-11-09 08:17:05'),
@@ -6026,21 +5981,23 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('51bdc4ed215c773297dc3303c2ff9c77568a169d5f97332a8ba3de06cc16fdde053c527300f4e223', 37, 1, 'MyApp', '[]', 0, '2026-05-14 00:46:11', '2026-05-14 00:46:11', '2027-05-14 09:46:11'),
 ('52b301d2025ceebe4a01eaaa670ac95a64e36b0213d7112a3e8cf9e01218544015a071e37b392052', 26, 1, 'MyApp', '[]', 1, '2024-10-21 06:09:56', '2024-12-27 10:11:23', '2025-10-21 06:09:56'),
 ('53a096f7e3bbd1108b923a37135d0c24ce311d2c4a8c8ae7f22d91a131931a7384838ea21c857f4c', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:13:42', '2026-04-27 07:28:27', '2027-03-31 10:13:42'),
-('53b150af4289f7e32dcf702d571e3c1aa3b0728fd4efb002640a6e41cc01babb2138f618902b06f0', 66, 1, 'google-login', '[]', 1, '2026-06-07 12:19:51', '2026-06-13 04:05:53', '2027-06-07 08:19:51'),
+('53b150af4289f7e32dcf702d571e3c1aa3b0728fd4efb002640a6e41cc01babb2138f618902b06f0', 66, 1, 'google-login', '[]', 1, '2026-06-07 12:19:51', '2026-06-26 02:39:32', '2027-06-07 08:19:51'),
 ('5573e5e410180cea12939e726af44b6f1a102ba24173020988e8e5c058dd2a68220964c81707aa71', 28, 1, 'MyApp', '[]', 1, '2026-04-19 03:21:00', '2026-04-27 07:28:27', '2027-04-19 12:21:00'),
 ('5672843e461bc5548ae8ea92a7d6c6f5ba2d4fe0c47a2982d491e0e38f130db0c61c6e6616d34986', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:42', '2026-04-27 07:28:27', '2027-01-03 08:35:42'),
 ('576037debeaa758bf8e9ef1517c0930a3f6f106325a08ce0cc1527482711f9b13609bcf40809ad1d', 24, 1, 'MyApp', '[]', 1, '2024-10-13 06:55:13', '2024-10-21 06:08:02', '2025-10-13 06:55:13'),
 ('5970843354c52a61ae896de5c41eddca3e67a638c6ba8c497d36c19bcd40928062779f579c2852aa', 24, 1, 'MyApp', '[]', 1, '2024-10-13 06:53:32', '2024-10-21 06:08:02', '2025-10-13 06:53:32'),
 ('598d123291b1e173a2208bc854646d2226f112e01dc9f58a8696843579439c61b9e542ec076abdec', 33, 1, 'facebook-login', '[]', 0, '2026-05-09 15:45:31', '2026-05-09 15:45:31', '2027-05-09 11:45:31'),
+('5af5e5ab1afc6da39838db6a129747569a5b2402231999646a843cd454eb56accb251935796ca509', 66, 1, 'MyApp', '[]', 1, '2026-06-22 20:15:02', '2026-06-26 02:39:32', '2027-06-23 05:15:02'),
 ('605ef3ff38b8242189f6d816836a1e3202c67c4746179abf9be69f09c66d5aee30684ad8d7bd1cde', 24, 1, 'MyApp', '[]', 1, '2024-10-18 08:29:46', '2024-10-21 06:08:02', '2025-10-18 08:29:46'),
 ('607753615fda77b416efa09c9dacbb1e110c243056cf4f333b7dbb361a77845bea45634b8763fe96', 34, 1, 'facebook-login', '[]', 0, '2026-05-09 16:03:53', '2026-05-09 16:03:53', '2027-05-09 12:03:53'),
 ('64cbf37f173e7c108ebf3bcc5f4370bf635f2e9df257dcc1f0e45658351362900fbb6d89382bc887', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:17:32', '2026-01-04 08:42:12', '2025-11-09 08:17:32'),
+('6625c1ae255125cd526ba0933616c7dd6c769d3f9c663c847350830546a2579dd1642a17f52cc3b2', 66, 1, 'MyApp', '[]', 1, '2026-06-20 02:25:46', '2026-06-26 02:39:32', '2027-06-20 11:25:46'),
 ('66bd63aeff4fb3aa9d8bb60d797a161a7b6ff03e6489ff7684a56053e371c4c7832a70adbf746c22', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:32:44', '2026-04-27 07:28:27', '2027-01-03 08:32:44'),
 ('6793101e4b8b6e8f33c4b771cda4aad7e07c71b61c352a10349e2c2cbf1ec32b0d8ae5077e83d8a7', 27, 1, 'MyApp', '[]', 1, '2024-11-09 11:21:24', '2026-01-04 08:42:12', '2025-11-09 11:21:24'),
 ('684a6010dc575ab96498e9a394982fb859504f37701a408909c1370c414740d8047241e31efae806', 28, 1, 'MyApp', '[]', 1, '2026-01-24 09:09:25', '2026-04-27 07:28:27', '2027-01-24 09:09:25'),
 ('6bc897a4021a01790cc635ef695f110d0366600d460ebde68f6d63cc1d9d0b9d1fc050f8dfe9299d', 38, 1, 'MyApp', '[]', 0, '2026-05-14 00:53:29', '2026-05-14 00:53:29', '2027-05-14 09:53:29'),
 ('7023f2f68cf10bc00a024dc5640f5ef3385a2733670375ea9391fe86604ec55b3ad5cee2794686b6', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:35:00', '2026-04-27 07:28:27', '2027-01-03 08:35:00'),
-('705a65c3c3d15d5ba237ea454bf975c03185b51a4f0674bbb8bd213e56aeb133ea37179b17eb5fb0', 66, 1, 'MyApp', '[]', 0, '2026-06-13 23:49:41', '2026-06-13 23:49:42', '2027-06-14 08:49:41'),
+('705a65c3c3d15d5ba237ea454bf975c03185b51a4f0674bbb8bd213e56aeb133ea37179b17eb5fb0', 66, 1, 'MyApp', '[]', 1, '2026-06-13 23:49:41', '2026-06-26 02:39:32', '2027-06-14 08:49:41'),
 ('73aacc0261a61a6a27ddfde32dcbcdde4a9c048f498cbee041694fc3bbdc7081b3eb621edee883ef', 27, 1, 'MyApp', '[]', 1, '2024-11-10 10:40:01', '2026-01-04 08:42:12', '2025-11-10 10:40:01'),
 ('749d5d4eb2362cc13610d62559cc6b467e6ba56baafcf4030393f111b6a03035508022c64eb50ff5', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:41:58', '2026-04-27 07:28:27', '2027-01-03 08:41:58'),
 ('74d0c8847d022adcfa94f55d07b0ae61eeb0ea57259f2f460173eab0719013854a33aed62a740af9', 31, 1, 'facebook-login', '[]', 0, '2026-05-09 15:33:53', '2026-05-09 15:33:53', '2027-05-09 11:33:53'),
@@ -6050,6 +6007,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('7ebb4b3cb84dc2dfef16ae8827f80ff2624dc53ec377800dde918b97e49f2fd7c3b7cd7037f98efe', 28, 1, 'MyApp', '[]', 1, '2026-01-25 06:55:24', '2026-04-27 07:28:27', '2027-01-25 06:55:24'),
 ('81342413f4087eb1ee3094067edbe2f2591600bd59b39c06a14eaf2c23f4f86fee797b19c9e6651c', 29, 1, 'facebook-login', '[]', 0, '2026-05-09 15:15:12', '2026-05-09 15:15:12', '2027-05-09 11:15:12'),
 ('81e70348462760e1b9578f69d864fbd332eb4e759a7cb3238df15a68dd483d5175b28945022de803', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:52:17', '2026-01-04 08:42:12', '2025-11-09 07:52:17'),
+('84b97e2eaf0cd59034f5417269f79f834a03d59a472475be98d8387cf9c515941cd44a5763e8d083', 66, 1, 'MyApp', '[]', 1, '2026-06-19 03:46:15', '2026-06-26 02:39:32', '2027-06-19 12:46:15'),
 ('84c69f640fcf9d0f7ed2a11ca4b195b7a1962198d88ba456eeb3bc5ca81c3c3cccf9ee2fb9af4196', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:04:28', '2026-04-27 07:28:27', '2027-01-02 12:04:28'),
 ('84cd113fe921f3aae3e14ac2c82107f1cacec2ee280a2c31003eb5583e65a895dde8f1087e9f0e6d', 28, 1, 'MyApp', '[]', 1, '2026-01-25 06:16:09', '2026-04-27 07:28:27', '2027-01-25 06:16:09'),
 ('87a65251d2b06656d51e9f25012ba6319ae46657b11565d577c7f45ba8e650dae6c10b3909edb529', 23, 1, 'MyApp', '[]', 0, '2024-10-13 06:35:15', '2024-10-13 06:35:15', '2025-10-13 06:35:15'),
@@ -6058,48 +6016,50 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('8bbdd03adfd33d5e85d73fde3b2976a39d8c5eda64bbb9ec946c28923dfacaf8cc0cba22fcff5756', 28, 1, 'MyApp', '[]', 1, '2026-04-21 01:35:26', '2026-04-27 07:28:27', '2027-04-21 10:35:26'),
 ('8d59609d992514fe04c01b6b4773a4ce2afc3e8d47c3fbe1fb0dcccc30b458e27ef7b68851e5f3d5', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:59:34', '2026-04-27 07:28:27', '2027-01-02 11:59:34'),
 ('8d7169ffafe380572c9ddb7d7482c778532da60b661eebdfde65feb0f97e790008e32a27f06deede', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:07', '2026-01-04 08:42:12', '2025-11-09 07:54:07'),
-('8dccd9060e406353ed1eaee602ff51bec74b868c7aba5a91b34d7e0655cc7250ba69d72b21accdde', 66, 1, 'MyApp', '[]', 1, '2026-06-10 00:59:36', '2026-06-13 04:05:53', '2027-06-10 09:59:36'),
+('8dccd9060e406353ed1eaee602ff51bec74b868c7aba5a91b34d7e0655cc7250ba69d72b21accdde', 66, 1, 'MyApp', '[]', 1, '2026-06-10 00:59:36', '2026-06-26 02:39:32', '2027-06-10 09:59:36'),
 ('912ec3193a684f170e4ff796e19c0e79733c00654012dfcc7b51a91b751d2f4e131a0648076b760d', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:18:47', '2024-12-27 10:11:23', '2025-12-27 08:18:47'),
 ('99d91f4820b2024068933cdd2eacf4bb0d85c33f8e3794eaeb5a738dbd938964494bc23944f0a487', 26, 1, 'MyApp', '[]', 1, '2024-11-16 09:15:00', '2024-12-27 10:11:23', '2025-11-16 09:15:00'),
 ('9bccbbf00b32f80ba2e138f1d233158abdc69db8bfb5c7f8c7cd6d3cd0f91ec8fc4bb2e4bcbc9ac2', 41, 1, 'MyApp', '[]', 0, '2026-05-14 01:00:48', '2026-05-14 01:00:48', '2027-05-14 10:00:48'),
-('9cdd62ddc6125d6d4b8910ca07f7e047d550d738ee2854222d679472c67b86a8dd1fd5fabc8492d2', 68, 1, 'MyApp', '[]', 1, '2026-05-21 02:01:14', '2026-06-10 00:57:11', '2027-05-21 11:01:14'),
+('9cdd62ddc6125d6d4b8910ca07f7e047d550d738ee2854222d679472c67b86a8dd1fd5fabc8492d2', 68, 1, 'MyApp', '[]', 1, '2026-05-21 02:01:14', '2026-06-22 20:14:02', '2027-05-21 11:01:14'),
 ('9d647f9e304ecfacdb3f362a72d0153227d21678c1090533e2914b95e62af6d723fde7edd73edad9', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:16:04', '2026-01-04 08:42:12', '2025-11-09 08:16:04'),
-('a91c89e582cf94bd4e5ac4b2930d1ab42576f90028c0cf152a7171e2db84e95ccb68bdc20cb6828c', 68, 1, 'MyApp', '[]', 1, '2026-06-07 12:20:13', '2026-06-10 00:57:11', '2027-06-07 08:20:13'),
+('a4cd3ae6858682c3214c4d959505c979a9773e8df3c4210a6595e1e39c3365e1a7fff34fc37fa127', 68, 1, 'MyApp', '[]', 1, '2026-06-22 20:11:47', '2026-06-22 20:14:02', '2027-06-23 05:11:47'),
+('a91c89e582cf94bd4e5ac4b2930d1ab42576f90028c0cf152a7171e2db84e95ccb68bdc20cb6828c', 68, 1, 'MyApp', '[]', 1, '2026-06-07 12:20:13', '2026-06-22 20:14:02', '2027-06-07 08:20:13'),
 ('a97b52dc4a10e69cb06656590132c2298ec6e9bc92fbf6b570f61beb1f261ed70b3dace4657fe974', 28, 1, 'MyApp', '[]', 1, '2026-01-04 08:51:00', '2026-04-27 07:28:27', '2027-01-04 08:51:00'),
 ('ac28a0356a0a92d8ef39c5ae70f9d12cbf3dc35b56bd209a4b31212783a5c4349abf8e832a6f72e7', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:16:08', '2026-04-27 07:28:27', '2027-03-31 10:16:08'),
-('adcdaa91088144f6d4096a3c7750c281a14b6b41c49db40b8b249e6f0986db38d709e47d679012a6', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:19:30', '2026-06-10 00:57:11', '2027-05-20 11:19:30'),
+('adcdaa91088144f6d4096a3c7750c281a14b6b41c49db40b8b249e6f0986db38d709e47d679012a6', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:19:30', '2026-06-22 20:14:02', '2027-05-20 11:19:30'),
 ('addc34f84de345442322abef9d9cd3c32e819cad317f3d6074e2f7e6cbde6128e37495e1bf6057bd', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:21', '2026-04-27 07:28:27', '2027-01-02 11:58:21'),
 ('ae92df663d19f1a93dcaacd0e2fd0dd5d372f21461dda738b323b49c72fd49d998f3569d8ad4c813', 28, 1, 'MyApp', '[]', 1, '2026-04-27 02:01:03', '2026-04-27 07:28:27', '2027-04-27 11:01:03'),
 ('ae9f7e815550c19616d5484d23b9a1bf70291c78fffb32620596283c917ccdc559d6b06270f5313a', 28, 1, 'MyApp', '[]', 1, '2026-04-18 06:19:18', '2026-04-27 07:28:27', '2027-04-18 15:19:18'),
 ('aed22c26f0486598455ff065d8a36bec12b259cdeb8fb9d32aa7867d10e4c72d7ab2fda1772af056', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:27:57', '2026-04-27 07:28:27', '2027-01-03 08:27:57'),
 ('b0b083a7a1776989a03c51835a21478db4b16a79fa6e6d13c42869a3a76505c3fb95dbdb088e30ee', 28, 1, 'MyApp', '[]', 1, '2026-04-27 07:26:28', '2026-04-27 07:28:27', '2027-04-27 16:26:28'),
 ('b21b0ac9396ab2d58b490f33c941c4f528aad6b405a5fa4d3884498c61b084060ff56d8c6d53bddf', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:26:33', '2026-04-27 07:28:27', '2027-01-03 08:26:33'),
+('b26c46b4eacb29d320f09020e577fd04d877850130f23bd5bd6b98e87dfd8f53e70e99e21bb00543', 66, 1, 'MyApp', '[]', 0, '2026-06-26 02:41:30', '2026-06-26 02:41:30', '2027-06-26 11:41:30'),
 ('b3bf45a510ca423059a9380bcbf8f6f5f5f8b213ef81a8b0a3fbaa25bb75de64077a37317226e04d', 27, 1, 'MyApp', '[]', 1, '2024-11-09 07:54:27', '2026-01-04 08:42:12', '2025-11-09 07:54:27'),
 ('bc6a6484dbfe15bbc1f481d67569a6f7e47eb76b4cf6921356a2a1dcad7c7055655ad74d1d044f4d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:33:59', '2026-04-27 07:28:27', '2027-01-03 08:33:59'),
 ('bd73558a74772ba7a9a8d5720c61fa3ed0ff9f9d4f2c16a9ff18640aa5c04a0cfeffd810e25d4b9a', 28, 1, 'MyApp', '[]', 1, '2026-03-31 10:21:21', '2026-04-27 07:28:27', '2027-03-31 10:21:21'),
 ('be8c7f239b907688cc369f1e6576a295c346d330fcadc159669e47f93910e07b12da3be791ed814b', 32, 1, 'facebook-login', '[]', 0, '2026-05-09 15:39:22', '2026-05-09 15:39:22', '2027-05-09 11:39:22'),
 ('c0c0e24c4820c844e7b4f1de956cef510ee47d87eae6dad0493a72399a07a965baa87bbd5e1cb425', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:04', '2026-01-04 08:42:12', '2025-11-09 08:13:04'),
-('c129a824b209c65ecf6a276d0a430bea30a73936d28251fa4e2b2c552bfa30bf5b1124cc5b345413', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:32:37', '2026-06-10 00:57:11', '2027-05-20 11:32:37'),
+('c129a824b209c65ecf6a276d0a430bea30a73936d28251fa4e2b2c552bfa30bf5b1124cc5b345413', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:32:37', '2026-06-22 20:14:02', '2027-05-20 11:32:37'),
 ('c26c68807dc164fab874c409ae970b584fd04d5b75d5091cc6cc8973f362e6e4eb7d1a30456d13e8', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:40:30', '2026-04-27 07:28:27', '2027-01-03 08:40:30'),
-('c8c042e31f7f278de3f8b289e920b28030fa3bf16704c7a507882f4b935cf44e442b49cef7499f83', 68, 1, 'MyApp', '[]', 1, '2026-05-25 04:23:20', '2026-06-10 00:57:11', '2027-05-25 13:23:20'),
+('c8c042e31f7f278de3f8b289e920b28030fa3bf16704c7a507882f4b935cf44e442b49cef7499f83', 68, 1, 'MyApp', '[]', 1, '2026-05-25 04:23:20', '2026-06-22 20:14:02', '2027-05-25 13:23:20'),
 ('cbcddd3bd5ff18f8227c4edf8698ab49005f84dcdd1e220a53d0c3828a59be774fcd433a986cbc28', 29, 1, 'facebook-login', '[]', 0, '2026-05-09 15:22:42', '2026-05-09 15:22:42', '2027-05-09 11:22:42'),
 ('cc824b2942c2d638645cad7db5058f85b5a9b3f0ddeffbd258fc3a5da9ea1c062ca97298c5b0f0cd', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:49', '2026-04-27 07:28:27', '2027-01-03 08:38:49'),
 ('d09877fdb46309a39f069609830a3f33768d31d03083533e57e94fa25f5f0b025d7cff8a1d92a825', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:09', '2026-04-27 07:28:27', '2027-01-03 08:39:09'),
 ('d0c5eb51c198db805992c3ccf98c5c875ec2e387bf41eaf1fc77b6b257fa448176c7f5004086c62d', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:42:26', '2026-04-27 07:28:27', '2027-01-03 08:42:26'),
 ('d10afa80df9b4e584652016dad3c46131b466ee7d3e7c7403cbe040f686f160d0de28811756d34ef', 35, 1, 'facebook-login', '[]', 0, '2026-05-09 16:08:53', '2026-05-09 16:08:53', '2027-05-09 12:08:53'),
-('d24ff4c01787ac0a15d47b96c6ae2f0abaf21484eb9dba6146c8fdd822785299479c0cbe20dd1dee', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:29:14', '2026-06-10 00:57:11', '2027-05-20 11:29:14'),
+('d24ff4c01787ac0a15d47b96c6ae2f0abaf21484eb9dba6146c8fdd822785299479c0cbe20dd1dee', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:29:14', '2026-06-22 20:14:02', '2027-05-20 11:29:14'),
 ('d490d081096e9519aeb3affb0ca3b4d71be71e5d51baee7d370b8658719ba9f13c5558b29064bd54', 28, 1, 'MyApp', '[]', 1, '2026-01-02 12:00:02', '2026-04-27 07:28:27', '2027-01-02 12:00:02'),
 ('d4b16831bc16bdc77122dfdbe29880891ce5efa45fd830e57b7ef81238707d0068e2e4846c574cef', 36, 1, 'facebook-login', '[]', 0, '2026-05-09 23:26:10', '2026-05-09 23:26:10', '2027-05-09 19:26:10'),
 ('d5a8de12179a27b1c6f243e8722ed183346bfe1883b67d7c097bb3b5b35d0c1f1b628e407f6a3b19', 27, 1, 'MyApp', '[]', 1, '2024-10-21 06:17:34', '2026-01-04 08:42:12', '2025-10-21 06:17:34'),
-('d671d2c8aec6c69a160dec6c0c2adf8d60657125f93999958c52ad7bdba2eec7e3040945a281c708', 66, 1, 'MyApp', '[]', 1, '2026-06-10 01:08:10', '2026-06-13 04:05:53', '2027-06-10 10:08:10'),
+('d671d2c8aec6c69a160dec6c0c2adf8d60657125f93999958c52ad7bdba2eec7e3040945a281c708', 66, 1, 'MyApp', '[]', 1, '2026-06-10 01:08:10', '2026-06-26 02:39:32', '2027-06-10 10:08:10'),
 ('d76fd93f9b7d4fefc43026291e6808a52f9cf41b7611ecb16da2c48beabacfd8c49a9454a596927f', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:55:10', '2026-04-27 07:28:27', '2027-01-02 11:55:10'),
 ('d926503a4e14c5b45a22ea58fd16f91f93af747268e8f6865d6dfbe9324fa581475eee4428d78f7a', 29, 1, 'facebook-login', '[]', 0, '2026-05-09 15:15:41', '2026-05-09 15:15:41', '2027-05-09 11:15:41'),
 ('da38243a2ba02f7ce04eb156390e5fb30006882963b304e4a1944018e779d6ee4b53ec80d7274a8e', 11, 1, 'MyApp', '[]', 1, '2024-11-02 15:55:07', '2024-11-09 07:43:32', '2025-11-02 15:55:07'),
 ('dc6bb1b59adc2b1ad274d5c2fa984e907fe0a63794cf1b509bd883fa188d71484bd112a47a5f8190', 26, 1, 'MyApp', '[]', 1, '2024-12-15 04:26:18', '2024-12-27 10:11:23', '2025-12-15 04:26:18'),
-('dd742a0d3d0375b6532b0fea7905b349de928634ada61b0f84527da27cc42c3e1d7a4931e7735ec7', 68, 1, 'MyApp', '[]', 1, '2026-05-19 23:48:12', '2026-06-10 00:57:11', '2027-05-20 08:48:12'),
+('dd742a0d3d0375b6532b0fea7905b349de928634ada61b0f84527da27cc42c3e1d7a4931e7735ec7', 68, 1, 'MyApp', '[]', 1, '2026-05-19 23:48:12', '2026-06-22 20:14:02', '2027-05-20 08:48:12'),
 ('de4cd7e43e450b1bb006da6ec6c23a4b1eabe4a8166dd9e93e265fed503b0c189662b7a5d8e06135', 26, 1, 'MyApp', '[]', 1, '2024-11-17 06:36:24', '2024-12-27 10:11:23', '2025-11-17 06:36:24'),
 ('df1ea0409e7d47b74718a5c00bcd56fd53ed0f8c88e8f9ff177ff985ef8735ff1089f87f1debb62c', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:16', '2026-01-04 08:42:12', '2025-11-09 08:13:16'),
-('df3817aa238a00e9c4526f4b90fb9283e526e7bf07e44ea5a36075e6874c23a15fb969a12ddbe7cf', 68, 1, 'MyApp', '[]', 1, '2026-05-21 02:31:23', '2026-06-10 00:57:11', '2027-05-21 11:31:23'),
+('df3817aa238a00e9c4526f4b90fb9283e526e7bf07e44ea5a36075e6874c23a15fb969a12ddbe7cf', 68, 1, 'MyApp', '[]', 1, '2026-05-21 02:31:23', '2026-06-22 20:14:02', '2027-05-21 11:31:23'),
 ('e0d551a2f15ea926573450cae08fe95e067ee7e95503c6dfe9a56c82b007ef1d39607516b369c41f', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:13:48', '2026-01-04 08:42:12', '2025-11-09 08:13:48'),
 ('e21c3d7cacc635201db49dda1b04d0c767d914c3e886deb9363549f734f09f656b352fd91ecd0ca0', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:46', '2026-04-27 07:28:27', '2027-01-02 11:57:46'),
 ('e2ec1ffb912c238cc7ce6402aa433ffe1fbf48f7cf222334b05c0d2bbe3dfd4f10e61ba1bd69521d', 28, 1, 'MyApp', '[]', 1, '2026-02-08 12:54:44', '2026-04-27 07:28:27', '2027-02-08 12:54:44'),
@@ -6109,7 +6069,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('ecbfa6e7b5f286f1093e53aaedee67128016561acd3da905ef2800be59d3f87f4fbc0f60d1bf1d1b', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:57:27', '2026-04-27 07:28:27', '2027-01-02 11:57:27'),
 ('ef965846cfbe61a234b76a9af09eae7707b3235725a7ef176fcae0c179819e89c0597b709f0290be', 40, 1, 'MyApp', '[]', 0, '2026-05-14 00:59:39', '2026-05-14 00:59:39', '2027-05-14 09:59:39'),
 ('f18b5bd2970d7b955bf155f478024cfa31f4b82b89a918578c4be91eac53422adc2c27a266183ef8', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:36:32', '2026-01-04 08:42:12', '2025-11-09 08:36:32'),
-('f55fbd84380053f3d72816a487dfc0f08f51ce0ba3a41cdf43ce3292bcf56e15982ae62d6ee4527b', 68, 1, 'MyApp', '[]', 1, '2026-05-21 00:58:16', '2026-06-10 00:57:11', '2027-05-21 09:58:16'),
+('f55fbd84380053f3d72816a487dfc0f08f51ce0ba3a41cdf43ce3292bcf56e15982ae62d6ee4527b', 68, 1, 'MyApp', '[]', 1, '2026-05-21 00:58:16', '2026-06-22 20:14:02', '2027-05-21 09:58:16'),
 ('f63948153056dd1d61e77f9afc83f0928c461868e03b4cb8106a6c6219f07fe9c16fc0ebe0845743', 27, 1, 'MyApp', '[]', 1, '2024-11-09 08:15:22', '2026-01-04 08:42:12', '2025-11-09 08:15:22'),
 ('fa797315f4466873c5caea339a427415a6936d9e519005e284f078a314c7f06a36fc2570293c69fe', 27, 1, 'MyApp', '[]', 1, '2024-11-10 11:21:40', '2026-01-04 08:42:12', '2025-11-10 11:21:40'),
 ('fc550ab7753a23dc9e748bc0581fbc8aeab3b4908a61152036764e261b2f94be408d0169c0368c8a', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:39:40', '2026-04-27 07:28:27', '2027-01-03 08:39:40');
@@ -6305,17 +6265,19 @@ INSERT INTO `orders` (`id`, `transaction_id`, `store_id`, `item_id`, `item_name`
 (89, 102, 1, 666, 'aus tempora.', 'The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height</li><li>Deliver</li><li>sample</li></ul><div>The quick brown fox jumps <b>over the lazy dog near the river</b></div></div><div>The quick brown fox jumps <u style=\"\">over the lazy dog near the river</u></div><div>The quick brown fox jumps <i style=\"\">over the lazy dog near the river</i><u style=\"\"></u></div><div>&lt;script&gt;&lt;/script&gt;</div>', 17, 4.00, 56.00, 78.41, 1, NULL, '2026-06-11 23:08:55', '2026-06-11 23:08:55'),
 (90, 103, 1, 666, 'aus tempora.', 'The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height</li><li>Deliver</li><li>sample</li></ul><div>The quick brown fox jumps <b>over the lazy dog near the river</b></div></div><div>The quick brown fox jumps <u style=\"\">over the lazy dog near the river</u></div><div>The quick brown fox jumps <i style=\"\">over the lazy dog near the river</i><u style=\"\"></u></div><div>&lt;script&gt;&lt;/script&gt;</div>', 17, 4.00, 56.00, 78.41, 1, NULL, '2026-06-11 23:12:18', '2026-06-11 23:12:18'),
 (91, 104, 1, 666, 'aus tempora.', 'The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height</li><li>Deliver</li><li>sample</li></ul><div>The quick brown fox jumps <b>over the lazy dog near the river</b></div></div><div>The quick brown fox jumps <u style=\"\">over the lazy dog near the river</u></div><div>The quick brown fox jumps <i style=\"\">over the lazy dog near the river</i><u style=\"\"></u></div><div>&lt;script&gt;&lt;/script&gt;</div>', 17, 4.00, 56.00, 78.41, 1, NULL, '2026-06-11 23:12:29', '2026-06-11 23:12:29'),
-(92, 105, 1, 666, 'aus tempora.', 'The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height</li><li>Deliver</li><li>sample</li></ul><div>The quick brown fox jumps <b>over the lazy dog near the river</b></div></div><div>The quick brown fox jumps <u style=\"\">over the lazy dog near the river</u></div><div>The quick brown fox jumps <i style=\"\">over the lazy dog near the river</i><u style=\"\"></u></div><div>&lt;script&gt;&lt;/script&gt;</div>', 4, 23.00, 56.00, 25.00, 1, NULL, '2026-06-14 10:01:25', '2026-06-14 10:01:25');
+(92, 105, 1, 666, 'aus tempora.', 'The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height</li><li>Deliver</li><li>sample</li></ul><div>The quick brown fox jumps <b>over the lazy dog near the river</b></div></div><div>The quick brown fox jumps <u style=\"\">over the lazy dog near the river</u></div><div>The quick brown fox jumps <i style=\"\">over the lazy dog near the river</i><u style=\"\"></u></div><div>&lt;script&gt;&lt;/script&gt;</div>', 4, 23.00, 56.00, 25.00, 1, NULL, '2026-06-14 10:01:25', '2026-06-14 10:01:25'),
+(93, 106, 1, 666, 'aus tempora.', 'The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height</li><li>Deliver</li><li>sample</li></ul><div>The quick brown fox jumps <b>over the lazy dog near the river</b></div></div><div>The quick brown fox jumps <u style=\"\">over the lazy dog near the river</u></div><div>The quick brown fox jumps <i style=\"\">over the lazy dog near the river</i><u style=\"\"></u></div><div>&lt;script&gt;&lt;/script&gt;</div>', 17, 4.00, 56.00, 78.41, 1, NULL, '2026-06-26 05:56:59', '2026-06-26 05:56:59'),
+(94, 107, 1, 666, 'aus tempora.', 'The quick brown fox jumps over the lazy do.&nbsp;<div><ul><li>Height</li><li>Deliver</li><li>sample</li></ul><div>The quick brown fox jumps <b>over the lazy dog near the river</b></div></div><div>The quick brown fox jumps <u style=\"\">over the lazy dog near the river</u></div><div>The quick brown fox jumps <i style=\"\">over the lazy dog near the river</i><u style=\"\"></u></div><div>&lt;script&gt;&lt;/script&gt;</div>', 9, 45.00, 90.00, 56.00, 1, NULL, '2026-06-26 05:58:24', '2026-06-26 05:58:24');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Table structure for table `password_reset_tokens`
 --
 
-CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(191) NOT NULL,
+  `token` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -8703,13 +8665,13 @@ CREATE TABLE `stores` (
 --
 
 INSERT INTO `stores` (`id`, `name`, `mobile`, `desc`, `latitude`, `longitude`, `is_active`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'A earum.', '9172292694712', '<b>Ex voluptas maior</b>es e asdf', 10.360618986446, 123.98538465858, NULL, 68, NULL, '2024-08-09 21:38:54', '2026-06-14 09:58:50'),
-(2, 'Cum magni cum.', '98236395160', 'Ratione dignissimos qui sint non ut rerum vel enim itaque quidem qui corrupti nihil rerum necessitatibus dolores maxime doloribus dolores quidem alias soluta reiciendis quasi alias.', 10.358196258544922, 123.98220825195312, NULL, 28, '2026-06-14 09:04:33', '2024-08-09 21:38:54', '2026-06-14 09:04:33'),
-(3, 'Adipisci eius blanditiis.', '95390877743', 'Omnis quidem aut ipsam delectus assumenda laudantium et officiis est voluptatem impedit ipsa ab aliquam repellendus quasi cupiditate eos ut libero ea voluptas.', 10.351566314697266, 123.97174072265625, NULL, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
-(4, 'Eveniet exercitationem necessitatibus dolorem.', '92057078643', 'Voluptatem quia possimus vel sit non impedit dolorem eum officia rerum minima quos sed culpa dolorum voluptatem sit sunt et aspernatur nesciunt qui ipsa laborum.', 10.331385612487793, 123.93457794189453, NULL, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
-(5, 'Sed aut a.', '95802082758', 'Dolorum voluptas sit ut dolore error asperiores voluptas dicta amet ea et esse est nihil et dolores rem ut.', 10.249485969543457, 123.80332946777344, NULL, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
-(6, 'Excepturi libero amet.', '98579840817', 'Id consequatur pariatur culpa voluptas magni doloribus et porro est minus mollitia ea alias molestiae ut.', 10.336010932922363, 123.93333435058594, NULL, 11, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
-(7, 'Saepe et minus.', '94302511325', 'Suscipit suscipit modi recusandae omnis dignissimos odit quis minus eius et natus iusto fuga ad iure qui voluptatem voluptatum id amet consequuntur eligendi laborum saepe tempore distinctio quia.', 10.350825309753418, 123.97221374511719, NULL, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
+(1, 'A earum.', '9172292694712', '<b>Ex voluptas maior</b>es e asdf', 10.360618986446, 123.98538465858, 1, 66, NULL, '2024-08-09 21:38:54', '2026-06-14 09:58:50'),
+(2, 'Cum magni cum.', '98236395160', 'Ratione dignissimos qui sint non ut rerum vel enim itaque quidem qui corrupti nihil rerum necessitatibus dolores maxime doloribus dolores quidem alias soluta reiciendis quasi alias.', 10.358196258544922, 123.98220825195312, 1, 28, '2026-06-14 09:04:33', '2024-08-09 21:38:54', '2026-06-14 09:04:33'),
+(3, 'Adipisci eius blanditiis.', '95390877743', 'Omnis quidem aut ipsam delectus assumenda laudantium et officiis est voluptatem impedit ipsa ab aliquam repellendus quasi cupiditate eos ut libero ea voluptas.', 10.351566314697266, 123.97174072265625, 1, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
+(4, 'Eveniet exercitationem necessitatibus dolorem.', '92057078643', 'Voluptatem quia possimus vel sit non impedit dolorem eum officia rerum minima quos sed culpa dolorum voluptatem sit sunt et aspernatur nesciunt qui ipsa laborum.', 10.331385612487793, 123.93457794189453, 1, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
+(5, 'Sed aut a.', '95802082758', 'Dolorum voluptas sit ut dolore error asperiores voluptas dicta amet ea et esse est nihil et dolores rem ut.', 10.249485969543457, 123.80332946777344, 1, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
+(6, 'Excepturi libero amet.', '98579840817', 'Id consequatur pariatur culpa voluptas magni doloribus et porro est minus mollitia ea alias molestiae ut.', 10.336010932922363, 123.93333435058594, 1, 11, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
+(7, 'Saepe et minus.', '94302511325', 'Suscipit suscipit modi recusandae omnis dignissimos odit quis minus eius et natus iusto fuga ad iure qui voluptatem voluptatum id amet consequuntur eligendi laborum saepe tempore distinctio quia.', 10.350825309753418, 123.97221374511719, 1, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
 (8, 'Voluptatibus animi at est.', '95672326018', 'Consequatur in sed aut ea aut impedit corporis quia adipisci culpa qui sed magnam quo voluptate maxime sequi.', 0, 0, NULL, 11, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
 (9, 'Reiciendis sint accusamus quae.', '95916177329', 'Delectus et sint sit rerum rerum debitis cumque debitis est repudiandae laborum qui.', 0, 0, NULL, 11, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
 (10, 'Quia numquam amet.', '91499197914', 'Vel ut voluptate iste quis veritatis quasi accusantium enim optio commodi aspernatur tenetur qui et dolorem debitis.', 0, 0, NULL, 10, NULL, '2024-08-09 21:38:54', '2024-08-09 21:38:54'),
@@ -8752,7 +8714,10 @@ INSERT INTO `stores` (`id`, `name`, `mobile`, `desc`, `latitude`, `longitude`, `
 (47, 'Sint fuga cum voluptas.', '93848482072', 'Fugiat illo occaecati soluta corporis voluptate voluptatem voluptatem voluptas et est blanditiis sit consequatur quia.', 0, 0, NULL, 11, NULL, '2024-08-09 21:38:56', '2024-08-09 21:38:56'),
 (48, 'Accusamus ut.', '90495727532', 'Temporibus ab qui nulla magnam optio excepturi dignissimos sed iusto saepe aut voluptatem harum exercitationem quis aliquid harum inventore officiis delectus et architecto doloremque sunt sequi sit labore.', 0, 0, NULL, 11, NULL, '2024-08-09 21:38:56', '2024-08-09 21:38:56'),
 (49, 'Doloremque tempore.', '93155275305', 'Illo voluptas inventore quos impedit molestias voluptas similique perferendis qui nam perferendis similique minus aut eum corporis est quod consequatur dolores voluptatem blanditiis ut autem aliquid sint rerum.', 0, 0, NULL, 10, NULL, '2024-08-09 21:38:56', '2024-08-09 21:38:56'),
-(50, 'Voluptate veniam eum voluptas.', '98871186503', 'Atque minus tempore minus qui velit consequatur ab temporibus recusandae quos enim aliquid eum eos consequatur optio facere.', 0, 0, NULL, 11, NULL, '2024-08-09 21:38:56', '2024-08-09 21:38:56');
+(50, 'Voluptate veniam eum voluptas.', '98871186503', 'Atque minus tempore minus qui velit consequatur ab temporibus recusandae quos enim aliquid eum eos consequatur optio facere.', 0, 0, NULL, 11, NULL, '2024-08-09 21:38:56', '2024-08-09 21:38:56'),
+(51, 'Sample Store 1', '09270079301', 'This is a sample store 1', 10.359852087445, 123.98799154298, 0, 66, '2026-06-28 04:56:35', '2026-06-27 06:24:53', '2026-06-28 04:56:35'),
+(52, 'sample store 2', '09270079301', 'sample store 2', 10.361846919999996, 123.98710631999994, 0, 66, NULL, '2026-06-27 10:53:01', '2026-06-27 10:53:01'),
+(53, 'Sample store 4', '09270079301', 'Sample store 4', 10.361846920003, 123.98710632001, 1, 66, NULL, '2026-06-28 01:11:30', '2026-06-28 02:11:36');
 
 -- --------------------------------------------------------
 
@@ -8792,52 +8757,10 @@ CREATE TABLE `store_menus` (
 --
 
 INSERT INTO `store_menus` (`id`, `name`, `icon`, `created_at`, `updated_at`) VALUES
-(1, 'Orders', 'fas fa-tasks', '2024-08-09 21:42:04', '2024-08-09 21:42:04'),
-(2, 'Items', 'fa-list-alt', '2024-08-09 21:42:04', '2024-08-09 21:42:04'),
-(3, 'Locations', 'fa-solid fa-location-dot', '2024-08-09 21:42:04', '2024-08-09 21:42:04'),
-(4, 'Users', 'fas fa-cog', '2024-08-09 21:42:04', '2024-08-09 21:42:04'),
-(5, 'Invoices', 'fa-solid fa-store', '2024-08-09 21:42:04', '2024-08-09 21:42:04');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `store_menu_access`
---
-
-CREATE TABLE `store_menu_access` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `access_right_id` int(11) DEFAULT NULL,
-  `store_menu_id` int(11) DEFAULT NULL,
-  `user_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  `invitation_code` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `store_menu_access`
---
-
-INSERT INTO `store_menu_access` (`id`, `access_right_id`, `store_menu_id`, `user_id`, `store_id`, `invitation_code`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 2, 26, 1, NULL, '2024-08-09 21:42:07', '2024-08-09 21:42:07', NULL),
-(2, 2, 2, 26, 1, NULL, '2024-08-09 21:42:07', '2024-08-09 21:42:07', NULL),
-(3, 3, 2, 26, 1, NULL, '2024-08-09 21:42:07', '2024-08-09 21:42:07', NULL),
-(4, NULL, NULL, 4, 1, NULL, '2024-08-09 21:42:07', '2025-01-03 07:41:43', '2025-01-03 07:41:43'),
-(5, 1, 1, 4, 1, NULL, '2024-12-30 08:56:21', '2025-01-03 08:14:36', '2025-01-03 08:14:36'),
-(6, 1, 1, 4, 1, NULL, '2024-12-30 09:04:33', '2025-01-03 08:00:26', '2025-01-03 08:00:26'),
-(7, 1, 1, 4, 1, NULL, '2024-12-30 09:40:51', '2025-01-03 07:45:43', '2025-01-03 07:45:43'),
-(8, 1, 4, 4, 1, NULL, '2025-01-03 05:20:07', '2025-01-03 07:43:33', '2025-01-03 07:43:33'),
-(9, 2, 2, 4, 1, NULL, '2025-01-03 07:45:17', '2025-01-03 07:45:30', '2025-01-03 07:45:30'),
-(10, 1, 2, 4, 1, NULL, '2025-01-03 08:01:10', '2025-01-03 08:14:05', '2025-01-03 08:14:05'),
-(11, 2, 2, 4, 1, NULL, '2025-01-03 08:06:52', '2025-01-03 08:14:17', '2025-01-03 08:14:17'),
-(12, 1, 2, 4, 1, NULL, '2025-01-03 08:10:01', '2025-01-03 08:14:49', '2025-01-03 08:14:49'),
-(13, 1, 2, 4, 1, NULL, '2025-01-03 08:11:22', '2025-01-03 08:15:06', '2025-01-03 08:15:06'),
-(14, 1, 2, 4, 1, NULL, '2025-01-03 08:11:45', '2025-01-03 08:11:45', NULL),
-(15, 1, 3, 4, 1, NULL, '2025-01-03 08:11:57', '2025-01-03 08:13:52', '2025-01-03 08:13:52'),
-(16, 1, 3, 4, 1, NULL, '2025-01-03 08:12:31', '2025-01-03 08:12:31', NULL),
-(17, 2, 2, 4, 1, NULL, '2025-01-03 08:13:36', '2025-01-03 08:13:36', NULL);
+(1, 'Items', 'shopping_bag', '2024-08-09 21:42:04', '2024-08-09 21:42:04'),
+(2, 'Transactions', 'fas fa-list-ul', '2024-08-09 21:42:04', '2024-08-09 21:42:04'),
+(3, 'Deliveries', 'fa-solid fa-truck', '2024-08-09 21:42:04', '2024-08-09 21:42:04'),
+(6, 'Store', 'fa-solid fa-store', '2026-05-08 03:19:25', '2026-05-08 03:19:25');
 
 -- --------------------------------------------------------
 
@@ -8877,7 +8800,34 @@ CREATE TABLE `store_users` (
 --
 
 INSERT INTO `store_users` (`id`, `store_id`, `user_id`, `email`, `verification_code`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(19, 1, NULL, 'momshieroce@gmail.com', '6a26248c80319', 1, NULL, '2026-06-08 14:10:20', '2026-06-09 13:49:11');
+(19, 1, 66, 'momshieroce@gmail.com', '6a26248c80319', 1, NULL, '2026-06-08 14:10:20', '2026-06-09 13:49:11'),
+(20, 53, NULL, 'momshieroce@gmail.com', NULL, 1, NULL, '2026-06-29 00:40:28', '2026-06-29 00:43:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `store_user_menus`
+--
+
+CREATE TABLE `store_user_menus` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `store_user_id` int(11) DEFAULT NULL,
+  `store_menu_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `store_user_menus`
+--
+
+INSERT INTO `store_user_menus` (`id`, `store_user_id`, `store_menu_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(23, 19, 1, '2026-06-23 01:27:32', '2026-06-23 01:27:32', NULL),
+(24, 19, 2, '2026-06-23 01:27:41', '2026-06-23 01:27:41', NULL),
+(25, 19, 3, '2026-06-23 01:33:25', '2026-06-23 01:33:25', NULL),
+(27, 20, 6, '2026-06-29 01:22:48', '2026-06-29 01:22:48', NULL),
+(28, 20, 1, '2026-06-29 01:27:14', '2026-06-29 01:27:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -8911,12 +8861,8 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `store_id`, `user_id`, `reference_id`, `status_id`, `payment_method_id`, `receive_method_id`, `receivers_mobile`, `lat`, `lng`, `contact_number`, `note`, `delivery_charge`, `total`, `grand_total`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(100, 2, 68, '6a1d27a86a170', 1, 1, 1, '9270079301', '10.361819259151', '123.98710631802', '9270079301', NULL, 18.00, 184.46, 202.46, NULL, '2026-06-01 05:33:12', '2026-06-01 05:33:12'),
-(101, 1, 66, '6a2b4d9fb66a9', 1, 1, 1, '9270079301', '10.36184024', '123.98712158', '9270079301', NULL, 4.60, 78.41, 83.01, NULL, '2026-06-11 23:06:55', '2026-06-14 07:16:02'),
-(102, 1, 66, '6a2b4e16d5b7a', 1, 1, 1, '9270079301', '10.36184024', '123.98712158', '9270079301', NULL, 4.60, 78.41, 83.01, NULL, '2026-06-11 23:08:54', '2026-06-14 07:15:50'),
-(103, 1, 66, '6a2b4ee203901', 5, 1, 1, '9270079301', '10.36184024', '123.98712158', '9270079301', NULL, 4.60, 78.41, 83.01, NULL, '2026-06-11 23:12:18', '2026-06-14 07:18:03'),
-(104, 1, 66, '6a2b4eed64975', 5, 1, 1, '9270079301', '10.36184024', '123.98712158', '9270079301', NULL, 4.60, 78.41, 83.01, NULL, '2026-06-11 23:12:29', '2026-06-14 07:17:59'),
-(105, 1, 66, '6a2e8a0543ea2', 1, 1, 2, '9270079301', '10.36183929', '123.98711395', '9270079301', NULL, 0.00, 25.00, 25.00, NULL, '2026-06-14 10:01:25', '2026-06-14 10:01:25');
+(106, 1, 66, '6a3e22bb9e3fb', 1, 1, 1, '9270079301', '10.361936811331', '123.98734336216', '9270079301', NULL, 5.20, 78.41, 83.61, NULL, '2026-06-26 05:56:59', '2026-06-26 05:56:59'),
+(107, 1, 66, '6a3e231069a9b', 1, 1, 1, '9270079301', '10.361846865593', '123.98711380401', '9270079301', NULL, 4.60, 56.00, 60.60, NULL, '2026-06-26 05:58:24', '2026-06-26 05:58:24');
 
 -- --------------------------------------------------------
 
@@ -9028,7 +8974,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `facebook_id`, `firstname`, `lastname`, `name`, `avatar`, `mobile`, `passcode`, `activation_code`, `mobile_attempt_count`, `mobile_verified_at`, `email_verified_at`, `status`, `password`, `remember_token`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(66, 'momshieroce@gmail.com', NULL, 'Bobby', 'Gerez', 'Rocelyn Gerez - a', NULL, '9270079309', NULL, '6VEyCgYp8TSClOnFG7NuoONeW2gZHbZbX4O42H3J3rAbIWmupoylyrErpjNbecNG', 0, NULL, NULL, 1, '$2y$10$PatDeoB3q2PBK7NNvlPWwe.iz.pIShWnRkVa5UBKuj2EYUl4MW4Ry', NULL, NULL, '2026-05-17 17:54:55', '2026-06-12 10:33:12'),
+(66, 'momshieroce@gmail.com', NULL, 'Bobby', 'Gerez', 'Rocelyn Gerez - a', NULL, '9270079309', NULL, '6hvCq8XjwZf2W8VkMQrCfaslBlqq3ATHbiKkECjUFPNLVjyn0Trvk6wDUrG46B8K', 0, NULL, NULL, 1, '$2y$10$PatDeoB3q2PBK7NNvlPWwe.iz.pIShWnRkVa5UBKuj2EYUl4MW4Ry', NULL, NULL, '2026-05-17 17:54:55', '2026-06-20 02:25:26'),
 (68, 'bobby.gerez@yahoo.com', NULL, 'Bobby', 'Gerez', 'Bobby Gerez', NULL, NULL, NULL, '6hvCq8XjwZf2W8VkMQrCfaslBlqq3ATHbiKkECjUFPNLVjyn0Trvk6wDUrG46B8K', 0, NULL, NULL, 1, '$2y$10$PatDeoB3q2PBK7NNvlPWwe.iz.pIShWnRkVa5UBKuj2EYUl4MW4Ry', NULL, NULL, '2026-05-19 23:46:01', '2026-05-19 23:46:01');
 
 --
@@ -9229,10 +9175,10 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Indexes for table `password_reset_tokens`
 --
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`email`);
 
 --
 -- Indexes for table `payment_methods`
@@ -9369,12 +9315,6 @@ ALTER TABLE `store_menus`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `store_menu_access`
---
-ALTER TABLE `store_menu_access`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `store_ratings`
 --
 ALTER TABLE `store_ratings`
@@ -9384,6 +9324,12 @@ ALTER TABLE `store_ratings`
 -- Indexes for table `store_users`
 --
 ALTER TABLE `store_users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `store_user_menus`
+--
+ALTER TABLE `store_user_menus`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -9437,7 +9383,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=417;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=439;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -9497,7 +9443,7 @@ ALTER TABLE `franchisees`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1111;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1115;
 
 --
 -- AUTO_INCREMENT for table `interconnected_cities`
@@ -9551,7 +9497,7 @@ ALTER TABLE `menu_role_access_right`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `mobile_otp`
@@ -9587,7 +9533,7 @@ ALTER TABLE `online_prices`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -9707,7 +9653,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `store_advertisements`
@@ -9719,13 +9665,7 @@ ALTER TABLE `store_advertisements`
 -- AUTO_INCREMENT for table `store_menus`
 --
 ALTER TABLE `store_menus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `store_menu_access`
---
-ALTER TABLE `store_menu_access`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `store_ratings`
@@ -9737,13 +9677,19 @@ ALTER TABLE `store_ratings`
 -- AUTO_INCREMENT for table `store_users`
 --
 ALTER TABLE `store_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `store_user_menus`
+--
+ALTER TABLE `store_user_menus`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `transaction_message`
