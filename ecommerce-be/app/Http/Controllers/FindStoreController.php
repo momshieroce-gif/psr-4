@@ -2,36 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\StoreRepository;
-use App\Http\Requests\FindStoreRequest;
-use App\Http\Resources\BaseResource;
-use App\Http\Resources\FindStoreResource;
-use App\Http\Requests\BaseIndexRequest;
+use App\Services\FindStoreService;
+use App\Http\Requests\FindStore\IndexRequest;
+use App\Http\Resources\FindStore\IndexResource;
+use App\Http\Resources\FindStore\ShowResource;
+
 class FindStoreController
 {
-    private $repository;
-    private $result;
-    
-    public function __construct(StoreRepository $storeRepository)
+    private FindStoreService $service;
+
+    public function __construct(FindStoreService $service)
     {
-        $this->repository = $storeRepository;
-        $this->showRequest = BaseIndexRequest::class;
+        $this->service = $service;
     }
-    
-    public function findStore(FindStoreRequest $findStoreRequest): FindStoreResource
+
+    public function index(IndexRequest $request): IndexResource
     {
-        $this->result = $this->repository->setParameters($findStoreRequest->all())->applyFilters();
-        return $this->getResource();
+        $this->service->setParameters($request->all());
+        $result = $this->service->applyFilters();
+
+        return new IndexResource($result);
     }
 
-    public function show(int $id): FindStoreResource {
-        $this->result = $this->repository->findOrFail($id);
-        return $this->getResource();
+    public function show(int $id): ShowResource
+    {
+        $result = $this->service->findOrFail($id);
+
+        return new ShowResource($result);
     }
-
-    public function getResource(){
-        return new FindStoreResource($this->result);
-    }
-
-
 }

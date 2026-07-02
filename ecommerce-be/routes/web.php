@@ -42,7 +42,7 @@ use App\Http\Controllers\ {
 
 
 /* Route resouce */
-Route::get('find-store', [FindStoreController::class, 'findStore']);
+Route::get('find-store', [FindStoreController::class, 'index']);
 Route::get('find-store/{id}', [FindStoreController::class, 'show']);
 Route::resource('public_stores', PublicStoreController::class);
 Route::resource('public_items', PublicItemController::class);
