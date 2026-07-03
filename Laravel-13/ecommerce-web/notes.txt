@@ -1,3 +1,0 @@
-use pnpm 
-npm install -g pnpm
-pnpm run dev

@@ -6,22 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Models\Store;
 use App\Models\Image;
-use Intervention\Image\Facades\Image as ImageFacade;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use App\Http\Requests\Store\PostRequest;
 
 class ApplyStoreService
 {
 
-    public function create(Request $request): Store
+    public function create(PostRequest $request): Store
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'mobile' => 'required|string|max:255',
-            'desc' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
-        ]);
+        $validated = $request->validated();
 
         $store = Store::create([
             'name' => $validated['name'],
@@ -76,7 +70,8 @@ class ApplyStoreService
 
     private function optimizeImage($file)
     {
-        $image = ImageFacade::make($file->getPathname());
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($file->getPathname());
         
         // Get original dimensions
         $width = $image->width();
@@ -88,15 +83,12 @@ class ApplyStoreService
 
         // Only resize if image is larger than maximum dimensions
         if ($width > $maxWidth || $height > $maxHeight) {
-            $image->resize($maxWidth, $maxHeight, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
+            $image->scale($maxWidth, $maxHeight);
         }
 
         // Convert to JPEG for better compression (if not already JPEG)
         if ($file->getClientOriginalExtension() !== 'jpg' && $file->getClientOriginalExtension() !== 'jpeg') {
-            $image->encode('jpg', 85);
+            $image->toJpeg(85);
         }
 
         return $image;

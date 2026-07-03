@@ -5,9 +5,12 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use App\Traits\Obfuscate\OptimusId;
 
 class BuildRepository
 {
+    use OptimusId;
+    
     protected Model|Builder $query;
     protected array $params = [];
     protected string $modelClass;
@@ -72,7 +75,7 @@ class BuildRepository
 
     public function findOrFail(int $id): Model
     {
-        return $this->query->findOrFail($id);
+        return $this->query->findOrFail($this->optimus()->decode($id));
     }
 
     public function getQuery(): Builder

@@ -12,9 +12,9 @@ class FindStoreService
     protected BuildRepository $repository;
     protected array $params = [];
 
-    public function __construct(BuildRepository $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        $this->repository = new BuildRepository(Store::class);
     }
 
     public function setParameters(array $params): self

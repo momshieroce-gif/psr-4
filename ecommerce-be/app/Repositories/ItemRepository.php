@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use App\Repositories\Support\ColumnValueCriteria;
 use App\Models\Image;
-use Intervention\Image\Facades\Image as ImageFacade;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use App\Constants\Config;
 class ItemRepository extends BaseRepository
 {
@@ -133,7 +134,8 @@ class ItemRepository extends BaseRepository
 
     private function optimizeImage($file)
     {
-        $image = ImageFacade::make($file->getPathname());
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($file->getPathname());
 
         // Get original dimensions
         $width = $image->width();
@@ -145,15 +147,12 @@ class ItemRepository extends BaseRepository
 
         // Only resize if image is larger than maximum dimensions
         if ($width > $maxWidth || $height > $maxHeight) {
-            $image->resize($maxWidth, $maxHeight, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
+            $image->scale($maxWidth, $maxHeight);
         }
 
         // Convert to JPEG for better compression (if not already JPEG)
         if ($file->getClientOriginalExtension() !== 'jpg' && $file->getClientOriginalExtension() !== 'jpeg') {
-            $image->encode('jpg', 85);
+            $image->toJpeg(85);
         }
 
         return $image;
