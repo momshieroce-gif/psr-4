@@ -60,7 +60,7 @@
 
             <div class="map-wrap">
               <GoogleMap ref="mapRef" :api-key="GOOGLE_MAP_API_KEY" :map-id="GOOGLE_MAP_ID" class="checkout-map"
-                :center="{ lat: lat, lng: lng }" :zoom="currentZoom" :draggable="true" :clickable-icons="false">
+                :center="{ lat: lat, lng: lng }" :zoom="currentZoom" :draggable="false" :clickable-icons="false">
                 <AdvancedMarker :options="getDeliveryMarkerOptions()" @drag="markerDrag">
                   <InfoWindow v-model="showInfoWindow" :options="{
                     position: { lat: lat, lng: lng },
