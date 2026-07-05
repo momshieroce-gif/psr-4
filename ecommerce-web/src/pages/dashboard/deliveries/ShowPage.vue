@@ -16,12 +16,6 @@
             <div class="page-subtitle">Navigate to store and delivery locations</div>
           </div>
         </div>
-        <div class="hero-right-actions">
-          <q-btn flat round dense :icon="locationLoading ? '' : (userLocation ? 'my_location' : 'location_disabled')"
-            class="location-refresh-btn" :loading="locationLoading" @click="getCurrentLocation">
-            <q-tooltip>{{ userLocation ? 'Refresh Location' : 'Get Location' }}</q-tooltip>
-          </q-btn>
-        </div>
       </div>
     </div>
 
@@ -63,25 +57,6 @@
           <!-- Info Grid -->
           <div class="info-grid">
             <div class="info-item">
-              <div class="info-icon-wrap">
-                <q-icon name="location_on" size="18px" color="white" />
-              </div>
-              <div class="info-text">
-                <div class="info-label">Store Location</div>
-                <div class="info-value">{{ transaction.store?.latitude ?? 'N/A' }}, {{ transaction.store?.longitude ??
-                  'N/A' }}</div>
-              </div>
-            </div>
-            <div class="info-item">
-              <div class="info-icon-wrap info-icon-wrap--violet">
-                <q-icon name="local_shipping" size="18px" color="white" />
-              </div>
-              <div class="info-text">
-                <div class="info-label">Delivery Location</div>
-                <div class="info-value">{{ transaction.lat ?? 'N/A' }}, {{ transaction.lng ?? 'N/A' }}</div>
-              </div>
-            </div>
-            <div class="info-item">
               <div class="info-icon-wrap info-icon-wrap--green">
                 <q-icon name="attach_money" size="18px" color="white" />
               </div>
@@ -97,6 +72,24 @@
               <div class="info-text">
                 <div class="info-label">Grand Total</div>
                 <div class="info-value highlight-value">{{ formatMoney(transaction.grand_total) }}</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon-wrap info-icon-wrap--violet">
+                <q-icon name="person" size="18px" color="white" />
+              </div>
+              <div class="info-text">
+                <div class="info-label">Customer Name</div>
+                <div class="info-value">{{ transaction.user?.name || 'N/A' }}</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon-wrap">
+                <q-icon name="phone" size="18px" color="white" />
+              </div>
+              <div class="info-text">
+                <div class="info-label">Customer Mobile</div>
+                <div class="info-value">{{ transaction.user?.mobile || 'N/A' }}</div>
               </div>
             </div>
           </div>
@@ -127,10 +120,6 @@
           <ul class="instruction-list">
             <li>
               <span class="instruction-bullet"></span>
-              Your location is automatically retrieved when the page loads.
-            </li>
-            <li>
-              <span class="instruction-bullet"></span>
               Click <strong>Navigate to Store</strong> to open Google Maps for store navigation.
             </li>
             <li>
@@ -152,14 +141,12 @@
 import { show } from 'src/boot/axios-call';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { getLocation, formatMoney } from 'src/boot/utilities';
+import { formatMoney } from 'src/boot/utilities';
 
 const route = useRoute();
 const loading = ref(true);
 const error = ref('');
 const transaction = ref<any>(null);
-const userLocation = ref<{ latitude: number; longitude: number } | null>(null);
-const locationLoading = ref(false);
 
 interface TransactionDetail {
   id: number;
@@ -184,7 +171,7 @@ async function fetchTransactionData() {
       entity: 'all-transactions',
       optimus_id: Number(route.params.id),
       query: {
-        with: 'store',
+        with: 'store,user',
       },
     });
     if (result) {
@@ -200,57 +187,37 @@ async function fetchTransactionData() {
   }
 }
 
-async function getCurrentLocation() {
-  locationLoading.value = true;
-  try {
-    const position = await getLocation();
-    userLocation.value = {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-    };
-    error.value = '';
-  } catch (err) {
-    console.error('Location error:', err);
-    userLocation.value = null;
-  } finally {
-    locationLoading.value = false;
-  }
-}
-
 function navigateToStore() {
-  if (!userLocation.value || !transaction.value?.store) {
-    error.value = 'Location or store information not available';
+  if (!transaction.value?.store) {
+    error.value = 'Store information not available';
     return;
   }
 
-  const { latitude: originLat, longitude: originLng } = userLocation.value;
   const { latitude: destLat, longitude: destLng } = transaction.value.store;
 
-  // Google Maps URL with directions in driving mode to store
-  const url = `https://www.google.com/maps/dir/${originLat},${originLng}/${destLat},${destLng}?dirflg=d`;
+  // Google Maps URL to store location
+  const url = `https://www.google.com/maps/search/?api=1&query=${destLat},${destLng}`;
 
   window.open(url, '_blank');
 }
 
 function navigateToDelivery() {
-  if (!userLocation.value || !transaction.value?.lat || !transaction.value?.lng) {
-    error.value = 'Location or delivery information not available';
+  if (!transaction.value?.lat || !transaction.value?.lng) {
+    error.value = 'Delivery information not available';
     return;
   }
 
-  const { latitude: originLat, longitude: originLng } = userLocation.value;
   const destLat = transaction.value.lat;
   const destLng = transaction.value.lng;
 
-  // Google Maps URL with directions in driving mode to delivery location
-  const url = `https://www.google.com/maps/dir/${originLat},${originLng}/${destLat},${destLng}?dirflg=d`;
+  // Google Maps URL to delivery location
+  const url = `https://www.google.com/maps/search/?api=1&query=${destLat},${destLng}`;
 
   window.open(url, '_blank');
 }
 
 onMounted(async () => {
   await fetchTransactionData();
-  await getCurrentLocation();
 });
 </script>
 
@@ -351,23 +318,6 @@ $muted: rgba(255, 255, 255, 0.55);
   }
 }
 
-.hero-right-actions {
-  display: flex;
-  align-items: center;
-}
-
-.location-refresh-btn {
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  transition: all 0.2s;
-
-  &:hover {
-    color: white;
-    background: rgba($accent, 0.2);
-    border-color: rgba($accent, 0.4);
-  }
-}
 
 // ── Empty / Loading / Error states ──────────────────────────────────────────
 .loading-container,
@@ -666,9 +616,6 @@ $muted: rgba(255, 255, 255, 0.55);
     font-size: 20px;
   }
 
-  .hero-right-actions {
-    margin-top: 8px;
-  }
 
   .delivery-content {
     grid-template-columns: 1fr;

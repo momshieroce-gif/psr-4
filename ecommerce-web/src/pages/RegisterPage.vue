@@ -81,6 +81,13 @@
               </div>
             </div>
 
+            <div class="field-group">
+              <label class="field-label">Security Verification</label>
+              <div class="recaptcha-wrapper">
+                <div id="recaptcha-container"></div>
+              </div>
+            </div>
+
             <div class="terms-row">
               <q-icon name="info" size="14px" color="grey-5" />
               <span>By registering, you agree to our <a href="#" class="terms-link">Terms of Service</a> and <a href="#"
@@ -166,7 +173,7 @@
 
 <script lang="ts" setup>
 import BreadCrumbsWrapper from 'src/components/BreadCrumbsWrapper.vue';
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { axios } from 'src/boot/axios';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
@@ -177,12 +184,89 @@ const router = useRouter();
 const $q = useQuasar();
 const userStore = useUserStore();
 
+const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const showPassword = ref(false);
 const isSubmitting = ref(false);
+const recaptchaToken = ref('');
+
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
+
+const recaptchaWidgetId = ref<number | null>(null);
+
+const loadRecaptchaScript = () => {
+  if (document.getElementById('recaptcha-script')) return;
+
+  const script = document.createElement('script');
+  script.id = 'recaptcha-script';
+  script.src = `https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback`;
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
+
+  (window as any).recaptchaCallback = renderRecaptcha;
+};
+
+const renderRecaptcha = () => {
+  if (window.grecaptcha) {
+    const container = document.getElementById('recaptcha-container');
+    if (container) {
+      recaptchaWidgetId.value = window.grecaptcha.render(container, {
+        sitekey: recaptchaSiteKey,
+        callback: onRecaptchaVerify,
+        'error-callback': onRecaptchaError,
+        'expired-callback': onRecaptchaExpired,
+      });
+    }
+  }
+};
+
+const resetRecaptcha = () => {
+  if (recaptchaWidgetId.value !== null && window.grecaptcha) {
+    window.grecaptcha.reset(recaptchaWidgetId.value);
+  }
+};
+
+const onRecaptchaVerify = (response: string) => {
+  recaptchaToken.value = response;
+};
+
+const onRecaptchaError = () => {
+  $q.notify({
+    message: 'reCAPTCHA verification failed. Please try again.',
+    type: 'negative',
+    position: 'top',
+    icon: 'error',
+  });
+  recaptchaToken.value = '';
+};
+
+const onRecaptchaExpired = () => {
+  $q.notify({
+    message: 'reCAPTCHA expired. Please complete it again.',
+    type: 'warning',
+    position: 'top',
+    icon: 'warning',
+  });
+  recaptchaToken.value = '';
+};
+
+onMounted(() => {
+  loadRecaptchaScript();
+});
+
+onUnmounted(() => {
+  const script = document.getElementById('recaptcha-script');
+  if (script) script.remove();
+});
 
 const applyAuthPayload = (data: {
   token: string;
@@ -213,12 +297,23 @@ const submitRegister = async () => {
     return;
   }
 
+  if (!recaptchaToken.value) {
+    $q.notify({
+      message: 'Please complete the reCAPTCHA verification.',
+      type: 'warning',
+      position: 'top',
+      icon: 'warning',
+    });
+    return;
+  }
+
   isSubmitting.value = true;
   try {
     const res = await axios.post('register', {
       name: name.value.trim(),
       email: email.value.trim(),
       password: password.value,
+      'g-recaptcha-response': recaptchaToken.value,
     });
     if (res.data?.success) {
       applyAuthPayload(res.data.data);
@@ -240,6 +335,8 @@ const submitRegister = async () => {
       position: 'top',
       icon: 'error',
     });
+    recaptchaToken.value = '';
+    resetRecaptcha();
   } finally {
     isSubmitting.value = false;
   }
