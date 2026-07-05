@@ -27,6 +27,12 @@ class ItemController extends ApiController
         return $this->getResource();
     }
 
+    protected function itemCreate() : BaseResource {
+        $params = app( $this->storeRequest )->all();
+        $this->result = $this->repository->itemCreateWithImage( $params );
+        return $this->getResource();
+    }
+
     public function getResource(){
         return new IndexResource($this->result);
     }

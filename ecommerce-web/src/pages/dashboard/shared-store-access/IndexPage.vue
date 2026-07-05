@@ -25,39 +25,6 @@
       </div>
     </div>
 
-    <!-- Statistics Cards -->
-    <div class="stats-section q-mb-lg">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon-wrap access-icon">
-            <q-icon name="store" size="24px" color="white" />
-          </div>
-          <div class="stat-content">
-            <div class="stat-number">{{ typedResult.length }}</div>
-            <div class="stat-label">Shared Stores</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon-wrap active-icon">
-            <q-icon name="check_circle" size="24px" color="white" />
-          </div>
-          <div class="stat-content">
-            <div class="stat-number">{{typedResult.filter(s => s.store?.name).length}}</div>
-            <div class="stat-label">Active Stores</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon-wrap items-icon">
-            <q-icon name="shopping_bag" size="24px" color="white" />
-          </div>
-          <div class="stat-content">
-            <div class="stat-number">{{ typedResult.length }}</div>
-            <div class="stat-label">Total Items</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Desktop Table View -->
     <div class="desktop-only">
       <!-- Empty State -->
@@ -219,6 +186,39 @@
       <div v-if="typedResult.length > 0" class="mobile-pagination">
         <q-pagination v-model="pagination.page" :max="pagination.lastPage" :max-pages="5" direction-links boundary-links
           color="primary" @update:model-value="handlePageChange" />
+      </div>
+    </div>
+
+     <!-- Statistics Cards -->
+    <div class="stats-section q-mt-lg">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrap access-icon">
+            <q-icon name="store" size="24px" color="white" />
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ typedResult.length }}</div>
+            <div class="stat-label">Shared Stores</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrap active-icon">
+            <q-icon name="check_circle" size="24px" color="white" />
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{typedResult.filter(s => s.store?.name).length}}</div>
+            <div class="stat-label">Active Stores</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrap items-icon">
+            <q-icon name="shopping_bag" size="24px" color="white" />
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{ typedResult.length }}</div>
+            <div class="stat-label">Total Items</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

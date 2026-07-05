@@ -147,6 +147,7 @@
 
 <script lang="ts" setup>
 import BreadCrumbsWrapper from 'src/components/BreadCrumbsWrapper.vue';
+import BiliscartLogo from 'src/components/BiliscartLogo.vue';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { axios } from 'src/boot/axios';
 import { useQuasar } from 'quasar';

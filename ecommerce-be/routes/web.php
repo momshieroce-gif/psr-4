@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth:api', 'itemMiddleware'], function () {
   Route::resource('item-prices', ItemPriceController::class);
   Route::post('item-update', [ItemController::class, 'itemUpdate']);
   Route::post('item-update/{id}', [ItemController::class, 'itemUpdate']);
+  Route::post('item-create', [ItemController::class, 'itemCreate']);
 });
 
 Route::group( [ 'middleware' => 'auth:api' ], function () {

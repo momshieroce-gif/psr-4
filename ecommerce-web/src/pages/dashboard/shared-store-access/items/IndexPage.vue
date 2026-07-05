@@ -17,6 +17,9 @@
           </div>
         </div>
         <div class="header-actions">
+          <q-btn unelevated icon="add" label="Create Item" class="create-btn" :to="`${$route.path}/create`">
+            <q-icon name="add" size="18px" class="q-mr-sm" />
+          </q-btn>
           <q-input v-model="search" placeholder="Search items..." outlined dense clearable debounce="1000"
             class="search-input">
             <template v-slot:prepend>
@@ -158,7 +161,7 @@ const { searchString, selectedCategory } = storeToRefs(useItem);
 const route = useRoute();
 const router = useRouter();
 const store = ref<Partial<StoreInterface>>({
-  optimus_id: '',
+  optimus_id: 0,
   name: '',
   latitude: 0,
   longitude: 0,
@@ -181,19 +184,21 @@ onMounted(() => {
 
 const categories = ref<CategoryInterface[]>([]);
 const getCategories = async () => {
-  const cat = await get<ResultInterface>(
+  const result = await get(
     {
-      entity: 'categories',
+      entity: 'listing_api',
       query: {
-        orderBy: 'name:asc',
-        type: 'collection',
-        whereHas: 'items:store_id;' + store.value.id,
+        listingApi: 'categories',
       },
     },
     false
   );
-
-  categories.value = cat.data.data;
+  if (result && typeof result === 'object' && 'data' in result) {
+    const apiResponse = result as { data: { categories: CategoryInterface[] } };
+    if (apiResponse.data) {
+      categories.value = apiResponse.data.categories;
+    }
+  }
 };
 
 const requestItems = async () => {
@@ -385,6 +390,26 @@ $muted: rgba(255, 255, 255, 0.5);
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.create-btn {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  height: 40px !important;
+  padding: 0 20px !important;
+  background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%) !important;
+  color: #ffffff !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3) !important;
+
+  &:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45) !important;
+  }
+
+  &:active {
+    transform: translateY(0) !important;
+  }
 }
 
 // ── Dark field mixin shared by search + category ───────────────────────────

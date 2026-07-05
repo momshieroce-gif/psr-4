@@ -52,6 +52,33 @@ class ItemRepository extends BaseRepository
 
     }
 
+    public function itemCreateWithImage(array $params): Item
+    {
+        /**get fillable should be before accessing the model */
+        $this->setFillable();
+        $data = array_intersect_key(
+            $params,
+            array_flip($this->fillable)
+        );
+
+        // Sanitize description to prevent XSS attacks
+        if (isset($data['description'])) {
+            $data['description'] = $this->sanitizeHtml($data['description']);
+        }
+
+        if (isset($data['store_id'])) {
+            $data['store_id'] =$this->optimus()->decode($data['store_id']);
+        }
+
+        // Create the item first
+        $this->model = $this->model->create($data);
+
+        // Then upload files
+        $this->filesUpload();
+
+        return $this->model->fresh();
+    }
+
      /**
      * Filter the resource
      * @param array $parameters
