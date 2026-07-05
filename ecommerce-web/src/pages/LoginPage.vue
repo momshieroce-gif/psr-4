@@ -77,6 +77,12 @@
             <div class="forgot-row">
               <router-link to="/forgot-password" class="forgot-link">Forgot password?</router-link>
             </div>
+            <div class="field-group">
+              <label class="field-label">Security Verification</label>
+              <div class="recaptcha-wrapper">
+                <div id="recaptcha-container"></div>
+              </div>
+            </div>
             <q-btn type="submit" no-caps unelevated class="submit-btn full-width" size="lg"
               :loading="isEmailSubmitting">
               <div class="submit-inner"><q-icon name="login" size="18px" /><span>Sign in to account</span></div>
@@ -141,7 +147,7 @@
 
 <script lang="ts" setup>
 import BreadCrumbsWrapper from 'src/components/BreadCrumbsWrapper.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { axios } from 'src/boot/axios';
 import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
@@ -159,6 +165,84 @@ const showPassword = ref(false);
 const isEmailSubmitting = ref(false);
 const isFacebookRedirecting = ref(false);
 const isGoogleRedirecting = ref(false);
+
+// reCAPTCHA
+const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+const recaptchaWidgetId = ref<number | null>(null);
+const recaptchaToken = ref('');
+
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
+
+// reCAPTCHA functions
+const loadRecaptchaScript = () => {
+  if (document.getElementById('recaptcha-script')) return;
+
+  const script = document.createElement('script');
+  script.id = 'recaptcha-script';
+  script.src = `https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback`;
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
+
+  (window as any).recaptchaCallback = renderRecaptcha;
+};
+
+const renderRecaptcha = () => {
+  if (window.grecaptcha) {
+    const container = document.getElementById('recaptcha-container');
+    if (container) {
+      recaptchaWidgetId.value = window.grecaptcha.render(container, {
+        sitekey: recaptchaSiteKey,
+        callback: onRecaptchaVerify,
+        'error-callback': onRecaptchaError,
+        'expired-callback': onRecaptchaExpired,
+      });
+    }
+  }
+};
+
+const resetRecaptcha = () => {
+  if (recaptchaWidgetId.value !== null && window.grecaptcha) {
+    window.grecaptcha.reset(recaptchaWidgetId.value);
+  }
+};
+
+const onRecaptchaVerify = (response: string) => {
+  recaptchaToken.value = response;
+};
+
+const onRecaptchaError = () => {
+  $q.notify({
+    message: 'reCAPTCHA verification failed. Please try again.',
+    type: 'negative',
+    position: 'top',
+    icon: 'error',
+  });
+  recaptchaToken.value = '';
+};
+
+const onRecaptchaExpired = () => {
+  $q.notify({
+    message: 'reCAPTCHA expired. Please complete it again.',
+    type: 'warning',
+    position: 'top',
+    icon: 'warning',
+  });
+  recaptchaToken.value = '';
+};
+
+onMounted(() => {
+  loadRecaptchaScript();
+});
+
+onUnmounted(() => {
+  const script = document.getElementById('recaptcha-script');
+  if (script) script.remove();
+});
 
 const redirectTo = route.redirectedFrom?.fullPath;
 const getFacebookLoginUrl = () => {
@@ -229,11 +313,22 @@ const finishGoogleLoginFromQuery = async (token: string) => {
 };
 
 const loginWithEmail = async () => {
+  if (!recaptchaToken.value) {
+    $q.notify({
+      message: 'Please complete the reCAPTCHA verification.',
+      type: 'warning',
+      position: 'top',
+      icon: 'warning',
+    });
+    return;
+  }
+
   isEmailSubmitting.value = true;
   try {
     const res = await axios.post('login', {
       email: email.value.trim(),
       password: password.value,
+      'g-recaptcha-response': recaptchaToken.value,
     });
     if (res.data?.success && res.data.data?.token) {
       const data = res.data.data as ProfileState;
@@ -255,6 +350,8 @@ const loginWithEmail = async () => {
       position: 'top',
       icon: 'error',
     });
+    recaptchaToken.value = '';
+    resetRecaptcha();
   } finally {
     isEmailSubmitting.value = false;
   }
@@ -543,6 +640,11 @@ onMounted(async () => {
   color: #374151;
   text-transform: uppercase;
   letter-spacing: 0.6px;
+}
+
+.recaptcha-wrapper {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .login-input {

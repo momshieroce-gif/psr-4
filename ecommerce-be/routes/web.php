@@ -119,7 +119,7 @@ Route::get('use-old-activation-code', [MobileActivationCodeController::class, 'u
 Route::post('register/ {
             activation_code}
             ', 'App\Http\Controllers\Api\User\UserController@activationCode');
-Route::post('register', [RegisterController::class, 'register']);
+Route::post('register', [RegisterController::class, 'register'])->middleware('throttle:5,1');
 Route::post('send-email-invitation', [UserController::class, 'inviteByEmail']);
 Route::post('forgot-password', [UserController::class, 'forgotPassword']);
 Route::post('reset-password', [UserController::class, 'resetPassword']);

@@ -63,6 +63,10 @@ class Transaction extends Model implements Auditable
         return $this->belongsTo(Store::class, 'store_id', 'id');
     }
 
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public function getDeliveryChargeAttribute($value){
         return number_format( $value ,2,".",",");
     }

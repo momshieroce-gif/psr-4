@@ -33,6 +33,7 @@ class RegisterController extends BaseController
             'lastname' => 'required_without:name|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         if ($validator->fails()) {
