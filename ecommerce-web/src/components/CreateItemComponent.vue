@@ -126,6 +126,60 @@
             </div>
           </div>
 
+          <!-- Price Variations Section -->
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon-wrap prices-icon">
+                <q-icon name="attach_money" size="20px" color="white" />
+              </div>
+              <div class="section-title">Price Variations</div>
+              <div v-if="item.item_price && item.item_price.length > 0" class="price-count-badge">
+                {{ item.item_price.length }} price{{ item.item_price.length !== 1 ? 's' : '' }}
+              </div>
+              <q-btn unelevated icon="add" label="Add Price" @click="addItemPrice" class="add-price-btn">
+                <q-tooltip>Add price variation</q-tooltip>
+              </q-btn>
+            </div>
+
+            <!-- Empty state -->
+            <div v-if="!item.item_price || item.item_price.length === 0" class="price-empty-state">
+              <div class="price-empty-icon-wrap">
+                <q-icon name="sell" size="36px" color="white" />
+              </div>
+              <div class="price-empty-text">No prices added yet</div>
+              <div class="price-empty-subtext">Click "Add Price" to set pricing options</div>
+            </div>
+
+            <!-- Price cards -->
+            <div v-if="item.item_price && item.item_price.length > 0" class="price-cards-list">
+              <div v-for="(itemPrice, index) in item.item_price" :key="itemPrice.id || index" class="price-card">
+                <div class="price-card-header">
+                  <div class="price-card-num">
+                    <div class="price-num-badge">{{ Number(index) + 1 }}</div>
+                    <span class="price-card-title">Price Option {{ Number(index) + 1 }}</span>
+                  </div>
+                  <q-btn flat round dense icon="close" @click="deleteItemPrice(Number(index))" class="delete-btn">
+                    <q-tooltip>Remove</q-tooltip>
+                  </q-btn>
+                </div>
+                <div class="price-card-divider"></div>
+                <div class="price-fields">
+                  <q-select dense v-model="itemPrice.unit" :options="units" label="Unit" hide-bottom-space use-input
+                    outlined :rules="[(val) => !!val || 'Unit is required.']" class="dark-input price-field" />
+                  <input-amount label="Original Price" :value="itemPrice.original_price"
+                    @input="(amount) => changeOriginalPrice(itemPrice, amount)" class="dark-input price-field" />
+                  <input-amount label="Online Price" :value="itemPrice.online_price"
+                    @input="(amount) => changeOnlinePrice(itemPrice, amount)" class="dark-input price-field" />
+                  <input-amount label="Selling Price" :value="itemPrice.selling_price"
+                    @input="(amount) => changeSellingPrice(itemPrice, amount)" class="dark-input price-field" />
+                  <q-input v-model="itemPrice.qty" label="Quantity" outlined dense type="number" min="0"
+                    :rules="[(val) => (val !== null && val !== undefined && val !== '') || 'Quantity is required.']"
+                    class="dark-input price-field" />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Actions -->
           <div class="form-actions">
             <q-btn label="Cancel" flat @click="handleBack" class="cancel-btn">
@@ -148,6 +202,7 @@ import { get } from 'src/boot/axios-call';
 import { axios } from 'src/boot/axios';
 import type { QForm } from 'quasar';
 import { Notify, Loading } from 'quasar';
+import InputAmount from 'src/components/inputs/InputAmount.vue';
 
 interface Category {
   id: number;
@@ -155,10 +210,21 @@ interface Category {
   value: number;
 }
 
+interface ItemPrice {
+  id: number;
+  original_price: number;
+  online_price: number;
+  selling_price: number;
+  category: any;
+  unit: any;
+  qty: number | string;
+}
+
 interface Item {
   name: string;
   description: string;
   category?: Category;
+  item_price?: ItemPrice[];
 }
 
 interface CreateItemProps {
@@ -186,6 +252,7 @@ const item = ref<Item>({
   name: '',
   description: '',
   category: undefined,
+  item_price: [],
 });
 
 // WYSIWYG Editor Functions
@@ -224,11 +291,46 @@ const removeImage = (index: number) => {
   newImages.value.splice(index, 1);
 };
 
+const addItemPrice = () => {
+  if (item.value.item_price) {
+    const nextId = Number(item.value.item_price.length) + 1;
+    item.value.item_price?.push({
+      id: nextId,
+      original_price: 0,
+      online_price: 0,
+      selling_price: 0,
+      category: null,
+      unit: null,
+      qty: '',
+    });
+  }
+};
+
+const deleteItemPrice = (index: number) => {
+  item.value.item_price?.splice(index, 1);
+  item.value.item_price?.forEach((attr: ItemPrice, idx: number) => {
+    attr.id = idx + 1;
+  });
+};
+
+const changeOriginalPrice = (itemPrice: ItemPrice, amount: number) => {
+  itemPrice.original_price = amount;
+};
+
+const changeOnlinePrice = (itemPrice: ItemPrice, amount: number) => {
+  itemPrice.online_price = amount;
+};
+
+const changeSellingPrice = (itemPrice: ItemPrice, amount: number) => {
+  itemPrice.selling_price = amount;
+};
+
 onBeforeMount(async () => {
   await listingApi();
 });
 
 const categories = ref<Category[]>([]);
+const units = ref<any[]>([]);
 
 const listingApi = async () => {
   const result = await get(
@@ -245,6 +347,23 @@ const listingApi = async () => {
     const apiResponse = result as { data: { data: { categories: Category[] } } };
     if (apiResponse.data?.data?.categories) {
       categories.value = apiResponse.data.data.categories;
+    }
+  }
+
+  const unitsResult = await get(
+    {
+      entity: 'listing_api',
+      query: {
+        listingApi: 'units',
+      },
+    },
+    false
+  );
+
+  if (unitsResult && typeof unitsResult === 'object' && 'data' in unitsResult) {
+    const unitsApiResponse = unitsResult as { data: { data: { units: any[] } } };
+    if (unitsApiResponse.data?.data?.units) {
+      units.value = unitsApiResponse.data.data.units;
     }
   }
 };
@@ -277,6 +396,19 @@ const onSubmit = async () => {
           formData.append('images[]', file);
         });
       }
+
+      // Add item prices to form data
+      if (item.value.item_price && item.value.item_price.length > 0) {
+        const itemPrices = item.value.item_price.map((v) => ({
+          unit_id: v.unit?.id,
+          original_price: v.original_price,
+          online_price: v.online_price,
+          selling_price: v.selling_price,
+          qty: v.qty,
+        }));
+        formData.append('item_prices', JSON.stringify(itemPrices));
+      }
+
       await axios.post(
         'item-create',
         formData,
@@ -456,6 +588,11 @@ $muted-2: rgba(255, 255, 255, 0.3);
     background: linear-gradient(135deg, $green 0%, $green-2 100%);
     box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
   }
+
+  &.prices-icon {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+  }
 }
 
 .section-title {
@@ -473,6 +610,34 @@ $muted-2: rgba(255, 255, 255, 0.3);
   padding: 6px 14px;
   border-radius: 20px;
   border: 1px solid rgba($accent, 0.2);
+}
+
+.price-count-badge {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.add-price-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: $white !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  height: 38px !important;
+  padding: 0 16px !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4) !important;
+  flex-shrink: 0;
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.55) !important;
+  }
 }
 
 // ── Form Fields ──────────────────────────────────────────────────────────────
@@ -749,6 +914,123 @@ $muted-2: rgba(255, 255, 255, 0.3);
   }
 }
 
+// ── Price Variations Section ───────────────────────────────────────────────────
+.price-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 32px;
+  border: 2px dashed rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.price-empty-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.12) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.price-empty-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: $white;
+  margin-bottom: 6px;
+}
+
+.price-empty-subtext {
+  font-size: 13px;
+  color: $muted;
+}
+
+.price-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.price-card {
+  background: $dark-elevated;
+  border: 1px solid $border;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: rgba(245, 158, 11, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.price-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.price-card-num {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-num-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: $white;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+  flex-shrink: 0;
+}
+
+.price-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: $white;
+}
+
+.delete-btn {
+  color: $muted !important;
+  border-radius: 8px !important;
+  transition: color 0.2s, background 0.2s !important;
+
+  &:hover {
+    color: #fca5a5 !important;
+    background: rgba(239, 68, 68, 0.12) !important;
+  }
+}
+
+.price-card-divider {
+  height: 1px;
+  background: $border;
+}
+
+.price-fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 20px 18px;
+}
+
+.price-field {
+  width: 100%;
+}
+
 // ── Form Actions ─────────────────────────────────────────────────────────────
 .form-actions {
   display: flex;
@@ -827,6 +1109,14 @@ $muted-2: rgba(255, 255, 255, 0.3);
 
   .upload-area {
     padding: 24px 16px;
+  }
+
+  .price-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .add-price-btn {
+    width: 100% !important;
   }
 
   .form-actions {
