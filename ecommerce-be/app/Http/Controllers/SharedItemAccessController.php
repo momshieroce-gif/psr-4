@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SharedItemAccess\IndexResource;
-use App\Repositories\ItemRepository;
+use App\Repositories\SharedItemAccessRepository;
 use App\Http\Requests\Item\StoreRequest;
 use App\Http\Requests\BaseIndexRequest;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class SharedItemAccessController extends ApiController
 {
 
-    public function __construct(ItemRepository $repository)
+    public function __construct(SharedItemAccessRepository $repository)
     {
         $this->repository = $repository;
         $this->indexRequest = BaseIndexRequest::class;

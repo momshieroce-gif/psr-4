@@ -16,27 +16,29 @@
             <div class="page-subtitle">Manage store items and inventory</div>
           </div>
         </div>
-        <div class="header-actions">
-          <q-btn unelevated icon="add" label="Create Item" class="create-btn" :to="`${$route.path}/create`">
-            <q-icon name="add" size="18px" class="q-mr-sm" />
-          </q-btn>
-          <q-input v-model="search" placeholder="Search items..." outlined dense clearable debounce="1000"
-            class="search-input">
-            <template v-slot:prepend>
-              <q-icon name="search" color="grey-5" />
-            </template>
-          </q-input>
-          <q-select outlined v-model="selectedCategory" :options="categories" label="Category" hide-bottom-space
-            use-input dense clearable class="category-select" @update:model-value="handleCategoryChange">
-            <template v-slot:prepend>
-              <q-icon name="category" color="grey-5" />
-            </template>
-            <template v-slot:append>
-              <q-icon v-if="selectedCategory" name="close" @click.stop.prevent="handleCategoryChange('')"
-                class="cursor-pointer" color="grey-5" />
-            </template>
-          </q-select>
-        </div>
+
+      </div>
+      <div class="header-actions">
+
+        <q-input v-model="search" placeholder="Search items..." outlined dense clearable debounce="1000"
+          class="search-input">
+          <template v-slot:prepend>
+            <q-icon name="search" color="grey-5" />
+          </template>
+        </q-input>
+        <q-select outlined v-model="selectedCategory" :options="categories" label="Category" hide-bottom-space use-input
+          dense clearable class="category-select" @update:model-value="handleCategoryChange">
+          <template v-slot:prepend>
+            <q-icon name="category" color="grey-5" />
+          </template>
+          <template v-slot:append>
+            <q-icon v-if="selectedCategory" name="close" @click.stop.prevent="handleCategoryChange('')"
+              class="cursor-pointer" color="grey-5" />
+          </template>
+        </q-select>
+        <q-btn unelevated icon="add" label="Create Item" class="create-btn" :to="`${$route.path}/create`">
+          <q-icon name="add" size="18px" class="q-mr-sm" />
+        </q-btn>
       </div>
     </div>
 
@@ -62,11 +64,6 @@
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
             <div class="action-buttons">
-              <q-btn unelevated dense icon="attach_money"
-                :to="`${$route.path}/${props.row.optimus_id}/item-prices?filters=store_id:${store.optimus_id}`"
-                size="md" class="tbl-btn tbl-btn--green">
-                <q-tooltip>Item Prices</q-tooltip>
-              </q-btn>
               <q-btn unelevated dense icon="edit_note"
                 :to="`${$route.path}/${props.row.optimus_id}?filters=store_id:${store.optimus_id}`" size="md"
                 class="tbl-btn tbl-btn--indigo">
@@ -123,9 +120,6 @@
               </div>
             </div>
             <div class="item-card-actions">
-              <q-btn unelevated dense icon="attach_money" label="Prices"
-                :to="`${$route.path}/${item.optimus_id}/item-prices?filters=store_id:${store.optimus_id}`"
-                class="action-btn-mobile action-btn-mobile--green" />
               <q-btn unelevated dense icon="edit_note" label="Edit"
                 :to="`${$route.path}/${item.optimus_id}?filters=store_id:${store.optimus_id}`"
                 class="action-btn-mobile action-btn-mobile--indigo" />
@@ -152,7 +146,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useCommonStore } from 'src/stores/common';
 import { onDeleteEntity } from 'boot/services';
-import type { StoreInterface, CategoryInterface, ResultInterface } from 'src/boot/interfaces';
+import type { StoreInterface, CategoryInterface } from 'src/boot/interfaces';
 
 const useCommon = useCommonStore();
 const { pagination, result, entityQuery } = storeToRefs(useCommon);
@@ -161,6 +155,7 @@ const { searchString, selectedCategory } = storeToRefs(useItem);
 const route = useRoute();
 const router = useRouter();
 const store = ref<Partial<StoreInterface>>({
+  id: 0,
   optimus_id: 0,
   name: '',
   latitude: 0,
@@ -180,23 +175,26 @@ onBeforeMount(async () => {
 
 onMounted(() => {
   entityQuery.value.query.page = 1;
+  onRequest(entityQuery.value, true);
 });
 
 const categories = ref<CategoryInterface[]>([]);
 const getCategories = async () => {
   const result = await get(
     {
-      entity: 'listing_api',
+      entity: 'categories',
       query: {
-        listingApi: 'categories',
+        orderBy: 'name:asc',
+        type: 'collection',
+        whereHas: 'items:store_id;' + store.value.id
       },
     },
     false
   );
   if (result && typeof result === 'object' && 'data' in result) {
-    const apiResponse = result as { data: { categories: CategoryInterface[] } };
-    if (apiResponse.data) {
-      categories.value = apiResponse.data.categories;
+    const responseData = result.data as { data: CategoryInterface[] };
+    if (responseData && responseData.data && Array.isArray(responseData.data)) {
+      categories.value = responseData.data;
     }
   }
 };
@@ -209,10 +207,16 @@ const requestItems = async () => {
   }
 
   if (selectedCategory.value) {
-    const categoryValue = selectedCategory.value as unknown as CategoryInterface;
-    const categoryId = typeof categoryValue === 'object' && 'id' in categoryValue
-      ? categoryValue.id
-      : selectedCategory.value;
+    const categoryValue = selectedCategory.value as unknown as { label: string; value: number };
+    let categoryId: number;
+    if (typeof categoryValue === 'object' && 'value' in categoryValue) {
+      categoryId = categoryValue.value;
+    } else if (typeof categoryValue === 'object' && 'id' in categoryValue) {
+      categoryId = (categoryValue as any).id;
+    } else {
+      categoryId = selectedCategory.value as unknown as number;
+    }
+
     if (categoryId) {
       filters += ',category_id:' + categoryId;
     }
@@ -225,19 +229,21 @@ const requestItems = async () => {
       filters: filters,
       page: pagination.value.page,
       limit: 12,
+      orderBy: 'created_at:desc',
     },
   };
 
-  onRequest(entityQuery.value, true);
 };
 
 watch(selectedCategory, () => {
   requestItems();
+  onRequest(entityQuery.value, true);
 });
 
 watch(search, (newValue) => {
   useItem.setSearchString(newValue || '');
   requestItems();
+  onRequest(entityQuery.value, true);
 });
 
 const typedResult = result as unknown as Array<{ optimus_id: number; name: string }>;
@@ -386,10 +392,10 @@ $muted: rgba(255, 255, 255, 0.5);
 }
 
 .header-actions {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 12px;
-  flex-wrap: wrap;
+  padding: 10px;
 }
 
 .create-btn {
@@ -576,17 +582,6 @@ $muted: rgba(255, 255, 255, 0.5);
   width: 34px !important;
   height: 34px !important;
 
-  &--green {
-    background: rgba(16, 185, 129, 0.15) !important;
-    color: #6ee7b7 !important;
-    border: 1px solid rgba(16, 185, 129, 0.3) !important;
-
-    &:hover {
-      background: rgba(16, 185, 129, 0.28) !important;
-      color: $white !important;
-    }
-  }
-
   &--indigo {
     background: rgba(99, 102, 241, 0.15) !important;
     color: #a5b4fc !important;
@@ -711,7 +706,7 @@ $muted: rgba(255, 255, 255, 0.5);
 
 .item-card-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
   padding-top: 12px;
   border-top: 1px solid $border;
@@ -724,17 +719,6 @@ $muted: rgba(255, 255, 255, 0.5);
   height: 34px !important;
   text-transform: none !important;
   letter-spacing: 0 !important;
-
-  &--green {
-    background: rgba(16, 185, 129, 0.15) !important;
-    color: #6ee7b7 !important;
-    border: 1px solid rgba(16, 185, 129, 0.3) !important;
-
-    &:hover {
-      background: rgba(16, 185, 129, 0.28) !important;
-      color: $white !important;
-    }
-  }
 
   &--indigo {
     background: rgba(99, 102, 241, 0.15) !important;

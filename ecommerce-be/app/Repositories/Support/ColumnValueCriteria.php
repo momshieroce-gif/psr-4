@@ -89,5 +89,10 @@ trait ColumnValueCriteria {
         }
     }
 
+    public function category_id(int $value) : void
+    {   
+        $this->model = $this->model->where('category_id', $value);
+    }
+
     
 }

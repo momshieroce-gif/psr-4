@@ -66,7 +66,8 @@ class BaseIndexRequest extends BaseRequest
             'latitude'              => 'sometimes',
             'longitude'             => 'sometimes',
             'radius'                => 'sometimes',
-            'reference_id'          => 'sometimes'
+            'reference_id'          => 'sometimes',
+            'store_id'              => 'sometimes',
         ];
     }
 }

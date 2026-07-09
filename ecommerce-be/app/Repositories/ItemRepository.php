@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Item;
+use App\Models\ItemPrice;
 use App\Repositories\BaseRepository;
 use App\Traits\RoleTrait;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,15 +26,16 @@ class ItemRepository extends BaseRepository
         $this->collection = new Collection();
     }
 
-    public function category_id(int $value) : void
-    {   
-        $this->model = $this->model->where('category_id', $value);
-    }
+    
 
     public function itemUpdateWithImage(int $id, array $params): Item
     {
         /**get fillable should be before accessing the model */
         $this->setFillable();
+
+        // Extract item_prices before filtering (it's not in fillable)
+        $itemPrices = Arr::get($params, 'item_prices', null);
+
         $this->model = $this->findOrFail($id);
         $data = array_intersect_key(
             $params,
@@ -48,6 +50,10 @@ class ItemRepository extends BaseRepository
 
         $this->filesUpload();
         $this->model->update($data);
+
+        // Handle item prices - delete existing and create new ones
+        $this->handleItemPrices($itemPrices, true);
+
         return $this->model->fresh();
 
     }
@@ -56,6 +62,10 @@ class ItemRepository extends BaseRepository
     {
         /**get fillable should be before accessing the model */
         $this->setFillable();
+
+        // Extract item_prices before filtering (it's not in fillable)
+        $itemPrices = Arr::get($params, 'item_prices', null);
+
         $data = array_intersect_key(
             $params,
             array_flip($this->fillable)
@@ -76,6 +86,9 @@ class ItemRepository extends BaseRepository
         // Then upload files
         $this->filesUpload();
 
+        // Create item prices if provided (no deletion needed for new items)
+        $this->handleItemPrices($itemPrices, false);
+
         return $this->model->fresh();
     }
 
@@ -95,7 +108,6 @@ class ItemRepository extends BaseRepository
             }
         }
         $this->with();
-        
         $this->collection = $this->model->get()
         ->filter(function ($item) {
             return $item->store && $item->store->distance <= Config::MAX_DISTANCE;
@@ -221,6 +233,43 @@ class ItemRepository extends BaseRepository
         $html = preg_replace('#\son[a-z]+\s*=\s*[^>\s]*#is', '', $html);
 
         return $html;
+    }
+
+    /**
+     * Handle item prices creation/update
+     * @param string|null $itemPrices JSON string of item prices
+     * @param bool $deleteExisting Whether to delete existing prices first
+     * @return void
+     */
+    private function handleItemPrices(?string $itemPrices, bool $deleteExisting = false): void
+    {
+        if ($itemPrices === null) {
+            return;
+        }
+
+        $decodedPrices = json_decode($itemPrices, true);
+        if (!is_array($decodedPrices) || empty($decodedPrices)) {
+            return;
+        }
+
+        // Delete existing item prices if requested (for updates)
+        if ($deleteExisting) {
+            ItemPrice::where('item_id', $this->model->id)->delete();
+        }
+
+        // Create new item prices
+        foreach ($decodedPrices as $itemPrice) {
+            ItemPrice::create([
+                'item_id' => $this->model->id,
+                'color_id' => Arr::get($itemPrice, 'color_id'),
+                'size_id' => Arr::get($itemPrice, 'size_id'),
+                'unit_id' => Arr::get($itemPrice, 'unit_id'),
+                'original_price' => Arr::get($itemPrice, 'original_price'),
+                'selling_price' => Arr::get($itemPrice, 'selling_price'),
+                'online_price' => Arr::get($itemPrice, 'online_price'),
+                'qty' => Arr::get($itemPrice, 'qty'),
+            ]);
+        }
     }
 
 

@@ -23,7 +23,8 @@ class StoreRequest extends BaseRequest
             'unit_id'       => 'sometimes',
             'store_id'      => 'required',
             'category_id'   => 'required',
-            'files'         => 'sometimes'
+            'files'         => 'sometimes',
+            'item_prices'    => 'required'
         ];
     }
 

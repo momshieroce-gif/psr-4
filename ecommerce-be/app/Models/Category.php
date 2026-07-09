@@ -19,7 +19,7 @@ class Category extends Model
         'icon',
         'desc'
     ];
-    protected $appends = ['label', 'value'];
+    protected $appends = ['label', 'value', 'optimus_id'];
 
     public function items(): HasMany {
         return $this->hasMany('App\Models\Item', 'category_id', 'id');
