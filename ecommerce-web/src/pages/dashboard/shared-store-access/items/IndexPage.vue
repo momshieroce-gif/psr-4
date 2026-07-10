@@ -174,6 +174,7 @@ onBeforeMount(async () => {
 });
 
 onMounted(() => {
+  result.value = [];
   entityQuery.value.query.page = 1;
   onRequest(entityQuery.value, true);
 });

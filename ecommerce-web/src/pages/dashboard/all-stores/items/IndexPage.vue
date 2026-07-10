@@ -96,12 +96,6 @@
               </td>
               <td class="td-center">
                 <div class="action-btns">
-                  <router-link
-                    :to="`${$route.path}/${item.optimus_id}/item-prices?filters=store_id:${store.optimus_id}`"
-                    class="action-pill action-prices">
-                    <q-icon name="attach_money" size="16px" />
-                    Prices
-                  </router-link>
                   <router-link :to="`${$route.path}/${item.optimus_id}?filters=store_id:${store.optimus_id}`"
                     class="action-pill action-edit">
                     <q-icon name="edit_note" size="16px" />
@@ -295,7 +289,13 @@ const goToLastPage = () => {
 };
 
 const handleCategoryChange = (value: Category | number | null) => {
-  selectedCategory.value = value;
+  if (value === null) {
+    selectedCategory.value = '';
+  } else if (typeof value === 'object') {
+    selectedCategory.value = String(value.id);
+  } else {
+    selectedCategory.value = String(value);
+  }
   requestItems();
 };
 
@@ -358,7 +358,7 @@ const requestItems = async () => {
     query: {
       filters: filters,
       page: pagination.value.page,
-      limit: 12,
+      limit: 12
     },
   };
 

@@ -99,7 +99,6 @@ export default [
             { path: ':id/store-users/menus', component: () => import('src/pages/dashboard/all-stores/store-users/MenusPage.vue') },
             { path: ':id/items', component: () => import('src/pages/dashboard/all-stores/items/IndexPage.vue') },
             { path: ':id/items/:itemId', component: () => import('src/pages/dashboard/all-stores/items/EditPage.vue') },
-            { path: ':id/items/:itemId/item-prices', component: () => import('src/pages/dashboard/all-stores/items/PricePage.vue') },
             { path: ':id/transactions', component: () => import('src/pages/dashboard/all-stores/transactions/IndexPage.vue') },
             { path: ':id/transactions/:transactionId', component: () => import('src/pages/dashboard/all-stores/transactions/ShowPage.vue') },
           ]

@@ -108,6 +108,7 @@ class ItemRepository extends BaseRepository
             }
         }
         $this->with();
+        $this->orderBy(Arr::get($parameters, 'orderBy', 'created_at:desc'));
         $this->collection = $this->model->get()
         ->filter(function ($item) {
             return $item->store && $item->store->distance <= Config::MAX_DISTANCE;

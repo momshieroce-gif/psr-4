@@ -17,11 +17,12 @@ class IndexRequest extends BaseRequest
     public function rules()
  {
         return [
-            'orderBy'          => 'required|string',
             'columns'          => 'required|string',
             'page'             => 'required|integer',
             'limit'            => 'required|integer',
-            'deleted'          => 'sometimes|integer'
+            'deleted'          => 'sometimes|integer',
+            'filters'          => 'sometimes|string',
+            'orderBy'          => 'sometimes|string',
 
         ];
     }
