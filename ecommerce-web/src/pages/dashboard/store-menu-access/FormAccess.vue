@@ -1,32 +1,12 @@
 <template>
-  <q-form
-    @submit.prevent="onSubmit"
-    class="q-gutter-sm"
-    ref="myForm"
-  >
-    <q-select
-      dense
-      v-model="localStoreMenuAccess.access_right"
-      :options="accessRights"
-      label="Select Access Rights"
-      hide-bottom-space
-      use-input
-      outlined
-      use-chips
-      :rules="[(val) => validateRequired(val) || 'Access Right is required.']"
-    />
+  <q-form @submit.prevent="onSubmit" class="q-gutter-sm" ref="myForm">
+    <q-select dense v-model="localStoreMenuAccess.access_right" :options="accessRights" label="Select Access Rights"
+      hide-bottom-space use-input outlined use-chips
+      :rules="[(val) => validateRequired(val) || 'Access Right is required.']" />
 
-    <q-select
-      dense
-      v-model="localStoreMenuAccess.store_menu"
-      :options="storeMenus"
-      label="Select Store Menus"
-      hide-bottom-space
-      use-input
-      outlined
-      use-chips
-      :rules="[(val) => validateRequired(val) || 'Store menu is required.']"
-    />
+    <q-select dense v-model="localStoreMenuAccess.store_menu" :options="storeMenus" label="Select Store Menus"
+      hide-bottom-space use-input outlined use-chips
+      :rules="[(val) => validateRequired(val) || 'Store menu is required.']" />
     <div class="flex justify-end">
       <q-btn :label="btnLabel" type="submit" color="primary" outline />
     </div>
@@ -76,15 +56,15 @@ const listingApi = async () => {
 
 const myForm = ref<QForm | null>(null);
 const onSubmit = async () => {
-  myForm.value?.validate().then(async (success: any) => {
+  myForm.value?.validate().then(async (success: boolean) => {
     if (success) {
       emit('submit', {
-          access_right_id: localStoreMenuAccess.value?.access_right?.id,
-          store_menu_id: localStoreMenuAccess.value?.store_menu?.id,
-          store_id: Number(route.params.storeId),
-          user_id: Number(route.params.userId)
+        access_right_id: localStoreMenuAccess.value?.access_right?.id,
+        store_menu_id: localStoreMenuAccess.value?.store_menu?.id,
+        store_id: Number(route.params.storeId),
+        user_id: Number(route.params.userId)
 
-        })
+      })
     }
   });
 };

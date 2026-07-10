@@ -146,16 +146,20 @@ import { formatMoney } from 'src/boot/utilities';
 const route = useRoute();
 const loading = ref(true);
 const error = ref('');
-const transaction = ref<any>(null);
+const transaction = ref<TransactionDetail | null>(null);
 
 interface TransactionDetail {
   id: number;
   reference_id: string;
   lat: number | null;
   lng: number | null;
-  delivery_charge: string;
+  delivery_charge: number;
   total: number;
   grand_total: number;
+  user?: {
+    name: string;
+    mobile: string;
+  };
   store?: {
     id: number;
     name: string;

@@ -14,24 +14,12 @@
             </div>
           </div>
           <div class="header-actions">
-            <q-btn
-              unelevated
-              color="primary"
-              label="View Transactions"
-              icon="receipt"
-              :to="`${$route.path}/transactions`"
-              class="view-items-btn"
-            >
+            <q-btn unelevated color="primary" label="View Transactions" icon="receipt"
+              :to="`${$route.path}/transactions`" class="view-items-btn">
               <q-tooltip>View store transactions</q-tooltip>
             </q-btn>
-            <q-btn
-              unelevated
-              color="primary"
-              label="View Items"
-              icon="inventory_2"
-              :to="`${$route.path}/items`"
-              class="view-items-btn"
-            >
+            <q-btn unelevated color="primary" label="View Items" icon="inventory_2" :to="`${$route.path}/items`"
+              class="view-items-btn">
               <q-tooltip>View store items</q-tooltip>
             </q-btn>
           </div>
@@ -40,19 +28,14 @@
     </q-card>
 
     <!-- Form Section -->
-    <StoreEditForm 
-      :store="store" 
-      :is-submitting="isSubmitting" 
-      @submit="onSubmit" 
-      @cancel="$router.back()" 
-    />
+    <StoreEditForm :store="store" :is-submitting="isSubmitting" @submit="onSubmit" @cancel="$router.back()" />
   </div>
 </template>
-  
+
 <script lang="ts" setup>
 import { ref, onBeforeMount } from 'vue';
 import { update, show } from 'src/boot/axios-call';
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 import StoreEditForm from 'src/components/StoreEditForm.vue';
 
 interface StoreData {
@@ -108,7 +91,7 @@ onBeforeMount(async () => {
       show_mobile: 1
     },
   }) as StoreData;
-  
+
   store.value.name = result.name || '';
   store.value.mobile = result.mobile || '';
   store.value.desc = result.desc || '';

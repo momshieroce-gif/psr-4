@@ -14,7 +14,7 @@ class PublicStoreItemRepository extends BaseRepository
         $this->cacheKey = 'items-get';
     }
 
-    public function category_id($value)
+    public function category_id(int $value): void
     {   
         $this->model = $this->model->where('category_id', $value);
     }

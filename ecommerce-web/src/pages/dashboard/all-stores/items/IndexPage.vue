@@ -245,31 +245,8 @@ interface ApiResponse<T> {
   };
 }
 
-const columns = [
-  {
-    name: 'name',
-    required: true,
-    label: 'Item Name',
-    align: 'left' as const,
-    field: 'name',
-    sortable: true
-  },
-  {
-    name: 'actions',
-    required: true,
-    label: 'Actions',
-    align: 'center' as const,
-    field: ''
-  }
-];
-
 const handleDeleteItem = (item: { optimus_id: number; name: string }) => {
   onDeleteEntity('items', item.optimus_id, item.name);
-};
-
-const handlePageChange = (page: number) => {
-  entityQuery.value.query.page = page;
-  onRequest(entityQuery.value);
 };
 
 const goToFirstPage = () => {

@@ -48,7 +48,7 @@
           <q-btn no-caps unelevated class="action-btn find-action" icon="search" label="Find Items"
             @click="getNearestItems" :disable="!searchString" />
           <div class="search-wrap">
-            <q-input v-model="searchString" placeholder="Type an item name to search..." outlined dense debounce="1000"
+            <q-input v-model="searchString" placeholder="Type an item name to search..." outlined dense
               class="hero-search" clearable>
               <template v-slot:prepend>
                 <q-icon name="search" size="18px" />
@@ -99,9 +99,10 @@
                     <q-icon name="storefront" size="12px" class="q-mr-xs" />
                     {{ item.store?.name }}
                   </div>
-                  <div class="item-card-dist" v-if="item.store?.distance">
+                  <div class="item-card-dist"
+                    v-if="item.store?.distance !== null && item.store?.distance !== undefined">
                     <q-icon name="near_me" size="11px" class="q-mr-xs" />
-                    {{ item.store.distance }} away
+                    {{ item.store.distance }}KM away
                   </div>
                 </div>
                 <router-link :to="`/public_stores/${item.store?.optimus_id}/item/${item.optimus_id}`"
@@ -145,9 +146,9 @@
                   </div>
                   <div class="info-window-body">
                     <div class="iw-item-name">{{ item.name }}</div>
-                    <div class="store-details" v-if="item.store.distance">
+                    <div class="store-details" v-if="item.store.distance !== null && item.store.distance !== undefined">
                       <q-icon name="straighten" size="xs" class="q-mr-xs" />
-                      <span class="text-caption">{{ item.store.distance }} away</span>
+                      <span class="text-caption">{{ item.store.distance }}KM away</span>
                     </div>
                     <q-btn :to="`/public_stores/${item.store.optimus_id}/item/${item.optimus_id}`" color="primary"
                       size="sm" unelevated class="q-mt-sm full-width" label="View Item" icon="arrow_forward" no-caps />
@@ -215,8 +216,13 @@ const useCommon = useCommonStore();
 const { lat, lng } = storeToRefs(useCommon);
 const showInfoWindow = ref(true);
 
+interface GoogleMapRef {
+  $mapObject?: google.maps.Map;
+  map?: google.maps.Map;
+  $map?: google.maps.Map;
+}
 
-const mapRef = ref<any>(null)
+const mapRef = ref<GoogleMapRef | null>(null)
 const mapSectionRef = ref<HTMLElement | null>(null)
 const directions = ref<google.maps.DirectionsResult | null>(null)
 const directionsRenderer = ref<google.maps.DirectionsRenderer | null>(null)
@@ -227,10 +233,7 @@ const origin = ref({ lat: lat.value, lng: lng.value })
 const destination = ref({ lat: 14.609, lng: 120.994 })
 const initialLat = ref<number | null>(null)
 const initialLng = ref<number | null>(null)
-const initialZoom = ref(currentZoom.value)
 const initialOrigin = ref({ lat: origin.value.lat, lng: origin.value.lng })
-const initialDestination = ref({ lat: destination.value.lat, lng: destination.value.lng })
-const initialShowInfoWindow = ref(showInfoWindow.value)
 
 // Create animated location marker element
 const createLocationMarkerElement = (): HTMLElement => {
@@ -312,7 +315,7 @@ const markerDrag = (e: { latLng: google.maps.LatLng }) => {
   lng.value = e.latLng.lng();
 };
 
-const kmRadius = ref(15);
+const kmRadius = ref(5);
 const nearestItems = ref<Array<ItemInterface>>([]);
 
 const getNearestItems = async () => {
@@ -336,7 +339,7 @@ const getNearestItems = async () => {
   );
 
   if (result && typeof result === 'object' && 'data' in result) {
-    nearestItems.value = (result as any).data.data;
+    nearestItems.value = (result as { data: { data: ItemInterface[] } }).data.data;
     showStoreList.value = true;
   }
 };
@@ -583,62 +586,6 @@ const requestDirections = () => {
   }
 }
 
-const resetToInitialDefaults = () => {
-  if (initialLat.value !== null && initialLng.value !== null) {
-    lat.value = initialLat.value
-    lng.value = initialLng.value
-    origin.value = { lat: initialLat.value, lng: initialLng.value }
-  } else {
-    origin.value = { lat: origin.value.lat, lng: origin.value.lng }
-  }
-
-  destination.value = { lat: initialDestination.value.lat, lng: initialDestination.value.lng }
-  currentZoom.value = initialZoom.value
-  showInfoWindow.value = initialShowInfoWindow.value
-  directions.value = null
-
-  if (directionsRenderer.value) {
-    directionsRenderer.value.setMap(null)
-    directionsRenderer.value = null
-  }
-
-  const map = mapRef.value?.$mapObject || mapRef.value?.map || mapRef.value?.$map
-  if (map) {
-    map.setCenter({ lat: lat.value, lng: lng.value })
-    map.setZoom(currentZoom.value)
-  }
-}
-
-watch(searchString, async () => {
-  if (searchString.value) {
-    const result = await get(
-      {
-        message: 'Searching nearest items',
-        entity: 'public_items',
-        query: {
-          filters: 'name:' + searchString.value,
-          orderBy: 'name:asc',
-          latitude: lat.value,
-          longitude: lng.value,
-          radius: kmRadius.value,
-          type: 'collection',
-          with: 'store' // Include store details in the response
-        },
-      },
-      true
-    );
-
-    if (result && typeof result === 'object' && 'data' in result) {
-      nearestItems.value = (result as any).data.data;
-      showStoreList.value = true;
-    }
-  }
-
-  if (!searchString.value) {
-    nearestItems.value = [];
-    resetToInitialDefaults()
-  }
-})
 
 </script>
 

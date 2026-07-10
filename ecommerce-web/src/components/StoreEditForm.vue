@@ -41,7 +41,7 @@
               <div>
                 <div class="field-label" style="margin-bottom: 2px;">Store Status</div>
                 <div class="status-toggle-hint">{{ localStore.is_active ? 'Store is visible to customers' : 'Store is hidden from customers' }}</div>
-                </div>
+              </div>
               <q-toggle v-model="localStore.is_active" :color="localStore.is_active ? 'positive' : 'grey-6'"
                 keep-color />
             </div>
@@ -233,9 +233,15 @@ watch(() => props.store, (newStore) => {
   localStore.value = { ...newStore };
 }, { deep: true });
 
+interface GoogleMapRef {
+  $mapObject?: google.maps.Map;
+  map?: google.maps.Map;
+  $map?: google.maps.Map;
+}
+
 const currentZoom = ref(15);
 const showInfoWindow = ref(true);
-const mapRef = ref<any>(null);
+const mapRef = ref<GoogleMapRef | null>(null);
 
 const lightboxOpen = ref(false);
 const lightboxSrc = ref('');
@@ -472,7 +478,7 @@ const addZoomControls = (map: google.maps.Map) => {
 };
 
 const handleSubmit = () => {
-  myForm.value?.validate().then((success: any) => {
+  myForm.value?.validate().then((success: boolean) => {
     if (success) {
       emit('submit', localStore.value);
     }

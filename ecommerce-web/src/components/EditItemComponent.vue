@@ -226,6 +226,11 @@ import type { QForm } from 'quasar';
 import { Notify, Loading } from 'quasar';
 import InputAmount from 'src/components/inputs/InputAmount.vue';
 
+interface Unit {
+  id: number;
+  name: string;
+}
+
 interface ItemPrice {
   id: number;
   item_id: number;
@@ -236,7 +241,7 @@ interface ItemPrice {
   original_price: number;
   selling_price: number;
   online_price: number;
-  unit?: any;
+  unit?: Unit;
 }
 
 interface ItemImage {
@@ -261,7 +266,7 @@ interface Item {
   description: string;
   images: ItemImage[];
   category?: Category;
-  unit?: any;
+  unit?: Unit;
   item_price?: ItemPrice[];
 }
 
@@ -346,7 +351,7 @@ const getItem = async () => {
 };
 
 const categories = ref<Category[]>([]);
-const units = ref<any[]>([]);
+const units = ref<Unit[]>([]);
 
 const listingApi = async () => {
   const result = await get(
@@ -375,7 +380,7 @@ const listingApi = async () => {
     false
   );
   if (unitsResult && typeof unitsResult === 'object' && 'data' in unitsResult) {
-    const unitsApiResponse = unitsResult as { data: { data: { units: any[] } } };
+    const unitsApiResponse = unitsResult as { data: { data: { units: Unit[] } } };
     if (unitsApiResponse.data?.data?.units) {
       units.value = unitsApiResponse.data.data.units;
     }

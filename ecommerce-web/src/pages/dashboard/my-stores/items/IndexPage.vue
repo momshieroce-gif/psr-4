@@ -156,7 +156,22 @@ const useItem = useItemStore();
 const { searchString, selectedCategory } = storeToRefs(useItem);
 const route = useRoute();
 const router = useRouter();
-const store = ref<any>({
+
+interface Store {
+  optimus_id: string;
+  name: string;
+  desc: string;
+  latitude: number;
+  longitude: number;
+  id?: number;
+}
+
+interface Category {
+  id: number;
+  name: string;
+}
+
+const store = ref<Store>({
   optimus_id: '',
   name: '',
   desc: '',
@@ -179,9 +194,9 @@ onMounted(() => {
   entityQuery.value.query.page = 1;
 });
 
-const categories = ref<any[]>([]);
+const categories = ref<Category[]>([]);
 const getCategories = async () => {
-  const cat: any = await get(
+  const cat = await get(
     {
       entity: 'categories',
       query: {
@@ -205,7 +220,7 @@ const requestItems = async () => {
 
   if (selectedCategory.value) {
     const categoryId = typeof selectedCategory.value === 'object' && 'id' in selectedCategory.value
-      ? (selectedCategory.value as any).id
+      ? (selectedCategory.value as Category).id
       : selectedCategory.value;
     if (categoryId) {
       filters += ',category_id:' + categoryId;
@@ -278,7 +293,7 @@ const goToNextPage = () => {
 const goToLastPage = () => {
   lastPage(entityQuery.value, pagination.value);
 };
-const handleCategoryChange = (value: any) => {
+const handleCategoryChange = (value: Category | number | null) => {
   selectedCategory.value = value;
   requestItems();
 };

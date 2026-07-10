@@ -208,12 +208,12 @@ const requestItems = async () => {
   }
 
   if (selectedCategory.value) {
-    const categoryValue = selectedCategory.value as unknown as { label: string; value: number };
+    const categoryValue = selectedCategory.value as unknown as { label: string; value: number } | { id: number };
     let categoryId: number;
     if (typeof categoryValue === 'object' && 'value' in categoryValue) {
       categoryId = categoryValue.value;
     } else if (typeof categoryValue === 'object' && 'id' in categoryValue) {
-      categoryId = (categoryValue as any).id;
+      categoryId = categoryValue.id;
     } else {
       categoryId = selectedCategory.value as unknown as number;
     }

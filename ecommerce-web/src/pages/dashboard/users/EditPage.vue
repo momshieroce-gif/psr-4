@@ -121,7 +121,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { get, show } from 'src/boot/axios-call';
 import { axios } from 'src/boot/axios';
 import { useRoute } from 'vue-router'
@@ -130,9 +130,6 @@ import type { AxiosResponse } from 'axios';
 
 const route = useRoute();
 const $q = useQuasar();
-
-/** Table from md and up; cards below (phones + small tablets). */
-const showRolesTable = computed(() => $q.screen.gt.md);
 
 interface RoleOption {
   id: number;
@@ -165,40 +162,6 @@ const userData = ref<UserShowData | null>(null);
 const selectedRoleId = ref<number | null>(null);
 const showRemoveRoleDialog = ref(false);
 const roleToRemove = ref<UserRoleRow | null>(null);
-
-const roleColumns = [
-  {
-    name: 'label',
-    required: true,
-    label: 'Role',
-    field: (row: UserRoleRow) => row.label || row.name,
-    align: 'left' as const,
-    sortable: true,
-  },
-  {
-    name: 'description',
-    required: true,
-    label: 'Description',
-    field: 'description',
-    align: 'left' as const,
-    sortable: true,
-  },
-  {
-    name: 'slug_name',
-    required: true,
-    label: 'Slug',
-    field: 'slug_name',
-    align: 'left' as const,
-    sortable: true,
-  },
-  {
-    name: 'actions',
-    required: true,
-    label: 'Actions',
-    field: '',
-    align: 'center' as const,
-  },
-];
 
 async function loadRoles() {
   rolesLoading.value = true;

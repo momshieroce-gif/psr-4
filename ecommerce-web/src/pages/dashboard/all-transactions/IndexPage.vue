@@ -237,39 +237,6 @@ entityQuery.value = {
 
 const typedResult = result as unknown as CustomerTransactionRow[];
 
-const columns = [
-  {
-    name: 'reference',
-    required: true,
-    label: 'Reference',
-    align: 'left' as const,
-    field: 'reference_id',
-    sortable: true
-  },
-  {
-    name: 'status',
-    required: true,
-    label: 'Order Status',
-    align: 'left' as const,
-    field: (row: any) => row.status?.label || 'Pending',
-    sortable: true
-  },
-  {
-    name: 'summary',
-    required: true,
-    label: 'Summary',
-    align: 'left' as const,
-    field: 'grand_total'
-  },
-  {
-    name: 'actions',
-    required: true,
-    label: 'Actions',
-    align: 'center' as const,
-    field: ''
-  }
-];
-
 const handlePageChange = (page: number) => {
   entityQuery.value.query.page = page;
   onRequest(entityQuery.value);
@@ -309,17 +276,6 @@ const goToNextPage = () => {
 
 const goToLastPage = () => {
   lastPage(entityQuery.value, pagination.value);
-};
-
-// Helper functions for UI
-const getStatusColor = (status: string | undefined): string => {
-  if (!status) return 'grey';
-  const statusLower = status.toLowerCase();
-  if (statusLower.includes('completed') || statusLower.includes('delivered')) return 'positive';
-  if (statusLower.includes('preparing') || statusLower.includes('processing')) return 'warning';
-  if (statusLower.includes('cancelled') || statusLower.includes('rejected')) return 'warning';
-  if (statusLower.includes('refund') || statusLower.includes('rejected')) return 'negative';
-  return 'primary';
 };
 
 const formatDate = (dateString: string | undefined): string => {

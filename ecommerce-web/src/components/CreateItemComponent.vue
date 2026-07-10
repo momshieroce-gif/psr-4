@@ -197,7 +197,7 @@
 
 <script setup lang="ts">
 import { ref, onBeforeMount, computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { get } from 'src/boot/axios-call';
 import { axios } from 'src/boot/axios';
 import type { QForm } from 'quasar';
@@ -210,13 +210,18 @@ interface Category {
   value: number;
 }
 
+interface Unit {
+  id: number;
+  name: string;
+}
+
 interface ItemPrice {
   id: number;
   original_price: number;
   online_price: number;
   selling_price: number;
-  category: any;
-  unit: any;
+  category: Category | null;
+  unit: Unit | null;
   qty: number | string;
 }
 
@@ -239,7 +244,6 @@ const emit = defineEmits<{
 }>();
 
 const router = useRouter();
-const route = useRoute();
 const myForm = ref<QForm | null>(null);
 const isSubmitting = ref(false);
 const editorRef = ref<HTMLElement | null>(null);
@@ -330,7 +334,7 @@ onBeforeMount(async () => {
 });
 
 const categories = ref<Category[]>([]);
-const units = ref<any[]>([]);
+const units = ref<Unit[]>([]);
 
 const listingApi = async () => {
   const result = await get(
@@ -361,7 +365,7 @@ const listingApi = async () => {
   );
 
   if (unitsResult && typeof unitsResult === 'object' && 'data' in unitsResult) {
-    const unitsApiResponse = unitsResult as { data: { data: { units: any[] } } };
+    const unitsApiResponse = unitsResult as { data: { data: { units: Unit[] } } };
     if (unitsApiResponse.data?.data?.units) {
       units.value = unitsApiResponse.data.data.units;
     }

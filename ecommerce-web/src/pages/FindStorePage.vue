@@ -91,9 +91,9 @@
                 <div class="store-card-num">{{ idx + 1 }}</div>
                 <div class="store-card-body">
                   <div class="store-card-name">{{ store.name }}</div>
-                  <div class="store-card-dist" v-if="store.distance">
+                  <div class="store-card-dist" v-if="store.distance !== null && store.distance !== undefined">
                     <q-icon name="near_me" size="11px" />
-                    {{ store.distance }} away
+                    {{ store.distance }}KM away
                   </div>
                 </div>
                 <q-icon name="arrow_forward_ios" size="12px" color="grey-4" />
@@ -328,7 +328,7 @@ const markerDrag = (e: { latLng: google.maps.LatLng }) => {
   lng.value = e.latLng.lng();
 };
 
-const kmRadius = ref(15);
+const kmRadius = ref(5);
 const nearestStores = ref<Array<StoreInterface>>([]);
 
 const getNearestStore = async () => {

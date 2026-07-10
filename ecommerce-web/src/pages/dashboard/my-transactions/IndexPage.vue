@@ -229,7 +229,6 @@ import { storeToRefs } from 'pinia';
 import { CustomerTransactionRow } from 'src/boot/interfaces';
 import { TRANSACTION_STATUS } from 'src/boot/constant';
 import { formatMoney } from 'src/boot/utilities';
-import { Notify } from 'quasar';
 
 const search = ref('');
 const useCommon = useCommonStore();
@@ -251,44 +250,6 @@ const typedResult = computed<CustomerTransactionRow[]>(() => {
   if (!Array.isArray(data)) return [];
   return data.filter((item): item is CustomerTransactionRow => item != null);
 });
-
-const columns = [
-  {
-    name: 'reference',
-    required: true,
-    label: 'Reference',
-    align: 'left',
-    field: 'reference_id',
-    sortable: true
-  },
-  {
-    name: 'status',
-    required: true,
-    label: 'Order Status',
-    align: 'left',
-    field: (row: CustomerTransactionRow) => row.status?.label || 'Pending',
-    sortable: true
-  },
-  {
-    name: 'summary',
-    required: true,
-    label: 'Summary',
-    align: 'left',
-    field: 'grand_total'
-  },
-  {
-    name: 'actions',
-    required: true,
-    label: 'Actions',
-    align: 'right',
-    field: ''
-  }
-];
-
-const handlePageChange = (page: number) => {
-  entityQuery.value.query.page = page;
-  onRequest(entityQuery.value);
-};
 
 onMounted(() => {
   entityQuery.value.query.page = 1;

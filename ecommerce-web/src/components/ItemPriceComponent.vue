@@ -116,6 +116,27 @@ interface ItemPriceProps {
   itemId: number;
 }
 
+interface Unit {
+  id: number;
+  name: string;
+}
+
+interface ItemPrice {
+  id: number;
+  original_price: number;
+  online_price: number;
+  selling_price: number;
+  qty: number | string;
+  unit?: Unit;
+}
+
+interface Item {
+  name: string;
+  description: string;
+  item_price: ItemPrice[];
+  category: unknown;
+}
+
 const props = defineProps<ItemPriceProps>();
 
 const emit = defineEmits<{
@@ -130,7 +151,7 @@ const onReset = () => {
   myForm.value?.resetValidation();
 };
 
-const item = ref<any>({
+const item = ref<Item>({
   name: '',
   description: '',
   item_price: [],
@@ -156,10 +177,10 @@ const getItem = async () => {
   );
 };
 
-const units = ref<any[]>([]);
+const units = ref<Unit[]>([]);
 
 const listingApi = async () => {
-  const result: any = await get(
+  const result = await get(
     {
       entity: 'listing_api',
       query: {
@@ -190,7 +211,7 @@ const addItemPrice = () => {
 const deleteItemPrice = (index: number) => {
   item.value.item_price?.splice(index, 1);
   // Recalculate IDs to ensure they are consecutive
-  item.value.item_price?.forEach((attr: any, idx: number) => {
+  item.value.item_price?.forEach((attr: ItemPrice, idx: number) => {
     attr.id = idx + 1;
   });
 };
@@ -201,7 +222,7 @@ const createItemPrice = async () => {
     return;
   }
 
-  const itemPrices = item.value.item_price?.map((v: any) => {
+  const itemPrices = item.value.item_price?.map((v: ItemPrice) => {
     return {
       unit_id: v.unit?.id,
       original_price: v.original_price,
@@ -228,24 +249,27 @@ const createItemPrice = async () => {
       message: 'Item prices updated successfully.',
     });
     emit('submit');
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error && typeof error === 'object' && 'response' in error
+      ? (error as { response?: { data?: { message?: string } } }).response?.data?.message
+      : undefined;
     Notify.create({
       position: 'bottom',
       type: 'negative',
-      message: error.response?.data?.message || 'Failed to update item prices.',
+      message: errorMessage || 'Failed to update item prices.',
     });
   }
 };
 
-const changeOriginalPrice = (itemPrice: any, amount: number) => {
+const changeOriginalPrice = (itemPrice: ItemPrice, amount: number) => {
   itemPrice.original_price = amount;
 };
 
-const changeOnlinePrice = (itemPrice: any, amount: number) => {
+const changeOnlinePrice = (itemPrice: ItemPrice, amount: number) => {
   itemPrice.online_price = amount;
 };
 
-const changeSellingPrice = (itemPrice: any, amount: number) => {
+const changeSellingPrice = (itemPrice: ItemPrice, amount: number) => {
   itemPrice.selling_price = amount;
 };
 

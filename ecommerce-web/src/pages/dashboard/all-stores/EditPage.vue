@@ -21,14 +21,15 @@
     </div>
 
     <!-- Form Section -->
-    <StoreEditForm :store="store" :is-submitting="isSubmitting" @submit="onSubmit" @cancel="$router.back()" :isActive="true"/>
+    <StoreEditForm :store="store" :is-submitting="isSubmitting" @submit="onSubmit" @cancel="$router.back()"
+      :isActive="true" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onBeforeMount } from 'vue';
 import { update, show } from 'src/boot/axios-call';
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 import StoreEditForm from 'src/components/StoreEditForm.vue';
 
 interface StoreImage {

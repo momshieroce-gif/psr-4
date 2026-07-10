@@ -176,7 +176,6 @@ import { isValidMobileNumber } from 'src/boot/validators';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useUserCartStore } from 'src/stores/userCart';
-import { useUserStore } from 'src/stores/user';
 import {
   ItemOrder,
   CustomerOrder,
@@ -820,8 +819,6 @@ const processCustomerOrder = async () => {
 }
 
 // ── Contact Form ──────────────────────────────────────────────────────────
-.contact-panel {}
-
 .contact-form {
   padding: 20px 24px 24px;
 }

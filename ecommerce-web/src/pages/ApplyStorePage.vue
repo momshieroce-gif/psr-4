@@ -182,12 +182,15 @@ async function submit() {
       message: 'Store application submitted successfully.',
     });
     router.push('/');
-  } catch (err: any) {
+  } catch (err: unknown) {
     Loading.hide();
+    const errorMessage = err && typeof err === 'object' && 'response' in err
+      ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
+      : undefined;
     Notify.create({
       position: 'bottom',
       type: 'negative',
-      message: err.response?.data?.message || 'An error occurred while submitting your application.',
+      message: errorMessage || 'An error occurred while submitting your application.',
     });
   } finally {
     submitting.value = false;

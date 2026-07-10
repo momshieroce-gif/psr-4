@@ -269,17 +269,6 @@ const typedResult = computed<StoreUser[]>(() => {
     return [];
 });
 
-const columns = [
-    {
-        name: 'userInfo',
-        required: true,
-        label: 'User Information',
-        align: 'left' as const,
-        field: 'email',
-        sortable: true
-    }
-];
-
 const handleDeleteUser = (user: StoreUser) => {
     onDeleteEntity('store-users', user.optimus_id, user.email);
 };

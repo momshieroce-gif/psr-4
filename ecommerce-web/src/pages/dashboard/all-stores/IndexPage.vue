@@ -250,43 +250,12 @@ entityQuery.value = {
 // Type the result as StoreRow array
 const typedResult = result as unknown as StoreRow[];
 
-const columns = [
-  {
-    name: 'name',
-    required: true,
-    label: 'Store Name',
-    align: 'left' as const,
-    field: 'name',
-    sortable: true
-  },
-  {
-    name: 'mobile',
-    required: true,
-    label: 'Mobile',
-    align: 'left' as const,
-    field: 'mobile',
-    sortable: true
-  },
-  {
-    name: 'actions',
-    required: true,
-    label: 'Actions',
-    align: 'center' as const,
-    field: ''
-  }
-];
-
 const handleDeleteStore = (store: StoreRow) => {
   onDeleteEntity('all_stores', store.optimus_id, store.name);
 };
 
 const handleRestoreStore = (store: StoreRow) => {
   onRestoreEntity('all_stores', store.optimus_id, store.name);
-};
-
-const handlePageChange = (page: number) => {
-  entityQuery.value.query.page = page;
-  onRequest(entityQuery.value);
 };
 
 const goToFirstPage = () => {

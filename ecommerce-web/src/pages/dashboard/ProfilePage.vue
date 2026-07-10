@@ -79,20 +79,18 @@ import { ref } from 'vue';
 import { useUserStore } from 'src/stores/user';
 import { storeToRefs } from 'pinia';
 import { create } from 'src/boot/axios-call';
-import { useRoute } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { isValidMobileNumber } from 'src/boot/validators';
 import type { QForm } from 'quasar';
 
 const $q = useQuasar();
-const route = useRoute();
 const useUser = useUserStore();
 const { profile } = storeToRefs(useUser);
 
 const myForm = ref<QForm | null>(null);
 
 const onSubmit = async () => {
-  myForm.value?.validate().then(async (success: any) => {
+  myForm.value?.validate().then(async (success: boolean) => {
     if (success) {
       try {
         await create({

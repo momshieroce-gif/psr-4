@@ -166,7 +166,7 @@
                   <span class="summary-line-label">
                     Subtotal
                     <span class="summary-item-count">({{ countTotalItems }} {{ countTotalItems === 1 ? 'item' : 'items'
-                    }})</span>
+                      }})</span>
                   </span>
                   <span class="summary-line-value">{{ formatMoney(total) }}</span>
                 </div>
@@ -273,7 +273,7 @@ interface DeliveryCharge {
 
 interface CartItem {
   item_price: number | string;
-  variations: any;
+  variations: Array<{ unit: number; count: number }>;
 }
 
 const receiveMethods = ref<ReceiveMethod[]>([]);

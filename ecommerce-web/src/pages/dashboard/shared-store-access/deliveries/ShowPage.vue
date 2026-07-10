@@ -157,7 +157,7 @@ import { getLocation } from 'src/boot/utilities';
 const route = useRoute();
 const loading = ref(true);
 const error = ref('');
-const transaction = ref<any>(null);
+const transaction = ref<TransactionDetail | null>(null);
 const userLocation = ref<{ latitude: number; longitude: number } | null>(null);
 const locationLoading = ref(false);
 

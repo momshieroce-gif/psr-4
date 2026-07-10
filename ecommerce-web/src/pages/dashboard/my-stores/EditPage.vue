@@ -13,7 +13,7 @@
           <h1 class="hero-title">Edit Store</h1>
           <div class="hero-subtitle">Update store information and location</div>
         </div>
-        
+
       </div>
     </div>
 
@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import { ref, onBeforeMount } from 'vue';
 import { update, show } from 'src/boot/axios-call';
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 import StoreEditForm from 'src/components/StoreEditForm.vue';
 
 interface StoreData {

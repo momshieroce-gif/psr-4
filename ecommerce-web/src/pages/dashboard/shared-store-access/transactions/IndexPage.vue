@@ -283,16 +283,6 @@ const goToLastPage = () => {
   lastPage(entityQuery.value, pagination.value);
 };
 
-// Helper functions for UI
-const getStatusColor = (status: string | undefined): string => {
-  if (!status) return 'grey';
-  const statusLower = status.toLowerCase();
-  if (statusLower.includes('completed') || statusLower.includes('delivered')) return 'positive';
-  if (statusLower.includes('preparing') || statusLower.includes('processing')) return 'warning';
-  if (statusLower.includes('cancelled') || statusLower.includes('rejected')) return 'negative';
-  return 'primary';
-};
-
 const formatDate = (dateString: string | undefined): string => {
   if (!dateString) return '';
   const date = new Date(dateString);

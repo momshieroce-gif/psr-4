@@ -189,7 +189,7 @@
       </div>
     </div>
 
-     <!-- Statistics Cards -->
+    <!-- Statistics Cards -->
     <div class="stats-section q-mt-lg">
       <div class="stats-grid">
         <div class="stat-card">
@@ -987,7 +987,6 @@ import { onMounted, ref, watch } from 'vue';
 import { onRequest, firstPage, previousPage, nextPage, lastPage } from 'src/boot/axios-call';
 import { storeToRefs } from 'pinia';
 import { useCommonStore } from 'src/stores/common';
-import { onDeleteEntity } from 'src/boot/services';
 import { StoreUser } from 'src/boot/interfaces';
 
 const useCommon = useCommonStore();
@@ -1007,36 +1006,6 @@ entityQuery.value = {
 };
 
 const typedResult = result as unknown as StoreUser[];
-
-const columns = [
-  {
-    name: 'name',
-    required: true,
-    label: 'Name',
-    align: 'left' as const,
-    field: (v: StoreUser) => v.store?.name,
-    sortable: true
-  },
-  {
-    name: 'mobile',
-    required: true,
-    label: 'Mobile',
-    align: 'left' as const,
-    field: (v: StoreUser) => v.store?.mobile,
-    sortable: true
-  },
-  {
-    name: 'actions',
-    required: true,
-    label: 'Actions',
-    align: 'center' as const,
-    field: ''
-  }
-];
-
-const handleDeleteStore = (store: StoreUser) => {
-  onDeleteEntity('stores', store.optimus_id, store.email);
-};
 
 const handlePageChange = (page: number) => {
   entityQuery.value.query.page = page;

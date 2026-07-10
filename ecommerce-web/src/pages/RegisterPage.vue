@@ -196,7 +196,11 @@ const recaptchaToken = ref('');
 
 declare global {
   interface Window {
-    grecaptcha: any;
+    grecaptcha: {
+      render: (container: string | HTMLElement, options: { sitekey: string; callback: () => void }) => number;
+      execute: (widgetId: number) => Promise<string>;
+      reset: (widgetId?: number) => void;
+    };
   }
 }
 
@@ -207,12 +211,12 @@ const loadRecaptchaScript = () => {
 
   const script = document.createElement('script');
   script.id = 'recaptcha-script';
-  script.src = `https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback`;
+  script.src = 'https://www.google.com/recaptcha/api.js?render=explicit&onload=recaptchaCallback';
   script.async = true;
   script.defer = true;
   document.head.appendChild(script);
 
-  (window as any).recaptchaCallback = renderRecaptcha;
+  (window as Window & { recaptchaCallback?: () => void }).recaptchaCallback = renderRecaptcha;
 };
 
 const renderRecaptcha = () => {

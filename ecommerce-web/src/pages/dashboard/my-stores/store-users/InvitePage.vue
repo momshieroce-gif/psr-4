@@ -67,11 +67,6 @@ const $q = useQuasar();
 const email = ref('');
 const loading = ref(false);
 
-const isValidEmail = (val: string) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(val) || 'Please enter a valid email address';
-};
-
 const handleInvite = async () => {
     if (!email.value) {
         return;
