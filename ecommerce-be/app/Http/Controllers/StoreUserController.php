@@ -38,9 +38,9 @@ class StoreUserController extends ApiController
 
         $storeUser = $service->verifyActivationCode($activationCode);
         if($storeUser){
-            return redirect(config('app.frontend_url') . '/dashboard/my-stores/' . $storeUser->store_optimus_id . '/users?success=1');
+            return redirect(config('app.frontend_url') . '/dashboard/my-stores/' . $storeUser->store_optimus_id . '/store-users?success=1');
         }
-        return redirect(config('app.frontend_url') . 'error-page?success=0');
+        return redirect(config('app.frontend_url') . '/error-page?success=0');
     }
 
     public function getResource(): IndexResource {

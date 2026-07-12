@@ -61,8 +61,6 @@ defineProps({
 
 <style scoped lang="scss">
 .mynearshops-logo {
-    width: 100%;
-    height: 100%;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 </style>
