@@ -61,7 +61,7 @@
             <div class="map-wrap">
               <GoogleMap ref="mapRef" :api-key="GOOGLE_MAP_API_KEY" :map-id="GOOGLE_MAP_ID" class="checkout-map"
                 :center="{ lat: lat, lng: lng }" :zoom="currentZoom" :draggable="false" :clickable-icons="false">
-                <AdvancedMarker :options="getDeliveryMarkerOptions()" @drag="markerDrag">
+                <AdvancedMarker :options="getDeliveryMarkerOptions()">
                   <InfoWindow v-model="showInfoWindow" :options="{
                     position: { lat: lat, lng: lng },
                     headerContent: 'Delivery Location',
@@ -151,9 +151,10 @@
                 </template>
               </q-input>
 
-              <button type="submit" class="complete-btn">
-                <q-icon name="check_circle" size="20px" class="q-mr-sm" />
-                Complete Order
+              <button type="submit" class="complete-btn" :disabled="isSubmitting">
+                <q-spinner v-if="isSubmitting" size="20px" color="white" class="q-mr-sm" />
+                <q-icon v-else name="check_circle" size="20px" class="q-mr-sm" />
+                {{ isSubmitting ? 'Processing...' : 'Complete Order' }}
               </button>
             </q-form>
           </div>
@@ -165,13 +166,13 @@
 </template>
 
 <script lang="ts" setup>
-import { GOOGLE_MAP_API_KEY, GOOGLE_MAP_ID } from 'src/boot/constant';
+import { GOOGLE_MAP_API_KEY, GOOGLE_MAP_ID, DELIVERY_TYPE } from 'src/boot/constant';
 import { GoogleMap, AdvancedMarker, InfoWindow } from 'vue3-google-map';
 import BreadCrumbsWrapper from 'src/components/BreadCrumbsWrapper.vue';
 import { ref, watch, nextTick, onMounted } from 'vue';
 import { useCommonStore } from 'src/stores/common';
 import { storeToRefs } from 'pinia';
-import { create, isMobileExist } from 'src/boot/axios-call';
+import { create, isMobileExist, get } from 'src/boot/axios-call';
 import { isValidMobileNumber } from 'src/boot/validators';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
@@ -193,6 +194,7 @@ const {
   selectedReceiveMethod,
   countTotalItems,
   deliveryCharge,
+  storeIds,
 } = storeToRefs(userCart);
 
 const router = useRouter();
@@ -204,6 +206,7 @@ const mapRef = ref<HTMLElement | null>(null);
 const currentZoom = ref(15);
 const searchLocation = ref('');
 const searchInputRef = ref<HTMLInputElement | null>(null);
+const isSubmitting = ref(false);
 let autocomplete: google.maps.places.Autocomplete | null = null;
 
 // Create animated delivery location marker element
@@ -225,15 +228,9 @@ const createDeliveryMarkerElement = (): HTMLElement => {
 const getDeliveryMarkerOptions = () => {
   return {
     position: { lat: lat.value, lng: lng.value },
-    gmpDraggable: true,
     title: 'Delivery Location',
     content: createDeliveryMarkerElement(),
   };
-};
-
-const markerDrag = (e: { latLng: google.maps.LatLng }) => {
-  lat.value = e.latLng.lat();
-  lng.value = e.latLng.lng();
 };
 
 // Initialize Google Places Autocomplete
@@ -244,6 +241,7 @@ const initAutocomplete = () => {
       autocomplete = new google.maps.places.Autocomplete(inputElement, {
         fields: ['formatted_address', 'geometry', 'name'],
         types: ['geocode', 'establishment'],
+        componentRestrictions: { country: 'PH' },
       });
 
       autocomplete.addListener('place_changed', onPlaceChanged);
@@ -252,7 +250,7 @@ const initAutocomplete = () => {
 };
 
 // Handle place selection from autocomplete
-const onPlaceChanged = () => {
+const onPlaceChanged = async () => {
   if (!autocomplete) return;
 
   const place = autocomplete.getPlace();
@@ -281,6 +279,9 @@ const onPlaceChanged = () => {
     currentZoom.value = 16;
   }
 
+  // Update delivery charge based on new location
+  await updateDeliveryCharge();
+
   $q.notify({
     message: 'Location updated successfully',
     type: 'positive',
@@ -292,6 +293,31 @@ const onPlaceChanged = () => {
 // Clear search input
 const clearSearch = () => {
   searchLocation.value = '';
+};
+
+// Update delivery charge based on location
+const updateDeliveryCharge = async () => {
+  if (selectedReceiveMethod.value === DELIVERY_TYPE.DELIVER) {
+    const result = await get(
+      {
+        entity: 'delivery_charges',
+        query: {
+          type: 'collection',
+          storeIds: storeIds.value.filter((id): id is number => id !== undefined),
+          latitude: lat.value,
+          longitude: lng.value,
+        },
+        message: '',
+      },
+      true
+    );
+    const delivery = (result as any)?.data?.data?.find((v: any) => v);
+    if (delivery) {
+      deliveryCharge.value = delivery.delivery_amount;
+    }
+  } else {
+    deliveryCharge.value = 0;
+  }
 };
 
 // Zoom functions
@@ -467,6 +493,8 @@ watch(mobile, async (currentVal) => {
 
 const storeId = ref(0);
 const processCustomerOrder = async () => {
+  isSubmitting.value = true;
+
   let customerOrders: CustomerOrder[] = [];
   Object.entries(groupByStore.value as unknown as Record<string, GroupStoreItemInterface[]>).forEach(
     ([key, items]) => {
@@ -506,6 +534,9 @@ const processCustomerOrder = async () => {
     },
     false
   );
+
+  isSubmitting.value = false;
+
   if (result) {
     userCart.emptyCart();
     router.push({

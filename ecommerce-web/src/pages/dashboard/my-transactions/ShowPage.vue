@@ -6,6 +6,9 @@
       <div class="hero-accent"></div>
       <div class="hero-body">
         <div class="hero-left">
+          <q-btn flat round dense icon="arrow_back" @click="$router.back()" class="back-btn">
+            <q-tooltip>Back</q-tooltip>
+          </q-btn>
           <div class="hero-icon-wrap">
             <q-icon name="receipt_long" size="26px" color="white" />
           </div>
@@ -14,7 +17,6 @@
             <div class="hero-sub">View complete transaction information</div>
           </div>
         </div>
-        <q-btn flat class="back-btn" icon="arrow_back" label="Back" @click="$router.back()" />
       </div>
     </div>
 
@@ -70,13 +72,6 @@
                     <div class="info-value">{{ localResult.receivers_mobile || 'N/A' }}</div>
                   </div>
                 </div>
-                <div class="info-row" v-if="localResult.lat && localResult.lng">
-                  <div class="info-icon-wrap"><q-icon name="location_on" size="18px" /></div>
-                  <div>
-                    <div class="info-label">Location</div>
-                    <div class="info-value">{{ localResult.lat }}, {{ localResult.lng }}</div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -105,6 +100,36 @@
               </div>
             </div>
           </div>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <!-- Location Map Section -->
+    <q-card flat class="detail-card q-mb-xl" v-if="localResult.lat && localResult.lng">
+      <q-card-section class="detail-card-header">
+        <div class="ref-row">
+          <div>
+            <div class="ref-id">
+              <q-icon name="location_on" size="18px" class="q-mr-xs" />
+              Delivery Location
+            </div>
+            <div class="ref-date">
+              <q-icon name="calendar_today" size="13px" class="q-mr-xs" />
+              {{ localResult.lat }}, {{ localResult.lng }}
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+
+      <div class="card-divider"></div>
+
+      <q-card-section class="detail-grid-section">
+        <div class="map-full-container">
+          <GoogleMap :api-key="GOOGLE_MAP_API_KEY" :map-id="GOOGLE_MAP_ID" class="detail-map-full"
+            :center="{ lat: Number(localResult.lat), lng: Number(localResult.lng) }" :zoom="15" :draggable="false"
+            :clickable-icons="false">
+            <AdvancedMarker :options="{ position: { lat: Number(localResult.lat), lng: Number(localResult.lng) } }" />
+          </GoogleMap>
         </div>
       </q-card-section>
     </q-card>
@@ -186,6 +211,8 @@
 import { show } from 'src/boot/axios-call';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { GoogleMap, AdvancedMarker } from 'vue3-google-map';
+import { GOOGLE_MAP_API_KEY, GOOGLE_MAP_ID } from 'src/boot/constant';
 
 interface OrderItem {
   id: number;
@@ -474,6 +501,18 @@ $muted: rgba(255, 255, 255, 0.5);
     border-bottom: none;
     padding-bottom: 0;
   }
+}
+
+.map-full-container {
+  width: 100%;
+}
+
+.detail-map-full {
+  width: 100%;
+  height: 350px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid $border;
 }
 
 .info-icon-wrap {
