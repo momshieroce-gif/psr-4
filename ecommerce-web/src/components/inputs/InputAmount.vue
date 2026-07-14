@@ -1,20 +1,10 @@
 <template>
-  <q-input
-    type="text"
-    :label="label"
-    prefix="₱"
-    v-model="displayValue"
-    @blur="isInputActive = false"
-    @focus="isInputActive = true"
-    :disable="disabled"
-    outlined
-    dense
-    bottom-slots
-  ></q-input>
+  <q-input type="text" :label="label" :prefix="prefix" v-model="displayValue" @blur="isInputActive = false"
+    @focus="isInputActive = true" :disable="disabled" outlined dense bottom-slots></q-input>
 </template>
 
 <script lang="ts" setup>
-import {ref, computed} from 'vue'
+import { ref, computed } from 'vue'
 const props = defineProps({
   value: {
     type: [String, Number],
@@ -22,6 +12,10 @@ const props = defineProps({
   },
   label: String,
   disabled: Boolean,
+  prefix: {
+    type: String,
+    default: ''
+  }
 });
 
 const isInputActive = ref(false);

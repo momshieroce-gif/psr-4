@@ -777,19 +777,27 @@ $muted-2: rgba(255, 255, 255, 0.3);
 .dark-input {
   :deep(.q-field__control) {
     background: $dark-elevated !important;
-    border-color: $border !important;
-    border-radius: 12px !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    border-radius: 10px !important;
     color: $white !important;
     transition: all 0.2s ease;
   }
 
   :deep(.q-field__control:hover) {
-    border-color: $border-strong !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+  }
+
+  :deep(.q-field__control::before) {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  :deep(.q-field--focused .q-field__control::before) {
+    border-color: rgba(99, 102, 241, 0.6) !important;
   }
 
   :deep(.q-field--focused .q-field__control) {
-    border-color: rgba($accent, 0.5) !important;
-    box-shadow: 0 0 0 3px rgba($accent, 0.1);
+    border-color: rgba(99, 102, 241, 0.6) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
   }
 
   :deep(.q-field__native) {

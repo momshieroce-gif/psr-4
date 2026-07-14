@@ -6,6 +6,9 @@
       <div class="hero-accent"></div>
       <div class="hero-body">
         <div class="hero-left">
+          <q-btn flat round dense icon="arrow_back" @click="$router.back()" class="back-btn">
+            <q-tooltip>Back</q-tooltip>
+          </q-btn>
           <div class="hero-icon-wrap">
             <q-icon name="manage_accounts" size="26px" color="white" />
           </div>
@@ -14,7 +17,6 @@
             <div class="hero-sub">Manage roles for this user</div>
           </div>
         </div>
-        <q-btn flat class="back-btn" icon="arrow_back" label="Back" @click="$router.back()" />
       </div>
     </div>
 

@@ -163,20 +163,19 @@ const store = ref<Partial<StoreInterface>>({
 });
 
 const search = ref('');
-onBeforeMount(async () => {
-  result.value = [];
+
+onMounted(async () => {
   store.value = await show({
     entity: 'shared-store-access',
     optimus_id: Number(route.params.id),
   });
-  await requestItems();
-  getCategories();
-});
-
-onMounted(() => {
   result.value = [];
   entityQuery.value.query.page = 1;
+  await requestItems();
+
   onRequest(entityQuery.value, true);
+  getCategories();
+
 });
 
 const categories = ref<CategoryInterface[]>([]);
