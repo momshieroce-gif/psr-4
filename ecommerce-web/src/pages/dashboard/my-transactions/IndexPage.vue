@@ -2,55 +2,28 @@
   <div class="tx-page">
 
     <!-- Hero Header -->
-    <div class="page-hero q-mb-xl">
+    <div class="page-hero q-mb-lg">
       <div class="hero-accent-overlay"></div>
       <div class="hero-inner">
         <div class="hero-icon-wrap">
-          <q-icon name="receipt_long" size="28px" color="white" />
+          <q-icon name="receipt_long" size="26px" color="white" />
         </div>
-        <div class="hero-text">
-          <h1 class="hero-title">My Transactions</h1>
+        <div>
+          <h2 class="hero-title">My Transactions</h2>
           <div class="hero-subtitle">Track and manage your orders</div>
         </div>
       </div>
       <div class="hero-controls">
-        <div class="search-wrap">
-          <q-icon name="search" size="20px" class="search-icon" />
-          <input v-model="search" type="text" placeholder="Search transactions..." class="dark-search" />
-        </div>
+        <q-input v-model="search" placeholder="Search transactions..." outlined dense clearable debounce="1000"
+          class="search-input" dark>
+          <template v-slot:prepend>
+            <q-icon name="search" color="grey-5" />
+          </template>
+        </q-input>
       </div>
     </div>
 
-    <!-- Stats Row -->
-    <div class="stats-row q-mb-lg">
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-indigo">
-          <q-icon name="receipt_long" size="20px" color="white" />
-        </div>
-        <div>
-          <div class="stat-value">{{ typedResult.length }}</div>
-          <div class="stat-label">On this page</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-blue">
-          <q-icon name="data_usage" size="20px" color="white" />
-        </div>
-        <div>
-          <div class="stat-value">{{ pagination.rowsNumber }}</div>
-          <div class="stat-label">Total records</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-green">
-          <q-icon name="menu_book" size="20px" color="white" />
-        </div>
-        <div>
-          <div class="stat-value">{{ pagination.page }} / {{ pagination.lastPage }}</div>
-          <div class="stat-label">Current page</div>
-        </div>
-      </div>
-    </div>
+
 
     <!-- Desktop Table -->
     <div class="desktop-only">
@@ -219,6 +192,37 @@
       </div>
     </div>
 
+    <!-- Stats Row -->
+    <div class="stats-row q-mt-lg">
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-indigo">
+          <q-icon name="receipt_long" size="20px" color="white" />
+        </div>
+        <div>
+          <div class="stat-value">{{ typedResult.length }}</div>
+          <div class="stat-label">On this page</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-blue">
+          <q-icon name="data_usage" size="20px" color="white" />
+        </div>
+        <div>
+          <div class="stat-value">{{ pagination.rowsNumber }}</div>
+          <div class="stat-label">Total records</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-green">
+          <q-icon name="menu_book" size="20px" color="white" />
+        </div>
+        <div>
+          <div class="stat-value">{{ pagination.page }} / {{ pagination.lastPage }}</div>
+          <div class="stat-label">Current page</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 <script setup lang="ts">
@@ -357,6 +361,10 @@ $muted-2: rgba(255, 255, 255, 0.3);
   border: 1px solid $border;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .hero-accent-overlay {
@@ -371,7 +379,8 @@ $muted-2: rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 32px 36px 0;
+  padding: 28px 32px;
+  flex: 1;
 }
 
 .hero-icon-wrap {
@@ -406,8 +415,12 @@ $muted-2: rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 20px 36px 28px;
-  flex-wrap: wrap;
+  padding: 28px 32px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 300px;
 }
 
 // ── Search ────────────────────────────────────────────────────────────────────
@@ -452,8 +465,8 @@ $muted-2: rgba(255, 255, 255, 0.3);
 // ── Stats ─────────────────────────────────────────────────────────────────────
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
 }
 
 .stat-card {
@@ -929,44 +942,46 @@ $muted-2: rgba(255, 255, 255, 0.3);
     padding: 16px 12px 48px;
   }
 
+  .page-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .hero-inner {
-    padding: 24px 20px 0;
-    flex-wrap: wrap;
+    padding: 24px 20px;
+    gap: 12px;
+  }
+
+  .hero-controls {
+    padding: 0 20px 24px;
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
   }
 
   .hero-title {
     font-size: 22px;
   }
+}
 
-  .hero-controls {
-    padding: 16px 20px 24px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
+.search-wrap {
+  max-width: 100%;
+  min-width: 0;
+}
 
-  .search-wrap {
-    max-width: 100%;
-    min-width: 0;
-  }
+.m-card-actions {
+  padding: 0 16px 16px;
+  gap: 8px;
+}
 
-  .stats-row {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
+.m-card-top {
+  padding: 16px 16px 12px;
+}
 
-  .m-card-actions {
-    padding: 0 16px 16px;
-    gap: 8px;
-  }
-
-  .m-card-top {
-    padding: 16px 16px 12px;
-  }
-
-  .m-card-detail {
-    padding: 0 16px 10px;
-  }
+.m-card-detail {
+  padding: 0 16px 10px;
 }
 
 @media (max-width: 600px) {
