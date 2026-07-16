@@ -24,192 +24,13 @@
       </div>
     </div>
 
-    <!-- Stats Row -->
-    <div class="stats-section q-mb-lg">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon-wrap transactions-icon">
-            <q-icon name="receipt_long" size="24px" color="white" />
-          </div>
-          <div class="stat-content">
-            <div class="stat-number">{{ typedResult.length }}</div>
-            <div class="stat-label">Transactions</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon-wrap page-icon">
-            <q-icon name="auto_stories" size="24px" color="white" />
-          </div>
-          <div class="stat-content">
-            <div class="stat-number">{{ pagination.page }}/{{ pagination.lastPage || 1 }}</div>
-            <div class="stat-label">Current Page</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon-wrap total-icon">
-            <q-icon name="database" size="24px" color="white" />
-          </div>
-          <div class="stat-content">
-            <div class="stat-number">{{ pagination.rowsNumber || 0 }}</div>
-            <div class="stat-label">Total Records</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Desktop Table View -->
-    <div class="desktop-only">
-      <!-- Empty State -->
-      <div v-if="typedResult.length === 0" class="empty-state-section">
-        <div class="empty-card">
-          <div class="empty-icon-wrap">
-            <q-icon name="receipt_long" size="64px" color="white" />
-          </div>
-          <div class="empty-title">No transactions found</div>
-          <div class="empty-subtitle">Your transaction history will appear here</div>
-        </div>
-      </div>
-
-      <!-- Transactions Table -->
-      <div v-else class="table-section">
-        <table class="txn-table">
-          <thead>
-            <tr>
-              <th class="th-cell">Reference</th>
-              <th class="th-cell">Status</th>
-              <th class="th-cell">Summary</th>
-              <th class="th-cell th-actions">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="txn in typedResult" :key="txn.optimus_id" class="txn-row">
-              <td class="td-cell">
-                <router-link :to="`${$route.path}/${txn.optimus_id}`" class="ref-link">
-                  <div class="ref-id">#{{ txn.reference_id }}</div>
-                  <div class="ref-date">
-                    <q-icon name="calendar_today" size="12px" class="q-mr-xs" />
-                    {{ formatDate(txn.created_at) }}
-                  </div>
-                </router-link>
-              </td>
-              <td class="td-cell">
-                <span :class="['status-pill', `status-${getStatusKey(txn.status?.label)}`]">
-                  {{ txn.status?.label || 'Pending' }}
-                </span>
-              </td>
-              <td class="td-cell">
-                <div class="summary-cell">
-                  <div class="summary-total">{{ formatMoney(txn.grand_total) }}</div>
-                  <div class="summary-meta">
-                    <span class="meta-tag">
-                      <q-icon name="payment" size="14px" class="q-mr-xs" />
-                      {{ txn.payment_method?.name || 'N/A' }}
-                    </span>
-                    <span class="meta-tag">
-                      <q-icon name="local_shipping" size="14px" class="q-mr-xs" />
-                      {{ txn.receive_method?.name || 'N/A' }}
-                    </span>
-                  </div>
-                </div>
-              </td>
-              <td class="td-cell">
-                <div class="actions-cell">
-                  <q-btn unelevated dense no-caps icon="visibility" label="View"
-                    :to="`${$route.path}/${txn.optimus_id}`" class="action-btn view-btn" />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Pagination -->
-        <div class="pagination-bar">
-          <span class="pagination-text">
-            Showing {{ pagination.from || 1 }}-{{ pagination.to || typedResult.length }}
-            of {{ pagination.rowsNumber || typedResult.length }}
-          </span>
-          <div class="pagination-controls">
-            <q-btn v-if="pagination.lastPage > 2" flat round dense icon="first_page" :disable="pagination.page === 1"
-              @click="goToFirstPage" class="pg-btn" />
-            <q-btn flat round dense icon="chevron_left" :disable="pagination.page === 1" @click="goToPreviousPage"
-              class="pg-btn" />
-            <div class="page-indicator">
-              <span class="current-pg">{{ pagination.page }}</span>
-              <span class="pg-sep">/</span>
-              <span class="total-pg">{{ pagination.lastPage }}</span>
-            </div>
-            <q-btn flat round dense icon="chevron_right" :disable="pagination.page === pagination.lastPage"
-              @click="goToNextPage" class="pg-btn" />
-            <q-btn v-if="pagination.lastPage > 2" flat round dense icon="last_page"
-              :disable="pagination.page === pagination.lastPage" @click="goToLastPage" class="pg-btn" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile Card View -->
-    <div class="mobile-only">
-      <!-- Empty State -->
-      <div v-if="typedResult.length === 0" class="empty-state-mobile">
-        <div class="empty-icon-mobile">
-          <q-icon name="receipt_long" size="48px" color="white" />
-        </div>
-        <div class="empty-title-mobile">No transactions found</div>
-        <div class="empty-subtitle-mobile">Your transaction history will appear here</div>
-      </div>
-
-      <!-- Transaction Cards -->
-      <div v-else class="cards-mobile">
-        <q-card v-for="txn in typedResult" :key="txn.optimus_id" flat class="txn-card q-mb-md">
-          <q-card-section class="txn-card-top">
-            <div class="txn-card-header">
-              <div class="txn-avatar">
-                <q-icon name="receipt_long" size="20px" color="white" />
-              </div>
-              <div class="txn-card-ref">
-                <div class="txn-card-id">#{{ txn.reference_id }}</div>
-                <div class="txn-card-date">{{ formatDate(txn.created_at) }}</div>
-              </div>
-              <span :class="['status-pill', `status-${getStatusKey(txn.status?.label)}`]">
-                {{ txn.status?.label || 'Pending' }}
-              </span>
-            </div>
-          </q-card-section>
-
-          <q-separator class="txn-divider" />
-
-          <q-card-section class="txn-card-body">
-            <div class="detail-row">
-              <span class="detail-label">Grand Total</span>
-              <span class="detail-value highlight">{{ txn.grand_total }}</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Payment</span>
-              <span class="detail-value">{{ txn.payment_method?.name || 'N/A' }}</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Receiving</span>
-              <span class="detail-value">{{ txn.receive_method?.name || 'N/A' }}</span>
-            </div>
-          </q-card-section>
-
-          <q-separator class="txn-divider" />
-
-          <q-card-actions class="txn-card-actions">
-            <q-btn unelevated icon="check_circle" label="Received" :to="`${$route.path}/${txn.optimus_id}`"
-              class="mobile-btn received-btn" />
-            <q-btn unelevated icon="visibility" label="View" :to="`${$route.path}/${txn.optimus_id}`"
-              class="mobile-btn view-btn-mobile" />
-          </q-card-actions>
-        </q-card>
-      </div>
-
-      <!-- Mobile Pagination -->
-      <div v-if="typedResult.length > 0" class="mobile-pagination">
-        <q-pagination v-model="pagination.page" :max="pagination.lastPage" :max-pages="5" direction-links boundary-links
-          color="primary" @update:model-value="handlePageChange" />
-      </div>
-    </div>
+    <!-- Transaction Table -->
+    <TransactionTable :transactions="typedResult" :pagination="pagination" :route-path="$route.path"
+      empty-subtitle="Your transaction history will appear here" :show-received-button="false" :format-date="formatDate"
+      :format-money="formatMoney" :get-status-color="getStatusColor" :on-mark-as-received="() => { }"
+      :on-go-to-first-page="goToFirstPage" :on-go-to-previous-page="goToPreviousPage" :on-go-to-next-page="goToNextPage"
+      :on-go-to-last-page="goToLastPage" />
   </div>
 </template>
 <script setup lang="ts">
@@ -219,6 +40,7 @@ import { onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { CustomerTransactionRow } from 'src/boot/interfaces';
 import { formatMoney } from 'src/boot/utilities';
+import TransactionTable from 'src/components/TransactionTable.vue';
 
 const search = ref('');
 const useCommon = useCommonStore();
@@ -295,6 +117,14 @@ const getStatusKey = (status: string | undefined): string => {
   if (s.includes('preparing') || s.includes('processing')) return 'warning';
   if (s.includes('cancelled') || s.includes('rejected') || s.includes('refund')) return 'danger';
   return 'default';
+};
+
+const getStatusColor = (status: string | undefined): string => {
+  const key = getStatusKey(status);
+  if (key === 'success') return 'positive';
+  if (key === 'warning') return 'warning';
+  if (key === 'danger') return 'negative';
+  return 'grey';
 };
 </script>
 

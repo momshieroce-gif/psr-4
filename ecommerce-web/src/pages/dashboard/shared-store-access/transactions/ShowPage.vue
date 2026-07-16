@@ -36,135 +36,9 @@
 
     <!-- Main Content -->
     <div class="txn-body">
-
-      <!-- Info Cards Grid -->
-      <div class="info-grid">
-
-        <!-- Transaction Info Card -->
-        <div class="info-card">
-          <div class="info-card-accent"></div>
-          <div class="info-card-header">
-            <div class="info-card-icon">
-              <q-icon name="info" size="20px" color="white" />
-            </div>
-            <span class="info-card-title">Transaction Info</span>
-          </div>
-          <div class="info-card-body">
-            <div class="info-row">
-              <div class="info-row-icon"><q-icon name="calendar_today" size="16px" /></div>
-              <div class="info-row-content">
-                <span class="info-row-label">Date</span>
-                <span class="info-row-value">{{ localResult.created_at }}</span>
-              </div>
-            </div>
-            <div class="info-row">
-              <div class="info-row-icon"><q-icon name="payment" size="16px" /></div>
-              <div class="info-row-content">
-                <span class="info-row-label">Payment Method</span>
-                <span class="info-row-value">{{ localResult.payment_method?.name || 'N/A' }}</span>
-              </div>
-            </div>
-            <div class="info-row">
-              <div class="info-row-icon"><q-icon name="local_shipping" size="16px" /></div>
-              <div class="info-row-content">
-                <span class="info-row-label">Receive Method</span>
-                <span class="info-row-value">{{ localResult.receive_method?.name || 'N/A' }}</span>
-              </div>
-            </div>
-            <div class="info-row">
-              <div class="info-row-icon"><q-icon name="phone" size="16px" /></div>
-              <div class="info-row-content">
-                <span class="info-row-label">Contact</span>
-                <span class="info-row-value">{{ localResult.contact_number || 'N/A' }}</span>
-              </div>
-            </div>
-            <div class="info-row" v-if="localResult.lat && localResult.lng">
-              <div class="info-row-icon"><q-icon name="location_on" size="16px" /></div>
-              <div class="info-row-content">
-                <span class="info-row-label">Location</span>
-                <span class="info-row-value">{{ localResult.lat }}, {{ localResult.lng }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Pricing Card -->
-        <div class="info-card">
-          <div class="info-card-accent info-card-accent--green"></div>
-          <div class="info-card-header">
-            <div class="info-card-icon info-card-icon--green">
-              <q-icon name="account_balance_wallet" size="20px" color="white" />
-            </div>
-            <span class="info-card-title">Pricing Summary</span>
-          </div>
-          <div class="info-card-body">
-            <div class="price-row">
-              <span class="price-label">Subtotal</span>
-              <span class="price-value">₱{{ formatCurrency(localResult.total) }}</span>
-            </div>
-            <div class="price-row">
-              <span class="price-label">Delivery Charge</span>
-              <span class="price-value">₱{{ localResult.delivery_charge || '0.00' }}</span>
-            </div>
-            <div class="price-divider"></div>
-            <div class="price-row price-row--total">
-              <span class="price-label">Grand Total</span>
-              <span class="price-value">₱{{ formatCurrency(localResult.grand_total) }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Orders Section -->
-      <div class="orders-section" v-if="localResult.orders && localResult.orders.length > 0">
-        <div class="orders-header">
-          <div class="orders-header-icon">
-            <q-icon name="shopping_bag" size="20px" color="white" />
-          </div>
-          <div>
-            <h2 class="orders-title">Order Items</h2>
-            <p class="orders-subtitle">{{ localResult.orders.length }} item{{ localResult.orders.length > 1 ? 's' : ''
-            }} in
-              this transaction</p>
-          </div>
-        </div>
-
-        <div class="orders-list">
-          <div v-for="(order, index) in localResult.orders" :key="order.id || index" class="order-card">
-            <div class="order-card-top">
-              <div class="order-badge">{{ index + 1 }}</div>
-              <div class="order-name-wrap">
-                <a v-if="order.store" :href="`/public_stores/${order.store.optimus_id}/item/${order.optimus_item}`"
-                  target="_blank" class="order-item-link">
-                  {{ order.item_name }}
-                </a>
-                <span v-else class="order-item-name">{{ order.item_name }}</span>
-                <span class="order-item-desc" v-if="order.item_description">{{ order.item_description }}</span>
-              </div>
-              <a v-if="order.store" :href="`/public_stores/${order.store.optimus_id}`" target="_blank"
-                class="order-store-chip">
-                <q-icon name="storefront" size="12px" />
-                {{ order.store.name }}
-              </a>
-            </div>
-            <div class="order-card-bottom">
-              <div class="order-metric">
-                <span class="order-metric-label">Qty</span>
-                <span class="order-metric-value">{{ order.qty }}</span>
-              </div>
-              <div class="order-metric">
-                <span class="order-metric-label">Price</span>
-                <span class="order-metric-value">₱{{ formatCurrency(order.online_price) }}</span>
-              </div>
-              <div class="order-metric order-metric--highlight">
-                <span class="order-metric-label">Subtotal</span>
-                <span class="order-metric-value">₱{{ formatCurrency(order.subtotal) }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <!-- Transaction Detail -->
+      <TransactionDetail :transaction="localResult" :show-map="true" :google-map-api-key="GOOGLE_MAP_API_KEY"
+        :google-map-id="GOOGLE_MAP_ID" :format-currency="formatCurrency" :get-status-color="getStatusColor" />
     </div>
   </div>
 </template>
@@ -174,6 +48,8 @@ import { show, get, update } from 'src/boot/axios-call';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import type { AxiosResponse } from 'axios';
+import TransactionDetail from 'src/components/TransactionDetail.vue';
+import { GOOGLE_MAP_API_KEY, GOOGLE_MAP_ID } from 'src/boot/constant';
 
 interface OrderItem {
   id: number;
@@ -314,6 +190,15 @@ const formatCurrency = (amount: number | string): string => {
     return parseFloat(amount).toFixed(2);
   }
   return amount.toFixed(2);
+};
+
+const getStatusColor = (status: string | undefined): string => {
+  if (!status) return 'grey';
+  const statusLower = status.toLowerCase();
+  if (statusLower.includes('completed') || statusLower.includes('delivered')) return 'positive';
+  if (statusLower.includes('preparing') || statusLower.includes('processing')) return 'warning';
+  if (statusLower.includes('cancelled') || statusLower.includes('rejected')) return 'negative';
+  return 'primary';
 };
 </script>
 

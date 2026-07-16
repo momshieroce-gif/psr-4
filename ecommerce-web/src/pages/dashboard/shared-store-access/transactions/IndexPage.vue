@@ -2,7 +2,7 @@
   <div class="txn-page-container">
 
     <!-- Hero Header -->
-    <div class="page-hero q-mb-xl">
+    <div class="page-hero q-mb-lg">
       <div class="hero-accent-overlay"></div>
       <div class="hero-inner">
         <div class="hero-left">
@@ -27,192 +27,13 @@
       </div>
     </div>
 
-    <!-- Stats Row -->
-    <div class="stats-row q-mb-lg">
-      <div class="stat-chip">
-        <q-icon name="receipt_long" size="18px" class="stat-chip-icon" />
-        <span class="stat-chip-value">{{ pagination.rowsNumber || typedResult.length }}</span>
-        <span class="stat-chip-label">Total</span>
-      </div>
-      <div class="stat-chip stat-chip--green">
-        <q-icon name="check_circle" size="18px" class="stat-chip-icon" />
-        <span class="stat-chip-value">{{typedResult.filter(t => t.status?.label?.toLowerCase().includes('complet') ||
-          t.status?.label?.toLowerCase().includes('deliver')).length}}</span>
-        <span class="stat-chip-label">Completed</span>
-      </div>
-      <div class="stat-chip stat-chip--yellow">
-        <q-icon name="pending" size="18px" class="stat-chip-icon" />
-        <span class="stat-chip-value">{{typedResult.filter(t => t.status?.label?.toLowerCase().includes('prepar') ||
-          t.status?.label?.toLowerCase().includes('process')).length}}</span>
-        <span class="stat-chip-label">Processing</span>
-      </div>
-    </div>
-
-    <!-- Desktop Table View -->
-    <div class="desktop-only">
-      <div v-if="typedResult.length === 0" class="empty-state-desktop">
-        <div class="empty-icon-wrap">
-          <q-icon name="receipt_long" size="48px" color="white" />
-        </div>
-        <div class="empty-title q-mt-md">No transactions found</div>
-        <div class="empty-subtitle q-mt-sm">Transaction history will appear here</div>
-      </div>
-
-      <div v-else class="table-section">
-        <table class="txn-table">
-          <thead>
-            <tr>
-              <th>Reference</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Grand Total</th>
-              <th>Payment</th>
-              <th>Delivery</th>
-              <th style="text-align:right;">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="transaction in typedResult" :key="transaction.optimus_id" class="txn-row">
-              <td>
-                <div class="ref-cell">
-                  <div class="ref-icon-wrap">
-                    <q-icon name="receipt" size="16px" color="white" />
-                  </div>
-                  <div>
-                    <router-link :to="`${$route.path}/${transaction.optimus_id}`" class="ref-link">
-                      #{{ transaction.reference_id }}
-                    </router-link>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="date-cell">
-                  <q-icon name="calendar_today" size="13px" class="date-icon" />
-                  {{ formatDate(transaction.created_at) }}
-                </div>
-              </td>
-              <td>
-                <span :class="['status-pill', `status-pill--${getStatusKey(transaction.status?.label)}`]">
-                  {{ transaction.status?.label || 'Pending' }}
-                </span>
-              </td>
-              <td>
-                <span class="total-value">{{ formatMoney(transaction.grand_total) }}</span>
-              </td>
-              <td>
-                <div class="meta-cell">
-                  <q-icon name="payment" size="13px" class="meta-icon" />
-                  {{ transaction.payment_method?.name || 'N/A' }}
-                </div>
-              </td>
-              <td>
-                <div class="meta-cell">
-                  <q-icon name="local_shipping" size="13px" class="meta-icon" />
-                  {{ transaction.receive_method?.name || 'N/A' }}
-                </div>
-              </td>
-              <td>
-                <div class="action-buttons">
-                  <q-btn unelevated dense icon="view_list" :to="`${$route.path}/${transaction.optimus_id}`" size="md"
-                    class="tbl-btn tbl-btn--indigo">
-                    <q-tooltip>View details</q-tooltip>
-                  </q-btn>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Pagination -->
-        <div class="table-pagination">
-          <div class="pagination-info">
-            Showing {{ pagination.from || 1 }}&ndash;{{ pagination.to || typedResult.length }}
-            of {{ pagination.rowsNumber || typedResult.length }} transactions
-          </div>
-          <div class="pagination-controls">
-            <q-btn v-if="pagination.lastPage > 2" flat round dense icon="first_page" :disable="pagination.page === 1"
-              @click="goToFirstPage" class="pagination-btn" />
-            <q-btn flat round dense icon="chevron_left" :disable="pagination.page === 1" @click="goToPreviousPage"
-              class="pagination-btn" />
-            <span class="page-number">{{ pagination.page }} / {{ pagination.lastPage }}</span>
-            <q-btn flat round dense icon="chevron_right" :disable="pagination.page === pagination.lastPage"
-              @click="goToNextPage" class="pagination-btn" />
-            <q-btn v-if="pagination.lastPage > 2" flat round dense icon="last_page"
-              :disable="pagination.page === pagination.lastPage" @click="goToLastPage" class="pagination-btn" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile Card View -->
-    <div class="mobile-only">
-      <div v-if="typedResult.length === 0" class="empty-state">
-        <div class="empty-icon-wrap">
-          <q-icon name="receipt_long" size="40px" color="white" />
-        </div>
-        <div class="empty-title q-mt-md">No transactions found</div>
-      </div>
-
-      <div v-else class="txn-cards">
-        <div v-for="transaction in typedResult" :key="transaction.optimus_id" class="txn-card q-mb-sm">
-          <div class="mobile-card-accent"></div>
-          <div class="mobile-card-body">
-            <!-- Card Header -->
-            <div class="txn-card-header">
-              <div class="txn-card-title">
-                <div class="ref-icon-wrap-sm">
-                  <q-icon name="receipt" size="14px" color="white" />
-                </div>
-                <router-link :to="`${$route.path}/${transaction.optimus_id}`" class="ref-link">
-                  #{{ transaction.reference_id }}
-                </router-link>
-              </div>
-              <span :class="['status-pill', `status-pill--${getStatusKey(transaction.status?.label)}`]">
-                {{ transaction.status?.label || 'Pending' }}
-              </span>
-            </div>
-
-            <!-- Date -->
-            <div class="txn-card-date">
-              <q-icon name="calendar_today" size="12px" class="date-icon" />
-              {{ formatDate(transaction.created_at) }}
-            </div>
-
-            <!-- Details -->
-            <div class="txn-card-details">
-              <div class="detail-row">
-                <span class="detail-label">Grand Total</span>
-                <span class="detail-value total-value">{{ formatMoney(transaction.grand_total) }}</span>
-              </div>
-              <div class="detail-row">
-                <span class="detail-label">
-                  <q-icon name="payment" size="12px" class="q-mr-xs" />Payment
-                </span>
-                <span class="detail-value">{{ transaction.payment_method?.name || 'N/A' }}</span>
-              </div>
-              <div class="detail-row">
-                <span class="detail-label">
-                  <q-icon name="local_shipping" size="12px" class="q-mr-xs" />Delivery
-                </span>
-                <span class="detail-value">{{ transaction.receive_method?.name || 'N/A' }}</span>
-              </div>
-            </div>
-
-            <!-- Actions -->
-            <div class="txn-card-actions">
-              <q-btn unelevated dense icon="view_list" label="View Details"
-                :to="`${$route.path}/${transaction.optimus_id}`" class="action-btn-mobile action-btn-mobile--indigo" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="typedResult.length > 0" class="mobile-pagination q-mt-md">
-        <q-pagination v-model="pagination.page" :max="pagination.lastPage" :max-pages="5" direction-links boundary-links
-          color="primary" @update:model-value="handlePageChange" />
-      </div>
-    </div>
-
+    <!-- Transaction Table -->
+    <TransactionTable :transactions="typedResult" :pagination="pagination" :route-path="$route.path"
+      empty-subtitle="Transaction history will appear here" :show-received-button="false" :format-date="formatDate"
+      :format-money="formatMoney" :get-status-color="getStatusColor" :on-mark-as-received="() => { }"
+      :on-go-to-first-page="goToFirstPage" :on-go-to-previous-page="goToPreviousPage" :on-go-to-next-page="goToNextPage"
+      :on-go-to-last-page="goToLastPage" />
+    
   </div>
 </template>
 <script setup lang="ts">
@@ -223,6 +44,7 @@ import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { CustomerTransactionRow } from 'src/boot/interfaces';
 import { formatMoney } from 'src/boot/utilities';
+import TransactionTable from 'src/components/TransactionTable.vue';
 
 const router = useRouter();
 const search = ref('');
@@ -300,6 +122,14 @@ const getStatusKey = (status: string | undefined): string => {
   if (s.includes('prepar') || s.includes('process')) return 'yellow';
   if (s.includes('cancel') || s.includes('reject')) return 'red';
   return 'default';
+};
+
+const getStatusColor = (status: string | undefined): string => {
+  const key = getStatusKey(status);
+  if (key === 'green') return 'completed';
+  if (key === 'yellow') return 'preparing';
+  if (key === 'red') return 'cancelled';
+  return 'grey';
 };
 </script>
 

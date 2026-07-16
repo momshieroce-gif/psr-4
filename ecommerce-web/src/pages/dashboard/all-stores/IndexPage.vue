@@ -2,7 +2,7 @@
   <div class="stores-page">
 
     <!-- Hero Header -->
-    <div class="page-hero q-mb-xl">
+    <div class="page-hero q-mb-lg">
       <div class="hero-accent-overlay"></div>
       <div class="hero-inner">
         <div class="hero-icon-wrap">
@@ -24,37 +24,6 @@
         <div class="search-wrap">
           <q-icon name="search" size="20px" class="search-icon" />
           <input v-model="search" type="text" placeholder="Search stores..." class="dark-search" />
-        </div>
-      </div>
-    </div>
-
-    <!-- Stats Row -->
-    <div class="stats-row q-mb-lg">
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-indigo">
-          <q-icon name="store" size="20px" color="white" />
-        </div>
-        <div>
-          <div class="stat-value">{{ typedResult.length }}</div>
-          <div class="stat-label">Stores on page</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-blue">
-          <q-icon name="data_usage" size="20px" color="white" />
-        </div>
-        <div>
-          <div class="stat-value">{{ pagination.rowsNumber }}</div>
-          <div class="stat-label">Total records</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-green">
-          <q-icon name="menu_book" size="20px" color="white" />
-        </div>
-        <div>
-          <div class="stat-value">{{ pagination.page }} / {{ pagination.lastPage }}</div>
-          <div class="stat-label">Current page</div>
         </div>
       </div>
     </div>
@@ -215,6 +184,37 @@
         </div>
         <div class="pagination-info">
           Showing {{ pagination.from }}&ndash;{{ pagination.to }} of {{ pagination.rowsNumber }} stores
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row q-mt-lg">
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-indigo">
+          <q-icon name="store" size="20px" color="white" />
+        </div>
+        <div>
+          <div class="stat-value">{{ typedResult.length }}</div>
+          <div class="stat-label">Stores on page</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-blue">
+          <q-icon name="data_usage" size="20px" color="white" />
+        </div>
+        <div>
+          <div class="stat-value">{{ pagination.rowsNumber }}</div>
+          <div class="stat-label">Total records</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-green">
+          <q-icon name="menu_book" size="20px" color="white" />
+        </div>
+        <div>
+          <div class="stat-value">{{ pagination.page }} / {{ pagination.lastPage }}</div>
+          <div class="stat-label">Current page</div>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
   <div class="delivery-page-container">
 
     <!-- Hero Header -->
-    <div class="page-hero q-mb-xl">
+    <div class="page-hero q-mb-lg">
       <div class="hero-accent-overlay"></div>
       <div class="hero-inner">
         <div class="hero-left">
@@ -31,24 +31,7 @@
       </div>
     </div>
 
-    <!-- Stats Row -->
-    <div class="stats-row q-mb-lg">
-      <div class="stat-chip">
-        <q-icon name="local_shipping" size="18px" class="stat-chip-icon" />
-        <span class="stat-chip-value">{{ pagination.rowsNumber || typedResult.length }}</span>
-        <span class="stat-chip-label">Deliveries</span>
-      </div>
-      <div class="stat-chip stat-chip--green">
-        <q-icon name="near_me" size="18px" class="stat-chip-icon" />
-        <span class="stat-chip-value">{{ nearestDistance !== null ? nearestDistance.toFixed(2) : '0.00' }}</span>
-        <span class="stat-chip-label">Nearest km</span>
-      </div>
-      <div class="stat-chip stat-chip--indigo">
-        <q-icon name="payments" size="18px" class="stat-chip-icon" />
-        <span class="stat-chip-value">{{ totalEarnings }}</span>
-        <span class="stat-chip-label">Total Earnings</span>
-      </div>
-    </div>
+   
 
     <!-- Desktop Table View -->
     <div class="desktop-only">
@@ -186,6 +169,24 @@
       </div>
     </div>
 
+     <!-- Stats Row -->
+    <div class="stats-row q-mt-lg">
+      <div class="stat-chip">
+        <q-icon name="local_shipping" size="18px" class="stat-chip-icon" />
+        <span class="stat-chip-value">{{ pagination.rowsNumber || typedResult.length }}</span>
+        <span class="stat-chip-label">Deliveries</span>
+      </div>
+      <div class="stat-chip stat-chip--green">
+        <q-icon name="near_me" size="18px" class="stat-chip-icon" />
+        <span class="stat-chip-value">{{ nearestDistance !== null ? nearestDistance.toFixed(2) : '0.00' }}</span>
+        <span class="stat-chip-label">Nearest km</span>
+      </div>
+      <div class="stat-chip stat-chip--indigo">
+        <q-icon name="payments" size="18px" class="stat-chip-icon" />
+        <span class="stat-chip-value">{{ totalEarnings }}</span>
+        <span class="stat-chip-label">Total Earnings</span>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
