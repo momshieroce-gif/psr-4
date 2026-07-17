@@ -14,8 +14,12 @@
               {{ transaction.created_at }}
             </div>
           </div>
-          <q-badge v-if="transaction.status" :color="getStatusColor(transaction.status.label)"
-            :label="transaction.status.label" class="status-badge-large" />
+          <div class="ref-actions">
+            <q-badge v-if="transaction.status" :color="getStatusColor(transaction.status.label)"
+              :label="transaction.status.label" class="status-badge-large" />
+            <q-btn unelevated dense icon="chat_bubble" label="Messages" :to="routePath + '/messages'"
+              class="messages-btn" />
+          </div>
         </div>
       </q-card-section>
 
@@ -235,13 +239,14 @@ interface TransactionDetail {
   orders?: OrderItem[];
 }
 
-defineProps<{
+const props = defineProps<{
   transaction: TransactionDetail;
   showMap?: boolean;
   googleMapApiKey?: string;
   googleMapId?: string;
   formatCurrency: (amount: number | string) => string;
   getStatusColor: (status: string | undefined) => string;
+  routePath: string;
 }>();
 </script>
 
@@ -302,11 +307,33 @@ $muted: rgba(255, 255, 255, 0.5);
   align-items: center;
 }
 
+.ref-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
 .status-badge-large {
   font-size: 14px;
   font-weight: 500;
   padding: 8px 16px;
   border-radius: 12px;
+}
+
+.messages-btn {
+  background: linear-gradient(135deg, $accent 0%, $accent-2 100%);
+  color: $white;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
 }
 
 // ── Info groups ────────────────────────────────────────────────────────────────

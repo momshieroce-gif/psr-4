@@ -22,7 +22,8 @@
 
     <!-- Transaction Detail -->
     <TransactionDetail :transaction="localResult" :show-map="true" :google-map-api-key="GOOGLE_MAP_API_KEY"
-      :google-map-id="GOOGLE_MAP_ID" :format-currency="formatCurrency" :get-status-color="getStatusColor" />
+      :google-map-id="GOOGLE_MAP_ID" :format-currency="formatCurrency" :get-status-color="getStatusColor"
+      :route-path="$route.path" />
   </div>
 </template>
 

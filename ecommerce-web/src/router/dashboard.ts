@@ -33,6 +33,7 @@ export default [
           children: [
             { path: '', component: () => import('src/pages/dashboard/my-transactions/IndexPage.vue') },
             { path: ':id', component: () => import('src/pages/dashboard/my-transactions/ShowPage.vue') },
+            { path: ':transactionId/messages', component: () => import('src/pages/dashboard/my-transactions/MessagesPage.vue') },
           ]
         },
         

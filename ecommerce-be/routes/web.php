@@ -36,7 +36,8 @@ use App\Http\Controllers\ {
     FindStoreController,
     SharedStoreAccessController,
     SharedItemAccessController,
-    StoreUserMenuController
+    StoreUserMenuController,
+    TransactionMessageController
 };
 
 
@@ -80,6 +81,10 @@ Route::group(['middleware' => 'auth:api', 'itemMiddleware'], function () {
 });
 
 Route::group( [ 'middleware' => 'auth:api' ], function () {
+   Route::get('/transaction_messages', [TransactionMessageController::class, 'index']);
+    Route::post('/transaction_messages', [TransactionMessageController::class, 'store']);
+    Route::put('/transaction_messages/{id}', [TransactionMessageController::class, 'update']);
+    Route::delete('/transaction_messages/{id}', [TransactionMessageController::class, 'destroy']);
   /* Route resouce */
   Route::resource('all_stores', StoreController::class);
   Route::post('/all_stores/{id}/restore', [StoreController::class, 'restore']);
@@ -133,6 +138,8 @@ Route::post('login', [RegisterController::class, 'login'])->middleware('throttle
 Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
     return $request->user();
 });
+
+
 
 
 

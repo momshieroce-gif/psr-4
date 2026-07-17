@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Jul 10, 2026 at 08:45 AM
+-- Generation Time: Jul 16, 2026 at 04:36 AM
 -- Server version: 10.11.18-MariaDB-ubu2204
 -- PHP Version: 8.3.26
 
@@ -619,7 +619,27 @@ INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `
 INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `auditable_id`, `old_values`, `new_values`, `url`, `ip_address`, `user_agent`, `tags`, `created_at`, `updated_at`) VALUES
 (460, 'App\\Models\\User', 66, 'created', 'App\\Models\\ItemPrice', 1069, '[]', '{\"item_id\":1008,\"color_id\":null,\"size_id\":null,\"unit_id\":3,\"original_price\":1,\"selling_price\":1,\"online_price\":1,\"qty\":\"4\",\"id\":1069}', 'http://localhost:8081/item-update/401440870', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-07 02:52:31', '2026-07-07 02:52:31'),
 (461, 'App\\Models\\User', 66, 'created', 'App\\Models\\ItemPrice', 1070, '[]', '{\"item_id\":1008,\"color_id\":null,\"size_id\":null,\"unit_id\":4,\"original_price\":1,\"selling_price\":1,\"online_price\":1,\"qty\":4,\"id\":1070}', 'http://localhost:8081/item-update/401440870', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-07 03:46:09', '2026-07-07 03:46:09'),
-(462, 'App\\Models\\User', 66, 'created', 'App\\Models\\ItemPrice', 1071, '[]', '{\"item_id\":1008,\"color_id\":null,\"size_id\":null,\"unit_id\":3,\"original_price\":1,\"selling_price\":1,\"online_price\":1,\"qty\":4,\"id\":1071}', 'http://localhost:8081/item-update/401440870', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-07 03:46:09', '2026-07-07 03:46:09');
+(462, 'App\\Models\\User', 66, 'created', 'App\\Models\\ItemPrice', 1071, '[]', '{\"item_id\":1008,\"color_id\":null,\"size_id\":null,\"unit_id\":3,\"original_price\":1,\"selling_price\":1,\"online_price\":1,\"qty\":4,\"id\":1071}', 'http://localhost:8081/item-update/401440870', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-07 03:46:09', '2026-07-07 03:46:09'),
+(463, 'App\\Models\\User', 66, 'created', 'App\\Models\\Store', 58, '[]', '{\"name\":\"Rez General Merchandise\",\"mobile\":\"09270079301\",\"desc\":\"This is a sample store...\",\"latitude\":\"10.3621945\",\"longitude\":\"123.98721099999999\",\"user_id\":66,\"is_active\":false,\"id\":58}', 'https://api.mynearshops.com/apply-store', '221.121.102.36', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 16:02:05', '2026-07-12 16:02:05'),
+(464, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUser', 21, '[]', '{\"store_id\":58,\"email\":\"momshieroce@gmail.com\",\"verification_code\":\"6a53124b2b1af\",\"is_verified\":false,\"id\":21}', 'https://api.mynearshops.com/invite-user', '221.121.102.36', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 16:04:27', '2026-07-12 16:04:27'),
+(465, 'App\\Models\\User', 66, 'updated', 'App\\Models\\StoreUser', 21, '{\"verification_code\":\"6a53124b2b1af\",\"is_verified\":0}', '{\"verification_code\":null,\"is_verified\":1}', 'https://api.mynearshops.com/store-users/verification_code/6a53124b2b1af', '221.121.102.36', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 16:05:30', '2026-07-12 16:05:30'),
+(466, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 29, '[]', '{\"store_user_id\":21,\"store_menu_id\":1,\"id\":29}', 'https://api.mynearshops.com/store-user-menus', '221.121.102.36', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 16:41:11', '2026-07-12 16:41:11'),
+(467, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 30, '[]', '{\"store_user_id\":21,\"store_menu_id\":2,\"id\":30}', 'https://api.mynearshops.com/store-user-menus', '221.121.102.36', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 16:41:21', '2026-07-12 16:41:21'),
+(468, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 31, '[]', '{\"store_user_id\":21,\"store_menu_id\":3,\"id\":31}', 'https://api.mynearshops.com/store-user-menus', '221.121.102.36', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 16:41:28', '2026-07-12 16:41:28'),
+(469, 'App\\Models\\User', 66, 'created', 'App\\Models\\StoreUserMenu', 32, '[]', '{\"store_user_id\":21,\"store_menu_id\":6,\"id\":32}', 'https://api.mynearshops.com/store-user-menus', '221.121.102.36', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 16:41:33', '2026-07-12 16:41:33'),
+(470, 'App\\Models\\User', 66, 'created', 'App\\Models\\Item', 1009, '[]', '{\"store_id\":58,\"name\":\"High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger\",\"description\":\"<span style=\\\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; background-color: rgb(255, 255, 255);\\\">High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger<\\/span>\",\"category_id\":\"10\",\"id\":1009}', 'http://localhost:8081/item-create', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 04:38:45', '2026-07-12 04:38:45'),
+(471, 'App\\Models\\User', 66, 'created', 'App\\Models\\Item', 1010, '[]', '{\"store_id\":58,\"name\":\"High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger\",\"description\":\"<span style=\\\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; background-color: rgb(255, 255, 255);\\\">High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger<\\/span>\",\"category_id\":\"10\",\"id\":1010}', 'http://localhost:8081/item-create', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', NULL, '2026-07-12 04:39:32', '2026-07-12 04:39:32'),
+(472, 'App\\Models\\User', 66, 'created', 'App\\Models\\Item', 1011, '[]', '{\"store_id\":58,\"name\":\"High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger\",\"description\":\"<span style=\\\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; background-color: rgb(255, 255, 255);\\\">High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger<\\/span>\",\"category_id\":\"10\",\"id\":1011}', 'http://localhost:8081/item-create', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:32:19', '2026-07-13 01:32:19'),
+(473, 'App\\Models\\User', 66, 'created', 'App\\Models\\ItemPrice', 1072, '[]', '{\"item_id\":1011,\"color_id\":null,\"size_id\":null,\"unit_id\":1,\"original_price\":90,\"selling_price\":225,\"online_price\":225,\"qty\":\"5\",\"id\":1072}', 'http://localhost:8081/item-create', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:32:26', '2026-07-13 01:32:26'),
+(474, 'App\\Models\\User', 66, 'updated', 'App\\Models\\Item', 1011, '{\"description\":\"<span style=\\\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; background-color: rgb(255, 255, 255);\\\">High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger<\\/span>\"}', '{\"description\":\"<span style=\\\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; background-color: rgb(255, 255, 255);\\\"><b>High Pressure Toilet Plunger<\\/b> Drain Unblocker Powerful Manual Pneumatic Toilet Plunger<\\/span>\"}', 'http://localhost:8081/item-update/678794897', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:38:18', '2026-07-13 01:38:18'),
+(475, 'App\\Models\\User', 66, 'created', 'App\\Models\\ItemPrice', 1073, '[]', '{\"item_id\":1011,\"color_id\":null,\"size_id\":null,\"unit_id\":1,\"original_price\":90,\"selling_price\":225,\"online_price\":225,\"qty\":5,\"id\":1073}', 'http://localhost:8081/item-update/678794897', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:38:18', '2026-07-13 01:38:18'),
+(476, 'App\\Models\\User', 66, 'created', 'App\\Models\\Transaction', 111, '[]', '{\"store_id\":321274948,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":126.6,\"contact_number\":\"9270079301\",\"reference_id\":\"6a5454352f4c1\",\"lat\":\"10.3244712\",\"lng\":\"123.9439105\",\"total\":450,\"grand_total\":576.6,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":111}', 'http://localhost:8081/my-transactions', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57'),
+(477, 'App\\Models\\User', 66, 'created', 'App\\Models\\Transaction', 110, '[]', '{\"store_id\":321274948,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":126.6,\"contact_number\":\"9270079301\",\"reference_id\":\"6a5454352bea3\",\"lat\":\"10.3244712\",\"lng\":\"123.9439105\",\"total\":450,\"grand_total\":576.6,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":110}', 'http://localhost:8081/my-transactions', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57'),
+(478, 'App\\Models\\User', 66, 'updated', 'App\\Models\\Transaction', 111, '{\"store_id\":null,\"user_id\":null,\"payment_method_id\":null,\"receive_method_id\":null,\"delivery_charge\":null,\"contact_number\":null,\"reference_id\":null,\"lat\":null,\"lng\":null,\"total\":null,\"grand_total\":null,\"status_id\":null,\"receivers_mobile\":null,\"id\":null}', '{\"store_id\":58,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":126.6,\"contact_number\":\"9270079301\",\"reference_id\":\"6a5454352f4c1\",\"lat\":\"10.3244712\",\"lng\":\"123.9439105\",\"total\":450,\"grand_total\":576.6,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":111}', 'http://localhost:8081/my-transactions', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57'),
+(479, 'App\\Models\\User', 66, 'updated', 'App\\Models\\Transaction', 110, '{\"store_id\":null,\"user_id\":null,\"payment_method_id\":null,\"receive_method_id\":null,\"delivery_charge\":null,\"contact_number\":null,\"reference_id\":null,\"lat\":null,\"lng\":null,\"total\":null,\"grand_total\":null,\"status_id\":null,\"receivers_mobile\":null,\"id\":null}', '{\"store_id\":58,\"user_id\":66,\"payment_method_id\":1,\"receive_method_id\":1,\"delivery_charge\":126.6,\"contact_number\":\"9270079301\",\"reference_id\":\"6a5454352bea3\",\"lat\":\"10.3244712\",\"lng\":\"123.9439105\",\"total\":450,\"grand_total\":576.6,\"status_id\":1,\"receivers_mobile\":\"9270079301\",\"id\":110}', 'http://localhost:8081/my-transactions', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57'),
+(480, 'App\\Models\\User', 66, 'created', 'App\\Models\\Order', 97, '[]', '{\"transaction_id\":110,\"store_id\":58,\"item_id\":1011,\"item_name\":\"High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger\",\"item_description\":\"<span style=\\\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; background-color: rgb(255, 255, 255);\\\"><b>High Pressure Toilet Plunger<\\/b> Drain Unblocker Powerful Manual Pneumatic Toilet Plunger<\\/span>\",\"unit_id\":1,\"base_price\":90,\"store_price\":225,\"online_price\":225,\"qty\":2,\"id\":97}', 'http://localhost:8081/my-transactions', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57'),
+(481, 'App\\Models\\User', 66, 'created', 'App\\Models\\Order', 98, '[]', '{\"transaction_id\":111,\"store_id\":58,\"item_id\":1011,\"item_name\":\"High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger\",\"item_description\":\"<span style=\\\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; background-color: rgb(255, 255, 255);\\\"><b>High Pressure Toilet Plunger<\\/b> Drain Unblocker Powerful Manual Pneumatic Toilet Plunger<\\/span>\",\"unit_id\":1,\"base_price\":90,\"store_price\":225,\"online_price\":225,\"qty\":2,\"id\":98}', 'http://localhost:8081/my-transactions', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57'),
+(482, 'App\\Models\\User', 66, 'created', 'App\\Models\\ItemPrice', 1074, '[]', '{\"item_id\":1011,\"color_id\":null,\"size_id\":null,\"unit_id\":1,\"original_price\":90,\"selling_price\":225,\"online_price\":225,\"qty\":5,\"id\":1074}', 'http://localhost:8081/item-update/678794897', '172.18.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', NULL, '2026-07-14 05:10:52', '2026-07-14 05:10:52');
 
 -- --------------------------------------------------------
 
@@ -3564,7 +3584,11 @@ INSERT INTO `images` (`id`, `thumbnail`, `path`, `imageable_id`, `imageable_type
 (1121, 'images/uploads/6a4c625d89cf7-63fgw.png', 'images/uploads/6a4c625d89cf7-63fgw.png', 1004, 'App\\Models\\Item', 0, '63fgw.png', 98018, NULL, '2026-07-07 01:20:13', '2026-07-07 01:20:13'),
 (1122, 'images/uploads/6a4c645e773f7-63fgw.png', 'images/uploads/6a4c645e773f7-63fgw.png', 1005, 'App\\Models\\Item', 0, '63fgw.png', 98018, NULL, '2026-07-07 01:28:47', '2026-07-07 01:28:47'),
 (1123, 'images/uploads/6a4c848f900c3-6a4729ea91ff8-f7219c2420e7fc2b.png', 'images/uploads/6a4c848f900c3-6a4729ea91ff8-f7219c2420e7fc2b.png', 1008, 'App\\Models\\Item', 0, '6a4729ea91ff8-f7219c2420e7fc2b.png', 3253, NULL, '2026-07-07 03:46:09', '2026-07-07 03:46:49'),
-(1124, 'images/uploads/6a4c8491375b1-63fgw.png', 'images/uploads/6a4c8491375b1-63fgw.png', 1008, 'App\\Models\\Item', 1, '63fgw.png', 98018, NULL, '2026-07-07 03:46:09', '2026-07-07 03:46:49');
+(1124, 'images/uploads/6a4c8491375b1-63fgw.png', 'images/uploads/6a4c8491375b1-63fgw.png', 1008, 'App\\Models\\Item', 1, '63fgw.png', 98018, NULL, '2026-07-07 03:46:09', '2026-07-07 03:46:49'),
+(1125, 'images/uploads/6a5311bd8d3f2-f7219c2420e7fc2b.png', 'images/uploads/6a5311bd8d3f2-f7219c2420e7fc2b.png', 58, 'App\\Models\\Store', 1, 'f7219c2420e7fc2b.png', 3253, NULL, '2026-07-12 16:02:05', '2026-07-12 16:02:05'),
+(1126, 'images/uploads/6a544e3355d71-q3.png', 'images/uploads/6a544e3355d71-q3.png', 1011, 'App\\Models\\Item', 0, 'q3.png', 582597, NULL, '2026-07-13 01:32:26', '2026-07-14 05:19:04'),
+(1127, 'images/uploads/6a55d2e548460-q2.png', 'images/uploads/6a55d2e548460-q2.png', 1011, 'App\\Models\\Item', 1, 'q2.png', 567765, NULL, '2026-07-14 05:10:51', '2026-07-14 05:19:04'),
+(1128, 'images/uploads/6a55d2ebcad96-q1.png', 'images/uploads/6a55d2ebcad96-q1.png', 1011, 'App\\Models\\Item', 0, 'q1.png', 218745, NULL, '2026-07-14 05:10:51', '2026-07-14 05:19:04');
 
 -- --------------------------------------------------------
 
@@ -3646,6 +3670,15 @@ CREATE TABLE `items` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`id`, `name`, `description`, `category_id`, `store_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1009, 'High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger', '<span style=\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; background-color: rgb(255, 255, 255);\">High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger</span>', 10, 58, '2026-07-12 04:38:44', '2026-07-13 01:26:52', '2026-07-13 01:26:52'),
+(1010, 'High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger', '<span style=\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; background-color: rgb(255, 255, 255);\">High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger</span>', 10, 58, '2026-07-12 04:39:32', '2026-07-13 01:26:30', '2026-07-13 01:26:30'),
+(1011, 'High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger', '<span style=\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; background-color: rgb(255, 255, 255);\"><b>High Pressure Toilet Plunger</b> Drain Unblocker Powerful Manual Pneumatic Toilet Plunger</span>', 10, 58, '2026-07-13 01:32:17', '2026-07-13 01:38:17', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -3666,6 +3699,13 @@ CREATE TABLE `item_prices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `item_prices`
+--
+
+INSERT INTO `item_prices` (`id`, `item_id`, `unit_id`, `color_id`, `size_id`, `qty`, `delivery_charge_id`, `original_price`, `selling_price`, `online_price`, `created_at`, `updated_at`) VALUES
+(1074, 1011, 1, NULL, NULL, 5, 1, 90.00, 225.00, 225.00, '2026-07-14 05:10:51', '2026-07-14 05:10:51');
 
 -- --------------------------------------------------------
 
@@ -3980,6 +4020,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('419f506a30f79d338ffa4bc08352cf642a44e6936606b333864ed38a790dea1629b73f3d8e83476d', 26, 1, 'MyApp', '[]', 0, '2024-12-27 10:11:51', '2024-12-27 10:11:51', '2025-12-27 10:11:51'),
 ('41a0a6afc666f2c3e2e3f65d7a107edb29f411d72f3a8ffb1feb6fd61a1f00d1724d0c4242d75166', 34, 1, 'facebook-login', '[]', 0, '2026-05-09 16:04:35', '2026-05-09 16:04:35', '2027-05-09 12:04:35'),
 ('42fe3fe21ebb6a28499a8450bbd3057246572d10b62637a798c49a118e4f0fbf3cfcffafb29b8d8d', 26, 1, 'MyApp', '[]', 1, '2024-12-27 08:16:45', '2024-12-27 10:11:23', '2025-12-27 08:16:45'),
+('44b80bda2beabdc9b73581deaea8b11f4601cb5799aff7d64042a7a5ac89d4ef6756ebe4aa52bb20', 66, 1, 'MyApp', '[]', 0, '2026-07-12 04:00:14', '2026-07-12 04:00:15', '2027-07-12 13:00:14'),
 ('453c9f023ddd895c7a25a77adaf763ae83aa3815acfa4277638091daa181a8605d1e0337b946725b', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:38:44', '2026-04-27 07:28:27', '2027-01-03 08:38:44'),
 ('46acae5386aa6ff7b491393c0ae3b6f119ff59ffc8c5cbdb32368a960566b4495d321b44dd5db327', 30, 1, 'facebook-login', '[]', 0, '2026-05-09 15:29:53', '2026-05-09 15:29:53', '2027-05-09 11:29:53'),
 ('477457618e9077e84d40507e09633a51087a7fd5703525c511df1cecc2c810587c03d64bfe4e9dcb', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:37:36', '2026-04-27 07:28:27', '2027-01-03 08:37:36'),
@@ -4044,6 +4085,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 ('adcdaa91088144f6d4096a3c7750c281a14b6b41c49db40b8b249e6f0986db38d709e47d679012a6', 68, 1, 'MyApp', '[]', 1, '2026-05-20 02:19:30', '2026-06-22 20:14:02', '2027-05-20 11:19:30'),
 ('addc34f84de345442322abef9d9cd3c32e819cad317f3d6074e2f7e6cbde6128e37495e1bf6057bd', 28, 1, 'MyApp', '[]', 1, '2026-01-02 11:58:21', '2026-04-27 07:28:27', '2027-01-02 11:58:21'),
 ('ae92df663d19f1a93dcaacd0e2fd0dd5d372f21461dda738b323b49c72fd49d998f3569d8ad4c813', 28, 1, 'MyApp', '[]', 1, '2026-04-27 02:01:03', '2026-04-27 07:28:27', '2027-04-27 11:01:03'),
+('ae9938f469a40c4955a64078199259db978465214406d03659f4fbe9dea1885bf229130dfb679b90', 66, 1, 'google-login', '[]', 0, '2026-07-12 15:59:38', '2026-07-12 15:59:38', '2027-07-12 11:59:38'),
 ('ae9f7e815550c19616d5484d23b9a1bf70291c78fffb32620596283c917ccdc559d6b06270f5313a', 28, 1, 'MyApp', '[]', 1, '2026-04-18 06:19:18', '2026-04-27 07:28:27', '2027-04-18 15:19:18'),
 ('aed22c26f0486598455ff065d8a36bec12b259cdeb8fb9d32aa7867d10e4c72d7ab2fda1772af056', 28, 1, 'MyApp', '[]', 1, '2026-01-03 08:27:57', '2026-04-27 07:28:27', '2027-01-03 08:27:57'),
 ('b0b083a7a1776989a03c51835a21478db4b16a79fa6e6d13c42869a3a76505c3fb95dbdb088e30ee', 28, 1, 'MyApp', '[]', 1, '2026-04-27 07:26:28', '2026-04-27 07:28:27', '2027-04-27 16:26:28'),
@@ -4209,6 +4251,14 @@ CREATE TABLE `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `transaction_id`, `store_id`, `item_id`, `item_name`, `item_description`, `unit_id`, `base_price`, `store_price`, `online_price`, `qty`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(97, 110, 58, 1011, 'High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger', '<span style=\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; background-color: rgb(255, 255, 255);\"><b>High Pressure Toilet Plunger</b> Drain Unblocker Powerful Manual Pneumatic Toilet Plunger</span>', 1, 90.00, 225.00, 225.00, 2, NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57'),
+(98, 111, 58, 1011, 'High Pressure Toilet Plunger Drain Unblocker Powerful Manual Pneumatic Toilet Plunger', '<span style=\"color: rgb(8, 8, 9); font-family: &quot;Segoe UI Historic&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif; font-size: 24px; background-color: rgb(255, 255, 255);\"><b>High Pressure Toilet Plunger</b> Drain Unblocker Powerful Manual Pneumatic Toilet Plunger</span>', 1, 90.00, 225.00, 225.00, 2, NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57');
 
 -- --------------------------------------------------------
 
@@ -6601,6 +6651,13 @@ CREATE TABLE `stores` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `stores`
+--
+
+INSERT INTO `stores` (`id`, `name`, `mobile`, `desc`, `latitude`, `longitude`, `is_active`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(58, 'Rez General Merchandise', '09270079301', 'This is a sample store...', 10.3621945, 123.987211, 1, 66, NULL, '2026-07-12 16:02:05', '2026-07-12 16:03:54');
+
 -- --------------------------------------------------------
 
 --
@@ -6682,8 +6739,7 @@ CREATE TABLE `store_users` (
 --
 
 INSERT INTO `store_users` (`id`, `store_id`, `user_id`, `email`, `verification_code`, `is_verified`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(19, 1, 66, 'momshieroce@gmail.com', '6a26248c80319', 1, NULL, '2026-06-08 14:10:20', '2026-06-09 13:49:11'),
-(20, 53, NULL, 'momshieroce@gmail.com', NULL, 1, NULL, '2026-06-29 00:40:28', '2026-06-29 00:43:30');
+(21, 58, NULL, 'momshieroce@gmail.com', NULL, 1, NULL, '2026-07-12 16:04:27', '2026-07-12 16:05:30');
 
 -- --------------------------------------------------------
 
@@ -6705,11 +6761,10 @@ CREATE TABLE `store_user_menus` (
 --
 
 INSERT INTO `store_user_menus` (`id`, `store_user_id`, `store_menu_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(23, 19, 1, '2026-06-23 01:27:32', '2026-06-23 01:27:32', NULL),
-(24, 19, 2, '2026-06-23 01:27:41', '2026-06-23 01:27:41', NULL),
-(25, 19, 3, '2026-06-23 01:33:25', '2026-06-23 01:33:25', NULL),
-(27, 20, 6, '2026-06-29 01:22:48', '2026-06-29 01:22:48', NULL),
-(28, 20, 1, '2026-06-29 01:27:14', '2026-06-29 01:27:14', NULL);
+(29, 21, 1, '2026-07-12 16:41:11', '2026-07-12 16:41:11', NULL),
+(30, 21, 2, '2026-07-12 16:41:21', '2026-07-12 16:41:21', NULL),
+(31, 21, 3, '2026-07-12 16:41:28', '2026-07-12 16:41:28', NULL),
+(32, 21, 6, '2026-07-12 16:41:32', '2026-07-12 16:41:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -6737,6 +6792,14 @@ CREATE TABLE `transactions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `store_id`, `user_id`, `reference_id`, `status_id`, `payment_method_id`, `receive_method_id`, `receivers_mobile`, `lat`, `lng`, `contact_number`, `note`, `delivery_charge`, `total`, `grand_total`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(110, 58, 66, '6a5454352bea3', 2, 1, 1, '9270079301', '10.3244712', '123.9439105', '9270079301', NULL, 126.60, 450.00, 576.60, NULL, '2026-07-13 01:57:57', '2026-07-15 02:22:28'),
+(111, 58, 66, '6a5454352f4c1', 1, 1, 1, '9270079301', '10.3244712', '123.9439105', '9270079301', NULL, 126.60, 450.00, 576.60, NULL, '2026-07-13 01:57:57', '2026-07-13 01:57:57');
 
 -- --------------------------------------------------------
 
@@ -6841,7 +6904,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `facebook_id`, `firstname`, `lastname`, `name`, `avatar`, `mobile`, `passcode`, `activation_code`, `mobile_attempt_count`, `mobile_verified_at`, `email_verified_at`, `status`, `password`, `remember_token`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(66, 'momshieroce@gmail.com', NULL, 'Bobby', 'Gerez', 'Rocelyn Gerez', NULL, '9270079309', NULL, '6hvCq8XjwZf2W8VkMQrCfaslBlqq3ATHbiKkECjUFPNLVjyn0Trvk6wDUrG46B8K', 0, NULL, NULL, 1, '$2y$10$PatDeoB3q2PBK7NNvlPWwe.iz.pIShWnRkVa5UBKuj2EYUl4MW4Ry', NULL, NULL, '2026-05-17 17:54:55', '2026-06-30 19:16:00'),
+(66, 'momshieroce@gmail.com', NULL, 'Bobby', 'Gerez', 'Rocelyn Gerez', NULL, '9270079309', NULL, '6hvCq8XjwZf2W8VkMQrCfaslBlqq3ATHbiKkECjUFPNLVjyn0Trvk6wDUrG46B8K', 0, NULL, NULL, 1, '$2y$10$0uUWfXweE7uSRaErKjoM6uORV/bW0rbkPA8h21tZS/MjIv4dImDoi', NULL, NULL, '2026-05-17 17:54:55', '2026-07-12 03:58:13'),
 (68, 'bobby.gerez@yahoo.com', NULL, 'Bobby', 'Gerez', 'Bobby Gerez', NULL, NULL, NULL, '6hvCq8XjwZf2W8VkMQrCfaslBlqq3ATHbiKkECjUFPNLVjyn0Trvk6wDUrG46B8K', 0, NULL, NULL, 1, '$2y$10$PatDeoB3q2PBK7NNvlPWwe.iz.pIShWnRkVa5UBKuj2EYUl4MW4Ry', NULL, NULL, '2026-05-19 23:46:01', '2026-05-19 23:46:01');
 
 --
@@ -7250,7 +7313,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=463;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=483;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -7310,7 +7373,7 @@ ALTER TABLE `franchisees`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1125;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1129;
 
 --
 -- AUTO_INCREMENT for table `interconnected_cities`
@@ -7334,13 +7397,13 @@ ALTER TABLE `invoice_items`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1009;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1012;
 
 --
 -- AUTO_INCREMENT for table `item_prices`
 --
 ALTER TABLE `item_prices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1072;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1075;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -7400,7 +7463,7 @@ ALTER TABLE `online_prices`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -7520,7 +7583,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `store_advertisements`
@@ -7544,19 +7607,19 @@ ALTER TABLE `store_ratings`
 -- AUTO_INCREMENT for table `store_users`
 --
 ALTER TABLE `store_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `store_user_menus`
 --
 ALTER TABLE `store_user_menus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `transaction_message`
