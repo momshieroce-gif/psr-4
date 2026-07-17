@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\Obfuscate\OptimusId;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 
 class TransactionMessage extends Model implements Auditable
 {
@@ -31,5 +32,13 @@ class TransactionMessage extends Model implements Auditable
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getCreatedAtAttribute($val): string {
+        return Carbon::parse($val)->toDayDateTimeString();
+    }
+
+    public function getUpdatedAtAttribute($val): string {
+        return Carbon::parse($val)->toDayDateTimeString();
     }
 }

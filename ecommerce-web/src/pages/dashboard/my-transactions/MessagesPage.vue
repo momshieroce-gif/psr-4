@@ -34,8 +34,7 @@
                     </div>
                     <div class="message-content">
                         <div class="message-header">
-                            <span class="message-sender">{{ isOwnMessage(message) ? 'You' : (message.user?.name ||
-                                'Store') }}</span>
+                            <span class="message-sender">{{ isOwnMessage(message) ? 'You' : 'Store' }}</span>
                             <span class="message-time">{{ formatTime(message.created_at) }}</span>
                         </div>
                         <div class="message-text">{{ message.message }}</div>
@@ -69,10 +68,8 @@ interface Message {
     message: string;
     created_at: string;
     updated_at: string;
-    user?: {
-        id: number;
-        name: string;
-    };
+    deleted_at: string | null;
+    optimus_id: number;
 }
 
 const route = useRoute();
@@ -86,23 +83,27 @@ const isOwnMessage = (message: Message): boolean => {
 };
 
 const formatTime = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-    });
+    return dateString || '';
 };
 
 const loadMessages = async () => {
     try {
         const transactionId = route.params.transactionId;
+        console.log('Loading messages for transaction:', transactionId);
         if (transactionId) {
             const result = await get({
                 entity: 'transaction_messages',
-                query: { filters: 'transaction_id:' + transactionId },
+                query: {
+                    filters: 'transaction_id:' + transactionId,
+                    type: 'collection'
+                }
             }, false);
+            console.log('API result:', result);
             if (result) {
-                messages.value = (typeof result === 'object' && result !== null && 'data' in result) ? (result as any).data : result;
+                // result is AxiosResponse, so access result.data.data for the actual array
+                const data = (result as any).data?.data || (result as any).data || result;
+                console.log('Parsed messages data:', data);
+                messages.value = Array.isArray(data) ? data : [];
             }
         }
     } catch (error) {

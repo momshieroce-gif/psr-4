@@ -17,7 +17,8 @@ class IndexRequest extends BaseRequest
     public function rules()
     {
         return [
-            'transaction_id' => 'sometimes'
+            'filters' => 'required',
+            'type'    => 'required'
         ];  
     }
 
