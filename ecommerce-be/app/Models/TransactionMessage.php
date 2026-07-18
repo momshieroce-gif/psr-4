@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Traits\Obfuscate\OptimusId;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -32,6 +33,11 @@ class TransactionMessage extends Model implements Auditable
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function transactionMedia(): HasMany
+    {
+        return $this->hasMany(TransactionMedia::class);
     }
 
     public function getCreatedAtAttribute($val): string {

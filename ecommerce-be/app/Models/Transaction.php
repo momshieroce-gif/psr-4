@@ -34,6 +34,7 @@ class Transaction extends Model implements Auditable
         'total',
         'grand_total',
         'receivers_mobile',
+        'is_return_refund'
     ];
 
     protected $appends = ['optimus_id'];

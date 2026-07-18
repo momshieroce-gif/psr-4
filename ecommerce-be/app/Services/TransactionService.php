@@ -18,5 +18,14 @@ class TransactionService
         $transaction->status_id = 5; // Assuming 5 is the ID for "Received" status
         $transaction->save();
         return $transaction;
-    } 
+    }
+
+    public function returnRefund(array $data)
+    {
+        $transactionId = $data['transaction_id'];
+        $transaction = $this->repository->findOrFail($transactionId);
+        $transaction->is_return_refund = true;
+        $transaction->save();
+        return $transaction;
+    }
 }

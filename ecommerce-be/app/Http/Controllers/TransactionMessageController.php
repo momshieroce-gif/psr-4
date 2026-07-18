@@ -30,11 +30,16 @@ class TransactionMessageController extends ApiController
     public function store()
     {
         $this->params = app($this->storeRequest)->all();
-        $this->result = $this->service->createTransactionMessage([
+
+        $data = [
             'transaction_id' => $this->params['transaction_id'],
-            'message' => $this->params['message'],
+            'message' => $this->params['message'] ?? null,
             'user_id' => auth()->id(),
-        ]);
+        ];
+
+        $files = request()->hasFile('media') ? request()->file('media') : null;
+        $this->result = $this->service->createTransactionMessage($data, $files);
+
         return $this->getResource();
     }
 

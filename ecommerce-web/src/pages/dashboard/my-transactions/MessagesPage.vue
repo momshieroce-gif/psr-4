@@ -37,18 +37,45 @@
                             <span class="message-sender">{{ isOwnMessage(message) ? 'You' : 'Store' }}</span>
                             <span class="message-time">{{ formatTime(message.created_at) }}</span>
                         </div>
-                        <div class="message-text">{{ message.message }}</div>
+                        <div v-if="message.message" class="message-text">{{ message.message }}</div>
+                        <div v-if="message.transaction_media && message.transaction_media.length > 0"
+                            class="message-media">
+                            <div v-for="media in message.transaction_media" :key="media.id" class="media-item">
+                                <img v-if="media.type === 'image'" :src="'/storage/' + media.path" alt="Attachment"
+                                    class="media-image" />
+                                <video v-else-if="media.type === 'video'" :src="'/storage/' + media.path" controls
+                                    class="media-video" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Message Input -->
             <div class="message-input-section">
+                <!-- File Previews -->
+                <div v-if="filePreviews.length > 0" class="file-previews">
+                    <div v-for="(preview, index) in filePreviews" :key="index"
+                        :class="['file-preview', { 'file-preview-video': !preview.preview }]">
+                        <img v-if="preview.preview" :src="preview.preview" alt="Preview" class="preview-image" />
+                        <div v-else class="video-preview">
+                            <q-icon name="videocam" size="32px" color="white" />
+                            <div class="file-name">{{ preview.file.name }}</div>
+                        </div>
+                        <q-btn flat round dense icon="close" class="preview-close" @click="clearFile(index)" />
+                    </div>
+                </div>
+
                 <div class="input-wrapper">
+                    <q-btn flat round dense icon="attach_file" class="attach-btn" @click="fileInput?.click()">
+                        <q-tooltip>Attach photo or video (max 5)</q-tooltip>
+                    </q-btn>
+                    <input ref="fileInput" type="file" accept="image/*,video/*" multiple style="display: none"
+                        @change="handleFileSelect" />
                     <q-input v-model="newMessage" placeholder="Type your message..." outlined dense autogrow
                         class="message-input" @keydown.enter="sendMessage" :loading="sending" />
-                    <q-btn unelevated icon="send" color="primary" @click="sendMessage" :disable="!newMessage.trim()"
-                        class="send-btn" />
+                    <q-btn unelevated icon="send" color="primary" @click="sendMessage"
+                        :disable="!newMessage.trim() && selectedFiles.length === 0" class="send-btn" />
                 </div>
             </div>
         </div>
@@ -70,6 +97,14 @@ interface Message {
     updated_at: string;
     deleted_at: string | null;
     optimus_id: number;
+    transaction_media?: Array<{
+        id: number;
+        path: string;
+        type: string;
+        transaction_message_id: number;
+        created_at: string;
+        updated_at: string;
+    }>;
 }
 
 const route = useRoute();
@@ -77,6 +112,9 @@ const messages = ref<Message[]>([]);
 const newMessage = ref('');
 const sending = ref(false);
 const currentUserId = ref<number | null>(null);
+const selectedFiles = ref<File[]>([]);
+const filePreviews = ref<Array<{ file: File; preview: string | null }>>([]);
+const fileInput = ref<HTMLInputElement | null>(null);
 
 const isOwnMessage = (message: Message): boolean => {
     return message.user_id === currentUserId.value;
@@ -84,6 +122,48 @@ const isOwnMessage = (message: Message): boolean => {
 
 const formatTime = (dateString: string): string => {
     return dateString || '';
+};
+
+const handleFileSelect = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+    if (files && files.length > 0) {
+        // Add new files to the selected files array (max 5)
+        const remainingSlots = 5 - selectedFiles.value.length;
+        const filesToAdd = Math.min(files.length, remainingSlots);
+
+        for (let i = 0; i < filesToAdd; i++) {
+            const file = files[i];
+            selectedFiles.value.push(file);
+
+            // Create preview for images
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    filePreviews.value.push({
+                        file: file,
+                        preview: e.target?.result as string
+                    });
+                };
+                reader.readAsDataURL(file);
+            } else {
+                filePreviews.value.push({
+                    file: file,
+                    preview: null
+                });
+            }
+        }
+    }
+};
+
+const clearFile = (index: number) => {
+    selectedFiles.value.splice(index, 1);
+    filePreviews.value.splice(index, 1);
+};
+
+const clearAllFiles = () => {
+    selectedFiles.value = [];
+    filePreviews.value = [];
 };
 
 const loadMessages = async () => {
@@ -95,7 +175,8 @@ const loadMessages = async () => {
                 entity: 'transaction_messages',
                 query: {
                     filters: 'transaction_id:' + transactionId,
-                    type: 'collection'
+                    type: 'collection',
+                    with: 'transactionMedia'
                 }
             }, false);
             console.log('API result:', result);
@@ -112,22 +193,43 @@ const loadMessages = async () => {
 };
 
 const sendMessage = async () => {
-    if (!newMessage.value.trim() || sending.value) return;
+    if ((!newMessage.value.trim() && selectedFiles.value.length === 0) || sending.value) return;
 
     sending.value = true;
     try {
         const transactionId = route.params.transactionId;
-        const result = await create({
-            entity: 'transaction_messages',
-            data: {
-                transaction_id: transactionId,
-                message: newMessage.value,
-            },
-        });
+
+        // Use FormData if files are selected
+        let result;
+        if (selectedFiles.value.length > 0) {
+            const formData = new FormData();
+            formData.append('transaction_id', transactionId as string);
+            if (newMessage.value.trim()) {
+                formData.append('message', newMessage.value);
+            }
+            selectedFiles.value.forEach(file => {
+                formData.append('media[]', file);
+            });
+
+            result = await create({
+                entity: 'transaction_messages',
+                data: formData,
+            }, true, 'Sending message...', 'Message sent successfully');
+        } else {
+            result = await create({
+                entity: 'transaction_messages',
+                data: {
+                    transaction_id: transactionId,
+                    message: newMessage.value,
+                },
+            });
+        }
 
         if (result) {
-            messages.value.push((typeof result === 'object' && result !== null && 'data' in result) ? (result as any).data : result);
+            const data = (typeof result === 'object' && result !== null && 'data' in result) ? (result as any).data : result;
+            messages.value.push(data);
             newMessage.value = '';
+            clearAllFiles();
         }
     } catch (error) {
         console.error('Error sending message:', error);
@@ -322,6 +424,36 @@ $muted: #94a3b8;
     color: $white;
     line-height: 1.5;
     word-wrap: break-word;
+    margin-bottom: 8px;
+}
+
+.message-media {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+}
+
+.media-item {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.media-image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.media-video {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    width: 100%;
 }
 
 // ── Message Input ─────────────────────────────────────────────────────────
@@ -331,10 +463,91 @@ $muted: #94a3b8;
     background: linear-gradient(180deg, transparent 0%, rgba($accent, 0.03) 100%);
 }
 
+.file-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.file-preview {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $border;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.video-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 12px;
+    text-align: center;
+}
+
+.file-preview-video {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.file-name {
+    color: $white;
+    font-size: 10px;
+    margin-top: 8px;
+    text-align: center;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.preview-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white !important;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    font-size: 14px;
+}
+
 .input-wrapper {
     display: flex;
     gap: 12px;
     align-items: flex-end;
+}
+
+.attach-btn {
+    color: $muted;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid $border;
+    transition: all 0.3s ease;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 12px;
+
+    &:hover {
+        color: white;
+        background: rgba($accent, 0.15);
+        border-color: rgba($accent, 0.3);
+    }
 }
 
 .message-input {

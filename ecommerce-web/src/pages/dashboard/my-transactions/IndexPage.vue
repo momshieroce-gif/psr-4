@@ -27,8 +27,8 @@
     <TransactionTable :transactions="typedResult" :pagination="pagination" :route-path="$route.path"
       empty-subtitle="Your transaction history will appear here" :show-received-button="true" :format-date="formatDate"
       :format-money="formatMoney" :get-status-color="getStatusColor" :on-mark-as-received="markedAsReceived"
-      :on-go-to-first-page="goToFirstPage" :on-go-to-previous-page="goToPreviousPage" :on-go-to-next-page="goToNextPage"
-      :on-go-to-last-page="goToLastPage" />
+      :on-return-refund="returnRefund" :on-go-to-first-page="goToFirstPage" :on-go-to-previous-page="goToPreviousPage"
+      :on-go-to-next-page="goToNextPage" :on-go-to-last-page="goToLastPage" />
 
   </div>
 </template>
@@ -124,6 +124,20 @@ const markedAsReceived = async (transactionId: number | string) => {
     {
       entity: 'my-transactions-marked-as-received',
       data: {},
+      optimus_id: transactionId,
+    },
+    true,
+    true
+  );
+
+  onRequest(entityQuery.value, true);
+};
+
+const returnRefund = async (transactionId: number | string) => {
+  await update(
+    {
+      entity: 'transaction-return-refund',
+      data: { transaction_id: transactionId },
       optimus_id: transactionId,
     },
     true,

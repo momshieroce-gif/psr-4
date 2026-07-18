@@ -18,8 +18,10 @@ class StoreRequest extends BaseRequest
     {
         return [
             'transaction_id' => 'required|integer',
-            'message' => 'required|string',
-        ];  
+            'message' => 'required_without:media|string|nullable',
+            'media' => 'required_without:message|array|max:5',
+            'media.*' => 'file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:10240',
+        ];
     }
 
     

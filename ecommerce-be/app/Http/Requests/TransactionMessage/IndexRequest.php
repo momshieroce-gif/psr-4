@@ -18,7 +18,8 @@ class IndexRequest extends BaseRequest
     {
         return [
             'filters' => 'required',
-            'type'    => 'required'
+            'type'    => 'required',
+            'with'    => 'sometimes'
         ];  
     }
 

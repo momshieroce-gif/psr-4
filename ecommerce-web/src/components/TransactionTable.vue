@@ -46,18 +46,38 @@
                 </div>
               </td>
               <td class="td-center">
-                <div class="action-btns">
-                  <button
-                    v-if="showReceivedButton && tx.status?.name !== TRANSACTION_STATUS.COMPLETED && onMarkAsReceived"
-                    class="action-pill action-received" @click="onMarkAsReceived(tx.optimus_id)">
-                    <q-icon name="inventory_2" size="16px" />
-                    Received
-                  </button>
-                  <router-link :to="`${routePath}/${tx.optimus_id}`" class="action-pill action-view">
-                    <q-icon name="info" size="16px" />
-                    View
-                  </router-link>
-                </div>
+                <q-btn-dropdown flat dense round dropdown-icon="more_vert" color="white" class="action-dropdown">
+                  <q-list class="action-menu">
+                    <q-item clickable v-close-popup :to="`${routePath}/${tx.optimus_id}`" class="menu-item">
+                      <q-item-section avatar>
+                        <q-icon name="info" size="18px" color="#a5b4fc" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label class="menu-label">View</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item
+                      v-if="showReceivedButton && tx.status?.name !== TRANSACTION_STATUS.COMPLETED && onMarkAsReceived"
+                      clickable v-close-popup @click="onMarkAsReceived(tx.optimus_id)" class="menu-item">
+                      <q-item-section avatar>
+                        <q-icon name="inventory_2" size="18px" color="#6ee7b7" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label class="menu-label">Received</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item clickable v-close-popup @click="onReturnRefund && onReturnRefund(tx.optimus_id)"
+                      class="menu-item">
+                      <q-item-section avatar>
+                        <q-icon name="assignment_return" size="18px" color="#fca5a5" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label class="menu-label">Return/Refund</q-item-label>
+                      </q-item-section>
+                    </q-item>
+
+                  </q-list>
+                </q-btn-dropdown>
               </td>
             </tr>
           </tbody>
@@ -131,15 +151,38 @@
           </div>
 
           <div class="m-card-actions">
-            <button v-if="showReceivedButton && tx.status?.name !== TRANSACTION_STATUS.COMPLETED && onMarkAsReceived"
-              class="m-action m-action-received" @click="onMarkAsReceived(tx.optimus_id)">
-              <q-icon name="inventory_2" size="16px" class="q-mr-xs" />
-              Received
-            </button>
-            <router-link :to="`${routePath}/${tx.optimus_id}`" class="m-action m-action-view">
-              <q-icon name="info" size="16px" class="q-mr-xs" />
-              View
-            </router-link>
+            <q-btn-dropdown flat dense dropdown-icon="more_vert" color="white" class="m-action-dropdown"
+              label="Actions">
+              <q-list class="action-menu">
+                <q-item
+                  v-if="showReceivedButton && tx.status?.name !== TRANSACTION_STATUS.COMPLETED && onMarkAsReceived"
+                  clickable v-close-popup @click="onMarkAsReceived(tx.optimus_id)" class="menu-item">
+                  <q-item-section avatar>
+                    <q-icon name="inventory_2" size="18px" color="#6ee7b7" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="menu-label">Received</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="onReturnRefund && onReturnRefund(tx.optimus_id)"
+                  class="menu-item">
+                  <q-item-section avatar>
+                    <q-icon name="assignment_return" size="18px" color="#fca5a5" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="menu-label">Return/Refund</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup :to="`${routePath}/${tx.optimus_id}`" class="menu-item">
+                  <q-item-section avatar>
+                    <q-icon name="info" size="18px" color="#a5b4fc" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="menu-label">View</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
           </div>
         </div>
       </div>
@@ -232,6 +275,7 @@ defineProps<{
   formatMoney: (amount: number) => string;
   getStatusColor: (status: string) => string;
   onMarkAsReceived?: (id: number) => void;
+  onReturnRefund?: (id: number) => void;
   onGoToFirstPage: () => void;
   onGoToPreviousPage: () => void;
   onGoToNextPage: () => void;
@@ -454,6 +498,38 @@ $green: #10b981;
   justify-content: center;
 }
 
+.action-dropdown {
+  :deep(.q-btn-dropdown__arrow) {
+    font-size: 20px;
+  }
+}
+
+.action-menu {
+  background: $dark-card;
+  border: 1px solid $border;
+  border-radius: 12px;
+  min-width: 180px;
+  padding: 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.menu-item {
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 2px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.menu-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $white;
+}
+
 .action-pill {
   display: inline-flex;
   align-items: center;
@@ -625,10 +701,22 @@ $green: #10b981;
 }
 
 .m-card-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  justify-content: flex-end;
   padding: 0 16px 16px;
+}
+
+.m-action-dropdown {
+  background: transparent !important;
+  border-radius: 8px !important;
+
+  :deep(.q-btn__content) {
+    background: transparent !important;
+  }
+
+  :deep(.q-btn-dropdown__arrow) {
+    font-size: 20px;
+  }
 }
 
 .m-action {
@@ -741,5 +829,12 @@ $green: #10b981;
   .stats-row {
     grid-template-columns: 1fr;
   }
+}
+
+
+</style>
+<style>
+.q-menu{
+  background: transparent !important;
 }
 </style>
