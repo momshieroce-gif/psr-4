@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Repositories\TransactionRepository;
+use  App\Enum\Status;
 
 class TransactionService
 {
@@ -25,6 +26,7 @@ class TransactionService
         $transactionId = $data['transaction_id'];
         $transaction = $this->repository->findOrFail($transactionId);
         $transaction->is_return_refund = true;
+        $transaction->status_id = Status::RETURNED_REFUND;
         $transaction->save();
         return $transaction;
     }

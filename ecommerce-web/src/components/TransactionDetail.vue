@@ -111,7 +111,7 @@
       <q-card-section class="detail-grid-section">
         <div class="map-full-container">
           <GoogleMap :api-key="googleMapApiKey" :map-id="googleMapId" class="detail-map-full"
-            :center="{ lat: Number(transaction.lat), lng: Number(transaction.lng) }" :zoom="15" :draggable="false"
+            :center="{ lat: Number(transaction.lat), lng: Number(transaction.lng) }" :zoom="15" :draggable="true"
             :clickable-icons="false">
             <AdvancedMarker :options="{ position: { lat: Number(transaction.lat), lng: Number(transaction.lng) } }" />
           </GoogleMap>

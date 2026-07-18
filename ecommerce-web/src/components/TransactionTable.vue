@@ -48,12 +48,20 @@
               <td class="td-center">
                 <q-btn-dropdown flat dense round dropdown-icon="more_vert" color="white" class="action-dropdown">
                   <q-list class="action-menu">
-                    <q-item clickable v-close-popup :to="`${routePath}/${tx.optimus_id}`" class="menu-item">
+                     <q-item clickable v-close-popup :to="`${routePath}/${tx.optimus_id}`" class="menu-item">
                       <q-item-section avatar>
                         <q-icon name="info" size="18px" color="#a5b4fc" />
                       </q-item-section>
                       <q-item-section>
                         <q-item-label class="menu-label">View</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                    <q-item clickable v-close-popup :to="`${routePath}/${tx.optimus_id}/messages`" class="menu-item">
+                      <q-item-section avatar>
+                        <q-icon name="message" size="18px" color="#6ee7b7" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label class="menu-label">Messages</q-item-label>
                       </q-item-section>
                     </q-item>
                     <q-item
@@ -63,11 +71,12 @@
                         <q-icon name="inventory_2" size="18px" color="#6ee7b7" />
                       </q-item-section>
                       <q-item-section>
-                        <q-item-label class="menu-label">Received</q-item-label>
+                        <q-item-label class="menu-label">Completed</q-item-label>
                       </q-item-section>
                     </q-item>
-                    <q-item clickable v-close-popup @click="onReturnRefund && onReturnRefund(tx.optimus_id)"
-                      class="menu-item">
+                    <q-item clickable v-close-popup
+                      @click="!tx.is_return_refund && onReturnRefund && onReturnRefund(tx.optimus_id)" class="menu-item"
+                      :class="{ 'menu-item-disabled': tx.is_return_refund === 1 }">
                       <q-item-section avatar>
                         <q-icon name="assignment_return" size="18px" color="#fca5a5" />
                       </q-item-section>
@@ -154,6 +163,14 @@
             <q-btn-dropdown flat dense dropdown-icon="more_vert" color="white" class="m-action-dropdown"
               label="Actions">
               <q-list class="action-menu">
+                <q-item clickable v-close-popup :to="`${routePath}/${tx.optimus_id}/messages`" class="menu-item">
+                  <q-item-section avatar>
+                    <q-icon name="message" size="18px" color="#6ee7b7" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label class="menu-label">Messages</q-item-label>
+                  </q-item-section>
+                </q-item>
                 <q-item
                   v-if="showReceivedButton && tx.status?.name !== TRANSACTION_STATUS.COMPLETED && onMarkAsReceived"
                   clickable v-close-popup @click="onMarkAsReceived(tx.optimus_id)" class="menu-item">
@@ -161,11 +178,12 @@
                     <q-icon name="inventory_2" size="18px" color="#6ee7b7" />
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label class="menu-label">Received</q-item-label>
+                    <q-item-label class="menu-label">Completed</q-item-label>
                   </q-item-section>
                 </q-item>
-                <q-item clickable v-close-popup @click="onReturnRefund && onReturnRefund(tx.optimus_id)"
-                  class="menu-item">
+                <q-item clickable v-close-popup
+                  @click="!tx.is_return_refund && onReturnRefund && onReturnRefund(tx.optimus_id)" class="menu-item"
+                  :class="{ 'menu-item-disabled': tx.is_return_refund === 1 }">
                   <q-item-section avatar>
                     <q-icon name="assignment_return" size="18px" color="#fca5a5" />
                   </q-item-section>
@@ -255,6 +273,7 @@ interface Transaction {
   status?: { name: string; label: string };
   payment_method?: { name: string };
   receive_method?: { name: string };
+  is_return_refund?: number;
 }
 
 interface Pagination {
@@ -521,6 +540,16 @@ $green: #10b981;
 
   &:hover {
     background: rgba(255, 255, 255, 0.06);
+  }
+
+  &.menu-item-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+
+    &:hover {
+      background: transparent;
+    }
   }
 }
 
@@ -830,11 +859,9 @@ $green: #10b981;
     grid-template-columns: 1fr;
   }
 }
-
-
 </style>
 <style>
-.q-menu{
+.q-menu {
   background: transparent !important;
 }
 </style>

@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth:api', 'myTransactionMiddleware'], function (
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
+  Route::patch('transaction-return-refund/{transactionId}', [TransactionController::class, 'returnRefund']);
   Route::post('apply-store', [ApplyStoreController::class, 'create']);
   Route::post('invite-user', [StoreUserController::class, 'inviteUser']);
   Route::resource('store-users', StoreUserController::class);
