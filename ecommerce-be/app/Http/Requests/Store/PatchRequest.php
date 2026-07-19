@@ -18,8 +18,8 @@ class PatchRequest extends BaseRequest
  {
         return [
             'desc'          => 'required|string',
-            'latitude'      => 'required',
-            'longitude'     => 'required',
+            'latitude'      => 'required|string',
+            'longitude'     => 'required|string',
             'mobile'        => 'required|string',
             'name'          => 'sometimes|string',
             'is_active'     => 'sometimes|boolean'

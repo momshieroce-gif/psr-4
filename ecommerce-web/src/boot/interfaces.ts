@@ -12,8 +12,8 @@ export interface GetQuery {
   page?: number
   type?: string
   orderBy?: string
-  latitude?: number
-  longitude?: number
+  latitude?: number | string
+  longitude?: number | string
   radius?: number
   storeIds?: Array<number>
   limit?: number

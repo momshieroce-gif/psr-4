@@ -82,6 +82,7 @@ class Transaction extends Model implements Auditable
         $maxLon = $boundingBox['maxLon'];
 
         $earthRaidusInKm = 6371;
+        $radiusFloat = (float) $radius;
 
         $query->select('transactions.*', DB::raw("
             ($earthRaidusInKm * acos(cos(radians($latitude)) 
@@ -93,7 +94,7 @@ class Transaction extends Model implements Auditable
         ->join('stores', 'transactions.store_id', '=', 'stores.id')
         ->whereBetween('stores.latitude', [$minLat, $maxLat])
         ->whereBetween('stores.longitude', [$minLon, $maxLon])
-        ->having('distance', '<=', $radius)
+        ->having('distance', '<=', $radiusFloat)
         ->orderBy('distance', 'asc');
     }
 

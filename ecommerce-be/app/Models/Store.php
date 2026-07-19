@@ -67,6 +67,7 @@ class Store extends Model implements Auditable
         $maxLon = $boundingBox['maxLon'];
 
         $earthRaidusInKm = 6371;
+        $radiusFloat = (float) $radius;
 
         $query->select('*', DB::raw("
             ($earthRaidusInKm * acos(cos(radians($latitude)) 
@@ -77,7 +78,7 @@ class Store extends Model implements Auditable
         "))
         ->whereBetween('latitude', [$minLat, $maxLat])
         ->whereBetween('longitude', [$minLon, $maxLon])
-        ->having('distance', '<=', $radius)
+        ->having('distance', '<=', $radiusFloat)
         ->orderBy('distance', 'asc');
     }
 

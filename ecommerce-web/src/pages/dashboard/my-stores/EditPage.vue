@@ -64,8 +64,8 @@ const onSubmit = async (data: StoreData) => {
           name: data.name,
           mobile: data.mobile,
           desc: data.desc,
-          latitude: data.latitude,
-          longitude: data.longitude,
+          latitude: data.latitude.toString(),
+          longitude: data.longitude.toString(),
         },
       },
       true
@@ -93,6 +93,7 @@ onBeforeMount(async () => {
   store.value.longitude = result.longitude || 120.9842;
   store.value.optimus_id = result.optimus_id || 0;
   store.value.is_active = result.is_active ?? false;
+
 });
 </script>
 

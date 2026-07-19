@@ -133,7 +133,7 @@
               </div>
               <div>
                 <div class="coordinate-label">Latitude</div>
-                <div class="coordinate-value">{{ localStore.latitude?.toFixed(6) || 'N/A' }}</div>
+                <div class="coordinate-value">{{ localStore.latitude || 'N/A' }}</div>
               </div>
             </div>
             <div class="coordinate-item">
@@ -142,7 +142,7 @@
               </div>
               <div>
                 <div class="coordinate-label">Longitude</div>
-                <div class="coordinate-value">{{ localStore.longitude?.toFixed(6) || 'N/A' }}</div>
+                <div class="coordinate-value">{{ localStore.longitude || 'N/A' }}</div>
               </div>
             </div>
           </div>
@@ -321,9 +321,7 @@ const zoomIn = () => {
   if (map) {
     const currentZoomLevel = map.getZoom() || currentZoom.value;
     if (currentZoomLevel < 21) {
-      const newZoom = currentZoomLevel + 1;
-      map.setZoom(newZoom);
-      currentZoom.value = newZoom;
+      map.setZoom(currentZoomLevel + 1);
     }
   }
 };
@@ -333,9 +331,7 @@ const zoomOut = () => {
   if (map) {
     const currentZoomLevel = map.getZoom() || currentZoom.value;
     if (currentZoomLevel > 1) {
-      const newZoom = currentZoomLevel - 1;
-      map.setZoom(newZoom);
-      currentZoom.value = newZoom;
+      map.setZoom(currentZoomLevel - 1);
     }
   }
 };
@@ -388,6 +384,7 @@ const addZoomControls = (map: google.maps.Map) => {
   `;
 
   const zoomInButton = document.createElement('button');
+  zoomInButton.type = 'button';
   zoomInButton.style.cssText = `
     width: 40px;
     height: 40px;
@@ -428,6 +425,7 @@ const addZoomControls = (map: google.maps.Map) => {
   });
 
   const zoomOutButton = document.createElement('button');
+  zoomOutButton.type = 'button';
   zoomOutButton.style.cssText = `
     width: 40px;
     height: 40px;

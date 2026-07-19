@@ -66,14 +66,9 @@ class FindStoreService
 
     protected function applyWithinKm($query, string $latitude, string $longitude, string $radius): void
     {
-        $boundingBox = $this->getBoundingBox($latitude, $longitude, $radius);
-
-        $minLat = $boundingBox['minLat'];
-        $maxLat = $boundingBox['maxLat'];
-        $minLon = $boundingBox['minLon'];
-        $maxLon = $boundingBox['maxLon'];
 
         $earthRadiusInKm = 6371;
+        $radiusFloat = (float) $radius;
 
         $query->select('*', DB::raw("
             ($earthRadiusInKm * acos(cos(radians($latitude)) 
@@ -82,9 +77,7 @@ class FindStoreService
             + sin(radians($latitude)) 
             * sin(radians(latitude)))) AS distance
         "))
-        ->whereBetween('latitude', [$minLat, $maxLat])
-        ->whereBetween('longitude', [$minLon, $maxLon])
-        ->having('distance', '<=', $radius)
+        ->havingRaw("distance <= $radiusFloat")
         ->orderBy('distance', 'asc');
     }
 

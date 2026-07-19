@@ -340,8 +340,8 @@ const getNearestStore = async () => {
       entity: 'find-store',
       query: {
         orderBy: 'name:asc',
-        latitude: lat.value,
-        longitude: lng.value,
+        latitude: lat.value.toString(),
+        longitude: lng.value.toString(),
         radius: kmRadius.value,
       },
     },
