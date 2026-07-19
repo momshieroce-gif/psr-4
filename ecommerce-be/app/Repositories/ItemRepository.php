@@ -109,9 +109,10 @@ class ItemRepository extends BaseRepository
         }
         $this->with();
         $this->orderBy(Arr::get($parameters, 'orderBy', 'created_at:desc'));
+        $radius = (float) Arr::get($parameters, 'radius', Config::MAX_DISTANCE);
         $this->collection = $this->model->get()
-        ->filter(function ($item) {
-            return $item->store && $item->store->distance <= Config::MAX_DISTANCE;
+        ->filter(function ($item) use ($radius) {
+            return $item->store && $item->store->distance <= $radius;
         })
         ->sortBy(function ($item) {
             return $item->store->distance ?? PHP_INT_MAX;
