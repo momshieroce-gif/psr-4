@@ -48,7 +48,7 @@
               <td class="td-center">
                 <q-btn-dropdown flat dense round dropdown-icon="more_vert" color="white" class="action-dropdown">
                   <q-list class="action-menu">
-                     <q-item clickable v-close-popup :to="`${routePath}/${tx.optimus_id}`" class="menu-item">
+                    <q-item clickable v-close-popup :to="`${routePath}/${tx.optimus_id}`" class="menu-item">
                       <q-item-section avatar>
                         <q-icon name="info" size="18px" color="#a5b4fc" />
                       </q-item-section>
@@ -66,7 +66,8 @@
                     </q-item>
                     <q-item
                       v-if="showReceivedButton && tx.status?.name !== TRANSACTION_STATUS.COMPLETED && onMarkAsReceived"
-                      clickable v-close-popup @click="onMarkAsReceived(tx.optimus_id)" class="menu-item">
+                      clickable v-close-popup @click="onMarkAsReceived(tx.optimus_id)" class="menu-item"
+                      :class="{ 'menu-item-disabled': tx.is_return_refund === 1 }">
                       <q-item-section avatar>
                         <q-icon name="inventory_2" size="18px" color="#6ee7b7" />
                       </q-item-section>

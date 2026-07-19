@@ -266,7 +266,7 @@ const { countTotalItems } = storeToRefs(useUserCartStore());
   font-weight: 700;
   min-width: 18px;
   height: 18px;
-  padding: 0 4px;
+  padding: 0 6px;
   animation: badgePop 2.5s ease-in-out infinite;
 }
 
